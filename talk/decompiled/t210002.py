@@ -9,8 +9,6 @@ def t210002_0():
         call = t210002_x4()
         assert not IsMultiplayerInProgress()
 
-# unseen headstone
-
 def t210002_x0():
     """State 0,1"""
     assert t210002_x1(z1=99999, z2=99999, z3=99999, z4=99999)
@@ -49,7 +47,7 @@ def t210002_x1(z1=99999, z2=99999, z3=99999, z4=99999):
 def t210002_x2(flag2=_, flag3=_, action1=_):
     """State 0,3"""
     DebugEvent('フラグ判定')
-    if not GetEventStatus(flag2 * 10 + 70000000 + flag3 * 1) or GetEventStatus(12100868) == 1:
+    if not GetEventStatus(flag2 * 10 + 70000000 + flag3 * 1):
         """State 1"""
         SetEventState(flag2 * 10 + 72100000 + flag3 * 1, 1)
         """State 4"""
