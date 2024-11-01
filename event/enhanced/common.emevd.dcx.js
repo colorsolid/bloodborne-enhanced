@@ -4,7 +4,7 @@
 // @game    Bloodborne
 // @string    ""
 // @linked    []
-// @version    3.4.1
+// @version    3.4.2
 // ==/EMEVD==
 
 // constructor
@@ -1178,8 +1178,6 @@ $Event(12105024, Restart, function() {
 
 // initialize lamp settings
 $Event(8400, Default, function() {
-    EndIf(ThisEvent());
-    
     // prevent lamp deactivation
     if (!EventFlag(12100968) && !EventFlag(12100868)) {
         SetEventFlag(12100968, ON); // off
@@ -1258,8 +1256,6 @@ $Event(8400, Default, function() {
 
 // initialize lamp settings 2
 $Event(8401, Default, function() {
-    EndIf(ThisEvent());
-    
     // enable Iosefka lamp from start
     if (!EventFlag(12100953) && !EventFlag(12100853)) {
         SetEventFlag(12100853, ON); // on
@@ -1268,8 +1264,6 @@ $Event(8401, Default, function() {
 
 // initialize broken lamp settings
 $Event(8405, Default, function() {
-    EndIf(ThisEvent());
-    
     // broken lamp
     if (!EventFlag(12100965) && !EventFlag(12100865)) {
         SetEventFlag(12100865, ON); // on
@@ -1288,8 +1282,6 @@ $Event(8405, Default, function() {
 
 // initialize other settings
 $Event(8406, Default, function() {
-    EndIf(ThisEvent());
-    
     // prevent auto ng+
     if (!EventFlag(12100973) && !EventFlag(12100873)) {
         SetEventFlag(12100873, ON); // on
@@ -1332,27 +1324,23 @@ $Event(8406, Default, function() {
     SetEventFlag(12102311, OFF);
     
     // game effect / dark fog
-    SetEventFlag(12102033, OFF);
-    SetEventFlag(12102034, ON);
-    SetEventFlag(12102035, OFF);
-    SetEventFlag(12102036, OFF);
+    if (!AnyBatchEventFlags(12102033, 12102036)) {
+        SetEventFlag(12102033, OFF);
+        SetEventFlag(12102034, ON);
+        SetEventFlag(12102035, OFF);
+        SetEventFlag(12102036, OFF);
+    }
     
     // increase cycle
-    SetEventFlag(12102022, ON);
-    SetEventFlag(12102023, OFF);
-    SetEventFlag(12102024, OFF);
-    SetEventFlag(12102025, OFF);
-    SetEventFlag(12102026, OFF);
-    SetEventFlag(12102027, OFF);
-    SetEventFlag(12102028, OFF);
-});
-
-// effect changed check
-$Event(12102030, Default, function() {
-    SetEventFlag(12102030, OFF);
-    WaitFor(ThisEvent());
-    SetEventFlag(12102031, ON);
-    RestartEvent();
+    if (!AnyBatchEventFlags(12102022, 12102028)) {
+        SetEventFlag(12102022, ON);
+        SetEventFlag(12102023, OFF);
+        SetEventFlag(12102024, OFF);
+        SetEventFlag(12102025, OFF);
+        SetEventFlag(12102026, OFF);
+        SetEventFlag(12102027, OFF);
+        SetEventFlag(12102028, OFF);
+    }
 });
 
 // change effect
