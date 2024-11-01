@@ -9,6 +9,8 @@ def t210305_1():
         call = t210305_x7()
         assert not IsClientPlayer()
 
+# gherman
+
 def t210305_x0(z7=99999, z8=99999, z9=99999, z10=99999):
     """State 0,1"""
     DebugEvent('会話判定')
@@ -287,8 +289,20 @@ def t210305_x11():
         DebugEvent('はい')
         """State 14"""
         assert t210305_x3(text1=1501800, text2=1501850)
-        """State 8"""
-        SetEventState(72100130, 1)
+        if GetEventStatus(12100973) == 1:
+            SetEventState(72100130, 1)
+        else:
+            OpenGenericDialog(2, 200009, 3, 4, 2)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            if GetGenericDialogButtonResult() == 1:
+                DebugEvent('OK')
+                """State 8"""
+                SetEventState(72100130, 1)
+            elif not IsGenericDialogOpen():
+                DebugEvent('CANCEL')
+                ForceCloseGenericDialog()
+                return 0
     elif GetTalkListEntryResult() == 2:
         """State 3"""
         DebugEvent('挨拶_汎用')
