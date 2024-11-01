@@ -4,11 +4,238 @@
 // @game    Bloodborne
 // @string    "PC情報_拠点到達時\u0000ボス_撃破\u0000PC情報_ボス撃破_拠点ボス\u0000ボス_戦闘開始\u0000ボス_撃破時間\u0000PC情報_ボス撃破_拠点ボス2\u0000ボス_戦闘開始2\u0000ボス_撃破時間2\u0000N:\\SPRJ\\data\\Param\\event\\common.emevd\u0000"
 // @linked    [164]
-// @version    3.4.2
+// @version    3.4.1
 // ==/EMEVD==
 
-// コンストラクタ
+const area_id = 21;
+const block_id = 0;
+
+const cleric_beast_offset = 0;
+const cleric_beast_defeat = 12411700;
+const cleric_beast_lamp_id = 2411952;
+
+const gascoigne_offset = 1;
+const gascoigne_defeat = 12411800;
+const gascoigne_lamp_id = 2411953;
+
+const amelia_offset = 2;
+const amelia_defeat = 12401800;
+const amelia_lamp_id = 2401951;
+
+const bsb_offset = 3;
+const bsb_defeat = 12301800;
+const bsb_lamp_id = 2301951;
+
+const witches_offset = 4;
+const witches_defeat = 12201800;
+const witches_lamp_id = 2201951;
+
+const shadows_offset = 5;
+const shadows_defeat = 12701800;
+const shadows_lamp_id = 2701951;
+
+const rom_offset = 6;
+const rom_defeat = 13201800;
+const rom_lamp_id = 3201952;
+
+const paarl_offset = 7;
+const paarl_defeat = 12301700;
+const paarl_lamp_id = 2301952;
+
+const one_reborn_offset = 8;
+const one_reborn_defeat = 12801800;
+const one_reborn_lamp_id = 2801951;
+
+const amygdala_offset = 9;
+const amygdala_defeat = 13301800;
+const amygdala_lamp_id = 3301951;
+
+const micolash_offset = 10;
+const micolash_defeat = 12601850;
+const micolash_lamp_id = 2601952;
+
+const wet_nurse_offset = 11;
+const wet_nurse_defeat = 12601800;
+const wet_nurse_lamp_id = 2601951;
+
+const celestial_emissary_offset = 12;
+const celestial_emissary_defeat = 12421700;
+const celestial_emissary_lamp_id = 2421952;
+
+const ebrietas_offset = 13;
+const ebrietas_defeat = 12421800;
+const ebrietas_lamp_id = 2421951;
+
+const logarius_offset = 14;
+const logarius_defeat = 12501800;
+const logarius_lamp_id = 2501952;
+
+const gehrman_offset = 15;
+const gehrman_defeat = 12101800;
+const gehrman_region = 12102802;
+const gehrman_trigger_short_warp = 2102810;
+
+const moon_presence_offset = 16;
+const moon_presence_defeat = 12101850;
+const moon_presence_region = 12102802;
+const moon_presence_trigger_short_warp = 2102805;
+
+const ludwig_offset = 17;
+const ludwig_defeat = 13401800;
+const ludwig_lamp_id = 3401952;
+
+const laurence_offset = 18;
+const laurence_defeat = 13401850;
+const laurence_lamp_id = 3401953;
+
+const living_failures_offset = 19;
+const living_failures_defeat = 13501850;
+const living_failures_lamp_id = 3501951;
+    
+const maria_offset = 20;
+const maria_defeat = 13501800;
+const maria_lamp_id = 3501952;
+
+const orphan_offset = 21;
+const orphan_defeat = 13601800;
+const orphan_lamp_id = 3601952;
+
+// constructor
 $Event(0, Default, function() {
+    InitializeEvent(0, 12100005, 0);
+    InitializeEvent(0, 8800, 0); // broken lamp enable/disable
+    
+    InitializeEvent(30, 8300, 2102318, 2102308, 2102319, 21, 0, -1, 2102328);
+    
+    SetEventFlag(8900+gehrman_offset, OFF);
+    SetEventFlag(8900+moon_presence_offset, OFF);
+    
+    SetEventFlag(moon_presence_defeat+15, OFF);
+    if (EventFlag(moon_presence_defeat+14)) {
+        SetEventFlag(moon_presence_defeat+14, OFF);
+        SetEventFlag(moon_presence_defeat+15, ON); 
+    }
+    
+    SetEventFlag(gascoigne_defeat+15, OFF);
+    if (EventFlag(gascoigne_defeat+14)) {
+        SetEventFlag(gascoigne_defeat+14, OFF);
+        SetEventFlag(gascoigne_defeat+15, ON); 
+    }
+    
+    SetEventFlag(ludwig_defeat+15, OFF);
+    if (EventFlag(ludwig_defeat+14)) {
+        SetEventFlag(ludwig_defeat+14, OFF);
+        SetEventFlag(ludwig_defeat+15, ON); 
+    }
+    
+    SetEventFlag(orphan_defeat+15, OFF);
+    if (EventFlag(orphan_defeat+14)) {
+        SetEventFlag(orphan_defeat+14, OFF);
+        SetEventFlag(orphan_defeat+15, ON); 
+    }
+    
+    if (!EventFlag(moon_presence_defeat+15)) {
+        InitializeEvent(gehrman_offset, 7700, gehrman_defeat+11, gehrman_defeat+12, 2102969, 821000);
+    }
+    InitializeEvent(moon_presence_offset, 7700, moon_presence_defeat+11, moon_presence_defeat+12, 2102969, 821000);
+    
+    if(EventFlag(gehrman_defeat+13) && !EventFlag(gehrman_defeat-1)) {
+        if (EventFlag(gehrman_defeat-2)) {
+            SetEventFlag(gehrman_defeat-2, OFF);
+            MoveBloodstainAndDroppedItems(gehrman_region, 2102967);
+        }
+        SetEventFlag(gehrman_defeat+13, OFF);
+        SetEventFlag(gehrman_defeat, ON);
+        SetEventFlag(gehrman_defeat+2, ON);
+        InitializeEvent(gehrman_offset, 8300, 2102968, 2102308, 2102967, 21, 0, 999, 2102328);
+    }
+    else if (EventFlag(gehrman_defeat+12) || EventFlag(gehrman_defeat-1) || EventFlag(moon_presence_defeat+15)) {
+        if (EventFlag(gehrman_defeat-2)) {
+            SetEventFlag(gehrman_defeat-2, OFF);
+            MoveBloodstainAndDroppedItems(gehrman_region, gehrman_trigger_short_warp);
+        }
+        SetEventFlag(gehrman_defeat, OFF);
+        SetEventFlag(gehrman_defeat+2, OFF);
+        //if (!EventFlag(moon_presence_defeat+15)) {
+            //SetEventFlag(moon_presence_defeat+2, ON);
+        //}
+        SetEventFlag(gehrman_defeat+12, OFF);
+        SetEventFlag(gehrman_defeat+13, ON);
+        SetEventFlag(gehrman_defeat-1, OFF);
+        SetEventFlag(8900+gehrman_offset, ON);
+        if (!EventFlag(moon_presence_defeat+15)) {
+            InitializeEvent(gehrman_offset, 8300, 2102968, 2102308, gehrman_trigger_short_warp, 21, 0, -1, 2102328);
+        }
+    }
+    
+    if(EventFlag(moon_presence_defeat+13) && !EventFlag(moon_presence_defeat-1)) {
+        if (EventFlag(moon_presence_defeat-2)) {
+            SetEventFlag(moon_presence_defeat-2, OFF);
+            MoveBloodstainAndDroppedItems(moon_presence_region, 2102967);
+        }
+        SetEventFlag(moon_presence_defeat+13, OFF);
+        SetEventFlag(moon_presence_defeat, ON);
+        SetEventFlag(moon_presence_defeat+2, ON);
+        InitializeEvent(moon_presence_offset, 8300, 2102968, 2102308, 2102967, 21, 0, 999, 2102328);
+    }
+    else if (EventFlag(moon_presence_defeat+12) || EventFlag(moon_presence_defeat-1) || EventFlag(moon_presence_defeat+15)) {
+        if (EventFlag(moon_presence_defeat-2)) {
+            SetEventFlag(moon_presence_defeat-2, OFF);
+            MoveBloodstainAndDroppedItems(moon_presence_region, moon_presence_trigger_short_warp);
+        }
+        SetEventFlag(moon_presence_defeat, OFF);
+        SetEventFlag(moon_presence_defeat+2, OFF);
+        SetEventFlag(moon_presence_defeat+12, OFF);
+        SetEventFlag(moon_presence_defeat+13, ON);
+        SetEventFlag(moon_presence_defeat-1, OFF);
+        SetEventFlag(8900+moon_presence_offset, ON);
+        InitializeEvent(moon_presence_offset, 8300, 2102968, 2102308, moon_presence_trigger_short_warp, 21, 0, -1, 2102328);
+    }
+    
+    if (!(EventFlag(gehrman_defeat+12) || EventFlag(gehrman_defeat+13) || EventFlag(moon_presence_defeat+12) || EventFlag(moon_presence_defeat+13))) {
+        InitializeEvent(31, 8300, 2102968, 2102308, 2102967, 21, 0, -1, 2102328);
+    }
+    
+    InitializeEvent(gehrman_offset, 8900, gehrman_defeat-1, 2102969, gehrman_defeat-2);
+    InitializeEvent(moon_presence_offset, 8900, moon_presence_defeat-1, 2102969, moon_presence_defeat-2, moon_presence_defeat+15, moon_presence_defeat+14);
+    
+    InitializeEvent(0, 12102000, 0); // reset rematch flags
+    
+    // prevent infinite rewarp
+    SetEventFlag(72110544, OFF);
+    SetEventFlag(72110659, OFF);
+    SetEventFlag(72110774, OFF);
+    SetEventFlag(72110889, OFF);
+    SetEventFlag(72111004, OFF);
+    SetEventFlag(72111119, OFF);
+    SetEventFlag(72111234, OFF);
+    SetEventFlag(72111349, OFF);
+    SetEventFlag(72111464, OFF);
+    SetEventFlag(72111579, OFF);
+    
+    SetEventFlag(12100998, OFF);
+    
+    InitializeEvent(cleric_beast_offset, 7700, cleric_beast_defeat+11, cleric_beast_defeat+12, cleric_beast_lamp_id+1000, 821000);
+    InitializeEvent(gascoigne_offset, 7700, gascoigne_defeat+11, gascoigne_defeat+12, gascoigne_lamp_id+1000, 821000);
+    InitializeEvent(amelia_offset, 7700, amelia_defeat+11, amelia_defeat+12, amelia_lamp_id+1000, 821000);
+    InitializeEvent(bsb_offset, 7700, bsb_defeat+11, bsb_defeat+12, bsb_lamp_id+1000, 821000);
+    InitializeEvent(witches_offset, 7700, witches_defeat+11, witches_defeat+12, witches_lamp_id+1000, 821000);
+    InitializeEvent(shadows_offset, 7700, shadows_defeat+11, shadows_defeat+12, shadows_lamp_id+1000, 821000);
+    InitializeEvent(rom_offset, 7700, rom_defeat+11, rom_defeat+12, rom_lamp_id+1000, 821000);
+    InitializeEvent(paarl_offset, 7700, paarl_defeat+11, paarl_defeat+12, paarl_lamp_id+1000, 821000);
+    InitializeEvent(one_reborn_offset, 7700, one_reborn_defeat+11, one_reborn_defeat+12, one_reborn_lamp_id+1000, 821000);
+    InitializeEvent(amygdala_offset, 7700, amygdala_defeat+11, amygdala_defeat+12, amygdala_lamp_id+1000, 821000);
+    InitializeEvent(micolash_offset, 7700, micolash_defeat+11, micolash_defeat+12, micolash_lamp_id+1000, 821000);
+    InitializeEvent(wet_nurse_offset, 7700, wet_nurse_defeat+11, wet_nurse_defeat+12, wet_nurse_lamp_id+1000, 821000);
+    InitializeEvent(celestial_emissary_offset, 7700, celestial_emissary_defeat+11, celestial_emissary_defeat+12, celestial_emissary_lamp_id+1000, 821000);
+    InitializeEvent(ebrietas_offset, 7700, ebrietas_defeat+11, ebrietas_defeat+12, ebrietas_lamp_id+1000, 821000);
+    InitializeEvent(logarius_offset, 7700, logarius_defeat+11, logarius_defeat+12, logarius_lamp_id+1000, 821000);
+    InitializeEvent(ludwig_offset, 7700, ludwig_defeat+11, ludwig_defeat+12, ludwig_lamp_id+1000, 821000);
+    InitializeEvent(laurence_offset, 7700, laurence_defeat+11, laurence_defeat+12, laurence_lamp_id+1000, 821000);
+    InitializeEvent(living_failures_offset, 7700, living_failures_defeat+11, living_failures_defeat+12, living_failures_lamp_id+1000, 821000);
+    InitializeEvent(maria_offset, 7700, maria_defeat+11, maria_defeat+12, maria_lamp_id+1000, 821000);
+    InitializeEvent(orphan_offset, 7700, orphan_defeat+11, orphan_defeat+12, orphan_lamp_id+1000, 821000);
+    
     InitializeEvent(0, 12100010, 0);
     if (EventFlag(9400)) {
         SetPlayerRespawnPoint(2102961);
@@ -22,13 +249,15 @@ $Event(0, Default, function() {
         DeactivateObject(2101100, Disabled);
     }
     SetNetworkUpdateRate(2100700, true, CharacterUpdateFrequency.AlwaysUpdate);
-    SetSpEffect(10000, 110, false);
-    SetSpEffect(10000, 111, false);
-    SetSpEffect(10000, 112, false);
-    SetSpEffect(10000, 113, false);
-    SetSpEffect(10000, 114, false);
-    SetSpEffect(10000, 115, false);
-    SetSpEffect(10000, 116, false);
+    
+    // SetSpEffect(10000, 110, false);
+    // SetSpEffect(10000, 111, false);
+    // SetSpEffect(10000, 112, false);
+    // SetSpEffect(10000, 113, false);
+    // SetSpEffect(10000, 114, false);
+    // SetSpEffect(10000, 115, false);
+    // SetSpEffect(10000, 116, false);
+    
     SetEventFlag(72100100, OFF);
     SetEventFlag(72100101, OFF);
     SetEventFlag(72100102, OFF);
@@ -76,7 +305,9 @@ $Event(0, Default, function() {
     SetEventFlag(72103600, OFF);
     SetEventFlag(72103601, OFF);
     SetEventFlag(72103602, OFF);
+    
     InitializeEvent(0, 12105210, 0);
+    
     InitializeEvent(52, 12107000, 72102110, 2100952, 2112950);
     InitializeEvent(0, 12107000, 72102200, 2100951, 2202950);
     InitializeEvent(1, 12107000, 72102201, 2100951, 2202951);
@@ -121,6 +352,7 @@ $Event(0, Default, function() {
     InitializeEvent(65, 12107000, 72103600, 2100231, 3602950);
     InitializeEvent(66, 12107000, 72103601, 2100231, 3602951);
     InitializeEvent(67, 12107000, 72103602, 2100231, 3602952);
+    
     SetEventFlag(72100420, OFF);
     SetEventFlag(72100421, OFF);
     SetEventFlag(72100422, OFF);
@@ -128,6 +360,7 @@ $Event(0, Default, function() {
     SetEventFlag(72100424, OFF);
     SetEventFlag(72100425, OFF);
     SetEventFlag(72100426, OFF);
+    
     InitializeEvent(0, 12107100, 72100420, 2100954, 9020);
     InitializeEvent(1, 12107100, 72100421, 2100955, 9021);
     InitializeEvent(2, 12107100, 72100422, 2100956, 9022);
@@ -135,6 +368,7 @@ $Event(0, Default, function() {
     InitializeEvent(4, 12107100, 72100424, 2100958, 9024);
     InitializeEvent(5, 12107100, 72100425, 2100959, 9025);
     InitializeEvent(6, 12107100, 72100426, 2100960, 9026);
+    
     SetEventFlag(72100300, OFF);
     SetEventFlag(72100301, OFF);
     SetEventFlag(72100302, OFF);
@@ -145,6 +379,7 @@ $Event(0, Default, function() {
     SetEventFlag(72100307, OFF);
     SetEventFlag(72100308, OFF);
     SetEventFlag(72100309, OFF);
+    
     InitializeEvent(0, 12107200, 72100300, 2902950, 9001);
     InitializeEvent(1, 12107200, 72100301, 2902951, 9002);
     InitializeEvent(2, 12107200, 72100302, 2902952, 9003);
@@ -155,6 +390,7 @@ $Event(0, Default, function() {
     InitializeEvent(7, 12107200, 72100307, 2902957, 9008);
     InitializeEvent(8, 12107200, 72100308, 2902958, 9009);
     InitializeEvent(9, 12107200, 72100309, 2902959, 9010);
+    
     InitializeEvent(0, 12100300, 0);
     InitializeEvent(0, 12100310, 0);
     InitializeEvent(0, 12100800, 0);
@@ -173,6 +409,8 @@ $Event(0, Default, function() {
     InitializeEvent(0, 12101803, 0);
     InitializeEvent(0, 12100000, 0);
     InitializeEvent(0, 12100002, 0);
+    InitializeEvent(0, 12100900, 0);
+    InitializeEvent(0, 12100902, 0);
     InitializeEvent(0, 12101850, 0);
     InitializeEvent(0, 12101851, 0);
     InitializeEvent(0, 12101852, 0);
@@ -207,17 +445,6 @@ $Event(0, Default, function() {
     InitializeEvent(0, 12105023, 0);
     InitializeEvent(0, 12105024, 0);
     InitializeEvent(0, 12105040, 0);
-    InitializeEvent(0, 12101000, 4110, 2100211, 2561);
-    InitializeEvent(1, 12101000, 4111, 2100211, 3330);
-    InitializeEvent(2, 12101000, 4112, 2100211, 3843);
-    InitializeEvent(3, 12101000, 4113, 2100212, 3840);
-    InitializeEvent(4, 12101000, 4114, 2100212, 3073);
-    InitializeEvent(5, 12101000, 4115, 2100212, 2818);
-    InitializeEvent(6, 12101000, 4116, 2100212, 3843);
-    InitializeEvent(7, 12101000, 4117, 2100213, 3840);
-    InitializeEvent(8, 12101000, 4118, 2100213, 3841);
-    InitializeEvent(9, 12101000, 4119, 2100213, 3842);
-    InitializeEvent(0, 12101010, 0);
     InitializeEvent(0, 12105043, 0);
     InitializeEvent(0, 12101020, 0);
     InitializeEvent(0, 12101021, 0);
@@ -256,39 +483,6 @@ $Event(0, Default, function() {
     InitializeEvent(0, 12100164, 0);
     InitializeEvent(0, 12100165, 0);
     SetCharacterHPBarDisplay(2100600, Disabled);
-    InitializeEvent(0, 12105060, 0);
-    InitializeEvent(0, 12105062, 0);
-    InitializeEvent(0, 12105070, 72100141, 6011, 20);
-    InitializeEvent(1, 12105070, 72100142, 6012, 21);
-    InitializeEvent(2, 12105070, 72100143, 6013, 22);
-    InitializeEvent(3, 12105070, 72100144, 6014, 23);
-    InitializeEvent(4, 12105070, 72100145, 6015, 24);
-    InitializeEvent(5, 12105070, 72100146, 6016, 25);
-    InitializeEvent(6, 12105070, 72100147, 6017, 26);
-    InitializeEvent(7, 12105070, 72100148, 6018, 27);
-    InitializeEvent(8, 12105070, 72100149, 6019, 28);
-    InitializeEvent(9, 12105070, 72100150, 6020, 0);
-    InitializeEvent(10, 12105070, 72100151, 6021, 0);
-    InitializeEvent(11, 12105070, 72100152, 6022, 0);
-    InitializeEvent(12, 12105070, 72100153, 6023, 0);
-    InitializeEvent(13, 12105070, 72100154, 6024, 0);
-    InitializeEvent(14, 12105070, 72100155, 6025, 0);
-    InitializeEvent(0, 12100020, 4900, 6071, 1);
-    InitializeEvent(1, 12100020, 4901, 6072, 1);
-    InitializeEvent(2, 12100020, 4902, 6073, 1);
-    InitializeEvent(3, 12100020, 4903, 6074, 0);
-    InitializeEvent(4, 12100020, 4904, 6075, 0);
-    InitializeEvent(5, 12100020, 4905, 6076, 0);
-    InitializeEvent(6, 12100020, 4906, 6077, 0);
-    InitializeEvent(7, 12100020, 4907, 6078, 0);
-    InitializeEvent(8, 12100020, 4908, 6079, 0);
-    InitializeEvent(9, 12100020, 4909, 6080, 0);
-    InitializeEvent(10, 12100020, 4910, 6081, 0);
-    InitializeEvent(11, 12100020, 4911, 6082, 0);
-    InitializeEvent(12, 12100020, 4912, 6083, 0);
-    InitializeEvent(13, 12100020, 4913, 6084, 0);
-    InitializeEvent(14, 12100020, 4914, 6085, 0);
-    InitializeEvent(0, 12105064, 0);
     InitializeEvent(0, 12101100, 0);
     InitializeEvent(0, 12105300, 0);
     SetSpEffect(10000, 9121, false);
@@ -298,7 +492,7 @@ $Event(0, Default, function() {
     InitializeEvent(0, 12100330, 0);
 });
 
-// プリコンストラクタ
+// pre-constructor
 $Event(50, Default, function() {
     if (EventFlag(12101020)) {
         SetCharacterBackreadState(2100215, true);
@@ -367,6 +561,7 @@ L0:
     SetCharacterAnimationState(2100958, Disabled);
     SetCharacterAnimationState(2100959, Disabled);
     SetCharacterAnimationState(2100960, Disabled);
+    SetCharacterAnimationState(2100500, Disabled); // <------
     SetCharacterGravity(2100200, Disabled);
     SetCharacterGravity(2100201, Disabled);
     SetCharacterGravity(2100202, Disabled);
@@ -395,6 +590,7 @@ L0:
     SetCharacterGravity(2100958, Disabled);
     SetCharacterGravity(2100959, Disabled);
     SetCharacterGravity(2100960, Disabled);
+    SetCharacterGravity(2100500, Disabled); // <------
     SetCharacterMaphits(2100200, true);
     SetCharacterMaphits(2100201, true);
     SetCharacterMaphits(2100202, true);
@@ -423,13 +619,154 @@ L0:
     SetCharacterMaphits(2100958, true);
     SetCharacterMaphits(2100959, true);
     SetCharacterMaphits(2100960, true);
+    SetCharacterMaphits(2100500, true); // <------
     if (EventFlag(12411000)) {
         SetCharacterBackreadState(2100800, true);
         SetCharacterBackreadState(2100810, true);
     }
 });
 
-// 初回死亡で拠点に来たポリ劇
+$Event(12100005, Default, function() {
+    WaitFixedTimeSeconds(0.5);
+    SetEventFlag(12100001, OFF);
+});
+
+// reset rematch flags
+$Event(12102000, Default, function() {
+    if(EventFlag(witches_defeat+13)) {
+        SetEventFlag(witches_defeat+13, OFF);
+        SetEventFlag(witches_defeat, ON);
+    }
+    
+    if(EventFlag(bsb_defeat+13)) {
+        SetEventFlag(bsb_defeat+13, OFF);
+        SetEventFlag(bsb_defeat, ON);
+    }
+    
+    if(EventFlag(paarl_defeat+13)) {
+        SetEventFlag(paarl_defeat+13, OFF);
+        SetEventFlag(paarl_defeat, ON);
+    }
+    
+    if(EventFlag(amelia_defeat+13)) {
+        SetEventFlag(amelia_defeat+13, OFF);
+        SetEventFlag(amelia_defeat, ON);
+    }
+    
+    if(EventFlag(cleric_beast_defeat+13)) {
+        SetEventFlag(cleric_beast_defeat+13, OFF);
+        SetEventFlag(cleric_beast_defeat, ON);
+    }
+    
+    if(EventFlag(gascoigne_defeat+13)) {
+        SetEventFlag(gascoigne_defeat+13, OFF);
+        SetEventFlag(gascoigne_defeat, ON);
+        
+        // Oedon Tomb Key
+        if (!PlayerHasItem(ItemType.Goods, 4000)) {
+            EventValueOperation(12411819, 8, 1, 0, 1, CalculationType.Assign);
+            DirectlyGivePlayerItem(ItemType.Goods, 4000, 12411819, 8);
+        }
+    }
+    
+    if(EventFlag(celestial_emissary_defeat+13)) {
+        SetEventFlag(celestial_emissary_defeat+13, OFF);
+        SetEventFlag(celestial_emissary_defeat, ON);
+    }
+    
+    if(EventFlag(ebrietas_defeat+13)) {
+        SetEventFlag(ebrietas_defeat+13, OFF);
+        SetEventFlag(ebrietas_defeat, ON);
+    }
+    
+    if(EventFlag(logarius_defeat+13)) {
+        
+        // hidden area display check
+        if (EventFlag(12500819)) {
+            SetEventFlag(12500819, OFF);
+            SetEventFlag(12500810, ON);
+        }
+        SetEventFlag(logarius_defeat+13, OFF);
+        SetEventFlag(logarius_defeat, ON);
+    }
+    
+    if(EventFlag(micolash_defeat+13)) {
+        SetEventFlag(micolash_defeat+13, OFF);
+        SetEventFlag(micolash_defeat, ON);
+    }
+    
+    if(EventFlag(wet_nurse_defeat+13)) {
+        SetEventFlag(wet_nurse_defeat+13, OFF);
+        SetEventFlag(wet_nurse_defeat, ON);
+    }
+    
+    if(EventFlag(shadows_defeat+13)) {
+        SetEventFlag(shadows_defeat+13, OFF);
+        SetEventFlag(shadows_defeat, ON);
+    }
+    
+    if(EventFlag(one_reborn_defeat+13)) {
+        SetEventFlag(one_reborn_defeat+13, OFF);
+        SetEventFlag(one_reborn_defeat, ON);
+    }
+    
+    if(EventFlag(rom_defeat+13)) {
+        SetEventFlag(rom_defeat+13, OFF);
+        SetEventFlag(rom_defeat, ON);
+        SetEventFlag(rom_defeat+3, ON);
+    }
+    
+    if(EventFlag(amygdala_defeat+13)) {
+        SetEventFlag(amygdala_defeat+13, OFF);
+        SetEventFlag(amygdala_defeat, ON);
+    }
+    
+    if(EventFlag(ludwig_defeat+13)) {
+        SetEventFlag(ludwig_defeat+13, OFF);
+        SetEventFlag(9471, ON);
+        SetEventFlag(ludwig_defeat, ON);
+    }
+    
+    if(EventFlag(laurence_defeat+13)) {
+        SetEventFlag(laurence_defeat+13, OFF);
+        SetEventFlag(laurence_defeat, ON);
+    }
+    
+    if(EventFlag(living_failures_defeat+13)) {
+        SetEventFlag(living_failures_defeat+13, OFF);
+        SetEventFlag(living_failures_defeat, ON);
+    }
+    
+    if(EventFlag(maria_defeat+13)) {
+        SetEventFlag(maria_defeat+13, OFF);
+        SetEventFlag(maria_defeat, ON);
+    }
+    
+    if(EventFlag(orphan_defeat+13)) {
+        SetEventFlag(orphan_defeat+13, OFF);
+        SetEventFlag(orphan_defeat, ON);
+    }
+});
+
+// Hide broken lamp if disabled
+$Event(8800, Default, function() {
+    if (EventFlag(12100965)) {
+        ChangeCharacterEnableState(2100500, Disabled);
+        DeactivateObject(2105099, Disabled);
+        WaitFor(EventFlag(12100865));
+        ChangeCharacterEnableState(2100500, Enabled);
+        DeactivateObject(2105099, Enabled);
+        RestartEvent();
+    }
+    else {
+        WaitFor(EventFlag(12100965));
+        ChangeCharacterEnableState(2100500, Disabled);
+        DeactivateObject(2105099, Disabled);
+        RestartEvent();
+    }
+});
+
+// The police drama that came to the base with the first death
 $Event(9401, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(HasMultiplayerState(MultiplayerState.Client));
@@ -441,7 +778,7 @@ $Event(9401, Default, function() {
     SetEventFlag(12417810, ON);
 });
 
-// Bエンド
+// B-end (kill moon presense)
 $Event(12100000, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(HasMultiplayerState(MultiplayerState.Client));
@@ -454,7 +791,19 @@ $Event(12100000, Default, function() {
                 || PlayerStandingOnHit(2103604)
                 || PlayerStandingOnHit(2103605))
             && !EventFlag(9900));
-    WaitFixedTimeSeconds(3);
+    if (EventFlag(12100973)) {
+        SetEventFlag(12100700, ON);
+    }
+    else {
+        SetEventFlag(12100800, ON);
+        SetEventFlag(12100802, OFF);
+        SetEventFlag(12100999, ON);
+    }
+});
+
+// choose to start ng+ (defeat mp)
+$Event(12100900, Default, function() {
+    WaitFor(EventFlag(12100700));
     DeleteMapSFX(2103300, true);
     DeleteMapSFX(2103500, true);
     DeleteMapSFX(2103501, true);
@@ -475,6 +824,9 @@ $Event(12100000, Default, function() {
     DeleteMapSFX(2103518, true);
     DeleteMapSFX(2103519, true);
     DeleteMapSFX(2103520, true);
+    SetEventFlag(12100999, OFF);
+    SetEventFlag(12100800, OFF);
+    SetEventFlag(12100802, OFF);
     SetEventFlag(9180, ON);
     WaitFixedTimeFrames(1);
     PlayCutsceneToPlayer(21000020, CutscenePlayMode.Skippable, 10000);
@@ -492,7 +844,7 @@ $Event(12100000, Default, function() {
     SetEventFlag(22, ON);
 });
 
-// Cエンド
+// C-end (kill gehrman)
 $Event(12100002, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(HasMultiplayerState(MultiplayerState.Client));
@@ -503,7 +855,19 @@ $Event(12100002, Default, function() {
                 || PlayerStandingOnHit(2103603)
                 || PlayerStandingOnHit(2103604)
                 || PlayerStandingOnHit(2103605)));
-    WaitFixedTimeSeconds(5);
+    if (EventFlag(12100973)) {
+        SetEventFlag(12100702, ON);
+    }
+    else {
+        SetEventFlag(12100800, OFF);
+        SetEventFlag(12100802, ON);
+        SetEventFlag(12100999, ON);
+    }
+});
+
+// choose to start ng+ (defeat gehrman)
+$Event(12100902, Default, function() {
+    WaitFor(EventFlag(12100702));
     SetEventFlag(9180, ON);
     WaitFixedTimeFrames(1);
     DeleteMapSFX(2103300, true);
@@ -515,6 +879,9 @@ $Event(12100002, Default, function() {
     DeleteMapSFX(2103505, true);
     DeleteMapSFX(2103506, true);
     DeleteMapSFX(2103507, true);
+    SetEventFlag(12100999, OFF);
+    SetEventFlag(12100800, OFF);
+    SetEventFlag(12100802, OFF);
     if (!PlayerGender(Gender.Female)) {
         PlayCutsceneToPlayer(21000030, CutscenePlayMode.Skippable, 10000);
     } else {
@@ -536,7 +903,7 @@ L1:
     SetEventFlag(23, ON);
 });
 
-// はまり対応
+// get stuck
 $Event(12100010, Default, function() {
     WaitFor(!EventFlag(9403) && InArea(10000, 2102100));
     DeactivateObject(2101010, Disabled);
@@ -547,25 +914,14 @@ $Event(12100010, Default, function() {
     DeactivateObject(2101031, Enabled);
 });
 
-// アイテム所持判定_XX
-$Event(12100020, Default, function(X0_4, X4_4, X8_4) {
-    SetNetworkSyncState(Disabled);
-    EndIf(!CharacterType(10000, TargetType.Alive));
-    if (X8_4 != 0) {
-        SetEventFlag(X4_4, OFF);
-    }
-    WaitFor(PlayerHasItem(ItemType.Goods, X0_4));
-    SetEventFlag(X4_4, ON);
-});
-
-// 人形のヒロイン_ゲールマン様がお待ちです
+// The doll heroine_Mr. Gehrmann is waiting
 $Event(12100100, Default, function(X0_4, X4_4) {
     WaitFor(!EventFlag(1003) && EventFlag(9462));
     BatchSetEventFlags(X0_4, X4_4, OFF);
     SetEventFlag(1002, ON);
 });
 
-// 人形のヒロイン_死んでいる
+// doll heroine_dead
 $Event(12100101, Default, function(X0_4, X4_4) {
     WaitFor(CharacterDead(2100700));
     BatchSetEventFlags(X0_4, X4_4, OFF);
@@ -573,20 +929,18 @@ $Event(12100101, Default, function(X0_4, X4_4) {
     SaveRequest(0);
 });
 
-// 人形のヒロイン_立ち位置制御
+// Doll heroine_Standing position control
 $Event(12100110, Default, function() {
     SetEventFlag(72100105, OFF);
     SetEventFlag(72100106, OFF);
     SetEventFlag(72100107, OFF);
     SetEventFlag(12100510, OFF);
-    if (!(!EventFlag(9401) || PlayerInsightAmount() == 0)) {
+    if (!(PlayerInsightAmount() == 0)) {
         SetEventFlag(12100105, ON);
         SetEventFlag(9404, ON);
         EndIf(
             (EventFlag(13501800) && !EventFlag(72100116))
-                || (EventFlag(13601800)
-                    && !EventFlag(72100117)
-                    && (EventFlag(1026) || EventFlag(1027))));
+                || (EventFlag(13601800) && !EventFlag(72100117) && (EventFlag(1026) || EventFlag(1027))));
         EndIf(EventFlag(1000));
         GotoIf(L0, EventFlag(1001));
         EndIf(EventFlag(1002));
@@ -651,7 +1005,7 @@ L9:
     SetEventFlag(12105100, ON);
 });
 
-// 人形のヒロイン_ランダム自動会話
+// doll heroine_random automatic conversation
 $Event(12100111, Default, function() {
     GotoIf(L0, EventFlag(12100500));
     GotoIf(L1, EventFlag(12100501));
@@ -670,7 +1024,7 @@ L1:
     EndEvent();
 });
 
-// 人形のヒロイン_レベルアップアニメ_PC
+// doll heroine_level up anime_PC
 $Event(12100112, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(!CharacterType(10000, TargetType.Alive));
@@ -680,8 +1034,7 @@ $Event(12100112, Default, function() {
     if (!(CharacterType(10000, TargetType.Alive) && EntityInRadiusOfEntity(10000, 2100700, 1))) {
         RotateCharacter(10000, 2100700, 101290, false);
         WaitFor(
-            (CharacterType(10000, TargetType.Alive) && EntityInRadiusOfEntity(10000, 2100700, 1))
-                || ElapsedFrames(89));
+            (CharacterType(10000, TargetType.Alive) && EntityInRadiusOfEntity(10000, 2100700, 1)) || ElapsedFrames(89));
     }
 L2:
     RotateCharacter(10000, 2100700, 101270, false);
@@ -697,8 +1050,7 @@ L0:
     if (!(CharacterType(10000, TargetType.Alive) && EntityInRadiusOfEntity(10000, 2100700, 1.5))) {
         RotateCharacter(10000, 2100700, 101290, false);
         WaitFor(
-            (CharacterType(10000, TargetType.Alive) && EntityInRadiusOfEntity(10000, 2100700, 1.5))
-                || ElapsedFrames(89));
+            (CharacterType(10000, TargetType.Alive) && EntityInRadiusOfEntity(10000, 2100700, 1.5)) || ElapsedFrames(89));
     }
 L3:
     RotateCharacter(10000, 2100700, 101280, false);
@@ -713,8 +1065,7 @@ L3:
 L1:
     if (!(CharacterType(10000, TargetType.Alive) && EntityInRadiusOfEntity(10000, 2100700, 2))) {
         RotateCharacter(10000, 2100700, 101290, false);
-        WaitFor(
-            CharacterType(10000, TargetType.Alive) && EntityInRadiusOfEntity(10000, 2100700, 2));
+        WaitFor(CharacterType(10000, TargetType.Alive) && EntityInRadiusOfEntity(10000, 2100700, 2));
     }
 L4:
     RotateCharacter(10000, 2100700, 101270, false);
@@ -728,7 +1079,7 @@ L4:
     RestartEvent();
 });
 
-// 人形のヒロイン_レベルアップアニメ_人形
+// doll heroine_level up anime_doll
 $Event(12100113, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(!CharacterType(10000, TargetType.Alive));
@@ -751,7 +1102,7 @@ L0:
     RestartEvent();
 });
 
-// 人形のヒロイン_レベルアップ_SFX
+// doll heroine_level up_SFX
 $Event(12100114, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(!CharacterType(10000, TargetType.Alive));
@@ -761,7 +1112,7 @@ $Event(12100114, Default, function() {
     RestartEvent();
 });
 
-// 人形のヒロイン_おじぎ
+// doll heroine_bow
 $Event(12100115, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(!CharacterType(10000, TargetType.Alive));
@@ -780,7 +1131,7 @@ L0:
     WaitFixedTimeSeconds(0);
 });
 
-// 人形のヒロイン_ハッと驚く
+// Doll Heroine_ Surprised
 $Event(12100116, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(!CharacterType(10000, TargetType.Alive));
@@ -806,7 +1157,7 @@ L2:
     WaitFixedTimeSeconds(0);
 });
 
-// 人形のヒロイン_ジェスチャーに反応
+// Respond to doll heroine_gesture
 $Event(12100117, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(!CharacterType(10000, TargetType.Alive));
@@ -831,17 +1182,18 @@ L0:
     }
 L1:
     RotateCharacter(2100700, 10000, 7026, false);
+    SetEventFlag(12100998, ON);
     WaitFixedTimeFrames(39);
     RotateCharacter(2100700, 10000, 7025, false);
     RestartEvent();
 });
 
-// 人形のヒロイン_殺害
+// doll heroine_kill
 $Event(12100120, Default, function() {
     EndIf(ThisEvent());
 });
 
-// 人形のヒロイン_キーアイテム所持判定
+// Doll Heroine_Key Item Possession Judgment
 $Event(12100121, Default, function() {
     WaitFor(PlayerHasItemIncludingBBox(ItemType.Goods, 4300));
     SetEventFlag(12100122, ON);
@@ -850,7 +1202,7 @@ $Event(12100121, Default, function() {
     RestartEvent();
 });
 
-// 人形のヒロイン_キーアイテム譲渡
+// Doll Heroine_Key Item Transfer
 $Event(12100123, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(ThisEvent());
@@ -863,35 +1215,35 @@ $Event(12100123, Default, function() {
     RemoveItemFromPlayer(ItemType.Goods, 4300, 1);
 });
 
-// 拠点老人_ようこそ
+// Base Old Man_Welcome
 $Event(12100140, Default, function(X0_4, X4_4) {
     WaitFor(EventFlag(1020) && EventFlag(9403));
     BatchSetEventFlags(X0_4, X4_4, OFF);
     SetEventFlag(1021, ON);
 });
 
-// 拠点老人_廃墟に聖杯があるよ
+// Base Old Man_The Holy Grail is in the Ruins
 $Event(12100141, Default, function(X0_4, X4_4) {
     WaitFor(EventFlag(1022) && EventFlag(9800));
     BatchSetEventFlags(X0_4, X4_4, OFF);
     SetEventFlag(1023, ON);
 });
 
-// 拠点老人_オドン教会に上れ
+// Stronghold Old Man_Go up to Odong Church
 $Event(12100142, Default, function(X0_4, X4_4) {
     WaitFor(EventFlag(1024) && (EventFlag(12301800) || EventFlag(9801)));
     BatchSetEventFlags(X0_4, X4_4, OFF);
     SetEventFlag(1025, ON);
 });
 
-// 拠点老人_介錯したい
+// Base old man_I want to intervene
 $Event(12100143, Default, function(X0_4, X4_4) {
     WaitFor(!EventFlag(1029) && !EventFlag(1030) && EventFlag(9462));
     BatchSetEventFlags(X0_4, X4_4, OFF);
     SetEventFlag(1028, ON);
 });
 
-// 拠点老人_戦闘中
+// Base old man_in battle
 $Event(12100144, Default, function(X0_4, X4_4) {
     WaitFor(!EventFlag(1030) && EventFlag(12101802));
     BatchSetEventFlags(X0_4, X4_4, OFF);
@@ -899,7 +1251,7 @@ $Event(12100144, Default, function(X0_4, X4_4) {
     SaveRequest(0);
 });
 
-// 拠点老人_死んでいる
+// base old_dead
 $Event(12100145, Default, function(X0_4, X4_4) {
     WaitFor(EventFlag(12101800));
     BatchSetEventFlags(X0_4, X4_4, OFF);
@@ -907,7 +1259,7 @@ $Event(12100145, Default, function(X0_4, X4_4) {
     SaveRequest(0);
 });
 
-// 拠点老人_会話ステート処理限界距離制御
+// base old man_conversation state processing limit distance control
 $Event(12100146, Default, function() {
     EndIf(!CharacterType(10000, TargetType.Alive));
     SetDistanceLimitForConversationStateProcessing(2100800, 17);
@@ -915,7 +1267,7 @@ $Event(12100146, Default, function() {
     SetDistanceLimitForConversationStateProcessing(2100800, 80);
 });
 
-// 拠点老人_立ち位置制御
+// base old man_standing position control
 $Event(12100160, Default, function() {
     SetEventFlag(72100133, OFF);
     SetEventFlag(72100134, OFF);
@@ -948,7 +1300,7 @@ L3:
     ChangeCharacterEnableState(2100600, Disabled);
 });
 
-// 拠点老人_ランダム自動会話
+// base old man_random automatic conversation
 $Event(12100161, Default, function() {
     EndIf(EventFlag(13601800) && !EventFlag(72100117));
     if (!EventFlag(1027)) {
@@ -985,7 +1337,7 @@ L1:
     IssueShortWarpRequest(2100600, TargetEntityType.Area, 2102311, -1);
 });
 
-// 拠点老人_建物OPEN
+// Base old man_Building OPEN
 $Event(12100162, Default, function() {
     if (EventFlag(9403)) {
         DeactivateObject(2101010, Disabled);
@@ -1005,18 +1357,14 @@ L0:
     DeactivateObject(2101031, Disabled);
 });
 
-// 拠点老人_攻撃で消える
+// base old man_disappears when attacked
 $Event(12100163, Restart, function() {
     SetEventFlag(12100163, OFF);
-    WaitFor(
-        !EventFlag(1028)
-            && !EventFlag(1029)
-            && !EventFlag(1030)
-            && CharacterHasEventMessage(2100600, 10));
+    WaitFor(!EventFlag(1028) && !EventFlag(1029) && !EventFlag(1030) && CharacterHasEventMessage(2100600, 10));
     SetEventFlag(12100163, ON);
 });
 
-// 拠点老人_ヒント
+// base old man_hint
 $Event(12100164, Default, function() {
     SetVisibilityOfMessage(2103000, Disabled);
     SetVisibilityOfMessage(2103001, Disabled);
@@ -1032,7 +1380,7 @@ $Event(12100164, Default, function() {
     }
 });
 
-// 拠点老人_顔を上げる
+// base old man_looks up
 $Event(12100165, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(!CharacterType(10000, TargetType.Alive));
@@ -1043,7 +1391,7 @@ $Event(12100165, Default, function() {
     ForceAnimationPlayback(2100600, 9003, true, false, false);
 });
 
-// Aエンド
+// A-end (submit)
 $Event(12100180, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(HasMultiplayerState(MultiplayerState.Client));
@@ -1080,8 +1428,13 @@ L1:
     SetEventFlag(6603, ON);
 });
 
-// 時間帯変化
+// time zone change
 $Event(12100300, Default, function() {
+    if (EventFlag(12100856)) {
+        BatchSetEventFlags(12105000, 12105001, OFF);
+        RandomlySetEventFlagInRange(12105000, 12105001, ON);
+        WaitFixedTimeFrames(1);
+    }
     if (!EventFlag(12101852)) {
         if (!EventFlag(9462)) {
             if (!EventFlag(9802)) {
@@ -1099,10 +1452,26 @@ L2:
                 NoOp();
             }
 L3:
-            DeactivateObject(2101310, Enabled);
-            DeactivateObject(2101311, Disabled);
-            DeactivateObject(2101300, Enabled);
-            DeactivateObject(2101301, Disabled);
+            if (EventFlag(12100956)) {
+                DeactivateObject(2101310, Enabled);
+                DeactivateObject(2101311, Disabled);
+                DeactivateObject(2101300, Enabled);
+                DeactivateObject(2101301, Disabled);
+            }
+            else {
+                if (EventFlag(12105000)) {
+                    DeactivateObject(2101310, Enabled);
+                    DeactivateObject(2101311, Disabled);
+                    DeactivateObject(2101300, Enabled);
+                    DeactivateObject(2101301, Disabled);
+                }
+                else {
+                    DeactivateObject(2101310, Disabled);
+                    DeactivateObject(2101311, Enabled);
+                    DeactivateObject(2101300, Disabled);
+                    DeactivateObject(2101301, Enabled);
+                }
+            }
             DeleteMapSFX(2103300, false);
             DeleteMapSFX(2103500, false);
             DeleteMapSFX(2103501, false);
@@ -1114,21 +1483,53 @@ L3:
             DeleteMapSFX(2103507, false);
             EndEvent();
         }
-L4:
-        DeactivateObject(2101310, Enabled);
-        DeactivateObject(2101311, Disabled);
-        DeactivateObject(2101300, Enabled);
-        DeactivateObject(2101301, Disabled);
+L4: 
+        if (EventFlag(12100956)) {
+            DeactivateObject(2101310, Enabled);
+            DeactivateObject(2101311, Disabled);
+            DeactivateObject(2101300, Enabled);
+            DeactivateObject(2101301, Disabled);
+        }
+        else {
+            if (EventFlag(12105000)) {
+                DeactivateObject(2101310, Enabled);
+                DeactivateObject(2101311, Disabled);
+                DeactivateObject(2101300, Enabled);
+                DeactivateObject(2101301, Disabled);
+            }
+            else {
+                DeactivateObject(2101310, Disabled);
+                DeactivateObject(2101311, Enabled);
+                DeactivateObject(2101300, Disabled);
+                DeactivateObject(2101301, Enabled);
+            }
+        }
         EndEvent();
     }
 L5:
-    DeactivateObject(2101310, Disabled);
-    DeactivateObject(2101311, Enabled);
-    DeactivateObject(2101300, Disabled);
-    DeactivateObject(2101301, Enabled);
+    if (EventFlag(12100956)) {
+        DeactivateObject(2101310, Disabled);
+        DeactivateObject(2101311, Enabled);
+        DeactivateObject(2101300, Disabled);
+        DeactivateObject(2101301, Enabled);
+    }
+    else {
+        if (EventFlag(12105000)) {
+            DeactivateObject(2101310, Enabled);
+            DeactivateObject(2101311, Disabled);
+            DeactivateObject(2101300, Enabled);
+            DeactivateObject(2101301, Disabled);
+        }
+        else {
+            DeactivateObject(2101310, Disabled);
+            DeactivateObject(2101311, Enabled);
+            DeactivateObject(2101300, Disabled);
+            DeactivateObject(2101301, Enabled);
+        }
+    }
 });
 
-// 拠点BGM変化
+// Base BGM change
 $Event(12100310, Default, function() {
     if (!EventFlag(9462)) {
         if (!(PlayerInsightAmount() >= 50 || EventFlag(9802))) {
@@ -1146,7 +1547,7 @@ L1:
     SetMapSoundState(2103901, Disabled);
 });
 
-// 略式儀式の汎聖杯入手判定
+// Informal Ritual Pan-Holy Grail availability
 $Event(12100330, Default, function() {
     EndIf(!CharacterType(10000, TargetType.Alive));
     WaitFor(EventFlag(5051) || EventFlag(6660));
@@ -1154,7 +1555,7 @@ $Event(12100330, Default, function() {
     SetEventFlag(6660, ON);
 });
 
-// 宝箱_XX
+// Treasure Chest_XX
 $Event(12100350, Default, function(X0_4, X4_4) {
     if (ThisEventSlot()) {
         ReproduceObjectAnimation(X0_4, 0);
@@ -1168,13 +1569,13 @@ L0:
     SetObjectTreasureState(X0_4, Enabled);
 });
 
-// トラップロードクリアで扉が開く
+// Door opens when trap road is cleared
 $Event(12100400, Default, function() {
     EndIf(!EventFlag(9462));
     ReproduceObjectAnimation(2101000, 1);
 });
 
-// 開けない扉Msg表示_XX
+// Unable to open door Msg display_XX
 $Event(12100410, Default, function(X0_4, X4_4, X8_4, X12_4) {
     SetNetworkSyncState(Disabled);
     WaitFor(ActionButtonInArea(X0_4, X4_4) || EventFlag(X8_4));
@@ -1183,7 +1584,7 @@ $Event(12100410, Default, function(X0_4, X4_4, X8_4, X12_4) {
     RestartEvent();
 });
 
-// 解禁アイテム取得済みフラグを立てる
+// Set unlocked item acquisition flag
 $Event(12100450, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(!CharacterType(10000, TargetType.Alive));
@@ -1232,7 +1633,7 @@ $Event(12100450, Default, function() {
     EndEvent();
 });
 
-// BJ取得済みフラグを立てる_00
+// Set BJ acquired flag_00
 $Event(12100451, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(HasMultiplayerState(MultiplayerState.Client));
@@ -1328,7 +1729,7 @@ $Event(12100451, Default, function() {
     }
 });
 
-// BJ取得済みフラグを立てる_01
+// Set BJ acquired flag_01
 $Event(12100452, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(HasMultiplayerState(MultiplayerState.Client));
@@ -1367,7 +1768,7 @@ $Event(12100452, Default, function() {
     }
 });
 
-// マップ初回入場_プレイログ
+// Map First Entry_Play Log
 $Event(12100990, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(HasMultiplayerState(MultiplayerState.Client));
@@ -1379,7 +1780,7 @@ $Event(12100990, Default, function() {
     ParameterOutput(PlayerPlayLogParameter.Armor, 0, PlayLogMultiplayerType.HostOnly);
 });
 
-// ボス関連配置物の初期化
+// Initialize boss-related placements
 $Event(12100800, Default, function() {
     if (EventFlag(12101850)) {
         ChangeCharacterEnableState(2100810, Disabled);
@@ -1419,7 +1820,7 @@ L3:
     }
 });
 
-// ボス撃破_拠点老人（覚醒）
+// Boss Defeat_Base Old Man (Awakening)
 $Event(12101800, Default, function() {
     if (ThisEventSlot()) {
         SetMapSoundState(2103802, Disabled);
@@ -1430,12 +1831,17 @@ L0:
     SetEventFlag(12104809, OFF);
     WaitFor(HPRatio(2100800) == 0);
     SetEventFlag(12104809, ON);
+    if (EventFlag(moon_presence_defeat+15)) {
+        EndEvent();
+    }
     WaitFor(CharacterDead(2100800));
     DisplayBanner(TextBannerType.DemonKilled);
     SetLockcamSlotNumber(21, 0, 0);
     WaitFixedTimeSeconds(3);
     if (!EventFlag(9900)) {
         HandleBossDefeat(2100800);
+        DeactivateObject(2101800, Disabled);
+        DeleteMapSFX(2103800, true);
     } else {
         HandleMinibossDefeat(2100800);
     }
@@ -1443,7 +1849,8 @@ L0:
     if (!HasMultiplayerState(MultiplayerState.Client)) {
         WaitFor(CharacterType(10000, TargetType.Alive));
         InitializeEvent(0, 9350, 3);
-        if (!EventFlag(6642)) {
+        
+        if (!EventFlag(6642) && !(EventFlag(gehrman_defeat+13))) {
             AwardItemLot(15000);
         } else {
             AwardItemLot(15005);
@@ -1456,6 +1863,9 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.TemporaryParameters, 34, PlayLogMultiplayerType.HostOnly);
         ParameterOutput(PlayerPlayLogParameter.Weapon, 34, PlayLogMultiplayerType.HostOnly);
         ParameterOutput(PlayerPlayLogParameter.Armor, 34, PlayLogMultiplayerType.HostOnly);
+        if (EventFlag(gehrman_defeat+13)) {
+            InitializeEvent(gehrman_offset, 7800, 2102962);
+        }
         EndEvent();
     }
 L1:
@@ -1463,7 +1873,7 @@ L1:
     WaitFixedTimeSeconds(0);
 });
 
-// ボス撃破SE再生_拠点老人（覚醒）
+// Boss Defeat SE Play_Base Old Man (Awakening)
 $Event(12101801, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(EventFlag(12101800));
@@ -1473,16 +1883,25 @@ $Event(12101801, Default, function() {
     PlaySE(2102800, SoundType.cCharacterMotion, 0);
 });
 
-// ホストがボス戦開始_初戦_拠点老人（覚醒）
+// Host starts boss battle_first battle_base old man (awakening)
 $Event(12101802, Default, function() {
     EndIf(EventFlag(12101800));
     EndIf(ThisEvent());
     ChangeCharacterEnableState(2100800, Disabled);
-    SetEventFlag(72100131, OFF);
-    WaitFor(EventFlag(72100131));
+    if (!EventFlag(gehrman_defeat+13)) {
+        SetEventFlag(72100131, OFF);
+        WaitFor(EventFlag(72100131));
+    }
     SetEventFlag(9180, ON);
     WaitFixedTimeFrames(1);
-    PlayCutsceneAndWarpPlayer(21000040, CutscenePlayMode.Skippable, 2102808, 21, 0, 10000);
+    if (!EventFlag(gehrman_defeat+13) || EventFlag(12100866)) {
+        if (EventFlag(moon_presence_defeat+15)) {
+            PlayCutsceneToPlayer(21000040, CutscenePlayMode.Skippable, 10000);
+        }
+        else {
+            PlayCutsceneAndWarpPlayer(21000040, CutscenePlayMode.Skippable, gehrman_trigger_short_warp, 21, 0, 10000);
+        }
+    }
     WaitFixedTimeFrames(1);
     SetEventFlag(9180, OFF);
     ChangeCharacterEnableState(2100800, Enabled);
@@ -1494,7 +1913,7 @@ $Event(12101802, Default, function() {
     SetEventFlag(9343, ON);
 });
 
-// 拠点老人（覚醒）_時間差入場ゲスト用対処処理
+// Base Elderly (Awakening) _ Coping process for staggered entry guests
 $Event(12101803, Default, function() {
     WaitFor(CharacterType(10000, TargetType.Alive) && EventFlag(12104800));
     EndIf(HasMultiplayerState(MultiplayerState.Host));
@@ -1504,7 +1923,7 @@ $Event(12101803, Default, function() {
     SetEventFlag(12101802, ON);
 });
 
-// ホストがボス戦開始_再戦_拠点老人（覚醒）
+// Host starts boss battle_rematch_base old man (awakening)
 $Event(12104810, Default, function() {
     EndIf(EventFlag(12101800));
     if (!EventFlag(12101802)) {
@@ -1513,23 +1932,21 @@ $Event(12104810, Default, function() {
         SpawnMapSFX(2103800);
     }
 L0:
-    flagChrAct = !EventFlag(12101800)
-        && CharacterType(10000, TargetType.Alive)
-        && ActionButtonInArea(2100800, 2101800);
+    flagChrAct = !EventFlag(12101800) && CharacterType(10000, TargetType.Alive) && ActionButtonInArea(2100800, 2101800);
     flag = EventFlag(12101800);
     WaitFor(flagChrAct || flag);
     EndIf(flag.Passed);
     RotateCharacter(10000, 2102800, 101130, false);
     chrArea = CharacterType(10000, TargetType.Alive) && InArea(10000, 2102801);
-    chrTime = CharacterType(10000, TargetType.Alive) && ElapsedSeconds(2);
-    WaitFor(chrArea || chrTime);
-    if (!chrTime.Passed) {
+    chr = CharacterType(10000, TargetType.Alive) && ElapsedSeconds(2);
+    WaitFor(chrArea || chr);
+    if (!chr.Passed) {
         SetEventFlag(12104800, ON);
     }
     RestartEvent();
 });
 
-// ゲストがボス戦開始_拠点老人（覚醒）
+// Guest starts boss battle_base old man (awakening)
 $Event(12104811, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(EventFlag(12101800));
@@ -1541,15 +1958,15 @@ $Event(12104811, Default, function() {
             && ActionButtonInArea(2100800, 2101800));
     RotateCharacter(10000, 2102800, 101130, false);
     chrArea = CharacterType(10000, TargetType.WhitePhantom) && InArea(10000, 2102801);
-    chrTime = CharacterType(10000, TargetType.WhitePhantom) && ElapsedSeconds(2);
-    WaitFor(chrArea || chrTime);
-    if (!chrTime.Passed) {
+    chr = CharacterType(10000, TargetType.WhitePhantom) && ElapsedSeconds(2);
+    WaitFor(chrArea || chr);
+    if (!chr.Passed) {
         SetEventFlag(12104801, ON);
     }
     RestartEvent();
 });
 
-// ボスが動き出す_拠点老人（覚醒）
+// Boss starts moving_base old man (awakening)
 $Event(12104802, Default, function() {
     EndIf(EventFlag(12101800));
     SetCharacterAIState(2100800, Disabled);
@@ -1581,6 +1998,12 @@ L3:
     Goto(L4);
 L4:
     SetCharacterAIState(2100800, Enabled);
+    if (EventFlag(moon_presence_defeat+15)) {
+        DisplayBossHealthBar(Enabled, 2100800, 1, 804000);
+    }
+    else {
+        DisplayBossHealthBar(Enabled, 2100800, 0, 804000);
+    }
     DisplayBossHealthBar(Enabled, 2100800, 0, 804000);
     SetCharacterInvincibility(2100800, Disabled);
     SetCharacterEventTarget(2100800, 2100801);
@@ -1588,7 +2011,7 @@ L4:
     StartTimeMeasurement(2100010, 80, Enabled);
 });
 
-// ボスBGM_ON_拠点老人（覚醒）
+// Boss BGM_ON_ Base Old Man (Awakening)
 $Event(12104803, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(EventFlag(12101800));
@@ -1618,7 +2041,7 @@ L0:
     EnableBossMapSound(2103803, Enabled);
 });
 
-// ボスカメラ_拠点老人（覚醒）
+// Boss Camera_Base Old Man (Awakening)
 $Event(12104804, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(EventFlag(12101800));
@@ -1629,7 +2052,7 @@ $Event(12104804, Default, function() {
     RestartEvent();
 });
 
-// ボスBGM_OFF_拠点老人（覚醒）
+// Boss BGM_OFF_ Base Old Man (Awakening)
 $Event(12104805, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(EventFlag(12101800));
@@ -1639,7 +2062,7 @@ $Event(12104805, Default, function() {
     EnableBossMapSound(-1, Disabled);
 });
 
-// ボスヒートアップ_拠点老人（覚醒）
+// Boss Heat Up_Base Old Man (Awakening)
 $Event(12104807, Default, function() {
     EndIf(EventFlag(12101800));
     WaitFor(HPRatio(2100800) < 0.5);
@@ -1652,7 +2075,7 @@ $Event(12104807, Default, function() {
     RequestCharacterAICommand(2100800, 1, 1);
 });
 
-// ボス強化解除_拠点老人（覚醒）
+// Remove Boss Enhancement_Base Old Man (Awakening)
 $Event(12104808, Default, function() {
     EndIf(EventFlag(12101800));
     WaitFor(CharacterHasEventMessage(2100800, 20));
@@ -1661,7 +2084,7 @@ $Event(12104808, Default, function() {
     RestartEvent();
 });
 
-// ボス撃破_悪夢を継ぐもの
+// Boss Defeat_Successor of Nightmare
 $Event(12101850, Default, function() {
     if (ThisEventSlot()) {
         SetMapSoundState(2103812, Disabled);
@@ -1669,12 +2092,19 @@ $Event(12101850, Default, function() {
         EndEvent();
     }
 L0:
-    WaitFor(CharacterDead(2100810));
+    if (EventFlag(moon_presence_defeat+15)) {
+        WaitFor(CharacterDead(2100810) && CharacterDead(2100800));
+    }
+    else {
+        WaitFor(CharacterDead(2100810));
+    }
     SetEventFlag(12104859, ON);
     DisplayBanner(TextBannerType.StadiumDraw);
     SetLockcamSlotNumber(21, 0, 0);
     WaitFixedTimeSeconds(3);
     HandleBossDefeat(2100810);
+    DeactivateObject(2101800, Disabled);
+    DeleteMapSFX(2103800, true);
     SetNetworkSyncState(Disabled);
     if (!HasMultiplayerState(MultiplayerState.Client)) {
         WaitFor(CharacterType(10000, TargetType.Alive));
@@ -1685,6 +2115,9 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.TemporaryParameters, 96, PlayLogMultiplayerType.HostOnly);
         ParameterOutput(PlayerPlayLogParameter.Weapon, 96, PlayLogMultiplayerType.HostOnly);
         ParameterOutput(PlayerPlayLogParameter.Armor, 96, PlayLogMultiplayerType.HostOnly);
+        if (EventFlag(moon_presence_defeat+13)) {
+            InitializeEvent(moon_presence_offset, 7800, 2102962);
+        }
         EndEvent();
     }
 L1:
@@ -1692,7 +2125,7 @@ L1:
     WaitFixedTimeSeconds(0);
 });
 
-// ボス撃破SE再生_悪夢を継ぐもの
+// Boss Defeat SE Play_Successor of Nightmare
 $Event(12101851, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(EventFlag(12101850));
@@ -1702,12 +2135,12 @@ $Event(12101851, Default, function() {
     PlaySE(2102800, SoundType.cCharacterMotion, 0);
 });
 
-// ホストがボス戦開始_初戦_悪夢を継ぐもの
+// Host starts boss battle_First battle_Successor of nightmare
 $Event(12101852, Default, function() {
     EndIf(EventFlag(12101850));
     EndIf(ThisEvent());
     WaitFor(
-        EventFlag(12101800)
+        (EventFlag(12101800) || EventFlag(moon_presence_defeat+15))
             && CharacterType(10000, TargetType.Alive)
             && (PlayerStandingOnHit(2103601)
                 || PlayerStandingOnHit(2103602)
@@ -1715,7 +2148,9 @@ $Event(12101852, Default, function() {
                 || PlayerStandingOnHit(2103604)
                 || PlayerStandingOnHit(2103605))
             && EventFlag(9900));
-    WaitFixedTimeSeconds(3);
+    if (!EventFlag(moon_presence_defeat+13)) {
+        WaitFixedTimeSeconds(3);
+    }
     SetEventFlag(9180, ON);
     WaitFixedTimeFrames(1);
     DeleteMapSFX(2103510, true);
@@ -1729,10 +2164,22 @@ $Event(12101852, Default, function() {
     DeleteMapSFX(2103518, true);
     DeleteMapSFX(2103519, true);
     DeleteMapSFX(2103520, true);
-    if (!HasMultiplayerState(MultiplayerState.Multiplayer)) {
-        PlayCutsceneAndWarpPlayer(21000050, CutscenePlayMode.Skippable, 2102809, 21, 0, 10000);
-    } else {
-        PlayCutsceneAndWarpPlayer(21000050, CutscenePlayMode.Unskippable, 2102809, 21, 0, 10000);
+    if (!EventFlag(moon_presence_defeat+13) || EventFlag(12100866)) {
+        if (!HasMultiplayerState(MultiplayerState.Multiplayer)) {
+            if (EventFlag(moon_presence_defeat+15)) {
+                PlayCutsceneToPlayer(21000050, CutscenePlayMode.Skippable, 10000);
+            }
+            else {
+                PlayCutsceneAndWarpPlayer(21000050, CutscenePlayMode.Skippable, 2102809, 21, 0, 10000);
+            }
+        } else {
+            if (EventFlag(moon_presence_defeat+15)) {
+                PlayCutsceneToPlayer(21000050, CutscenePlayMode.Unskippable, 10000);
+            }
+            else {
+                PlayCutsceneAndWarpPlayer(21000050, CutscenePlayMode.Unskippable, 2102809, 21, 0, 10000);
+            }
+        }
     }
     WaitFixedTimeFrames(1);
     SetEventFlag(9180, OFF);
@@ -1758,7 +2205,7 @@ $Event(12101852, Default, function() {
     SetEventFlag(9307, ON);
 });
 
-// 悪夢を継ぐもの_時間差入場ゲスト用対処処理
+// Inheriting Nightmares_Processing for staggered entry guests
 $Event(12101853, Default, function() {
     WaitFor(CharacterType(10000, TargetType.Alive) && EventFlag(12104850));
     EndIf(HasMultiplayerState(MultiplayerState.Host));
@@ -1771,7 +2218,7 @@ $Event(12101853, Default, function() {
     SetEventFlag(12101852, ON);
 });
 
-// ホストがボス戦開始_再戦_悪夢を継ぐもの
+// Host starts boss battle_rematch_continues nightmare
 $Event(12104880, Default, function() {
     EndIf(EventFlag(12101850));
     if (!EventFlag(12101852)) {
@@ -1780,23 +2227,21 @@ $Event(12104880, Default, function() {
         SpawnMapSFX(2103800);
     }
 L0:
-    flagChrAct = !EventFlag(12101850)
-        && CharacterType(10000, TargetType.Alive)
-        && ActionButtonInArea(2100800, 2101800);
+    flagChrAct = !EventFlag(12101850) && CharacterType(10000, TargetType.Alive) && ActionButtonInArea(2100800, 2101800);
     flag = EventFlag(12101850);
     WaitFor(flagChrAct || flag);
     EndIf(flag.Passed);
     RotateCharacter(10000, 2102800, 101130, false);
     chrArea = CharacterType(10000, TargetType.Alive) && InArea(10000, 2102801);
-    chrTime = CharacterType(10000, TargetType.Alive) && ElapsedSeconds(2);
-    WaitFor(chrArea || chrTime);
-    if (!chrTime.Passed) {
+    chr = CharacterType(10000, TargetType.Alive) && ElapsedSeconds(2);
+    WaitFor(chrArea || chr);
+    if (!chr.Passed) {
         SetEventFlag(12104850, ON);
     }
     RestartEvent();
 });
 
-// ゲストがボス戦開始_悪夢を継ぐもの
+// Guest starts boss battle_Successor of Nightmare
 $Event(12104881, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(EventFlag(12101850));
@@ -1808,15 +2253,15 @@ $Event(12104881, Default, function() {
             && ActionButtonInArea(2100800, 2101800));
     RotateCharacter(10000, 2102800, 101130, false);
     chrArea = CharacterType(10000, TargetType.WhitePhantom) && InArea(10000, 2102801);
-    chrTime = CharacterType(10000, TargetType.WhitePhantom) && ElapsedSeconds(2);
-    WaitFor(chrArea || chrTime);
-    if (!chrTime.Passed) {
+    chr = CharacterType(10000, TargetType.WhitePhantom) && ElapsedSeconds(2);
+    WaitFor(chrArea || chr);
+    if (!chr.Passed) {
         SetEventFlag(12104851, ON);
     }
     RestartEvent();
 });
 
-// ボスが動き出す_悪夢を継ぐもの
+// Boss begins to move_Successor of Nightmare
 $Event(12104852, Default, function() {
     EndIf(EventFlag(12101850));
     SetCharacterAIState(2100810, Disabled);
@@ -1854,7 +2299,7 @@ L4:
     StartTimeMeasurement(2100011, 146, Enabled);
 });
 
-// ボスBGM_ON_悪夢を継ぐもの
+// Boss BGM_ON_ Successor to Nightmare
 $Event(12104853, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(EventFlag(12101850));
@@ -1882,7 +2327,7 @@ $Event(12104853, Default, function() {
     EnableBossMapSound(2103813, Enabled);
 });
 
-// ボスカメラ_悪夢を継ぐもの
+// Boss Camera_Successor of Nightmares
 $Event(12104854, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(EventFlag(12101850));
@@ -1893,7 +2338,7 @@ $Event(12104854, Default, function() {
     RestartEvent();
 });
 
-// ボスBGM_OFF_悪夢を継ぐもの
+// Boss BGM_OFF_Successor of Nightmare
 $Event(12104855, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(EventFlag(12101850));
@@ -1903,7 +2348,7 @@ $Event(12104855, Default, function() {
     EnableBossMapSound(-1, Disabled);
 });
 
-// 部位損傷_悪夢を継ぐもの_XX
+// Body Damage_Heir to Nightmare_XX
 $Event(12104860, Default, function(X0_2, X4_4, X8_2, X12_4, X16_4, X20_4, X24_4) {
     EndIf(EventFlag(12101850));
     CreateNPCPart(2100810, X0_2, X8_2, X12_4, 1, 1, false, false);
@@ -1932,7 +2377,7 @@ $Event(12104860, Default, function(X0_2, X4_4, X8_2, X12_4, X16_4, X20_4, X24_4)
     RestartEvent();
 });
 
-// 悪夢を継ぐもの_見つめる攻撃処理
+// Nightmare Succeeder_Staring attack processing
 $Event(12104870, Default, function() {
     SetNetworkSyncState(Disabled);
     WaitFor(CharacterHasEventMessage(2100810, 10));
@@ -1945,7 +2390,7 @@ $Event(12104870, Default, function() {
     RestartEvent();
 });
 
-// 墓石メッセンジャーアニメ
+// Gravestone Messenger Animation
 $Event(12105000, Restart, function(X0_4, X4_4) {
     SetNetworkSyncState(Disabled);
     EndIf(!CharacterType(10000, TargetType.Alive));
@@ -1959,7 +2404,7 @@ $Event(12105000, Restart, function(X0_4, X4_4) {
     RestartEvent();
 });
 
-// 墓石メッセンジャーアニメ_狩人悪夢
+// Tombstone Messenger Anime_Hunter's Nightmare
 $Event(12105004, Restart, function(X0_4, X4_4) {
     SetNetworkSyncState(Disabled);
     EndIf(!CharacterType(10000, TargetType.Alive));
@@ -1975,7 +2420,7 @@ $Event(12105004, Restart, function(X0_4, X4_4) {
     RestartEvent();
 });
 
-// 聖杯セット_00（クイックダンジョン）
+// Holy Grail Set_00 (Quick Dungeon)
 $Event(12105010, Restart, function() {
     DeactivateObject(2101200, Disabled);
     DeactivateObject(2101201, Disabled);
@@ -2056,7 +2501,7 @@ L9:
     RestartEvent();
 });
 
-// 聖杯セット_01（チャネルダンジョン1）
+// Holy Grail Set_01 (Channel Dungeon 1)
 $Event(12105011, Restart, function() {
     DeactivateObject(2101210, Disabled);
     DeactivateObject(2101211, Disabled);
@@ -2155,7 +2600,7 @@ L9:
     RestartEvent();
 });
 
-// 聖杯セット_02（チャネルダンジョン2）
+// Holy Grail Set_02 (Channel Dungeon 2)
 $Event(12105012, Restart, function() {
     DeactivateObject(2101220, Disabled);
     DeactivateObject(2101221, Disabled);
@@ -2254,7 +2699,7 @@ L9:
     RestartEvent();
 });
 
-// 聖杯セット_03（チャネルダンジョン3）
+// Holy Grail Set_03 (Channel Dungeon 3)
 $Event(12105013, Restart, function() {
     DeactivateObject(2101230, Disabled);
     DeactivateObject(2101231, Disabled);
@@ -2353,7 +2798,7 @@ L9:
     RestartEvent();
 });
 
-// 聖杯セット_04（チャネルダンジョン4）
+// Holy Grail Set_04 (Channel Dungeon 4)
 $Event(12105014, Restart, function() {
     DeactivateObject(2101240, Disabled);
     DeactivateObject(2101241, Disabled);
@@ -2452,7 +2897,7 @@ L9:
     RestartEvent();
 });
 
-// 聖杯セット_05（チャネルダンジョン5）
+// Holy Grail Set_05 (Channel Dungeon 5)
 $Event(12105015, Restart, function() {
     DeactivateObject(2101250, Disabled);
     DeactivateObject(2101251, Disabled);
@@ -2551,7 +2996,7 @@ L9:
     RestartEvent();
 });
 
-// 聖杯セット_06（チャネルダンジョン6）
+// Holy Grail Set_06 (Channel Dungeon 6)
 $Event(12105016, Restart, function() {
     DeactivateObject(2101260, Disabled);
     DeactivateObject(2101261, Disabled);
@@ -2649,143 +3094,7 @@ L9:
     SpawnOneshotSFX(TargetEntityType.Character, 2100960, 200, 351);
     RestartEvent();
 });
-
-// 墓石メッセンジャーアニメ可否判定_墓石0
-$Event(12105020, Restart, function() {
-    WaitFor(
-        EventFlag(12417810)
-            || EventFlag(12417830)
-            || EventFlag(12417850)
-            || EventFlag(12417870)
-            || EventFlag(12407810)
-            || EventFlag(12407830)
-            || EventFlag(12427810)
-            || EventFlag(12427830)
-            || EventFlag(12427850)
-            || EventFlag(12307810)
-            || EventFlag(12307830)
-            || EventFlag(12307850));
-    SetEventFlag(12105030, ON);
-    WaitFor(
-        !(EventFlag(12417810)
-            || EventFlag(12417830)
-            || EventFlag(12417850)
-            || EventFlag(12417870)
-            || EventFlag(12407810)
-            || EventFlag(12407830)
-            || EventFlag(12427810)
-            || EventFlag(12427830)
-            || EventFlag(12427850)
-            || EventFlag(12307810)
-            || EventFlag(12307830)
-            || EventFlag(12307850)));
-    SetEventFlag(12105030, OFF);
-    RestartEvent();
-});
-
-// 墓石メッセンジャーアニメ可否判定_墓石1
-$Event(12105021, Restart, function() {
-    WaitFor(
-        EventFlag(12207810)
-            || EventFlag(12207830)
-            || EventFlag(12707810)
-            || EventFlag(12707830)
-            || EventFlag(13207810)
-            || EventFlag(13207850));
-    SetEventFlag(12105031, ON);
-    WaitFor(
-        !(EventFlag(12207810)
-            || EventFlag(12207830)
-            || EventFlag(12707810)
-            || EventFlag(12707830)
-            || EventFlag(13207810)
-            || EventFlag(13207850)));
-    SetEventFlag(12105031, OFF);
-    RestartEvent();
-});
-
-// 墓石メッセンジャーアニメ可否判定_墓石2
-$Event(12105022, Restart, function() {
-    WaitFor(
-        EventFlag(12807810)
-            || EventFlag(12807830)
-            || EventFlag(12807850)
-            || EventFlag(12807870)
-            || EventFlag(12507810)
-            || EventFlag(12507830)
-            || EventFlag(12507850)
-            || EventFlag(12117810));
-    SetEventFlag(12105032, ON);
-    WaitFor(
-        !(EventFlag(12807810)
-            || EventFlag(12807830)
-            || EventFlag(12807850)
-            || EventFlag(12807870)
-            || EventFlag(12507810)
-            || EventFlag(12507830)
-            || EventFlag(12507850)
-            || EventFlag(12117810)));
-    SetEventFlag(12105032, OFF);
-    RestartEvent();
-});
-
-// 墓石メッセンジャーアニメ可否判定_墓石3
-$Event(12105023, Restart, function() {
-    WaitFor(
-        EventFlag(13207830)
-            || EventFlag(13207870)
-            || EventFlag(13307810)
-            || EventFlag(13307830)
-            || EventFlag(12607810)
-            || EventFlag(12607830)
-            || EventFlag(12607850)
-            || EventFlag(12607870)
-            || EventFlag(13307810));
-    SetEventFlag(12105033, ON);
-    WaitFor(
-        !(EventFlag(13207830)
-            || EventFlag(13207870)
-            || EventFlag(13307810)
-            || EventFlag(13307830)
-            || EventFlag(12607810)
-            || EventFlag(12607830)
-            || EventFlag(12607850)
-            || EventFlag(12607870)
-            || EventFlag(13307810)));
-    SetEventFlag(12105033, OFF);
-    RestartEvent();
-});
-
-// 墓石メッセンジャーアニメ可否判定_墓石4
-$Event(12105024, Restart, function() {
-    WaitFor(
-        EventFlag(13407810)
-            || EventFlag(13407830)
-            || EventFlag(13407850)
-            || EventFlag(13407870)
-            || EventFlag(13507810)
-            || EventFlag(13507830)
-            || EventFlag(13507850)
-            || EventFlag(13607810)
-            || EventFlag(13607830)
-            || EventFlag(13607850));
-    SetEventFlag(12105034, ON);
-    WaitFor(
-        !(EventFlag(13407810)
-            || EventFlag(13407830)
-            || EventFlag(13407850)
-            || EventFlag(13407870)
-            || EventFlag(13507810)
-            || EventFlag(13507830)
-            || EventFlag(13507850)
-            || EventFlag(13607810)
-            || EventFlag(13607830)
-            || EventFlag(13607850)));
-    SetEventFlag(12105034, OFF);
-    RestartEvent();
-});
-
-// 売買メッセンジャーアニメ
+// Buy and Sell Messenger Anime
 $Event(12105040, Restart, function() {
     ForceAnimationPlayback(2100211, 7001, true, false, false);
     ForceAnimationPlayback(2100212, 7002, true, false, false);
@@ -2806,42 +3115,7 @@ $Event(12105040, Restart, function() {
     RestartEvent();
 });
 
-// 売買メッセンジャー_ラインナップ拡充_XX
-$Event(12101000, Default, function(X0_4, X4_4, X8_1, X9_1) {
-    EndIf(ThisEventSlot());
-    WaitFor(CharacterBackreadStatus(X4_4));
-    ChangeCharacterDispmask(X4_4, X8_1, OFF);
-    ChangeCharacterDispmask(X4_4, X9_1, OFF);
-    WaitFor(PlayerHasItem(ItemType.Goods, X0_4));
-    ChangeCharacterDispmask(X4_4, X8_1, ON);
-    ChangeCharacterDispmask(X4_4, X9_1, ON);
-});
-
-// 売買メッセンジャー＿ラインナップ拡充_時間帯フラグ
-$Event(12101010, Default, function() {
-    SetNetworkSyncState(Disabled);
-    EndIf(!CharacterType(10000, TargetType.Alive));
-    if (EventFlag(9800)) {
-        SetEventFlag(5900, ON);
-    }
-    if (EventFlag(9801)) {
-        SetEventFlag(5901, ON);
-    }
-    if (EventFlag(9802)) {
-        SetEventFlag(5902, ON);
-    }
-    if (EventFlag(12801800)) {
-        SetEventFlag(5903, ON);
-    }
-    if (EventFlag(12601800)) {
-        SetEventFlag(5904, ON);
-    }
-    if (EventFlag(6603)) {
-        BatchSetEventFlags(5900, 5904, ON);
-    }
-});
-
-// 売買メッセンジャー（SAN値）アニメ
+// Trading messenger (SAN value) animation
 $Event(12105043, Restart, function() {
     SetNetworkSyncState(Disabled);
     EndIf(!CharacterType(10000, TargetType.Alive));
@@ -2868,7 +3142,7 @@ L0:
     RestartEvent();
 });
 
-// 右手武器くれるメッセンジャーアニメ
+// messenger anime that gives right hand weapon
 $Event(12101020, Default, function() {
     if (!ThisEvent()) {
         ForceAnimationPlayback(2100215, 7013, true, false, false);
@@ -2896,7 +3170,7 @@ L0:
     SetCharacterBackreadState(2100220, true);
 });
 
-// 左手武器くれるメッセンジャーアニメ
+// messenger animation with left hand weapon
 $Event(12101021, Default, function() {
     if (!ThisEvent()) {
         ForceAnimationPlayback(2100216, 7023, true, false, false);
@@ -2931,7 +3205,7 @@ L0:
     SetCharacterBackreadState(2100221, true);
 });
 
-// 手記くれるメッセンジャーアニメ
+// messenger animation that can write down
 $Event(12101022, Default, function() {
     if (!EventFlag(6620)) {
         ForceAnimationPlayback(2100230, 7053, true, false, false);
@@ -2956,7 +3230,7 @@ L0:
     ForceAnimationPlayback(2100230, 7053, true, false, false);
 });
 
-// マルチアイテムくれるメッセンジャーアニメ
+// Messenger animation that gives you multiple items
 $Event(12101024, Default, function() {
     if (!EventFlag(6622)) {
         ForceAnimationPlayback(2100231, 7053, true, false, false);
@@ -2978,7 +3252,7 @@ L0:
     ForceAnimationPlayback(2100231, 7053, true, false, false);
 });
 
-// NPC呼びの鐘くれるメッセンジャーアニメ
+// Messenger animation that gives NPC call bell
 $Event(12101026, Default, function() {
     if (!EventFlag(6670)) {
         WaitFor(CharacterBackreadStatus(2100230) && EventFlag(12101022) && EventFlag(12100105));
@@ -3000,7 +3274,7 @@ L0:
     ForceAnimationPlayback(2100230, 7053, true, false, false);
 });
 
-// 聖Dへのワープアイテムくれるメッセンジャーアニメ
+// A messenger anime that gives you a warp item to St. D
 $Event(12101028, Default, function() {
     if (!EventFlag(50000100)) {
         WaitFor(
@@ -3027,7 +3301,7 @@ L0:
     ForceAnimationPlayback(2100231, 7053, true, false, false);
 });
 
-// 聖堂街Dへのワープアイテム販売開始
+// Warp item sales to Cathedral District D begin
 $Event(12101100, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(!CharacterType(10000, TargetType.Alive));
@@ -3035,35 +3309,7 @@ $Event(12101100, Default, function() {
     SetEventFlag(12101101, ON);
 });
 
-// 着せ替えメッセンジャー_フラグ制御_裸専用
-$Event(12105060, Restart, function() {
-    SetNetworkSyncState(Disabled);
-    EndIf(!CharacterType(10000, TargetType.Alive));
-    SetEventFlag(12105061, OFF);
-    WaitFor(EventFlag(72100140));
-    SetEventFlag(12105061, ON);
-    SetEventFlag(72100140, OFF);
-    BatchSetEventFlags(6011, 6025, OFF);
-    RotateCharacter(10000, 2100218, 101310, false);
-    WaitFixedTimeSeconds(1);
-    ForceAnimationPlayback(2100218, 7003, false, false, false);
-    WaitFixedTimeFrames(39);
-    ChangeCharacterDispmask(2100218, 20, OFF);
-    ChangeCharacterDispmask(2100218, 21, OFF);
-    ChangeCharacterDispmask(2100218, 22, OFF);
-    ChangeCharacterDispmask(2100218, 23, OFF);
-    ChangeCharacterDispmask(2100218, 24, OFF);
-    ChangeCharacterDispmask(2100218, 25, OFF);
-    ChangeCharacterDispmask(2100218, 26, OFF);
-    ChangeCharacterDispmask(2100218, 27, OFF);
-    ChangeCharacterDispmask(2100218, 28, OFF);
-    ForceAnimationPlayback(2100218, 7004, false, false, false);
-    WaitFixedTimeFrames(49);
-    ForceAnimationPlayback(2100218, 7001, true, false, false);
-    RestartEvent();
-});
-
-// 着せ替えメッセンジャー_アイテムを1つでも持っているか判定
+// Check if you have at least one dress-up messenger item
 $Event(12105062, Default, function() {
     SetNetworkSyncState(Disabled);
     if (!EventFlag(12105063)) {
@@ -3141,82 +3387,14 @@ L0:
     RestartEvent();
 });
 
-// 着せ替えメッセンジャー_DLC有効判定
-$Event(12105064, Default, function() {
-    SetNetworkSyncState(Disabled);
-    ForceAnimationPlayback(2100232, 7053, true, false, false);
-    EndIf(HasMultiplayerState(MultiplayerState.Client));
-    WaitFor(
-        (EventFlag(6900) && !EventFlag(6071))
-            || (EventFlag(6901) && !EventFlag(6072))
-            || (EventFlag(6902) && !EventFlag(6073)));
-    ForceAnimationPlayback(2100232, 7054, false, false, false);
-    WaitFixedTimeFrames(30);
-    WaitFixedTimeFrames(79);
-    ForceAnimationPlayback(2100232, 7051, true, false, false);
-    WaitFor(CharacterType(10000, TargetType.Alive) && ActionButtonInArea(6025, 2100232));
-    if (!EventFlag(6071)) {
-        if (EventFlag(6900)) {
-            AwardItemLot(2100900);
-            SetEventFlag(6071, ON);
-        }
-    }
-    if (!EventFlag(6072)) {
-        if (EventFlag(6901)) {
-            AwardItemLot(2100910);
-            SetEventFlag(6072, ON);
-        }
-    }
-    if (!EventFlag(6073)) {
-        if (EventFlag(6902)) {
-            AwardItemLot(2100920);
-            SetEventFlag(6073, ON);
-        }
-    }
-    ForceAnimationPlayback(2100232, 7052, false, false, false);
-    WaitFixedTimeFrames(74);
-L0:
-    ChangeCharacterEnableState(2100232, Disabled);
-});
-
-// 着せ替えメッセンジャー_フラグ制御_裸以外
-$Event(12105070, Restart, function(X0_4, X4_4, X8_1) {
-    SetNetworkSyncState(Disabled);
-    EndIf(!CharacterType(10000, TargetType.Alive));
-    SetEventFlag(12105061, OFF);
-    WaitFor(EventFlag(X0_4));
-    SetEventFlag(12105061, ON);
-    SetEventFlag(X0_4, OFF);
-    BatchSetEventFlags(6011, 6025, OFF);
-    RotateCharacter(10000, 2100218, 101310, false);
-    WaitFixedTimeSeconds(1);
-    ForceAnimationPlayback(2100218, 7003, false, false, false);
-    WaitFixedTimeFrames(39);
-    SetEventFlag(X4_4, ON);
-    ChangeCharacterDispmask(2100218, 20, OFF);
-    ChangeCharacterDispmask(2100218, 21, OFF);
-    ChangeCharacterDispmask(2100218, 22, OFF);
-    ChangeCharacterDispmask(2100218, 23, OFF);
-    ChangeCharacterDispmask(2100218, 24, OFF);
-    ChangeCharacterDispmask(2100218, 25, OFF);
-    ChangeCharacterDispmask(2100218, 26, OFF);
-    ChangeCharacterDispmask(2100218, 27, OFF);
-    ChangeCharacterDispmask(2100218, 28, OFF);
-    ChangeCharacterDispmask(2100218, X8_1, ON);
-    ForceAnimationPlayback(2100218, 7004, false, false, false);
-    WaitFixedTimeFrames(49);
-    ForceAnimationPlayback(2100218, 7001, true, false, false);
-    RestartEvent();
-});
-
-// 人形のヒロイン_座り状態判定
+// Doll heroine_sitting state judgment
 $Event(12105200, Default, function() {
     SetEventFlag(12105200, OFF);
     WaitFor(CharacterHasSpEffect(2100700, 153));
     WaitFixedTimeFrames(1);
 });
 
-// アイテムエンチャント効果消去
+// Remove item enchantment effect
 $Event(12105210, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(!CharacterType(10000, TargetType.Alive));
@@ -3228,7 +3406,7 @@ $Event(12105210, Default, function() {
     RestartEvent();
 });
 
-// 汎聖杯ダンジョン解禁
+// Pan-Holy Grail Dungeon Unlocked
 $Event(12105300, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(HasMultiplayerState(MultiplayerState.Client));
@@ -3264,7 +3442,7 @@ $Event(12105300, Default, function() {
     }
 });
 
-// 聖杯メッセンジャー_XX
+// Holy Grail Messenger_XX
 $Event(12105310, Restart, function(X0_4, X4_4) {
     WaitFor(EventFlag(X0_4));
     WaitFixedTimeFrames(31);
@@ -3276,40 +3454,3 @@ $Event(12105310, Restart, function(X0_4, X4_4) {
     WaitFixedTimeFrames(74);
     RestartEvent();
 });
-
-// ワープOBJ_地上へのワープ_XX
-$Event(12107000, Default, function(X0_4, X4_4, X8_4) {
-    EndIf(HasMultiplayerState(MultiplayerState.Client));
-    WaitFor(EventFlag(X0_4));
-    RotateCharacter(10000, X4_4, 101164, false);
-    WaitFixedTimeSeconds(4);
-    WarpPlayerToRespawnPoint(X8_4);
-});
-
-// ワープOBJ_ダンジョンへのワープ_前半_XX
-$Event(12107100, Default, function(X0_4, X4_4, X8_4) {
-    EndIf(HasMultiplayerState(MultiplayerState.Client));
-    WaitFor(EventFlag(X0_4));
-    WaitFixedTimeSeconds(4);
-    SetEventFlag(9020, OFF);
-    SetEventFlag(9021, OFF);
-    SetEventFlag(9022, OFF);
-    SetEventFlag(9023, OFF);
-    SetEventFlag(9024, OFF);
-    SetEventFlag(9025, OFF);
-    SetEventFlag(9026, OFF);
-    SetEventFlag(X8_4, ON);
-    SetEventFlag(X0_4, OFF);
-    EndEvent();
-    RotateCharacter(10000, X4_4, 101164, false);
-});
-
-// ワープOBJ_ダンジョンへのワープ_後半_XX
-$Event(12107200, Default, function(X0_4, X4_4, X8_4) {
-    WaitFor(EventFlag(X0_4));
-    SetEventFlag(X0_4, OFF);
-    WarpPlayerToRespawnPoint(X4_4);
-    SetEventFlag(X8_4, ON);
-});
-
-

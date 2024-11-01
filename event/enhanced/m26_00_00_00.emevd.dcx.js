@@ -4,15 +4,641 @@
 // @game    Bloodborne
 // @string    "クリア時間_通し\u0000クリア時間_1プレイ\u0000ボス_撃破\u0000PC情報_ボス撃破_死と闇レッサー\u0000ボス_戦闘開始\u0000ボス戦_撃破時間\u0000トラップロード_闇魔法_解除状態\u0000トラップロード_闇魔法_発動状態\u0000PC情報_ボス撃破_トラップロード中ボス\u0000トラップロード_中ボス戦_撃破時間\u0000PC情報_トラップロード到達時\u0000N:\\SPRJ\\data\\Param\\event\\common.emevd\u0000\u0000\u0000\u0000\u0000"
 // @linked    [300]
-// @version    3.4.2
+// @version    3.4.1
 // ==/EMEVD==
 
-// コンストラクタ
+const area_id = 26;
+const block_id = 0;
+
+const nightmare_lamp_offset = 30;
+const nightmare_lamp_id = 2601950;
+
+const base_lamp_offset = 33;
+const base_lamp_id = 2601953;
+
+const micolash_lamp_offset = 32;
+const micolash_offset = 10;
+const micolash_defeat = 12601850;
+const micolash_return = 2601889;
+const micolash_lamp_id = 2601952;
+const micolash_region = 2602852;
+
+const wet_nurse_lamp_offset = 31;
+const wet_nurse_offset = 11;
+const wet_nurse_defeat = 12601800;
+const wet_nurse_return = 2601899;
+const wet_nurse_lamp_id = 2601951;
+const wet_nurse_region = 2602802;
+
+// 2 cage elevators
+// 2 big elevators
+
+// constructor
 $Event(0, Default, function() {
-    InitializeEvent(30, 7000, 2600950, 2601950, 999, 12607800);
-    InitializeEvent(31, 7000, 2600951, 2601951, 12601800, 12607820);
-    InitializeEvent(32, 7000, 2600952, 2601952, 999, 12607840);
-    InitializeEvent(33, 7000, 2600953, 2601953, 999, 12607860);
+    
+    SetEventFlag(8900+micolash_offset, OFF);
+    SetEventFlag(8900+wet_nurse_offset, OFF);
+    
+    SetEventFlag(wet_nurse_defeat+15, OFF);
+    if (EventFlag(wet_nurse_defeat+14)) {
+        SetEventFlag(wet_nurse_defeat+14, OFF);
+        SetEventFlag(wet_nurse_defeat+15, ON); 
+    }
+    
+    InitializeEvent(14, 7900, 10000000+micolash_return, micolash_return, area_id, block_id, 8500+nightmare_lamp_offset);
+    InitializeEvent(15, 7900, 10000000+micolash_return-3, micolash_return, area_id, block_id, 8500+base_lamp_offset);
+    InitializeEvent(16, 7900, 10000000+wet_nurse_return, wet_nurse_return, area_id, block_id, 8500+nightmare_lamp_offset);
+    InitializeEvent(17, 7900, 10000000+wet_nurse_return-3, wet_nurse_return, area_id, block_id, 8500+base_lamp_offset);
+    InitializeEvent(18, 7900, 10000000+wet_nurse_return-2, wet_nurse_return, area_id, block_id, 8500+micolash_lamp_offset);
+    
+    InitializeEvent(nightmare_lamp_offset, 8500, 8500+nightmare_lamp_offset, nightmare_lamp_id, 72113030);
+    InitializeEvent(base_lamp_offset, 8500, 8500+base_lamp_offset, base_lamp_id, 72113131);
+    InitializeEvent(micolash_lamp_offset, 8500, 8500+micolash_lamp_offset, micolash_lamp_id, 72113232);
+    InitializeEvent(wet_nurse_lamp_offset, 8500, 8500+wet_nurse_lamp_offset, wet_nurse_lamp_id, 72113333);
+    
+    InitializeEvent(nightmare_lamp_offset, 8300, nightmare_lamp_id+2000, nightmare_lamp_id+3000, nightmare_lamp_id+4000, area_id, block_id, -1, nightmare_lamp_id+6000);
+    InitializeEvent(base_lamp_offset, 8300, base_lamp_id+2000, base_lamp_id+3000, base_lamp_id+4000, area_id, block_id, -1, base_lamp_id+6000);
+    
+    if(EventFlag(micolash_defeat+13) && !EventFlag(micolash_defeat-1)) {
+        if (EventFlag(micolash_defeat-2)) {
+            SetEventFlag(micolash_defeat-2, OFF);
+            MoveBloodstainAndDroppedItems(micolash_region, micolash_lamp_id+4000);
+        }
+        SetEventFlag(micolash_defeat+13, OFF);
+        SetEventFlag(micolash_defeat, ON);
+        InitializeEvent(micolash_lamp_offset, 8300, micolash_lamp_id+2000, micolash_lamp_id+3000, micolash_lamp_id+4000, area_id, block_id, 999, micolash_lamp_id+6000);
+    }
+    else if (EventFlag(micolash_defeat+12) || EventFlag(micolash_defeat-1)) {
+        if (EventFlag(micolash_defeat-2)) {
+            SetEventFlag(micolash_defeat-2, OFF);
+            MoveBloodstainAndDroppedItems(micolash_region, micolash_lamp_id+5000);
+        }
+        SetEventFlag(1082, OFF);
+        SetEventFlag(micolash_defeat, OFF);
+        SetEventFlag(micolash_defeat+2, OFF);
+        SetEventFlag(micolash_defeat+12, OFF);
+        SetEventFlag(micolash_defeat+13, ON);
+        SetEventFlag(micolash_defeat-1, OFF);
+        SetEventFlag(8900+micolash_offset, ON);
+        InitializeEvent(micolash_lamp_offset, 8300, micolash_lamp_id+2000, micolash_lamp_id+3000, micolash_lamp_id+5000, area_id, block_id, -1, micolash_lamp_id+6000);
+    }
+    else {
+        InitializeEvent(micolash_lamp_offset, 8300, micolash_lamp_id+2000, micolash_lamp_id+3000, micolash_lamp_id+4000, area_id, block_id, -1, micolash_lamp_id+6000);
+    }
+    
+    InitializeEvent(micolash_offset, 8900, micolash_defeat-1, micolash_lamp_id+1000, micolash_defeat-2);
+    InitializeEvent(micolash_offset, 7700, micolash_defeat+11, micolash_defeat+12, micolash_lamp_id+1000, 826000);
+    
+    if(EventFlag(wet_nurse_defeat+13) && !EventFlag(wet_nurse_defeat-1)) {
+        if (EventFlag(wet_nurse_defeat-2)) {
+            SetEventFlag(wet_nurse_defeat-2, OFF);
+            MoveBloodstainAndDroppedItems(wet_nurse_region, wet_nurse_lamp_id+4000);
+        }
+        SetEventFlag(wet_nurse_defeat+13, OFF);
+        SetEventFlag(wet_nurse_defeat, ON);
+        InitializeEvent(wet_nurse_lamp_offset, 8300, wet_nurse_lamp_id+2000, wet_nurse_lamp_id+3000, wet_nurse_lamp_id+4000, area_id, block_id, 999, wet_nurse_lamp_id+6000);
+    }
+    else if (EventFlag(wet_nurse_defeat+12) || EventFlag(wet_nurse_defeat-1)) {
+        if (EventFlag(wet_nurse_defeat-2)) {
+            SetEventFlag(wet_nurse_defeat-2, OFF);
+            MoveBloodstainAndDroppedItems(wet_nurse_region, wet_nurse_lamp_id+5000);
+        }
+        SetEventFlag(wet_nurse_defeat, OFF);
+        SetEventFlag(wet_nurse_defeat+2, OFF);
+        SetEventFlag(wet_nurse_defeat+3000, ON);
+        SetEventFlag(wet_nurse_defeat+3002, ON);
+        SetEventFlag(wet_nurse_defeat+12, OFF);
+        SetEventFlag(wet_nurse_defeat+13, ON);
+        SetEventFlag(wet_nurse_defeat-1, OFF);
+        SetEventFlag(8900+wet_nurse_offset, ON);
+        InitializeEvent(wet_nurse_lamp_offset, 8300, wet_nurse_lamp_id+2000, wet_nurse_lamp_id+3000, wet_nurse_lamp_id+5000, area_id, block_id, -1, wet_nurse_lamp_id+6000);
+    }
+    else {
+        InitializeEvent(wet_nurse_lamp_offset, 8300, wet_nurse_lamp_id+2000, wet_nurse_lamp_id+3000, wet_nurse_lamp_id+4000, area_id, block_id, -1, wet_nurse_lamp_id+6000);
+    }
+    
+    InitializeEvent(wet_nurse_offset, 8900, wet_nurse_defeat-1, wet_nurse_lamp_id+1000, wet_nurse_defeat-2, wet_nurse_defeat+15, wet_nurse_defeat+14);
+    InitializeEvent(wet_nurse_offset, 7700, wet_nurse_defeat+11, wet_nurse_defeat+12, wet_nurse_lamp_id+1000, 826002);
+    
+    InitializeEvent(3000, 12107000, 72113000, 2601950, 2412950);
+    InitializeEvent(3001, 12107000, 72113001, 2601950, 2412951);
+    InitializeEvent(3002, 12107000, 72113002, 2601950, 2412952);
+    InitializeEvent(3003, 12107000, 72113003, 2601950, 2412953);
+    InitializeEvent(3004, 12107000, 72113004, 2601950, 2402950);
+    InitializeEvent(3005, 12107000, 72113005, 2601950, 2402951);
+    InitializeEvent(3006, 12107000, 72113006, 2601950, 2422950);
+    InitializeEvent(3007, 12107000, 72113007, 2601950, 2422952);
+    InitializeEvent(3008, 12107000, 72113008, 2601950, 2422951);
+    InitializeEvent(3009, 12107000, 72113009, 2601950, 2302950);
+    InitializeEvent(3010, 12107000, 72113010, 2601950, 2302951);
+    InitializeEvent(3011, 12107000, 72113011, 2601950, 2302952);
+    InitializeEvent(3012, 12107000, 72113012, 2601950, 2202950);
+    InitializeEvent(3013, 12107000, 72113013, 2601950, 2202951);
+    InitializeEvent(3014, 12107000, 72113014, 2601950, 2702950);
+    InitializeEvent(3015, 12107000, 72113015, 2601950, 2702951);
+    InitializeEvent(3016, 12107000, 72113016, 2601950, 3202950);
+    InitializeEvent(3017, 12107000, 72113017, 2601950, 3202952);
+    InitializeEvent(3018, 12107000, 72113018, 2601950, 2802950);
+    InitializeEvent(3019, 12107000, 72113019, 2601950, 2802953);
+    InitializeEvent(3020, 12107000, 72113020, 2601950, 2802951);
+    InitializeEvent(3021, 12107000, 72113021, 2601950, 2802952);
+    InitializeEvent(3022, 12107000, 72113022, 2601950, 2502950);
+    InitializeEvent(3023, 12107000, 72113023, 2601950, 2502952);
+    InitializeEvent(3024, 12107000, 72113024, 2601950, 2502951);
+    InitializeEvent(3025, 12107000, 72113025, 2601950, 2112950);
+    InitializeEvent(3026, 12107000, 72113026, 2601950, 3202951);
+    InitializeEvent(3027, 12107000, 72113027, 2601950, 3202953);
+    InitializeEvent(3028, 12107000, 72113028, 2601950, 3302950);
+    InitializeEvent(3029, 12107000, 72113029, 2601950, 3302951);
+    InitializeEvent(3030, 12107000, 72113030, 2601950, 2602950);
+    InitializeEvent(3031, 12107000, 72113031, 2601950, 2602953);
+    InitializeEvent(3032, 12107000, 72113032, 2601950, 2602952);
+    InitializeEvent(3033, 12107000, 72113033, 2601950, 2602951);
+    InitializeEvent(3034, 12107000, 72113034, 2601950, 3402950);
+    InitializeEvent(3035, 12107000, 72113035, 2601950, 3402951);
+    InitializeEvent(3036, 12107000, 72113036, 2601950, 3402953);
+    InitializeEvent(3037, 12107000, 72113037, 2601950, 3402952);
+    InitializeEvent(3038, 12107000, 72113038, 2601950, 3502950);
+    InitializeEvent(3039, 12107000, 72113039, 2601950, 3502951);
+    InitializeEvent(3040, 12107000, 72113040, 2601950, 3502952);
+    InitializeEvent(3041, 12107000, 72113041, 2601950, 3602950);
+    InitializeEvent(3042, 12107000, 72113042, 2601950, 3602951);
+    InitializeEvent(3043, 12107000, 72113043, 2601950, 3602952);
+    InitializeEvent(3044, 12107000, 72113044, 2601950, 2902950);
+    InitializeEvent(3045, 12107000, 72113045, 2601950, 2902951);
+    InitializeEvent(3046, 12107000, 72113046, 2601950, 2902952);
+    InitializeEvent(3047, 12107000, 72113047, 2601950, 2902953);
+    InitializeEvent(3048, 12107000, 72113048, 2601950, 2902954);
+    InitializeEvent(3049, 12107000, 72113049, 2601950, 2902955);
+    InitializeEvent(3050, 12107000, 72113050, 2601950, 2902956);
+    InitializeEvent(3051, 12107000, 72113051, 2601950, 2902957);
+    InitializeEvent(3052, 12107000, 72113052, 2601950, 2902958);
+    InitializeEvent(3053, 12107000, 72113053, 2601950, 2902959);
+
+    InitializeEvent(3100, 12107000, 72113100, 2601953, 2412950);
+    InitializeEvent(3101, 12107000, 72113101, 2601953, 2412951);
+    InitializeEvent(3102, 12107000, 72113102, 2601953, 2412952);
+    InitializeEvent(3103, 12107000, 72113103, 2601953, 2412953);
+    InitializeEvent(3104, 12107000, 72113104, 2601953, 2402950);
+    InitializeEvent(3105, 12107000, 72113105, 2601953, 2402951);
+    InitializeEvent(3106, 12107000, 72113106, 2601953, 2422950);
+    InitializeEvent(3107, 12107000, 72113107, 2601953, 2422952);
+    InitializeEvent(3108, 12107000, 72113108, 2601953, 2422951);
+    InitializeEvent(3109, 12107000, 72113109, 2601953, 2302950);
+    InitializeEvent(3110, 12107000, 72113110, 2601953, 2302951);
+    InitializeEvent(3111, 12107000, 72113111, 2601953, 2302952);
+    InitializeEvent(3112, 12107000, 72113112, 2601953, 2202950);
+    InitializeEvent(3113, 12107000, 72113113, 2601953, 2202951);
+    InitializeEvent(3114, 12107000, 72113114, 2601953, 2702950);
+    InitializeEvent(3115, 12107000, 72113115, 2601953, 2702951);
+    InitializeEvent(3116, 12107000, 72113116, 2601953, 3202950);
+    InitializeEvent(3117, 12107000, 72113117, 2601953, 3202952);
+    InitializeEvent(3118, 12107000, 72113118, 2601953, 2802950);
+    InitializeEvent(3119, 12107000, 72113119, 2601953, 2802953);
+    InitializeEvent(3120, 12107000, 72113120, 2601953, 2802951);
+    InitializeEvent(3121, 12107000, 72113121, 2601953, 2802952);
+    InitializeEvent(3122, 12107000, 72113122, 2601953, 2502950);
+    InitializeEvent(3123, 12107000, 72113123, 2601953, 2502952);
+    InitializeEvent(3124, 12107000, 72113124, 2601953, 2502951);
+    InitializeEvent(3125, 12107000, 72113125, 2601953, 2112950);
+    InitializeEvent(3126, 12107000, 72113126, 2601953, 3202951);
+    InitializeEvent(3127, 12107000, 72113127, 2601953, 3202953);
+    InitializeEvent(3128, 12107000, 72113128, 2601953, 3302950);
+    InitializeEvent(3129, 12107000, 72113129, 2601953, 3302951);
+    InitializeEvent(3130, 12107000, 72113130, 2601953, 2602950);
+    InitializeEvent(3131, 12107000, 72113131, 2601953, 2602953);
+    InitializeEvent(3132, 12107000, 72113132, 2601953, 2602952);
+    InitializeEvent(3133, 12107000, 72113133, 2601953, 2602951);
+    InitializeEvent(3134, 12107000, 72113134, 2601953, 3402950);
+    InitializeEvent(3135, 12107000, 72113135, 2601953, 3402951);
+    InitializeEvent(3136, 12107000, 72113136, 2601953, 3402953);
+    InitializeEvent(3137, 12107000, 72113137, 2601953, 3402952);
+    InitializeEvent(3138, 12107000, 72113138, 2601953, 3502950);
+    InitializeEvent(3139, 12107000, 72113139, 2601953, 3502951);
+    InitializeEvent(3140, 12107000, 72113140, 2601953, 3502952);
+    InitializeEvent(3141, 12107000, 72113141, 2601953, 3602950);
+    InitializeEvent(3142, 12107000, 72113142, 2601953, 3602951);
+    InitializeEvent(3143, 12107000, 72113143, 2601953, 3602952);
+    InitializeEvent(3144, 12107000, 72113144, 2601953, 2902950);
+    InitializeEvent(3145, 12107000, 72113145, 2601953, 2902951);
+    InitializeEvent(3146, 12107000, 72113146, 2601953, 2902952);
+    InitializeEvent(3147, 12107000, 72113147, 2601953, 2902953);
+    InitializeEvent(3148, 12107000, 72113148, 2601953, 2902954);
+    InitializeEvent(3149, 12107000, 72113149, 2601953, 2902955);
+    InitializeEvent(3150, 12107000, 72113150, 2601953, 2902956);
+    InitializeEvent(3151, 12107000, 72113151, 2601953, 2902957);
+    InitializeEvent(3152, 12107000, 72113152, 2601953, 2902958);
+    InitializeEvent(3153, 12107000, 72113153, 2601953, 2902959);
+
+    InitializeEvent(3200, 12107000, 72113200, 2601952, 2412950);
+    InitializeEvent(3201, 12107000, 72113201, 2601952, 2412951);
+    InitializeEvent(3202, 12107000, 72113202, 2601952, 2412952);
+    InitializeEvent(3203, 12107000, 72113203, 2601952, 2412953);
+    InitializeEvent(3204, 12107000, 72113204, 2601952, 2402950);
+    InitializeEvent(3205, 12107000, 72113205, 2601952, 2402951);
+    InitializeEvent(3206, 12107000, 72113206, 2601952, 2422950);
+    InitializeEvent(3207, 12107000, 72113207, 2601952, 2422952);
+    InitializeEvent(3208, 12107000, 72113208, 2601952, 2422951);
+    InitializeEvent(3209, 12107000, 72113209, 2601952, 2302950);
+    InitializeEvent(3210, 12107000, 72113210, 2601952, 2302951);
+    InitializeEvent(3211, 12107000, 72113211, 2601952, 2302952);
+    InitializeEvent(3212, 12107000, 72113212, 2601952, 2202950);
+    InitializeEvent(3213, 12107000, 72113213, 2601952, 2202951);
+    InitializeEvent(3214, 12107000, 72113214, 2601952, 2702950);
+    InitializeEvent(3215, 12107000, 72113215, 2601952, 2702951);
+    InitializeEvent(3216, 12107000, 72113216, 2601952, 3202950);
+    InitializeEvent(3217, 12107000, 72113217, 2601952, 3202952);
+    InitializeEvent(3218, 12107000, 72113218, 2601952, 2802950);
+    InitializeEvent(3219, 12107000, 72113219, 2601952, 2802953);
+    InitializeEvent(3220, 12107000, 72113220, 2601952, 2802951);
+    InitializeEvent(3221, 12107000, 72113221, 2601952, 2802952);
+    InitializeEvent(3222, 12107000, 72113222, 2601952, 2502950);
+    InitializeEvent(3223, 12107000, 72113223, 2601952, 2502952);
+    InitializeEvent(3224, 12107000, 72113224, 2601952, 2502951);
+    InitializeEvent(3225, 12107000, 72113225, 2601952, 2112950);
+    InitializeEvent(3226, 12107000, 72113226, 2601952, 3202951);
+    InitializeEvent(3227, 12107000, 72113227, 2601952, 3202953);
+    InitializeEvent(3228, 12107000, 72113228, 2601952, 3302950);
+    InitializeEvent(3229, 12107000, 72113229, 2601952, 3302951);
+    InitializeEvent(3230, 12107000, 72113230, 2601952, 2602950);
+    InitializeEvent(3231, 12107000, 72113231, 2601952, 2602953);
+    InitializeEvent(3232, 12107000, 72113232, 2601952, 2602952);
+    InitializeEvent(3233, 12107000, 72113233, 2601952, 2602951);
+    InitializeEvent(3234, 12107000, 72113234, 2601952, 3402950);
+    InitializeEvent(3235, 12107000, 72113235, 2601952, 3402951);
+    InitializeEvent(3236, 12107000, 72113236, 2601952, 3402953);
+    InitializeEvent(3237, 12107000, 72113237, 2601952, 3402952);
+    InitializeEvent(3238, 12107000, 72113238, 2601952, 3502950);
+    InitializeEvent(3239, 12107000, 72113239, 2601952, 3502951);
+    InitializeEvent(3240, 12107000, 72113240, 2601952, 3502952);
+    InitializeEvent(3241, 12107000, 72113241, 2601952, 3602950);
+    InitializeEvent(3242, 12107000, 72113242, 2601952, 3602951);
+    InitializeEvent(3243, 12107000, 72113243, 2601952, 3602952);
+    InitializeEvent(3244, 12107000, 72113244, 2601952, 2902950);
+    InitializeEvent(3245, 12107000, 72113245, 2601952, 2902951);
+    InitializeEvent(3246, 12107000, 72113246, 2601952, 2902952);
+    InitializeEvent(3247, 12107000, 72113247, 2601952, 2902953);
+    InitializeEvent(3248, 12107000, 72113248, 2601952, 2902954);
+    InitializeEvent(3249, 12107000, 72113249, 2601952, 2902955);
+    InitializeEvent(3250, 12107000, 72113250, 2601952, 2902956);
+    InitializeEvent(3251, 12107000, 72113251, 2601952, 2902957);
+    InitializeEvent(3252, 12107000, 72113252, 2601952, 2902958);
+    InitializeEvent(3253, 12107000, 72113253, 2601952, 2902959);
+
+    InitializeEvent(3300, 12107000, 72113300, 2601951, 2412950);
+    InitializeEvent(3301, 12107000, 72113301, 2601951, 2412951);
+    InitializeEvent(3302, 12107000, 72113302, 2601951, 2412952);
+    InitializeEvent(3303, 12107000, 72113303, 2601951, 2412953);
+    InitializeEvent(3304, 12107000, 72113304, 2601951, 2402950);
+    InitializeEvent(3305, 12107000, 72113305, 2601951, 2402951);
+    InitializeEvent(3306, 12107000, 72113306, 2601951, 2422950);
+    InitializeEvent(3307, 12107000, 72113307, 2601951, 2422952);
+    InitializeEvent(3308, 12107000, 72113308, 2601951, 2422951);
+    InitializeEvent(3309, 12107000, 72113309, 2601951, 2302950);
+    InitializeEvent(3310, 12107000, 72113310, 2601951, 2302951);
+    InitializeEvent(3311, 12107000, 72113311, 2601951, 2302952);
+    InitializeEvent(3312, 12107000, 72113312, 2601951, 2202950);
+    InitializeEvent(3313, 12107000, 72113313, 2601951, 2202951);
+    InitializeEvent(3314, 12107000, 72113314, 2601951, 2702950);
+    InitializeEvent(3315, 12107000, 72113315, 2601951, 2702951);
+    InitializeEvent(3316, 12107000, 72113316, 2601951, 3202950);
+    InitializeEvent(3317, 12107000, 72113317, 2601951, 3202952);
+    InitializeEvent(3318, 12107000, 72113318, 2601951, 2802950);
+    InitializeEvent(3319, 12107000, 72113319, 2601951, 2802953);
+    InitializeEvent(3320, 12107000, 72113320, 2601951, 2802951);
+    InitializeEvent(3321, 12107000, 72113321, 2601951, 2802952);
+    InitializeEvent(3322, 12107000, 72113322, 2601951, 2502950);
+    InitializeEvent(3323, 12107000, 72113323, 2601951, 2502952);
+    InitializeEvent(3324, 12107000, 72113324, 2601951, 2502951);
+    InitializeEvent(3325, 12107000, 72113325, 2601951, 2112950);
+    InitializeEvent(3326, 12107000, 72113326, 2601951, 3202951);
+    InitializeEvent(3327, 12107000, 72113327, 2601951, 3202953);
+    InitializeEvent(3328, 12107000, 72113328, 2601951, 3302950);
+    InitializeEvent(3329, 12107000, 72113329, 2601951, 3302951);
+    InitializeEvent(3330, 12107000, 72113330, 2601951, 2602950);
+    InitializeEvent(3331, 12107000, 72113331, 2601951, 2602953);
+    InitializeEvent(3332, 12107000, 72113332, 2601951, 2602952);
+    InitializeEvent(3333, 12107000, 72113333, 2601951, 2602951);
+    InitializeEvent(3334, 12107000, 72113334, 2601951, 3402950);
+    InitializeEvent(3335, 12107000, 72113335, 2601951, 3402951);
+    InitializeEvent(3336, 12107000, 72113336, 2601951, 3402953);
+    InitializeEvent(3337, 12107000, 72113337, 2601951, 3402952);
+    InitializeEvent(3338, 12107000, 72113338, 2601951, 3502950);
+    InitializeEvent(3339, 12107000, 72113339, 2601951, 3502951);
+    InitializeEvent(3340, 12107000, 72113340, 2601951, 3502952);
+    InitializeEvent(3341, 12107000, 72113341, 2601951, 3602950);
+    InitializeEvent(3342, 12107000, 72113342, 2601951, 3602951);
+    InitializeEvent(3343, 12107000, 72113343, 2601951, 3602952);
+    InitializeEvent(3344, 12107000, 72113344, 2601951, 2902950);
+    InitializeEvent(3345, 12107000, 72113345, 2601951, 2902951);
+    InitializeEvent(3346, 12107000, 72113346, 2601951, 2902952);
+    InitializeEvent(3347, 12107000, 72113347, 2601951, 2902953);
+    InitializeEvent(3348, 12107000, 72113348, 2601951, 2902954);
+    InitializeEvent(3349, 12107000, 72113349, 2601951, 2902955);
+    InitializeEvent(3350, 12107000, 72113350, 2601951, 2902956);
+    InitializeEvent(3351, 12107000, 72113351, 2601951, 2902957);
+    InitializeEvent(3352, 12107000, 72113352, 2601951, 2902958);
+    InitializeEvent(3353, 12107000, 72113353, 2601951, 2902959);
+
+    SetEventFlag(72110030, OFF);
+    SetEventFlag(72110130, OFF);
+    SetEventFlag(72110230, OFF);
+    SetEventFlag(72110330, OFF);
+    SetEventFlag(72110430, OFF);
+    SetEventFlag(72110530, OFF);
+    SetEventFlag(72110630, OFF);
+    SetEventFlag(72110730, OFF);
+    SetEventFlag(72110830, OFF);
+    SetEventFlag(72110930, OFF);
+    SetEventFlag(72111030, OFF);
+    SetEventFlag(72111130, OFF);
+    SetEventFlag(72111230, OFF);
+    SetEventFlag(72111330, OFF);
+    SetEventFlag(72111430, OFF);
+    SetEventFlag(72111530, OFF);
+    SetEventFlag(72111630, OFF);
+    SetEventFlag(72111730, OFF);
+    SetEventFlag(72111830, OFF);
+    SetEventFlag(72111930, OFF);
+    SetEventFlag(72112030, OFF);
+    SetEventFlag(72112130, OFF);
+    SetEventFlag(72112230, OFF);
+    SetEventFlag(72112330, OFF);
+    SetEventFlag(72112430, OFF);
+    SetEventFlag(72112530, OFF);
+    SetEventFlag(72112630, OFF);
+    SetEventFlag(72112730, OFF);
+    SetEventFlag(72112830, OFF);
+    SetEventFlag(72112930, OFF);
+    SetEventFlag(72113030, OFF);
+    SetEventFlag(72113130, OFF);
+    SetEventFlag(72113230, OFF);
+    SetEventFlag(72113330, OFF);
+    SetEventFlag(72113430, OFF);
+    SetEventFlag(72113530, OFF);
+    SetEventFlag(72113630, OFF);
+    SetEventFlag(72113730, OFF);
+    SetEventFlag(72113830, OFF);
+    SetEventFlag(72113930, OFF);
+    SetEventFlag(72114030, OFF);
+    SetEventFlag(72114130, OFF);
+    SetEventFlag(72114230, OFF);
+    SetEventFlag(72114330, OFF);
+    SetEventFlag(72114430, OFF);
+    SetEventFlag(72114530, OFF);
+    SetEventFlag(72114630, OFF);
+    SetEventFlag(72114730, OFF);
+    SetEventFlag(72114830, OFF);
+    SetEventFlag(72114930, OFF);
+    SetEventFlag(72115030, OFF);
+    SetEventFlag(72115130, OFF);
+    SetEventFlag(72115230, OFF);
+    SetEventFlag(72115330, OFF);
+
+    SetEventFlag(72110031, OFF);
+    SetEventFlag(72110131, OFF);
+    SetEventFlag(72110231, OFF);
+    SetEventFlag(72110331, OFF);
+    SetEventFlag(72110431, OFF);
+    SetEventFlag(72110531, OFF);
+    SetEventFlag(72110631, OFF);
+    SetEventFlag(72110731, OFF);
+    SetEventFlag(72110831, OFF);
+    SetEventFlag(72110931, OFF);
+    SetEventFlag(72111031, OFF);
+    SetEventFlag(72111131, OFF);
+    SetEventFlag(72111231, OFF);
+    SetEventFlag(72111331, OFF);
+    SetEventFlag(72111431, OFF);
+    SetEventFlag(72111531, OFF);
+    SetEventFlag(72111631, OFF);
+    SetEventFlag(72111731, OFF);
+    SetEventFlag(72111831, OFF);
+    SetEventFlag(72111931, OFF);
+    SetEventFlag(72112031, OFF);
+    SetEventFlag(72112131, OFF);
+    SetEventFlag(72112231, OFF);
+    SetEventFlag(72112331, OFF);
+    SetEventFlag(72112431, OFF);
+    SetEventFlag(72112531, OFF);
+    SetEventFlag(72112631, OFF);
+    SetEventFlag(72112731, OFF);
+    SetEventFlag(72112831, OFF);
+    SetEventFlag(72112931, OFF);
+    SetEventFlag(72113031, OFF);
+    SetEventFlag(72113131, OFF);
+    SetEventFlag(72113231, OFF);
+    SetEventFlag(72113331, OFF);
+    SetEventFlag(72113431, OFF);
+    SetEventFlag(72113531, OFF);
+    SetEventFlag(72113631, OFF);
+    SetEventFlag(72113731, OFF);
+    SetEventFlag(72113831, OFF);
+    SetEventFlag(72113931, OFF);
+    SetEventFlag(72114031, OFF);
+    SetEventFlag(72114131, OFF);
+    SetEventFlag(72114231, OFF);
+    SetEventFlag(72114331, OFF);
+    SetEventFlag(72114431, OFF);
+    SetEventFlag(72114531, OFF);
+    SetEventFlag(72114631, OFF);
+    SetEventFlag(72114731, OFF);
+    SetEventFlag(72114831, OFF);
+    SetEventFlag(72114931, OFF);
+    SetEventFlag(72115031, OFF);
+    SetEventFlag(72115131, OFF);
+    SetEventFlag(72115231, OFF);
+    SetEventFlag(72115331, OFF);
+
+    SetEventFlag(72110032, OFF);
+    SetEventFlag(72110132, OFF);
+    SetEventFlag(72110232, OFF);
+    SetEventFlag(72110332, OFF);
+    SetEventFlag(72110432, OFF);
+    SetEventFlag(72110532, OFF);
+    SetEventFlag(72110632, OFF);
+    SetEventFlag(72110732, OFF);
+    SetEventFlag(72110832, OFF);
+    SetEventFlag(72110932, OFF);
+    SetEventFlag(72111032, OFF);
+    SetEventFlag(72111132, OFF);
+    SetEventFlag(72111232, OFF);
+    SetEventFlag(72111332, OFF);
+    SetEventFlag(72111432, OFF);
+    SetEventFlag(72111532, OFF);
+    SetEventFlag(72111632, OFF);
+    SetEventFlag(72111732, OFF);
+    SetEventFlag(72111832, OFF);
+    SetEventFlag(72111932, OFF);
+    SetEventFlag(72112032, OFF);
+    SetEventFlag(72112132, OFF);
+    SetEventFlag(72112232, OFF);
+    SetEventFlag(72112332, OFF);
+    SetEventFlag(72112432, OFF);
+    SetEventFlag(72112532, OFF);
+    SetEventFlag(72112632, OFF);
+    SetEventFlag(72112732, OFF);
+    SetEventFlag(72112832, OFF);
+    SetEventFlag(72112932, OFF);
+    SetEventFlag(72113032, OFF);
+    SetEventFlag(72113132, OFF);
+    SetEventFlag(72113232, OFF);
+    SetEventFlag(72113332, OFF);
+    SetEventFlag(72113432, OFF);
+    SetEventFlag(72113532, OFF);
+    SetEventFlag(72113632, OFF);
+    SetEventFlag(72113732, OFF);
+    SetEventFlag(72113832, OFF);
+    SetEventFlag(72113932, OFF);
+    SetEventFlag(72114032, OFF);
+    SetEventFlag(72114132, OFF);
+    SetEventFlag(72114232, OFF);
+    SetEventFlag(72114332, OFF);
+    SetEventFlag(72114432, OFF);
+    SetEventFlag(72114532, OFF);
+    SetEventFlag(72114632, OFF);
+    SetEventFlag(72114732, OFF);
+    SetEventFlag(72114832, OFF);
+    SetEventFlag(72114932, OFF);
+    SetEventFlag(72115032, OFF);
+    SetEventFlag(72115132, OFF);
+    SetEventFlag(72115232, OFF);
+    SetEventFlag(72115332, OFF);
+
+    SetEventFlag(72110033, OFF);
+    SetEventFlag(72110133, OFF);
+    SetEventFlag(72110233, OFF);
+    SetEventFlag(72110333, OFF);
+    SetEventFlag(72110433, OFF);
+    SetEventFlag(72110533, OFF);
+    SetEventFlag(72110633, OFF);
+    SetEventFlag(72110733, OFF);
+    SetEventFlag(72110833, OFF);
+    SetEventFlag(72110933, OFF);
+    SetEventFlag(72111033, OFF);
+    SetEventFlag(72111133, OFF);
+    SetEventFlag(72111233, OFF);
+    SetEventFlag(72111333, OFF);
+    SetEventFlag(72111433, OFF);
+    SetEventFlag(72111533, OFF);
+    SetEventFlag(72111633, OFF);
+    SetEventFlag(72111733, OFF);
+    SetEventFlag(72111833, OFF);
+    SetEventFlag(72111933, OFF);
+    SetEventFlag(72112033, OFF);
+    SetEventFlag(72112133, OFF);
+    SetEventFlag(72112233, OFF);
+    SetEventFlag(72112333, OFF);
+    SetEventFlag(72112433, OFF);
+    SetEventFlag(72112533, OFF);
+    SetEventFlag(72112633, OFF);
+    SetEventFlag(72112733, OFF);
+    SetEventFlag(72112833, OFF);
+    SetEventFlag(72112933, OFF);
+    SetEventFlag(72113033, OFF);
+    SetEventFlag(72113133, OFF);
+    SetEventFlag(72113233, OFF);
+    SetEventFlag(72113333, OFF);
+    SetEventFlag(72113433, OFF);
+    SetEventFlag(72113533, OFF);
+    SetEventFlag(72113633, OFF);
+    SetEventFlag(72113733, OFF);
+    SetEventFlag(72113833, OFF);
+    SetEventFlag(72113933, OFF);
+    SetEventFlag(72114033, OFF);
+    SetEventFlag(72114133, OFF);
+    SetEventFlag(72114233, OFF);
+    SetEventFlag(72114333, OFF);
+    SetEventFlag(72114433, OFF);
+    SetEventFlag(72114533, OFF);
+    SetEventFlag(72114633, OFF);
+    SetEventFlag(72114733, OFF);
+    SetEventFlag(72114833, OFF);
+    SetEventFlag(72114933, OFF);
+    SetEventFlag(72115033, OFF);
+    SetEventFlag(72115133, OFF);
+    SetEventFlag(72115233, OFF);
+    SetEventFlag(72115333, OFF);
+
+    InitializeEvent(0, 12107100, 72100421, 2601950, 9021);
+    InitializeEvent(1, 12107100, 72100422, 2601950, 9022);
+    InitializeEvent(2, 12107100, 72100423, 2601950, 9023);
+    InitializeEvent(3, 12107100, 72100424, 2601950, 9024);
+    InitializeEvent(4, 12107100, 72100425, 2601950, 9025);
+    InitializeEvent(5, 12107100, 72100426, 2601950, 9026);
+
+    InitializeEvent(6, 12107100, 72100427, 2601951, 9021);
+    InitializeEvent(7, 12107100, 72100428, 2601951, 9022);
+    InitializeEvent(8, 12107100, 72100429, 2601951, 9023);
+    InitializeEvent(9, 12107100, 72100430, 2601951, 9024);
+    InitializeEvent(10, 12107100, 72100431, 2601951, 9025);
+    InitializeEvent(11, 12107100, 72100432, 2601951, 9026);
+
+    InitializeEvent(12, 12107100, 72100433, 2601952, 9021);
+    InitializeEvent(13, 12107100, 72100434, 2601952, 9022);
+    InitializeEvent(14, 12107100, 72100435, 2601952, 9023);
+    InitializeEvent(15, 12107100, 72100436, 2601952, 9024);
+    InitializeEvent(16, 12107100, 72100437, 2601952, 9025);
+    InitializeEvent(17, 12107100, 72100438, 2601952, 9026);
+
+    InitializeEvent(18, 12107100, 72100439, 2601953, 9021);
+    InitializeEvent(19, 12107100, 72100440, 2601953, 9022);
+    InitializeEvent(20, 12107100, 72100441, 2601953, 9023);
+    InitializeEvent(21, 12107100, 72100442, 2601953, 9024);
+    InitializeEvent(22, 12107100, 72100443, 2601953, 9025);
+    InitializeEvent(23, 12107100, 72100444, 2601953, 9026);
+
+    InitializeEvent(0, 12107200, 72100300, 2902950, 9001, 2901950);
+    InitializeEvent(1, 12107200, 72100301, 2902951, 9002, 2901950);
+    InitializeEvent(2, 12107200, 72100302, 2902952, 9003, 2901950);
+    InitializeEvent(3, 12107200, 72100303, 2902953, 9004, 2901950);
+    InitializeEvent(4, 12107200, 72100304, 2902954, 9005, 2901950);
+    InitializeEvent(5, 12107200, 72100305, 2902955, 9006, 2901950);
+    InitializeEvent(6, 12107200, 72100306, 2902956, 9007, 2901950);
+    InitializeEvent(7, 12107200, 72100307, 2902957, 9008, 2901950);
+    InitializeEvent(8, 12107200, 72100308, 2902958, 9009, 2901950);
+    InitializeEvent(9, 12107200, 72100309, 2902959, 9010, 2901950);
+
+    InitializeEvent(10, 12107200, 72100310, 2902950, 9001, 2901951);
+    InitializeEvent(11, 12107200, 72100311, 2902951, 9002, 2901951);
+    InitializeEvent(12, 12107200, 72100312, 2902952, 9003, 2901951);
+    InitializeEvent(13, 12107200, 72100313, 2902953, 9004, 2901951);
+    InitializeEvent(14, 12107200, 72100314, 2902954, 9005, 2901951);
+    InitializeEvent(15, 12107200, 72100315, 2902955, 9006, 2901951);
+    InitializeEvent(16, 12107200, 72100316, 2902956, 9007, 2901951);
+    InitializeEvent(17, 12107200, 72100317, 2902957, 9008, 2901951);
+    InitializeEvent(18, 12107200, 72100318, 2902958, 9009, 2901951);
+    InitializeEvent(19, 12107200, 72100319, 2902959, 9010, 2901951);
+
+    InitializeEvent(20, 12107200, 72100320, 2902950, 9001, 2901952);
+    InitializeEvent(21, 12107200, 72100321, 2902951, 9002, 2901952);
+    InitializeEvent(22, 12107200, 72100322, 2902952, 9003, 2901952);
+    InitializeEvent(23, 12107200, 72100323, 2902953, 9004, 2901952);
+    InitializeEvent(24, 12107200, 72100324, 2902954, 9005, 2901952);
+    InitializeEvent(25, 12107200, 72100325, 2902955, 9006, 2901952);
+    InitializeEvent(26, 12107200, 72100326, 2902956, 9007, 2901952);
+    InitializeEvent(27, 12107200, 72100327, 2902957, 9008, 2901952);
+    InitializeEvent(28, 12107200, 72100328, 2902958, 9009, 2901952);
+    InitializeEvent(29, 12107200, 72100329, 2902959, 9010, 2901952);
+
+    InitializeEvent(30, 12107200, 72100330, 2902950, 9001, 2901953);
+    InitializeEvent(31, 12107200, 72100331, 2902951, 9002, 2901953);
+    InitializeEvent(32, 12107200, 72100332, 2902952, 9003, 2901953);
+    InitializeEvent(33, 12107200, 72100333, 2902953, 9004, 2901953);
+    InitializeEvent(34, 12107200, 72100334, 2902954, 9005, 2901953);
+    InitializeEvent(35, 12107200, 72100335, 2902955, 9006, 2901953);
+    InitializeEvent(36, 12107200, 72100336, 2902956, 9007, 2901953);
+    InitializeEvent(37, 12107200, 72100337, 2902957, 9008, 2901953);
+    InitializeEvent(38, 12107200, 72100338, 2902958, 9009, 2901953);
+    InitializeEvent(39, 12107200, 72100339, 2902959, 9010, 2901953);
+    
+    InitializeEvent(30, 7000, 2600950, 2601950, 999, 12607800, -1);
+    
+    InitializeEvent(31, 7000, 2600951, 2601951, 12601800, 12607820, wet_nurse_defeat+13);
+    InitializeEvent(wet_nurse_offset, 8800, wet_nurse_defeat+13, wet_nurse_lamp_id-1000, wet_nurse_lamp_id, wet_nurse_lamp_id+3000);
+    
+    InitializeEvent(32, 7000, 2600952, 2601952, 999, 12607840, -1);
+    InitializeEvent(33, 7000, 2600953, 2601953, 999, 12607860, -1);
     InitializeEvent(30, 7100, 72600200, 2601950);
     InitializeEvent(31, 7100, 72600201, 2601951);
     InitializeEvent(32, 7100, 72600202, 2601952);
@@ -25,6 +651,10 @@ $Event(0, Default, function() {
     InitializeEvent(31, 7300, 72102601, 2601951);
     InitializeEvent(32, 7300, 72102602, 2601952);
     InitializeEvent(33, 7300, 72102603, 2601953);
+    InitializeEvent(30, 12102220, 2601950, 2600950);
+    InitializeEvent(31, 12102220, 2601951, 2600951);
+    InitializeEvent(32, 12102220, 2601952, 2600952);
+    InitializeEvent(33, 12102220, 2601953, 2600953);
     InitializeEvent(6, 9200, 2603900);
     StartTimeMeasurement(2600000, 0, Disabled);
     StartTimeMeasurement(2600001, 18, Enabled);
@@ -296,11 +926,10 @@ $Event(0, Default, function() {
     InitializeEvent(2, 12600120, 12601002, 2601007);
     InitializeEvent(3, 12600120, 12601003, 2601009);
     InitializeEvent(0, 12600125, 2601008, 2600570);
-    if (CharacterType(10000, TargetType.Alive)) {
-        if (EventFlag(6314)) {
-            SetEventFlag(12601999, ON);
-        }
-    }
+    GotoIf(S0, !CharacterType(10000, TargetType.Alive));
+    GotoIf(S0, !EventFlag(6314));
+    SetEventFlag(12601999, ON);
+S0:
     if (!EventFlag(12601999)) {
         DeactivateObject(2601500, Enabled);
         DeactivateObject(2601501, Disabled);
@@ -312,11 +941,10 @@ $Event(0, Default, function() {
         SetObjectTreasureState(2601500, Disabled);
         SetObjectTreasureState(2601501, Enabled);
     }
-    if (CharacterType(10000, TargetType.Alive)) {
-        if (EventFlag(6315)) {
-            SetEventFlag(12601998, ON);
-        }
-    }
+    GotoIf(S1, !CharacterType(10000, TargetType.Alive));
+    GotoIf(S1, !EventFlag(6315));
+    SetEventFlag(12601998, ON);
+S1:
     if (!EventFlag(12601998)) {
         DeactivateObject(2601502, Enabled);
         DeactivateObject(2601503, Disabled);
@@ -334,7 +962,7 @@ $Event(0, Default, function() {
     InitializeEvent(0, 12600703, 0);
 });
 
-// 出現寡婦_出現_TR
+// Appearance Widow_Appearance_TR
 $Event(12604700, Restart, function(X0_4, X4_4, X8_4, X12_4, X16_4, X20_4) {
     if (EventFlag(X8_4)) {
         SetCharacterAIState(X0_4, Disabled);
@@ -362,7 +990,7 @@ L0:
     SetEventFlag(X4_4, ON);
 });
 
-// 出現寡婦_鐘を鳴らす_TR
+// Appearance Widow_Ring the bell_TR
 $Event(12604710, Restart, function(X0_4, X4_4, X8_4, X12_4, X16_4) {
     EndIf(EventFlag(X8_4));
     WaitFor(
@@ -380,7 +1008,7 @@ $Event(12604710, Restart, function(X0_4, X4_4, X8_4, X12_4, X16_4) {
     RestartEvent();
 });
 
-// 出現寡婦_鐘を止める_TR
+// Appearance Widow_Stop the Bell_TR
 $Event(12604720, Restart, function(X0_4, X4_4, X8_4, X12_4, X16_4) {
     EndIf(EventFlag(X8_4));
     WaitFor(
@@ -395,7 +1023,7 @@ $Event(12604720, Restart, function(X0_4, X4_4, X8_4, X12_4, X16_4) {
     RestartEvent();
 });
 
-// 出現寡婦_消滅_TR
+// Appearance widow_disappearance_TR
 $Event(12604730, Restart, function(X0_4, X4_4, X8_4, X12_4, X16_4, X20_4, X24_4) {
     EndIf(EventFlag(X8_4) || EventFlag(X12_4) || EventFlag(X16_4));
     hp = HPRatio(X0_4) == 0;
@@ -415,7 +1043,7 @@ L0:
     ForceAnimationPlayback(X0_4, 7010, false, false, false);
 });
 
-// 出現寡婦_同一領域判定_TR_悪夢の主エリア
+// Appearing Widow_Same area determination_TR_Nightmare main area
 $Event(12604740, Restart, function() {
     WaitFor(
         CharacterType(10000, TargetType.Alive)
@@ -480,7 +1108,7 @@ $Event(12604740, Restart, function() {
     RestartEvent();
 });
 
-// 出現寡婦_同一領域判定_TR_死と闇レッサーエリア
+// Widow Appearance_Same Area Judgment_TR_Death and Darkness Lesser Area
 $Event(12604742, Restart, function() {
     WaitFor(
         CharacterType(10000, TargetType.Alive)
@@ -531,7 +1159,7 @@ $Event(12604742, Restart, function() {
     RestartEvent();
 });
 
-// ボス撃破_レッサーデーモン（死と闇）
+// Boss Defeat_Lesser Demon (Death and Darkness)
 $Event(12601800, Default, function() {
     if (ThisEvent()) {
         SetMapSoundState(2603802, Disabled);
@@ -552,8 +1180,10 @@ L0:
     WaitFor(CharacterDead(2600800));
     SetEventFlag(12604808, ON);
     WaitFixedTimeSeconds(3);
-    PlaySE(2602300, SoundType.aEnvironmentalSound, 260000004);
-    WaitFixedTimeSeconds(18);
+    if (!EventFlag(wet_nurse_defeat+13)) {
+        PlaySE(2602300, SoundType.aEnvironmentalSound, 260000004);
+        WaitFixedTimeSeconds(18);
+    }
     DisplayBanner(TextBannerType.StadiumDraw);
     DeactivateObject(2601800, Disabled);
     DeleteMapSFX(2603800, true);
@@ -566,7 +1196,9 @@ L0:
         WaitFor(CharacterType(10000, TargetType.Alive));
         InitializeEvent(0, 9350, 3);
         AwardAchievement(20);
-        AwardItemLot(55100000);
+        if (!EventFlag(wet_nurse_defeat+13)) {
+            AwardItemLot(55100000);
+        }
         SetEventFlag(2601, ON);
         SetEventFlag(9462, ON);
         EndTimeMeasurement(2600000);
@@ -577,6 +1209,9 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.TemporaryParameters, 52, PlayLogMultiplayerType.HostOnly);
         ParameterOutput(PlayerPlayLogParameter.Weapon, 52, PlayLogMultiplayerType.HostOnly);
         ParameterOutput(PlayerPlayLogParameter.Armor, 52, PlayLogMultiplayerType.HostOnly);
+        if (EventFlag(wet_nurse_defeat+13)) {
+            InitializeEvent(wet_nurse_offset, 7800, wet_nurse_lamp_id+1000, 826002);
+        }
         EndEvent();
     }
 L1:
@@ -584,7 +1219,7 @@ L1:
     WaitFixedTimeSeconds(0);
 });
 
-// ボス撃破SE再生_レッサーデーモン（死と闇）
+// Boss defeat SE play_Lesser Demon (Death and Darkness)
 $Event(12601801, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(EventFlag(12601800));
@@ -594,18 +1229,14 @@ $Event(12601801, Default, function() {
     PlaySE(2602800, SoundType.cCharacterMotion, 0);
 });
 
-// ホストがボス部屋入場_初戦_レッサーデーモン（死と闇）
+// Host enters boss room_First battle_Lesser Demon (Death and Darkness)
 $Event(12601802, Default, function() {
     EndIf(EventFlag(12601800));
     EndIf(ThisEvent());
     ChangeCharacterEnableState(2600800, Disabled);
     ChangeCharacterEnableState(2600801, Disabled);
     SetObjectInvulnerability(2601856, Enabled);
-    WaitFor(
-        !EventFlag(12601800)
-            && !ThisEvent()
-            && CharacterType(10000, TargetType.Alive)
-            && InArea(10000, 2602805));
+    WaitFor((!EventFlag(12601800) && !ThisEvent() && CharacterType(10000, TargetType.Alive) && InArea(10000, 2602805)) || EventFlag(wet_nurse_defeat+13));
     if (!HasMultiplayerState(MultiplayerState.Client)) {
         IssueBossRoomEntryNotification(0);
     }
@@ -614,10 +1245,12 @@ $Event(12601802, Default, function() {
     SetEventFlag(9180, ON);
     SetMapSoundState(2603100, Disabled);
     WaitFixedTimeFrames(1);
-    if (!HasMultiplayerState(MultiplayerState.Multiplayer)) {
-        PlayCutsceneToPlayer(26000010, CutscenePlayMode.Skippable, 10000);
-    } else {
-        PlayCutsceneToPlayer(26000010, CutscenePlayMode.Unskippable, 10000);
+    if (!EventFlag(wet_nurse_defeat+13) || EventFlag(12100866)) {
+        if (!HasMultiplayerState(MultiplayerState.Multiplayer)) {
+            PlayCutsceneToPlayer(26000010, CutscenePlayMode.Skippable, 10000);
+        } else {
+            PlayCutsceneToPlayer(26000010, CutscenePlayMode.Unskippable, 10000);
+        }
     }
     WaitFixedTimeFrames(1);
     SetEventFlag(9180, OFF);
@@ -630,7 +1263,7 @@ $Event(12601802, Default, function() {
     SetEventFlag(9306, ON);
 });
 
-// レッサーデーモン（死と闇）_時間差入場ゲスト用対処処理
+// Lesser Demon (Death and Darkness)_Countermeasures for guests entering at different times
 $Event(12601803, Default, function() {
     WaitFor(CharacterType(10000, TargetType.Alive) && EventFlag(12604800));
     EndIf(HasMultiplayerState(MultiplayerState.Host));
@@ -641,7 +1274,7 @@ $Event(12601803, Default, function() {
     SetEventFlag(12601802, ON);
 });
 
-// ホストがボス部屋入場_再戦_レッサーデーモン（死と闇）
+// Host enters boss room_Rematch_Lesser Demon (Death and Darkness)
 $Event(12604845, Default, function() {
     EndIf(EventFlag(12601800));
     if (!EventFlag(12601802)) {
@@ -655,23 +1288,21 @@ $Event(12604845, Default, function() {
     }
 L0:
     ReproduceObjectDestruction(2601856, 1);
-    flagChrAct = !EventFlag(12601800)
-        && CharacterType(10000, TargetType.Alive)
-        && ActionButtonInArea(2600800, 2601800);
+    flagChrAct = !EventFlag(12601800) && CharacterType(10000, TargetType.Alive) && ActionButtonInArea(2600800, 2601800);
     flag = EventFlag(12601800);
     WaitFor(flagChrAct || flag);
     EndIf(flag.Passed);
     RotateCharacter(10000, 2602800, 101130, true);
     chrArea = CharacterType(10000, TargetType.Alive) && InArea(10000, 2602801);
-    chrTime = CharacterType(10000, TargetType.Alive) && ElapsedSeconds(2);
-    WaitFor(chrArea || chrTime);
-    if (!chrTime.Passed) {
+    chr = CharacterType(10000, TargetType.Alive) && ElapsedSeconds(2);
+    WaitFor(chrArea || chr);
+    if (!chr.Passed) {
         SetEventFlag(12604800, ON);
     }
     RestartEvent();
 });
 
-// ゲストがボス部屋入場_レッサーデーモン（死と闇）
+// Guest enters boss room_Lesser Demon (Death and Darkness)
 $Event(12604846, Default, function() {
     SetNetworkSyncState(Disabled);
     WaitFor(
@@ -682,15 +1313,15 @@ $Event(12604846, Default, function() {
             && ActionButtonInArea(2600800, 2601800));
     RotateCharacter(10000, 2602800, 101130, true);
     chrArea = CharacterType(10000, TargetType.WhitePhantom) && InArea(10000, 2602801);
-    chrTime = CharacterType(10000, TargetType.WhitePhantom) && ElapsedSeconds(2);
-    WaitFor(chrArea || chrTime);
-    if (!chrTime.Passed) {
+    chr = CharacterType(10000, TargetType.WhitePhantom) && ElapsedSeconds(2);
+    WaitFor(chrArea || chr);
+    if (!chr.Passed) {
         SetEventFlag(12604801, ON);
     }
     RestartEvent();
 });
 
-// 他人の世界で霧壁あたり無効_レッサーデーモン（死と闇）
+// Ineffective against fog wall in other people's world_Lesser Demon (Death and Darkness)
 $Event(12604847, Default, function() {
     WaitFor(CharacterType(10000, TargetType.Alive) && EntityInRadiusOfEntity(10000, 2601800, 4));
     SetCharacterGravityMaphitStateExcludingOwnWorld(10000, Disabled);
@@ -698,7 +1329,7 @@ $Event(12604847, Default, function() {
     RestartEvent();
 });
 
-// 他人の世界で霧壁あたり無効2_レッサーデーモン（死と闇）
+// Invalidity per fog wall in other people's world 2_Lesser Demon (Death and Darkness)
 $Event(12604848, Default, function() {
     WaitFor(
         CharacterType(10000, TargetType.Alive)
@@ -709,7 +1340,7 @@ $Event(12604848, Default, function() {
     RestartEvent();
 });
 
-// ボスが動き出す_レッサーデーモン（死と闇）
+// Boss begins to move_Lesser Demon (Death and Darkness)
 $Event(12604802, Default, function() {
     EndIf(EventFlag(12601800));
     SetCharacterAIState(2600800, Disabled);
@@ -722,7 +1353,7 @@ $Event(12604802, Default, function() {
     SetCharacterImmortality(2600800, Enabled);
     SetCharacterImmortality(2600801, Enabled);
     if (!ThisEvent()) {
-        WaitFor(EventFlag(12604800));
+        WaitFor(EventFlag(12604800) || EventFlag(wet_nurse_defeat+13));
         if (!HasMultiplayerState(MultiplayerState.Client)) {
             if (!EventFlag(12604732)) {
                 IssueBossRoomEntryNotification(0);
@@ -768,7 +1399,7 @@ L4:
     StartTimeMeasurement(2600010, 104, Enabled);
 });
 
-// ボスBGM ON_レッサーデーモン（死と闇）
+// Boss BGM ON_Lesser Demon (Death and Darkness)
 $Event(12604803, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(EventFlag(12601800));
@@ -797,7 +1428,7 @@ L0:
     EnableBossMapSound(2603803, Enabled);
 });
 
-// ボスカメラ_レッサーデーモン（死と闇）
+// Boss Camera_Lesser Demon (Death and Darkness)
 $Event(12604804, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(EventFlag(12601800));
@@ -805,7 +1436,7 @@ $Event(12604804, Default, function() {
     SetLockcamSlotNumber(26, 0, 1);
 });
 
-// ボスBGM OFF_レッサーデーモン（死と闇）
+// Boss BGM OFF_Lesser Demon (Death and Darkness)
 $Event(12604805, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(EventFlag(12601800));
@@ -815,14 +1446,14 @@ $Event(12604805, Default, function() {
     EnableBossMapSound(-1, Disabled);
 });
 
-// ボス分身セットアップ
+// Boss clone setup
 $Event(12604806, Default, function() {
     ChangeCharacterEnableState(2600801, Disabled);
     SetCharacterGravity(2600801, Disabled);
     SetCharacterMaphits(2600801, true);
 });
 
-// ボス暗闇魔法_プレイログ出力
+// Boss dark magic_play log output
 $Event(12604807, Default, function() {
     SetNetworkSyncState(Disabled);
     WaitFor(EventFlag(12604802) && !CharacterHasSpEffect(10000, 5630));
@@ -832,17 +1463,26 @@ $Event(12604807, Default, function() {
     RestartEvent();
 });
 
-// ボス暗闇魔法管理
+// Boss dark magic management
 $Event(12604810, Default, function() {
-    WaitFor(CharacterHasSpEffect(10000, 5630));
-    SetSpEffect(2600800, 5631, false);
+    WaitFor(CharacterHasSpEffect(10000, 5630) || EventFlag(wet_nurse_defeat+15));
+    if (EventFlag(wet_nurse_defeat+15)) {
+        SetSpEffect(10000, 5680, false);
+        SetSpEffect(2600800, 5681, false);
+    }
+    else {
+        SetSpEffect(2600800, 5631, false);
+    }
     RequestCharacterAICommand(2600800, 100, 0);
+    if (EventFlag(wet_nurse_defeat+15)) {
+        EndEvent();
+    }
     WaitFor(!CharacterHasSpEffect(10000, 5630));
     RequestCharacterAICommand(2600800, 110, 0);
     RestartEvent();
 });
 
-// ボスが抱える赤子の声
+// The voice of the baby held by the boss
 $Event(12604815, Default, function() {
     SetNetworkSyncState(Disabled);
     flag = ThisEvent();
@@ -856,7 +1496,7 @@ $Event(12604815, Default, function() {
     RestartEvent();
 });
 
-// ボスランダムワープ先選択_XX
+// Boss random warp destination selection_XX
 $Event(12604820, Default, function(X0_4, X4_4, X8_4) {
     WaitFor(CharacterHasEventMessage(X0_4, 10));
     RandomlySetEventFlagInRange(X4_4, X8_4, ON);
@@ -864,7 +1504,7 @@ $Event(12604820, Default, function(X0_4, X4_4, X8_4) {
     RestartEvent();
 });
 
-// ボスランダムワープ_XX
+// Boss random warp_XX
 $Event(12604830, Default, function(X0_4, X4_4, X8_4, X12_4) {
     SetEventFlag(X4_4, OFF);
     WaitFor(EventFlag(X4_4));
@@ -881,12 +1521,9 @@ $Event(12604830, Default, function(X0_4, X4_4, X8_4, X12_4) {
     RestartEvent();
 });
 
-// 分身召喚攻撃
+// Clone summon attack
 $Event(12604840, Default, function() {
-    WaitFor(
-        EventFlag(12604803)
-            && CharacterHasEventMessage(2600800, 20)
-            && CharacterHasSpEffect(2600800, 5631));
+    WaitFor((EventFlag(12604803) && CharacterHasEventMessage(2600800, 20) && CharacterHasSpEffect(2600800, 5631)) || EventFlag(wet_nurse_defeat+15));
     WarpObjectToCharacter(2601857, 10000, 245);
     WaitFixedTimeFrames(1);
     ChangeCharacterEnableState(2600801, Enabled);
@@ -914,16 +1551,17 @@ L4:
     RequestCharacterAIReplan(2600801);
     RequestCharacterAICommand(2600801, 100, 0);
     SetSpEffect(2600801, 5631, false);
-    WaitFor(
-        CharacterHasEventMessage(2600801, 20)
-            || HasDamageType(2600801, 10000, DamageType.Unspecified));
+    if (EventFlag(wet_nurse_defeat+15)) {
+        EndEvent();
+    }
+    WaitFor(CharacterHasEventMessage(2600801, 20) || HasDamageType(2600801, 10000, DamageType.Unspecified));
     SpawnOneshotSFX(TargetEntityType.Character, 2600801, 220, 655105);
     WaitFixedTimeFrames(10);
     ChangeCharacterEnableState(2600801, Disabled);
     RestartEvent();
 });
 
-// ボス撃破_悪夢の主
+// Boss Defeat_Nightmare Lord
 $Event(12601850, Default, function() {
     if (ThisEvent()) {
         SetMapSoundState(2603852, Disabled);
@@ -958,7 +1596,9 @@ L0:
     SetNetworkSyncState(Disabled);
     if (!HasMultiplayerState(MultiplayerState.Client)) {
         AwardAchievement(19);
-        AwardItemLot(21000);
+        if (!EventFlag(micolash_defeat+13)) {
+            AwardItemLot(21000);
+        }
         WaitFor(CharacterType(10000, TargetType.Alive));
         InitializeEvent(0, 9350, 2);
         SetEventFlag(2600, ON);
@@ -973,6 +1613,9 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.TemporaryParameters, 190, PlayLogMultiplayerType.HostOnly);
         ParameterOutput(PlayerPlayLogParameter.Weapon, 190, PlayLogMultiplayerType.HostOnly);
         ParameterOutput(PlayerPlayLogParameter.Armor, 190, PlayLogMultiplayerType.HostOnly);
+        if (EventFlag(micolash_defeat+13)) {
+            InitializeEvent(micolash_offset, 7800, micolash_lamp_id+1000, 826000);
+        }
         EndEvent();
     }
 L1:
@@ -980,7 +1623,7 @@ L1:
     WaitFixedTimeSeconds(0);
 });
 
-// ボス撃破SE再生_悪夢の主
+// Boss defeat SE playback_Nightmare Lord
 $Event(12601851, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(EventFlag(12601850));
@@ -990,7 +1633,7 @@ $Event(12601851, Default, function() {
     PlaySE(2602850, SoundType.cCharacterMotion, 0);
 });
 
-// ホストがボス部屋入場_初戦_悪夢の主
+// Host enters boss room_First battle_Nightmare Lord
 $Event(12601852, Default, function() {
     EndIf(EventFlag(12601850));
     EndIf(ThisEvent());
@@ -1008,10 +1651,14 @@ $Event(12601852, Default, function() {
     SetEventFlag(9180, ON);
     WaitFixedTimeFrames(1);
     if (!HasMultiplayerState(MultiplayerState.Multiplayer)) {
-        PlayCutsceneToPlayer(26000060, CutscenePlayMode.Skippable, 10000);
+        if (!EventFlag(micolash_defeat+13) || EventFlag(12100866)) {
+            PlayCutsceneToPlayer(26000060, CutscenePlayMode.Skippable, 10000);
+        }
     } else {
 L0:
-        PlayCutsceneToPlayer(26000060, CutscenePlayMode.Unskippable, 10000);
+        if (!EventFlag(micolash_defeat+13) || EventFlag(12100866)) {
+            PlayCutsceneToPlayer(26000060, CutscenePlayMode.Unskippable, 10000);
+        }
     }
 L1:
     WaitFixedTimeFrames(1);
@@ -1027,7 +1674,7 @@ L1:
     SetEventFlag(9342, ON);
 });
 
-// 悪夢の主_撃破後扉制御
+// Nightmare Lord_Door control after defeating
 $Event(12601853, Default, function() {
     if (ThisEventSlot()) {
         ReproduceObjectAnimation(2601852, 2);
@@ -1043,11 +1690,13 @@ L0:
     ForceAnimationPlayback(2601852, 1, false, false, false);
 });
 
-// 悪夢の主_撃破後カットシーン
+// Lord of Nightmares_Cutscene after defeating
 $Event(12601854, Default, function() {
     if (ThisEvent()) {
-        ReproduceObjectAnimation(2601250, 1);
-        ReproduceObjectAnimation(2601852, 1);
+        if (!EventFlag(micolash_defeat+13)) {
+            ReproduceObjectAnimation(2601250, 1);
+            ReproduceObjectAnimation(2601852, 1);
+        }
         EndEvent();
     }
 L0:
@@ -1074,7 +1723,7 @@ L2:
     SetEventFlag(9180, OFF);
 });
 
-// 悪夢の主_時間差入場ゲスト用対処処理
+// Lord of Nightmares_Measures for guests entering at different times
 $Event(12601855, Default, function() {
     WaitFor(CharacterType(10000, TargetType.Alive) && EventFlag(12604850));
     EndIf(HasMultiplayerState(MultiplayerState.Host));
@@ -1088,7 +1737,7 @@ $Event(12601855, Default, function() {
     SetEventFlag(12601852, ON);
 });
 
-// ホストがボス部屋入場_再戦_悪夢の主
+// Host enters boss room_Rematch_Nightmare Lord
 $Event(12604860, Default, function() {
     EndIf(EventFlag(12601850));
     if (!EventFlag(12601852)) {
@@ -1105,23 +1754,21 @@ $Event(12604860, Default, function() {
         SpawnMapSFX(2603859);
     }
 L0:
-    flagChrAct = !EventFlag(12601850)
-        && CharacterType(10000, TargetType.Alive)
-        && ActionButtonInArea(2600850, 2601850);
+    flagChrAct = !EventFlag(12601850) && CharacterType(10000, TargetType.Alive) && ActionButtonInArea(2600850, 2601850);
     flag = EventFlag(12601850);
     WaitFor(flagChrAct || flag);
     EndIf(flag.Passed);
     RotateCharacter(10000, 2602850, 101130, true);
     chrArea = CharacterType(10000, TargetType.Alive) && InArea(10000, 2602851);
-    chrTime = CharacterType(10000, TargetType.Alive) && ElapsedSeconds(2);
-    WaitFor(chrArea || chrTime);
-    if (!chrTime.Passed) {
+    chr = CharacterType(10000, TargetType.Alive) && ElapsedSeconds(2);
+    WaitFor(chrArea || chr);
+    if (!chr.Passed) {
         SetEventFlag(12604850, ON);
     }
     RestartEvent();
 });
 
-// ゲストがボス部屋入場_悪夢の主
+// Guest enters boss room_Lord of Nightmare
 $Event(12604861, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(EventFlag(12601850));
@@ -1133,15 +1780,15 @@ $Event(12604861, Default, function() {
             && ActionButtonInArea(2600850, 2601850));
     RotateCharacter(10000, 2602850, 101130, true);
     chrArea = CharacterType(10000, TargetType.WhitePhantom) && InArea(10000, 2602851);
-    chrTime = CharacterType(10000, TargetType.WhitePhantom) && ElapsedSeconds(2);
-    WaitFor(chrArea || chrTime);
-    if (!chrTime.Passed) {
+    chr = CharacterType(10000, TargetType.WhitePhantom) && ElapsedSeconds(2);
+    WaitFor(chrArea || chr);
+    if (!chr.Passed) {
         SetEventFlag(12604851, ON);
     }
     RestartEvent();
 });
 
-// 他人の世界で霧壁あたり無効_悪夢の主
+// Invalid around fog wall in other people's world_Lord of Nightmare
 $Event(12604862, Default, function() {
     WaitFor(CharacterType(10000, TargetType.Alive) && EntityInRadiusOfEntity(10000, 2601850, 4));
     SetCharacterGravityMaphitStateExcludingOwnWorld(10000, Disabled);
@@ -1149,7 +1796,7 @@ $Event(12604862, Default, function() {
     RestartEvent();
 });
 
-// 他人の世界で霧壁あたり無効2_悪夢の主
+// Invalidity per fog wall in other people's world 2_Nightmare Lord
 $Event(12604863, Default, function() {
     WaitFor(
         CharacterType(10000, TargetType.Alive)
@@ -1160,13 +1807,13 @@ $Event(12604863, Default, function() {
     RestartEvent();
 });
 
-// ボスが動き出す_悪夢の主
+// The boss begins to move_The Lord of Nightmare
 $Event(12604852, Default, function() {
     EndIf(EventFlag(12601850));
     SetCharacterAIState(2600850, Disabled);
     SetCharacterHPBarDisplay(2600850, Disabled);
     if (!ThisEvent()) {
-        WaitFor(EventFlag(12604850));
+        WaitFor(EventFlag(12604850) || EventFlag(micolash_defeat+13));
         if (!HasMultiplayerState(MultiplayerState.Client)) {
             if (!EventFlag(12604731)) {
                 IssueBossRoomEntryNotification(0);
@@ -1203,7 +1850,7 @@ L4:
     StartTimeMeasurement(2601010, 232, Enabled);
 });
 
-// ボスBGM ON_悪夢の主
+// Boss BGM ON_Lord of Nightmare
 $Event(12604853, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(EventFlag(12601850));
@@ -1231,7 +1878,7 @@ L0:
     EnableBossMapSound(2603853, Enabled);
 });
 
-// ボスカメラ_悪夢の主
+// Boss Camera_Nightmare Lord
 $Event(12604854, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(EventFlag(12601850));
@@ -1239,7 +1886,7 @@ $Event(12604854, Default, function() {
     SetLockcamSlotNumber(26, 0, 1);
 });
 
-// ボスBGM OFF_悪夢の主
+// Boss BGM OFF_Nightmare Lord
 $Event(12604855, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(EventFlag(12601850));
@@ -1249,7 +1896,7 @@ $Event(12604855, Default, function() {
     EnableBossMapSound(-1, Disabled);
 });
 
-// ボス撤退_悪夢の主
+// Boss retreat_Lord of Nightmare
 $Event(12604856, Default, function() {
     EndIf(EventFlag(12601850));
     SetCharacterImmortality(2600850, Enabled);
@@ -1273,7 +1920,7 @@ L0:
     DeleteMapSFX(2603851, true);
 });
 
-// ボス撤退_偽死亡する悪夢の主_アニメ再生要求
+// Boss withdrawal_Fake death of the nightmare lord_Anime playback request
 $Event(12604985, Default, function() {
     EndIf(EventFlag(12601850));
     EndIf(EventFlag(12604856));
@@ -1285,7 +1932,7 @@ $Event(12604985, Default, function() {
     RestartEvent();
 });
 
-// ボス撤退_偽死亡する悪夢の主_再生要求終了
+// Boss withdrawal_Fake death of the nightmare lord_Rebirth request completed
 $Event(12604986, Default, function() {
     EndIf(EventFlag(12601850));
     EndIf(ThisEvent());
@@ -1295,7 +1942,7 @@ $Event(12604986, Default, function() {
     EndEvent();
 });
 
-// 前半ボス（NPC）イベント
+// First half boss (NPC) event
 $Event(12604870, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4, X20_4, X24_4, X28_4) {
     EndIf(EventFlag(12601850));
     flagArea = !EventFlag(12604946) && InArea(2600850, X0_4) && EntityInRadiusOfEntity(10000, 2600850, 9);
@@ -1375,7 +2022,7 @@ L8:
     RestartEvent();
 });
 
-// 前半ボス（NPC）イベントラスト
+// First half boss (NPC) event last
 $Event(12604877, Default, function() {
     EndIf(EventFlag(12601850));
     flagHp = !EventFlag(12604856) && HPRatio(2600850) < 0.7 && !EventFlag(12604946);
@@ -1392,7 +2039,7 @@ L0:
     RequestCharacterAICommand(2600850, -1, 0);
 });
 
-// 後半ボス（NPC）ワープイベント
+// Second half boss (NPC) warp event
 $Event(12604878, Default, function() {
     EndIf(EventFlag(12601850));
     chrArea = CharacterType(10000, TargetType.Alive) && InArea(2600850, 2602064);
@@ -1422,13 +2069,13 @@ S2:
     RestartEvent();
 });
 
-// 最終部屋の移動目標フラグ同期
+// Final room moving target flag synchronization
 $Event(12604956, Default, function() {
     WaitFor(ThisEvent());
     EndEvent();
 });
 
-// 最終部屋へ逃走完了_悪夢の主
+// Escape to the final room completed_Nightmare Lord
 $Event(12604879, Default, function() {
     if (!EventFlag(12601850)) {
         WaitFor(CharacterType(10000, TargetType.Alive) && InArea(2600850, 2602066));
@@ -1443,7 +2090,7 @@ L0:
     WaitFixedTimeSeconds(0);
 });
 
-// 後半ボス（NPC）イベント
+// Second half boss (NPC) event
 $Event(12604880, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4, X20_4, X24_4, X28_4) {
     EndIf(EventFlag(12601850));
     flagAreaDmg = (!EventFlag(12604956) && InArea(2600850, X0_4) && EntityInRadiusOfEntity(10000, 2600850, 9))
@@ -1457,10 +2104,7 @@ $Event(12604880, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4, X20_4, X24_4,
     flagAreaDmg5 = flagAreaDmg && EntityInRadiusOfEntity(10000, 2600850, 3);
     WaitFor(flagAreaDmg2 || flagAreaDmg3 || flagAreaDmg4 || flagAreaDmg5);
     GotoIf(L9, 
-        InArea(2600850, 2602059)
-            || InArea(2600850, 2602063)
-            || InArea(2600850, 2602068)
-            || InArea(2600850, 2602065));
+        InArea(2600850, 2602059) || InArea(2600850, 2602063) || InArea(2600850, 2602068) || InArea(2600850, 2602065));
     BatchSetEventFlags(12604865, 12604868, OFF);
     RandomlySetEventFlagInRange(12604865, 12604868, ON);
     if (!EventFlag(12604865)) {
@@ -1518,7 +2162,7 @@ L5:
     RestartEvent();
 });
 
-// 前半ボス（NPC）イベント_被ダメワープ
+// First half boss (NPC) event_damage warp
 $Event(12604888, Default, function() {
     EndIf(EventFlag(12601850));
     WaitFor(
@@ -1558,7 +2202,7 @@ L5:
     RestartEvent();
 });
 
-// 後半ボス（NPC）イベント_被ダメワープ
+// Second half boss (NPC) event_damage warp
 $Event(12604889, Default, function() {
     EndIf(EventFlag(12601850));
     WaitFor(
@@ -1617,7 +2261,7 @@ S10:
     RestartEvent();
 });
 
-// 共通ボス（NPC）イベント_操り骸初期化
+// Common boss (NPC) event_Manipulated skeleton initialization
 $Event(12604890, Default, function(X0_4, X4_4, X8_4) {
     if (EventFlag(X4_4)) {
         ChangeCharacterEnableState(X0_4, Disabled);
@@ -1630,7 +2274,7 @@ L0:
     ForceAnimationPlayback(X0_4, 7002, false, false, false);
 });
 
-// 共通ボス（NPC）イベント_操り骸制御
+// Common boss (NPC) event_Manipulator control
 $Event(12604910, Default, function(X0_4, X4_4) {
     EndIf(EventFlag(X4_4));
     EndIf(ThisEventSlot());
@@ -1646,7 +2290,7 @@ $Event(12604910, Default, function(X0_4, X4_4) {
     ForceAnimationPlayback(X0_4, 7001, false, false, false);
 });
 
-// 最終部屋ロジック制御_悪夢の主
+// Final room logic control_Nightmare Lord
 $Event(12604930, Default, function() {
     EndIf(EventFlag(12601850));
     WaitFor(EventFlag(12604879));
@@ -1655,7 +2299,7 @@ $Event(12604930, Default, function() {
     SetCharacterAIState(2600850, Enabled);
 });
 
-// 悪夢の主_被ダメAIリセット_XX
+// Nightmare Lord_Damage AI Reset_XX
 $Event(12604931, Default, function(X0_4, X4_4) {
     EndIf(EventFlag(12601850));
     WaitFor(EventFlag(X0_4) && HasDamageType(2600850, -1, DamageType.Unspecified));
@@ -1669,7 +2313,7 @@ $Event(12604931, Default, function(X0_4, X4_4) {
     RequestCharacterAIReplan(2600850);
 });
 
-// 悪夢の主_うわ言（前半）_XX
+// Lord of the Nightmare_Lust (first half)_XX
 $Event(12604960, Default, function(X0_4) {
     EndIf(EventFlag(12601850));
     WaitFor(EventFlag(12604852) && !EventFlag(72600300));
@@ -1684,7 +2328,7 @@ $Event(12604960, Default, function(X0_4) {
     RestartEvent();
 });
 
-// 悪夢の主_うわ言（後半）_XX
+// Lord of the Nightmare_Lust (second half)_XX
 $Event(12604970, Default, function(X0_4) {
     EndIf(EventFlag(12601850));
     WaitFor(EventFlag(12604852) && EventFlag(72600300));
@@ -1706,7 +2350,7 @@ L1:
     RestartEvent();
 });
 
-// 悪夢の主_宇宙魔法セリフ
+// Lord of Nightmares_Space Magic Lines
 $Event(12604980, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4, X20_4, X24_4) {
     EndIf(EventFlag(12601850));
     WaitFor(EventFlag(12604852));
@@ -1719,7 +2363,7 @@ $Event(12604980, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4, X20_4, X24_4)
     RestartEvent();
 });
 
-// SAN値で狂気の悪霊出現_トラップロード_XX
+// Crazy evil spirit appears with SAN value_Trap Road_XX
 $Event(12604000, Restart, function(X0_4, X4_1, X8_4) {
     EndIf(ThisEventSlot());
     ChangeCharacterEnableState(X0_4, Disabled);
@@ -1731,7 +2375,7 @@ $Event(12604000, Restart, function(X0_4, X4_1, X8_4) {
     ForceAnimationPlayback(X0_4, 6200, false, true, false);
 });
 
-// SAN値で狂気の悪霊消滅_トラップロード_XX
+// Destroy crazy evil spirits with SAN value_Trap Road_XX
 $Event(12604005, Restart, function(X0_4, X4_1, X8_4) {
     if (!ThisEventSlot()) {
         WaitFor(EventFlag(X8_4) && PlayerInsightAmount() <= X4_1);
@@ -1740,7 +2384,7 @@ L0:
     ForceCharacterDeath(X0_4, false);
 });
 
-// リスポン禁止_XX_トラップロード
+// No respawn_XX_Traplord
 $Event(12600500, Restart, function(X0_4) {
     if (ThisEventSlot()) {
         ForceCharacterTreasure(X0_4);
@@ -1752,7 +2396,7 @@ L0:
     EndEvent();
 });
 
-// 邪眼_制御
+// evil eye_control
 $Event(12600020, Restart, function(X0_4, X4_4) {
     SetCharacterGravity(X0_4, Disabled);
     SetCharacterGravity(X4_4, Disabled);
@@ -1767,7 +2411,7 @@ $Event(12600020, Restart, function(X0_4, X4_4) {
     DeleteMapSFX(2603000, false);
 });
 
-// 邪眼_弾丸キャラ位置制御
+// Evil eye_bullet character position control
 $Event(12600021, Restart, function() {
     WaitFor(InArea(10000, 2602017));
     IssueShortWarpRequest(2600100, TargetEntityType.Area, 2602019, -1);
@@ -1776,7 +2420,7 @@ $Event(12600021, Restart, function() {
     RestartEvent();
 });
 
-// 邪眼_効果本体1
+// Evil eye_effect body 1
 $Event(12600130, Default, function(X0_4) {
     SetNetworkSyncState(Disabled);
     if (!CharacterHasSpEffect(X0_4, 4691)) {
@@ -1792,7 +2436,7 @@ L0:
     RestartEvent();
 });
 
-// 邪眼_効果本体2
+// Evil eye_effect body 2
 $Event(12600150, Default, function(X0_4) {
     SetNetworkSyncState(Disabled);
     WaitFor(!CharacterHasSpEffect(X0_4, 4690) && CharacterHasSpEffect(X0_4, 4691));
@@ -1800,7 +2444,7 @@ $Event(12600150, Default, function(X0_4) {
     RestartEvent();
 });
 
-// 邪眼_光源制御
+// Evil eye_light source control
 $Event(12600025, Default, function() {
     WaitFor(
         CharacterType(10000, TargetType.Alive)
@@ -1808,13 +2452,12 @@ $Event(12600025, Default, function() {
                 || CharacterAIState(2600100, AIStateType.Alert)
                 || CharacterAIState(2600100, AIStateType.Combat)));
     SpawnMapSFX(2603000);
-    WaitFor(
-        CharacterType(10000, TargetType.Alive) && CharacterAIState(2600100, AIStateType.Normal));
+    WaitFor(CharacterType(10000, TargetType.Alive) && CharacterAIState(2600100, AIStateType.Normal));
     DeleteMapSFX(2603000, true);
     RestartEvent();
 });
 
-// 邪眼_機能停止
+// Evil eye_stop function
 $Event(12600026, Restart, function() {
     if (!ThisEvent()) {
         WaitFor(ActionButtonInArea(7100, 2601271));
@@ -1875,7 +2518,7 @@ L0:
     DeleteMapSFX(2603000, true);
 });
 
-// 邪眼_落下位置に出現
+// Evil eye_appears at the falling position
 $Event(12600027, Restart, function() {
     ChangeCharacterEnableState(2600129, Disabled);
     if (ThisEvent()) {
@@ -1887,7 +2530,7 @@ L0:
     ChangeCharacterEnableState(2600129, Enabled);
 });
 
-// 邪眼_交信ジェスチャーでボディジェム入手
+// Get body gem with evil eye communication gesture
 $Event(12600028, Default, function() {
     EndIf(ThisEvent());
     EndIf(HasMultiplayerState(MultiplayerState.Client));
@@ -1901,20 +2544,17 @@ L0:
     EndEvent();
 });
 
-// 邪眼_殺害で儀式素材入手
+// Obtain ritual materials by killing evil eye
 $Event(12600029, Restart, function() {
     EndIf(ThisEvent());
     EndIf(HasMultiplayerState(MultiplayerState.Client));
-    WaitFor(
-        EventFlag(12600027)
-            && HPRatio(2600129) == 0
-            && HasDamageType(2600129, 10000, DamageType.Unspecified));
+    WaitFor(EventFlag(12600027) && HPRatio(2600129) == 0 && HasDamageType(2600129, 10000, DamageType.Unspecified));
     AwardItemLot(2605010);
     SetEventFlag(5913, ON);
     WaitFixedTimeFrames(0);
 });
 
-// 赤子の声_XX
+// Baby's voice_XX
 $Event(12600010, Default, function(X0_4, X4_4, X8_4) {
     EndIf(EventFlag(12601802));
     WaitFor(HasMultiplayerState(MultiplayerState.Host) && InArea(10000, X0_4));
@@ -1927,7 +2567,7 @@ L0:
     EndEvent();
 });
 
-// 花嫁_制御
+// bride_control
 $Event(12600030, Default, function() {
     SetCharacterTeamType(2600500, TeamType.FriendlyNPC);
     if (ThisEvent()) {
@@ -1948,7 +2588,7 @@ L1:
     ChangeCharacterEnableState(2600500, Disabled);
 });
 
-// 花嫁_一撃死
+// Bride_One hit death
 $Event(12600031, Default, function() {
     if (ThisEvent()) {
         SetCharacterBackreadState(2600500, true);
@@ -1960,7 +2600,7 @@ L0:
     ForceCharacterDeath(2600500, false);
 });
 
-// 特殊待機_敵対時解除
+// Special standby_Cancel when hostile
 $Event(12600035, Default, function(X0_4) {
     ForceAnimationPlayback(X0_4, 7000, false, false, false);
     chr = CharacterTargetedBy(X0_4, 10000)
@@ -1973,22 +2613,19 @@ $Event(12600035, Default, function(X0_4) {
     ForceAnimationPlayback(X0_4, 7001, false, false, false);
 });
 
-// 牢番Ａ初登場演出
+// First appearance of Prisoner A
 $Event(12600040, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4) {
     SetCharacterAIState(X4_4, Disabled);
     WaitFor(InArea(X12_4, X0_4) || InArea(X12_4, X16_4));
     SetCharacterAIState(X4_4, Enabled);
     SetCharacterHome(X4_4, X8_4);
     RequestCharacterAICommand(X4_4, 20, 0);
-    WaitFor(
-        HasDamageType(X4_4, 10000, DamageType.Unspecified)
-            || HPRatio(X4_4) < 1
-            || InArea(X4_4, X8_4));
+    WaitFor(HasDamageType(X4_4, 10000, DamageType.Unspecified) || HPRatio(X4_4) < 1 || InArea(X4_4, X8_4));
     RequestCharacterAICommand(X4_4, -1, 0);
     RequestCharacterAIReplan(X4_4);
 });
 
-// 牢番Ａ非戦闘主義
+// Prisoner A non-combat principle
 $Event(12600041, Default, function(X0_4) {
     SetSpEffect(X0_4, 5641, false);
     WaitFor(HasDamageType(X0_4, 10000, DamageType.Unspecified));
@@ -1996,7 +2633,7 @@ $Event(12600041, Default, function(X0_4) {
     RequestCharacterAIReplan(X0_4);
 });
 
-// 牢番Ａ不意打ちマン
+// Prisoner A Surprise Attack Man
 $Event(12600047, Default, function(X0_4) {
     RequestCharacterAICommand(X0_4, 40, 0);
     WaitFor(CharacterAIState(2600202, AIStateType.Combat));
@@ -2008,7 +2645,7 @@ $Event(12600047, Default, function(X0_4) {
     RequestCharacterAICommand(X0_4, -1, 0);
 });
 
-// 牢番Ａ_便所男
+// Prisoner A_Toilet Man
 $Event(12600180, Default, function(X0_4, X4_4) {
     SetNetworkSyncState(Disabled);
     EndIf(HasMultiplayerState(MultiplayerState.Client));
@@ -2021,16 +2658,16 @@ $Event(12600180, Default, function(X0_4, X4_4) {
     WarpObjectToCharacter(2601040, X0_4, -1);
     CreateObjectfollowingSFX(2601040, 200, 900201);
     act = ActionButtonInArea(2600030, 2601040);
-    time = ElapsedSeconds(15);
-    WaitFor(act || time);
+    cond = ElapsedSeconds(15);
+    WaitFor(act || cond);
     DeleteObjectfollowingSFX(2601040, true);
-    RestartIf(time.Passed);
+    RestartIf(cond.Passed);
     ForceAnimationPlayback(10000, 101140, false, false, false);
     AwardItemLot(X4_4);
     RestartEvent();
 });
 
-// 死と闇の眷属の特殊待機
+// Special standby for the followers of death and darkness
 $Event(12600050, Default, function(X0_4, X4_4) {
     SetCharacterAIState(X0_4, Disabled);
     ForceAnimationPlayback(X0_4, 7000, false, false, false);
@@ -2040,17 +2677,15 @@ $Event(12600050, Default, function(X0_4, X4_4) {
     SetCharacterAIState(X0_4, Enabled);
 });
 
-// 敵対時特殊待機解除
+// Cancel special standby when hostile
 $Event(12600060, Default, function(X0_4, X4_4, X8_4) {
     ForceAnimationPlayback(X0_4, X4_4, true, false, true);
-    WaitFor(
-        HasDamageType(X0_4, 10000, DamageType.Unspecified)
-            || CharacterAIState(X0_4, AIStateType.Combat));
+    WaitFor(HasDamageType(X0_4, 10000, DamageType.Unspecified) || CharacterAIState(X0_4, AIStateType.Combat));
     RequestCharacterAnimationReset(X0_4, Interpolation.Interpolated);
     ForceAnimationPlayback(X0_4, X8_4, false, false, false);
 });
 
-// 屍肉鳥が籠から落ちてくる
+// Carcass bird falls from cage
 $Event(12600070, Default, function(X0_4, X4_4, X8_4) {
     WaitFor(EntityInRadiusOfEntity(10000, X0_4, X8_4));
     SetCharacterHome(X0_4, X4_4);
@@ -2060,11 +2695,10 @@ $Event(12600070, Default, function(X0_4, X4_4, X8_4) {
     RequestCharacterAIReplan(X0_4);
 });
 
-// 捨て子の巨人特殊待機
+// Abandoned Giant Special Standby
 $Event(12600080, Default, function(X0_4, X4_4, X8_4, X12_4) {
     ForceAnimationPlayback(X0_4, X4_4, true, false, true);
-    WaitFor(
-        HasDamageType(X0_4, 10000, DamageType.Unspecified) || EntityInRadiusOfEntity(X0_4, 10000, 5));
+    WaitFor(HasDamageType(X0_4, 10000, DamageType.Unspecified) || EntityInRadiusOfEntity(X0_4, 10000, 5));
     BatchSetEventFlags(12600080, 12600081, OFF);
     RandomlySetEventFlagInRange(12600080, 12600081, ON);
     GotoIf(S0, EventFlag(12600080));
@@ -2077,14 +2711,14 @@ S1:
     EndEvent();
 });
 
-// ロジック起動_領域判定
+// Logic activation_area determination
 $Event(12600090, Default, function(X0_4, X4_4) {
     SetCharacterAIState(X0_4, Disabled);
     WaitFor(InArea(10000, X4_4) || HasDamageType(X0_4, -1, DamageType.Unspecified));
     SetCharacterAIState(X0_4, Enabled);
 });
 
-// 狂犬の特殊待機_連動解除
+// Mad dog's special standby_link cancellation
 $Event(12600105, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4, X20_4) {
     ForceAnimationPlayback(X0_4, X4_4, true, false, true);
     dmg = HasDamageType(X0_4, -1, DamageType.Unspecified);
@@ -2099,7 +2733,7 @@ $Event(12600105, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4, X20_4) {
     ForceAnimationPlayback(X0_4, X8_4, false, false, false);
 });
 
-// 銀の獣の眷属死亡時に寄生虫発生_XX
+// Parasites occur when a kin of the silver beast dies_XX
 $Event(12600110, Restart, function(X0_4, X4_4, X8_4) {
     ChangeCharacterEnableState(X4_4, Disabled);
     ChangeCharacterEnableState(X8_4, Disabled);
@@ -2114,7 +2748,7 @@ $Event(12600110, Restart, function(X0_4, X4_4, X8_4) {
     ForceAnimationPlayback(X8_4, 7000, false, false, false);
 });
 
-// 宝箱_XX
+// Treasure Chest_XX
 $Event(12600120, Restart, function(X0_4, X4_4) {
     if (ThisEventSlot()) {
         ReproduceObjectAnimation(X4_4, 0);
@@ -2127,7 +2761,7 @@ $Event(12600120, Restart, function(X0_4, X4_4) {
     SetObjectTreasureState(X4_4, Enabled);
 });
 
-// 宝_XX
+// Treasure_XX
 $Event(12600125, Restart, function(X0_4, X4_4) {
     EndIf(ThisEventSlot());
     EndIf(HasMultiplayerState(MultiplayerState.Client));
@@ -2138,7 +2772,7 @@ $Event(12600125, Restart, function(X0_4, X4_4) {
     DeleteObjectfollowingSFX(X0_4, true);
 });
 
-// ロジック起動_距離判定
+// Logic activation_distance judgment
 $Event(12600190, Restart, function(X0_4, X4_4) {
     SetCharacterAIState(X0_4, Disabled);
     areaDmg |= EntityInRadiusOfEntity(X0_4, 10000, 30);
@@ -2150,7 +2784,7 @@ $Event(12600190, Restart, function(X0_4, X4_4) {
     SetCharacterAIState(X0_4, Enabled);
 });
 
-// さまよう狂気_TR_XX
+// Wandering Madness_TR_XX
 $Event(12600400, Restart, function(X0_4, X4_4) {
     if (ThisEventSlot()) {
         ChangeCharacterEnableState(X0_4, Disabled);
@@ -2165,7 +2799,7 @@ L0:
     WaitFixedTimeSeconds(0);
 });
 
-// さまよう狂気_逃げる方向指定
+// Wandering madness_Escape direction specification
 $Event(12600410, Restart, function() {
     EndIf(EventFlag(12600403));
     WaitFor(
@@ -2178,14 +2812,14 @@ $Event(12600410, Restart, function() {
     RequestCharacterAICommand(2600403, -1, 0);
 });
 
-// 悪夢の主_後半戦
+// Lord of Nightmare_Second half
 $Event(12600701, Restart, function() {
     WaitFor(EventFlag(1080) && EventFlag(72600300));
     BatchSetEventFlags(1080, 1099, OFF);
     SetEventFlag(1081, ON);
 });
 
-// 悪夢の主_初期化
+// Nightmare Lord_Initialization
 $Event(12600703, Restart, function() {
     WaitFor(!EventFlag(1082));
     BatchSetEventFlags(1080, 1099, OFF);
@@ -2194,24 +2828,24 @@ $Event(12600703, Restart, function() {
     BatchSetEventFlags(72600300, 72600319, OFF);
 });
 
-// 共通_エレベータ_疑似起動済みフラグ
+// Common_elevator_pseudo-started flag
 $Event(12601294, Default, function() {
     WaitFixedTimeFrames(0);
 });
 
-// 共通_エレベータレバー_操作不可msg_XX
+// Common_Elevator lever_Unoperable msg_XX
 $Event(12601295, Default, function(X0_4, X4_4, X8_4, X12_4, X16_1) {
     SetNetworkSyncState(Disabled);
     WaitFor(
         (!EventFlag(X4_4) && ActionButtonInArea(7100, X0_4))
             || (EventFlag(X8_4) && ActionButtonInArea(7100, X0_4))
-            || (EventFlagState(X16_1, TargetEventFlagType.EventFlag, X12_4)
-                && ActionButtonInArea(7100, X0_4)));
+            || (EventFlagState(X16_1, TargetEventFlagType.EventFlag, X12_4) && ActionButtonInArea(7100, X0_4)));
     DisplayGenericDialog(10010172, PromptType.OKCANCEL, NumberofOptions.OneButton, -1, 3);
     RestartEvent();
 });
 
-// 共通エレベータ_初期化_XX
+// Common elevator_initialization_XX
+// InitializeEvent(3, 12601310, 12601254, 2601280, 2601281, 2601282, 12601334);
 $Event(12601310, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4) {
     if (!EventFlag(X0_4)) {
         ReproduceObjectAnimation(X4_4, 4);
@@ -2228,7 +2862,8 @@ $Event(12601310, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4) {
     SetObjactState(X12_4, 2600000, Disabled);
 });
 
-// 第一SCエレベータ_初期化
+// 1st SC elevator_initialization
+// InitializeEvent(0, 12601315, 12601256, 2601240, 2601241, 2601242, 12601323);
 $Event(12601315, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4) {
     if (!EventFlag(X0_4)) {
         ReproduceObjectAnimation(X4_4, 4);
@@ -2245,7 +2880,8 @@ $Event(12601315, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4) {
     SetObjactState(X12_4, 2600000, Enabled);
 });
 
-// 共通エレベータ_上昇_XX
+// Common elevator_ascent_XX
+// InitializeEvent(5, 12601320, 12605254, 12601255, 2602291, 2602292, 2601291, 2601292, 2601290, 12601291);
 $Event(12601320, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4, X20_4, X24_4, X28_4) {
     WaitFor(
         (!EventFlag(X0_4) && !EventFlag(X4_4) && InArea(10000, X8_4))
@@ -2262,7 +2898,8 @@ $Event(12601320, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4, X20_4, X24_4,
     RestartEvent();
 });
 
-// 共通エレベータ_下降_XX
+// Common elevator_descending_XX
+// InitializeEvent(3, 12601330, 12605256, 12601256, 2602252, 2602251, 2601242, 2601241, 2601240, 12601241);
 $Event(12601330, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4, X20_4, X24_4, X28_4) {
     WaitFor(
         (!EventFlag(X0_4) && EventFlag(X4_4) && InArea(10000, X12_4))
@@ -2279,7 +2916,7 @@ $Event(12601330, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4, X20_4, X24_4,
     RestartEvent();
 });
 
-// 屋上エレベータ_初期状態逆転_XX
+// Rooftop elevator_Initial state reversal_XX
 $Event(12601340, Default, function(X0_4, X4_4, X8_4) {
     EndIf(EventFlag(X0_4));
     SetEventFlag(X4_4, ON);
@@ -2287,7 +2924,7 @@ $Event(12601340, Default, function(X0_4, X4_4, X8_4) {
     SetObjactState(X8_4, 2600000, Disabled);
 });
 
-// 図書館エレベータ_初期化
+// Library elevator_initialization
 $Event(12601351, Default, function(X0_4, X4_4, X8_4) {
     if (!EventFlag(X0_4)) {
         ReproduceObjectAnimation(X4_4, 0);
@@ -2304,7 +2941,7 @@ $Event(12601351, Default, function(X0_4, X4_4, X8_4) {
     EndEvent();
 });
 
-// 図書館エレベータ_作動
+// Library elevator_operation
 $Event(12601352, Default, function() {
     WaitFor(EventFlag(12601351));
     if (!EventFlag(12601253)) {
@@ -2322,11 +2959,7 @@ L0:
         ForceAnimationPlayback(2601260, 3, false, true, false);
     }
 L1:
-    WaitFor(
-        !InArea(10000, 2602241)
-            && !InArea(10000, 2602242)
-            && !InArea(10000, 2602243)
-            && !InArea(10000, 2602244));
+    WaitFor(!InArea(10000, 2602241) && !InArea(10000, 2602242) && !InArea(10000, 2602243) && !InArea(10000, 2602244));
     if (!EventFlag(12601253)) {
         ForceAnimationPlayback(2601261, 9, false, false, false);
         ForceAnimationPlayback(2601260, 7, false, true, false);
@@ -2340,7 +2973,7 @@ L2:
     RestartEvent();
 });
 
-// ほおずき_弾丸ダミーキャラ接続_XX
+// Hotzuki_Bullet dummy character connection_XX
 $Event(12605200, Restart, function(X0_4, X4_4) {
     SetCharacterGravity(X4_4, Disabled);
     if (!ThisEventSlot()) {
@@ -2355,7 +2988,7 @@ $Event(12605200, Restart, function(X0_4, X4_4) {
     RestartEvent();
 });
 
-// マップ初回入場_プレイログ
+// Map first entry_play log
 $Event(12600990, Default, function() {
     EndIf(ThisEvent());
     EndIf(HasMultiplayerState(MultiplayerState.Client));
@@ -2367,7 +3000,7 @@ $Event(12600990, Default, function() {
     InitializeEvent(0, 9350, 3);
 });
 
-// 礼拝堂扉を開放
+// Open chapel door
 $Event(12601050, Default, function() {
     if (ThisEvent()) {
         ReproduceObjectAnimation(2601050, 1);
@@ -2380,7 +3013,7 @@ L0:
     WaitFixedTimeSeconds(0);
 });
 
-// 邪眼橋扉を開放
+// Open the evil eye bridge door
 $Event(12601051, Default, function() {
     if (ThisEvent()) {
         ReproduceObjectAnimation(2601051, 0);
@@ -2396,7 +3029,7 @@ L0:
     WaitFixedTimeSeconds(0);
 });
 
-// ワープ椅子_ワープアニメ再生_XX
+// Warp Chair_Warp Anime Play_XX
 $Event(12607010, Default, function(X0_4, X4_4) {
     WaitFor(EventFlag(X0_4));
     IssueShortWarpRequest(10000, TargetEntityType.Object, X4_4, 200);
@@ -2405,7 +3038,7 @@ $Event(12607010, Default, function(X0_4, X4_4) {
     SetEventFlag(X0_4, OFF);
 });
 
-// ワープ椅子_ワープ_XX
+// Warp Chair_Warp_XX
 $Event(12607020, Default, function(X0_4, X4_4, X8_4) {
     WaitFor(EventFlag(X0_4));
     SetEventFlag(X0_4, OFF);
@@ -2413,7 +3046,7 @@ $Event(12607020, Default, function(X0_4, X4_4, X8_4) {
     SetEventFlag(X8_4, ON);
 });
 
-// ワープ椅子_ワープ後処理
+// Warp chair_warp post-processing
 $Event(12607040, Default, function() {
     if (!AnyBatchEventFlags(9001, 9010)) {
         EndEvent();
@@ -2463,7 +3096,7 @@ $Event(12607040, Default, function() {
     BatchSetEventFlags(9000, 9010, OFF);
 });
 
-// ワープ椅子_初回起動演出_XX
+// Warp chair_first startup effect_XX
 $Event(12607050, Default, function(X0_4, X4_4, X8_4) {
     EndIf(EventFlag(X0_4));
     SetCharacterGravity(X4_4, Disabled);
@@ -2476,5 +3109,3 @@ $Event(12607050, Default, function(X0_4, X4_4, X8_4) {
     ForceAnimationPlayback(X4_4, 101166, false, true, false);
     ChangeCharacterEnableState(X4_4, Disabled);
 });
-
-

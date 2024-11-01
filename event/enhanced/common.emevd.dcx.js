@@ -4,11 +4,156 @@
 // @game    Bloodborne
 // @string    ""
 // @linked    []
-// @version    3.4.2
+// @version    3.4.1
 // ==/EMEVD==
 
-// コンストラクタ
+// constructor
 $Event(0, Default, function() {
+    SetEventFlag(1509, OFF);
+    SetEventFlag(1510, OFF);
+    SetEventFlag(12100761, OFF); // re-enable rest in the menu
+    
+    SetSpEffect(10000, 8039, false);
+    
+    InitializeEvent(0, 12101000, 4110, 2100211, 2561);
+    InitializeEvent(1, 12101000, 4111, 2100211, 3330);
+    InitializeEvent(2, 12101000, 4112, 2100211, 3843);
+    InitializeEvent(3, 12101000, 4113, 2100212, 3840);
+    InitializeEvent(4, 12101000, 4114, 2100212, 3073);
+    InitializeEvent(5, 12101000, 4115, 2100212, 2818);
+    InitializeEvent(6, 12101000, 4116, 2100212, 3843);
+    InitializeEvent(7, 12101000, 4117, 2100213, 3840);
+    InitializeEvent(8, 12101000, 4118, 2100213, 3841);
+    InitializeEvent(9, 12101000, 4119, 2100213, 3842);
+    
+    // boss defeated broken lamp menu flags
+    InitializeEvent(0, 12102040, 0);
+    InitializeEvent(0, 12102041, 0);
+    InitializeEvent(0, 12102043, 0);
+    
+    // increase cycle
+    InitializeEvent(0, 12102020, 0);
+    InitializeEvent(0, 12102021, 0);
+
+    // dark fog
+    //SetEventFlag(12102031, ON);
+    InitializeEvent(0, 12102032, 0);
+    
+    // unlock all lamps
+    InitializeEvent(0, 12102200, 0);
+    
+    // unlock all shortcuts
+    InitializeEvent(0, 12102210, 0);
+    
+    // spEffect test
+    //InitializeEvent(0, 13100000, 0);
+    
+    // check if in Hunter's Dream for shop to update with badges
+    InitializeEvent(0, 12100001, 0);
+    InitializeEvent(0, 12100003, 0);
+    
+    InitializeEvent(0, 12100005, 0);
+    
+    // bulk acquisitions
+    InitializeEvent(0, 12101300, 0);
+    InitializeEvent(0, 12101301, 0);
+    InitializeEvent(0, 12101302, 0);
+    InitializeEvent(0, 12101303, 0);
+    InitializeEvent(0, 12101310, 0);
+    InitializeEvent(0, 12101320, 0);
+    InitializeEvent(0, 12101330, 0);
+    InitializeEvent(0, 12101331, 0);
+    InitializeEvent(0, 12101332, 0);
+    InitializeEvent(0, 12101333, 0);
+    InitializeEvent(0, 12101334, 0);
+    InitializeEvent(0, 12101340, 0);
+    InitializeEvent(0, 12101360, 0);
+    InitializeEvent(0, 12101361, 0);
+    
+    // beast and broccoli runes
+    InitializeEvent(0, 12100770, 0);
+    InitializeEvent(0, 12100769, 0);
+    
+    InitializeEvent(0, 12101010, 0);
+    
+    InitializeEvent(0, 8700, 0); // disable item refill after time limit
+    
+    // Settings initializers
+    InitializeEvent(0, 8400, 0); // lamp
+    InitializeEvent(0, 8401, 0); // lamp 2
+    InitializeEvent(0, 8405, 0); // broken lamp
+    InitializeEvent(0, 8406, 0); // misc
+    
+    if (EventFlag(12100850)) { // auto rematch enabled, rematch initiated from dream, and death respawn location is dream
+        SetEventFlag(12100850, OFF);
+        SetEventFlag(12100650, ON);
+    }
+    
+    SetEventFlag(12100750, OFF);
+    if (EventFlag(12100650)) { // initiated from the dream
+        SetEventFlag(12100650, OFF);
+        SetEventFlag(12100750, ON);
+        if (EventFlag(12100963)) { // victory respawn location is set to dream
+            SetPlayerRespawnPoint(2102969); // return to broken lamp
+        }
+    }
+    
+    // remove insight on auto rematch
+    if (EventFlag(8950)) {
+        SetEventFlag(8950, OFF);
+        SetSpEffect(10000, 4682, false);
+    }
+    
+    InitializeEvent(0, 12105060, 0);
+    InitializeEvent(0, 12105064, 0);
+    InitializeEvent(0, 12105070, 72100141, 6011, 20);
+    InitializeEvent(1, 12105070, 72100142, 6012, 21);
+    InitializeEvent(2, 12105070, 72100143, 6013, 22);
+    InitializeEvent(3, 12105070, 72100144, 6014, 23);
+    InitializeEvent(4, 12105070, 72100145, 6015, 24);
+    InitializeEvent(5, 12105070, 72100146, 6016, 25);
+    InitializeEvent(6, 12105070, 72100147, 6017, 26);
+    InitializeEvent(7, 12105070, 72100148, 6018, 27);
+    InitializeEvent(8, 12105070, 72100149, 6019, 28);
+    InitializeEvent(9, 12105070, 72100150, 6020, 0);
+    InitializeEvent(10, 12105070, 72100151, 6021, 0);
+    InitializeEvent(11, 12105070, 72100152, 6022, 0);
+    InitializeEvent(12, 12105070, 72100153, 6023, 0);
+    InitializeEvent(13, 12105070, 72100154, 6024, 0);
+    InitializeEvent(14, 12105070, 72100155, 6025, 0);
+    
+    InitializeEvent(0, 12105062, 0);
+    
+    InitializeEvent(0, 12105020, 0);
+    InitializeEvent(0, 12105021, 0);
+    InitializeEvent(0, 12105022, 0);
+    InitializeEvent(0, 12105023, 0);
+    InitializeEvent(0, 12105024, 0);
+    
+    SetEventFlag(72100420, OFF);
+    SetEventFlag(72100421, OFF);
+    SetEventFlag(72100422, OFF);
+    SetEventFlag(72100423, OFF);
+    SetEventFlag(72100424, OFF);
+    SetEventFlag(72100425, OFF);
+    SetEventFlag(72100426, OFF);
+    
+    InitializeEvent(0, 12100020, 4900, 6071, 1);
+    InitializeEvent(1, 12100020, 4901, 6072, 1);
+    InitializeEvent(2, 12100020, 4902, 6073, 1);
+    InitializeEvent(3, 12100020, 4903, 6074, 0);
+    InitializeEvent(4, 12100020, 4904, 6075, 0);
+    InitializeEvent(5, 12100020, 4905, 6076, 0);
+    InitializeEvent(6, 12100020, 4906, 6077, 0);
+    InitializeEvent(7, 12100020, 4907, 6078, 0);
+    InitializeEvent(8, 12100020, 4908, 6079, 0);
+    InitializeEvent(9, 12100020, 4909, 6080, 0);
+    InitializeEvent(10, 12100020, 4910, 6081, 0);
+    InitializeEvent(11, 12100020, 4911, 6082, 0);
+    InitializeEvent(12, 12100020, 4912, 6083, 0);
+    InitializeEvent(13, 12100020, 4913, 6084, 0);
+    InitializeEvent(14, 12100020, 4914, 6085, 0);
+    
     SetEventFlag(7501, OFF);
     InitializeEvent(0, 9190, 0);
     InitializeEvent(0, 9191, 0);
@@ -188,7 +333,7 @@ $Event(0, Default, function() {
     }
 });
 
-// プリコンストラクタ
+// pre-constructor
 $Event(50, Default, function() {
     InitializeEvent(0, 6002, 0);
     if (!HasMultiplayerState(MultiplayerState.Client)) {
@@ -403,6 +548,7 @@ L0:
     InitializeEvent(0, 3500, 4900, 6900, 6071, 6011);
     InitializeEvent(1, 3500, 4901, 6901, 6072, 6012);
     InitializeEvent(2, 3500, 4902, 6902, 6073, 6013);
+    
     InitializeEvent(0, 3503, 0);
     if (EventFlag(6604)) {
         RemoveItemFromPlayer(ItemType.Goods, 4000, 1);
@@ -449,7 +595,1610 @@ L1:
     NoOp();
 });
 
-// DLC削除_XX
+// activate all lamps
+$Event(12102200, Default, function() {
+    EndIf(ThisEvent());
+    SetEventFlag(12102202, ON);
+    WaitFor(EventFlag(12102201) || EventFlag(12102301));
+    if (!EventFlag(12102301)) {
+        DisplayBanner(TextBannerType.StadiumWin); // unlocked
+    }
+    
+    // abandoned workshop
+    //SetEventFlag(72110200, ON);
+    SetEventFlag(12117810, ON);
+    
+    SetEventFlag(12207810, ON);
+    SetEventFlag(12207830, ON);
+    SetEventFlag(12307810, ON);
+    SetEventFlag(12307830, ON);
+    SetEventFlag(12307850, ON);
+    SetEventFlag(12407810, ON);
+    SetEventFlag(12407830, ON);
+    SetEventFlag(12417810, ON);
+    SetEventFlag(12417830, ON);
+    SetEventFlag(12417850, ON);
+    SetEventFlag(12417870, ON);
+    SetEventFlag(12427810, ON);
+    SetEventFlag(12427830, ON);
+    SetEventFlag(12427850, ON);
+    SetEventFlag(12507810, ON);
+    SetEventFlag(12507830, ON);
+    SetEventFlag(12507850, ON);
+    SetEventFlag(12607810, ON);
+    SetEventFlag(12607830, ON);
+    SetEventFlag(12607850, ON);
+    SetEventFlag(12607870, ON);
+    SetEventFlag(12707810, ON);
+    SetEventFlag(12707830, ON);
+    SetEventFlag(12807810, ON);
+    SetEventFlag(12807830, ON);
+    SetEventFlag(12807850, ON);
+    SetEventFlag(12807870, ON);
+    SetEventFlag(13207810, ON);
+    SetEventFlag(13207830, ON);
+    SetEventFlag(13207850, ON);
+    SetEventFlag(13207870, ON);
+    SetEventFlag(13307810, ON);
+    SetEventFlag(13307830, ON);
+    SetEventFlag(13407810, ON);
+    SetEventFlag(13407830, ON);
+    SetEventFlag(13407850, ON);
+    SetEventFlag(13407870, ON);
+    SetEventFlag(13507810, ON);
+    SetEventFlag(13507830, ON);
+    SetEventFlag(13507850, ON);
+    SetEventFlag(13607810, ON);
+    SetEventFlag(13607830, ON);
+    SetEventFlag(13607850, ON);
+    
+    SetEventFlag(12102202, OFF);
+});
+
+// unlock all shortcuts
+$Event(12102210, Default, function() {
+    EndIf(ThisEvent());
+    SetEventFlag(12102212, ON);
+    WaitFor(EventFlag(12102211) || EventFlag(12102311));
+    if (!EventFlag(12102311)) {
+        DisplayBanner(TextBannerType.StadiumWin);
+    }
+    
+    SetEventFlag(12200110, ON);
+    SetEventFlag(12200125, ON);
+    SetEventFlag(12300120, ON);
+    SetEventFlag(12300121, ON);
+    SetEventFlag(12409453, ON);
+    SetEventFlag(12400160, ON);
+    SetEventFlag(12400157, ON);
+    SetEventFlag(12400177, ON);
+    SetEventFlag(12410200, ON);
+    SetEventFlag(12410202, ON);
+    SetEventFlag(12410203, ON);
+    SetEventFlag(12410112, ON);
+    SetEventFlag(12410117, ON);
+    SetEventFlag(12415350, OFF);
+    SetEventFlag(12410350, ON);
+    SetEventFlag(12410330, ON);
+    SetEventFlag(12420123, ON);
+    SetEventFlag(12500074, ON);
+    SetEventFlag(12500501, ON);
+    
+    
+    SetEventFlag(12601251, OFF);
+    
+    // mensis first cage elevator
+    SetEventFlag(12601253, OFF);
+    SetEventFlag(12601254, OFF);
+    SetEventFlag(12601334, ON);
+    
+    // mensis second cage elevator
+    SetEventFlag(12605254, OFF);
+    SetEventFlag(12601255, OFF);
+    SetEventFlag(12601335, ON);
+    
+    // mensis bottom elevator
+    SetEventFlag(12605256, OFF);
+    SetEventFlag(12601256, ON);
+    SetEventFlag(12601323, ON);
+    
+    // mensis top elevator
+    SetEventFlag(12605251, OFF);
+    SetEventFlag(12601251, OFF);
+    SetEventFlag(12601331, ON);
+    
+    // mikolash door
+    SetEventFlag(12601051, ON);
+    
+    // woods elevator 1
+    SetEventFlag(12700134, OFF);
+    SetEventFlag(12700135, OFF);
+    SetEventFlag(12700137, ON);
+    
+    // woods elevator 2
+    SetEventFlag(12700144, OFF);
+    SetEventFlag(12700147, ON);
+    
+    SetEventFlag(12700110, ON);
+    SetEventFlag(12700111, ON);
+    SetEventFlag(12700112, ON);
+    
+    // yahar'gul elevator
+    SetEventFlag(12800610, ON);
+    SetEventFlag(12800612, ON);
+    SetEventFlag(12800630, ON);
+    
+    // yahar'gul big door
+    SetEventFlag(12809802, ON);
+    
+    // yahar'gul small doors
+    SetEventFlag(12800480, ON);
+    SetEventFlag(12800481, ON);
+    SetEventFlag(12800482, ON);
+    SetEventFlag(12800483, ON);
+    SetEventFlag(12800484, ON);
+    
+    
+    SetEventFlag(13200040, ON);
+    SetEventFlag(13200041, ON);
+    SetEventFlag(13200043, ON);
+    SetEventFlag(13200010, ON);
+    
+    // nightmare frontier slab
+    SetEventFlag(13300100, ON);
+    
+    // nightmare frontier elevator
+    SetEventFlag(13300115, OFF);
+    SetEventFlag(13300116, OFF);
+    SetEventFlag(13300111, ON);
+    
+    // hunter's nightmare door
+    SetEventFlag(13401211, ON);
+    
+    // hunter's nightmare gate
+    SetEventFlag(13401220, ON);
+    
+    SetEventFlag(13501250, ON);
+    SetEventFlag(13504110, OFF);
+    SetEventFlag(13501118, ON);
+    SetEventFlag(13501116, OFF);
+    SetEventFlag(13504120, OFF);
+    SetEventFlag(13501128, ON);
+    SetEventFlag(13501126, OFF);
+    SetEventFlag(13601312, ON);
+    SetEventFlag(13601200, ON);
+    SetEventFlag(13601201, ON);
+    SetEventFlag(13604100, OFF);
+    SetEventFlag(13601108, ON);
+    SetEventFlag(13601106, ON);
+    
+    SetEventFlag(12102211, OFF);
+    
+    SetEventFlag(12102212, OFF);
+    
+    //RestartEvent();
+});
+
+$Event(12102220, Default, function(X0_4, X4_4) {
+    EndIf(!EventFlag(12102200) || ThisEventSlot());
+    WaitFor(CharacterBackreadStatus(X4_4));
+    WaitFixedTimeSeconds(1);
+    InitializeWarpObject(X0_4);
+});
+
+// increase ng cycle
+$Event(12102020, Default, function() {
+    SetEventFlag(12102010, ON);
+    if (GameCycle() == 0) {
+        SetEventFlag(12102003, ON);
+    }
+    else if (GameCycle() == 1) {
+        SetEventFlag(12102003, OFF);
+        SetEventFlag(12102004, ON);
+    }
+    else if (GameCycle() == 2) {
+        SetEventFlag(12102004, OFF);
+        SetEventFlag(12102005, ON);
+    }
+    else if (GameCycle() == 3) {
+        SetEventFlag(12102005, OFF);
+        SetEventFlag(12102006, ON);
+    }
+    else if (GameCycle() == 4) {
+        SetEventFlag(12102006, OFF);
+        SetEventFlag(12102007, ON);
+    }
+    else if (GameCycle() == 5) {
+        SetEventFlag(12102007, OFF);
+        SetEventFlag(12102008, ON);
+    }
+    else if (GameCycle() >= 6) {
+        SetEventFlag(12102008, OFF);
+        SetEventFlag(12102009, ON);
+        SetEventFlag(12102010, OFF);
+    }
+    WaitFor(EventFlag(12102001));
+    SetEventFlag(12102001, OFF);
+    IncrementGameCycle(0);
+    RestartEvent();
+});
+
+// increase ng cycle settings tool
+$Event(12102021, Default, function() {
+    EndIf(EventFlag(12102021));
+    WaitFor(EventFlag(8406));
+    if (EventFlag(12102022)) {
+    
+    }
+    else if (EventFlag(12102023)) {
+        IncrementGameCycle(0);
+    }
+    else if (EventFlag(12102024)) {
+        IncrementGameCycle(0);
+        WaitFixedTimeFrames(1);
+        IncrementGameCycle(0);
+    }
+    else if (EventFlag(12102025)) {
+        IncrementGameCycle(0);
+        WaitFixedTimeFrames(1);
+        IncrementGameCycle(0);
+        WaitFixedTimeFrames(1);
+        IncrementGameCycle(0);
+    
+    }
+    else if (EventFlag(12102026)) {
+        IncrementGameCycle(0);
+        WaitFixedTimeFrames(1);
+        IncrementGameCycle(0);
+        WaitFixedTimeFrames(1);
+        IncrementGameCycle(0);
+        WaitFixedTimeFrames(1);
+        IncrementGameCycle(0);
+    
+    }
+    else if (EventFlag(12102027)) {
+        IncrementGameCycle(0);
+        WaitFixedTimeFrames(1);
+        IncrementGameCycle(0);
+        WaitFixedTimeFrames(1);
+        IncrementGameCycle(0);
+        WaitFixedTimeFrames(1);
+        IncrementGameCycle(0);
+        WaitFixedTimeFrames(1);
+        IncrementGameCycle(0);
+    
+    }
+    else if (EventFlag(12102028)) {
+        IncrementGameCycle(0);
+        WaitFixedTimeFrames(1);
+        IncrementGameCycle(0);
+        WaitFixedTimeFrames(1);
+        IncrementGameCycle(0);
+        WaitFixedTimeFrames(1);
+        IncrementGameCycle(0);
+        WaitFixedTimeFrames(1);
+        IncrementGameCycle(0);
+        WaitFixedTimeFrames(1);
+        IncrementGameCycle(0);
+    
+    }
+});
+
+// any boss defeated 1
+$Event(12102040, Default, function() {
+    EndIf(EventFlag(12102042));
+    WaitFor(EventFlag(12201800) || EventFlag(12301800) || EventFlag(12301700) || EventFlag(12401800) || EventFlag(12411700) 
+    || EventFlag(12411800) || EventFlag(12421700) || EventFlag(12421800) || EventFlag(12501800) || EventFlag(12601850) 
+    || EventFlag(12601800) || EventFlag(12701800) || EventFlag(12801800) || EventFlag(13201800) || EventFlag(13301800));
+    SetEventFlag(12102042, ON);
+});
+
+// any boss defeated 2
+$Event(12102041, Default, function() {
+    EndIf(EventFlag(12102042));
+    WaitFor(EventFlag(13401800) || EventFlag(13401850) || EventFlag(13501850) || EventFlag(13501800) || EventFlag(13601800) 
+    || EventFlag(12101800) || EventFlag(12101850));
+    SetEventFlag(12102042, ON);
+});
+
+// distorted bosses defeated
+$Event(12102043, Default, function() {
+    EndIf(ThisEvent());
+    WaitFor(EventFlag(12411800) || EventFlag(13401800) || EventFlag(13601800) || EventFlag(12101850) || EventFlag(12601800));
+});
+
+$Event(13100000, Default, function() {
+    WaitFixedTimeSeconds(5);
+    // 429 stank cloud (limited)
+    // 1600, 1610, 1620, 1630 acquire souls (+11379)
+    // 5560 invisible
+    // 5600 full body flame
+    // 5601 smouldering
+    // 5679 fire back
+    // 5703 vial heal
+    // 5718 red leg
+    SetSpEffect(10000, 421, false);
+});
+
+// Trading messenger_Lineup expansion_XX
+$Event(12101000, Default, function(X0_4, X4_4, X8_1, X9_1) {
+    EndIf(ThisEventSlot());
+    WaitFixedTimeSeconds(0.1);
+    WaitFor(CharacterBackreadStatus(X4_4) || EventFlag(12100004));
+    if (!EventFlag(12100004)) {
+        ChangeCharacterDispmask(X4_4, X8_1, OFF);
+        ChangeCharacterDispmask(X4_4, X9_1, OFF);
+    }
+    else {
+        // DisplayBanner(TextBannerType.BlackPhantomDeath);
+    }
+    WaitFor(PlayerHasItem(ItemType.Goods, X0_4));
+    if (!EventFlag(12100004)) {
+        ChangeCharacterDispmask(X4_4, X8_1, ON);
+        ChangeCharacterDispmask(X4_4, X9_1, ON);
+    }
+});
+
+// shop lineup badge fix
+$Event(12100001, Default, function() {
+    SetEventFlag(12100004, OFF);
+});
+
+$Event(12100003, Default, function() {
+    WaitFixedTimeSeconds(1);
+    if (EventFlag(12100001)) {
+        SetEventFlag(12100004, ON);
+    }
+});
+
+// acquire all runes
+$Event(12100005, Default, function() {
+    //EndIf(ThisEvent());
+    SetEventFlag(12109000, ON);
+    WaitFor(EventFlag(12100006));
+    AwardItemLot(110000);
+    AwardItemLot(110010);
+    AwardItemLot(110020);
+    AwardItemLot(110030);
+    AwardItemLot(110040);
+    AwardItemLot(110050);
+    AwardItemLot(110060);
+    AwardItemLot(110070);
+    AwardItemLot(110080);
+    AwardItemLot(110090);
+    AwardItemLot(110100);
+    AwardItemLot(110110);
+    AwardItemLot(110120);
+    AwardItemLot(110130);
+    AwardItemLot(110140);
+    AwardItemLot(110150);
+    AwardItemLot(110160);
+    AwardItemLot(110170);
+    AwardItemLot(110180);
+    AwardItemLot(110190);
+    AwardItemLot(110200);
+    AwardItemLot(110210);
+    AwardItemLot(110220);
+    AwardItemLot(110230);
+    AwardItemLot(110240);
+    AwardItemLot(110250);
+    AwardItemLot(110260);
+    AwardItemLot(110270);
+    AwardItemLot(110280);
+    AwardItemLot(110290);
+    AwardItemLot(110300);
+    AwardItemLot(110310);
+    AwardItemLot(110320);
+    AwardItemLot(110330);
+    AwardItemLot(110340);
+    AwardItemLot(110350);
+    AwardItemLot(110360);
+    AwardItemLot(110370);
+    AwardItemLot(110380);
+    AwardItemLot(110390);
+    AwardItemLot(110400);
+    AwardItemLot(110410);
+    AwardItemLot(110420);
+    AwardItemLot(110430);
+    AwardItemLot(110440);
+    AwardItemLot(110450);
+    AwardItemLot(110460);
+    AwardItemLot(110470);
+    AwardItemLot(110480);
+    AwardItemLot(110490);
+    AwardItemLot(110500);
+    AwardItemLot(110510);
+    AwardItemLot(110520);
+    AwardItemLot(110530);
+    AwardItemLot(110540);
+    AwardItemLot(110550);
+    AwardItemLot(110560);
+    AwardItemLot(110570);
+    AwardItemLot(110580);
+    AwardItemLot(110590);
+    AwardItemLot(110600);
+    AwardItemLot(110610);
+    AwardItemLot(110620);
+    AwardItemLot(110630);
+    AwardItemLot(110640);
+    AwardItemLot(110650);
+    AwardItemLot(110660);
+    AwardItemLot(110670);
+    AwardItemLot(110680);
+    AwardItemLot(110690);
+    AwardItemLot(110700);
+    AwardItemLot(110710);
+    AwardItemLot(110720);
+    AwardItemLot(110730);
+    AwardItemLot(110740);
+    if (EventFlag(12100870)) {
+        AwardItemLot(110750);
+    }
+    if (EventFlag(12100869)) {
+        AwardItemLot(110760);
+    }
+    SetEventFlag(12100006, OFF);
+    RestartEvent();
+});
+
+// Gravestone messenger animation propriety judgment_gravestone 0
+$Event(12105020, Restart, function() {
+    WaitFor(
+        EventFlag(12417810)
+            || EventFlag(12417830)
+            || EventFlag(12417850)
+            || EventFlag(12417870)
+            || EventFlag(12407810)
+            || EventFlag(12407830)
+            || EventFlag(12427810)
+            || EventFlag(12427830)
+            || EventFlag(12427850)
+            || EventFlag(12307810)
+            || EventFlag(12307830)
+            || EventFlag(12307850));
+    SetEventFlag(12105030, ON);
+    WaitFor(
+        !(EventFlag(12417810)
+            || EventFlag(12417830)
+            || EventFlag(12417850)
+            || EventFlag(12417870)
+            || EventFlag(12407810)
+            || EventFlag(12407830)
+            || EventFlag(12427810)
+            || EventFlag(12427830)
+            || EventFlag(12427850)
+            || EventFlag(12307810)
+            || EventFlag(12307830)
+            || EventFlag(12307850)));
+    SetEventFlag(12105030, OFF);
+    RestartEvent();
+});
+
+// Gravestone messenger animation propriety judgment_gravestone 1
+$Event(12105021, Restart, function() {
+    WaitFor(
+        EventFlag(12207810)
+            || EventFlag(12207830)
+            || EventFlag(12707810)
+            || EventFlag(12707830)
+            || EventFlag(13207810)
+            || EventFlag(13207850));
+    SetEventFlag(12105031, ON);
+    WaitFor(
+        !(EventFlag(12207810)
+            || EventFlag(12207830)
+            || EventFlag(12707810)
+            || EventFlag(12707830)
+            || EventFlag(13207810)
+            || EventFlag(13207850)));
+    SetEventFlag(12105031, OFF);
+    RestartEvent();
+});
+
+// Tombstone messenger animation propriety judgment_Tombstone 2
+$Event(12105022, Restart, function() {
+    WaitFor(
+        EventFlag(12807810)
+            || EventFlag(12807830)
+            || EventFlag(12807850)
+            || EventFlag(12807870)
+            || EventFlag(12507810)
+            || EventFlag(12507830)
+            || EventFlag(12507850)
+            || EventFlag(12117810));
+    SetEventFlag(12105032, ON);
+    WaitFor(
+        !(EventFlag(12807810)
+            || EventFlag(12807830)
+            || EventFlag(12807850)
+            || EventFlag(12807870)
+            || EventFlag(12507810)
+            || EventFlag(12507830)
+            || EventFlag(12507850)
+            || EventFlag(12117810)));
+    SetEventFlag(12105032, OFF);
+    RestartEvent();
+});
+
+// Gravestone messenger animation propriety judgment_gravestone 3
+$Event(12105023, Restart, function() {
+    WaitFor(
+        EventFlag(13207830)
+            || EventFlag(13207870)
+            || EventFlag(13307810)
+            || EventFlag(13307830)
+            || EventFlag(12607810)
+            || EventFlag(12607830)
+            || EventFlag(12607850)
+            || EventFlag(12607870)
+            || EventFlag(13307810));
+    SetEventFlag(12105033, ON);
+    WaitFor(
+        !(EventFlag(13207830)
+            || EventFlag(13207870)
+            || EventFlag(13307810)
+            || EventFlag(13307830)
+            || EventFlag(12607810)
+            || EventFlag(12607830)
+            || EventFlag(12607850)
+            || EventFlag(12607870)
+            || EventFlag(13307810)));
+    SetEventFlag(12105033, OFF);
+    RestartEvent();
+});
+
+// Gravestone messenger animation propriety judgment_gravestone 4
+$Event(12105024, Restart, function() {
+    WaitFor(
+        EventFlag(13407810)
+            || EventFlag(13407830)
+            || EventFlag(13407850)
+            || EventFlag(13407870)
+            || EventFlag(13507810)
+            || EventFlag(13507830)
+            || EventFlag(13507850)
+            || EventFlag(13607810)
+            || EventFlag(13607830)
+            || EventFlag(13607850));
+    SetEventFlag(12105034, ON);
+    WaitFor(
+        !(EventFlag(13407810)
+            || EventFlag(13407830)
+            || EventFlag(13407850)
+            || EventFlag(13407870)
+            || EventFlag(13507810)
+            || EventFlag(13507830)
+            || EventFlag(13507850)
+            || EventFlag(13607810)
+            || EventFlag(13607830)
+            || EventFlag(13607850)));
+    SetEventFlag(12105034, OFF);
+    RestartEvent();
+});
+
+// initialize lamp settings
+$Event(8400, Default, function() {
+    EndIf(ThisEvent());
+    
+    // prevent lamp deactivation
+    if (!EventFlag(12100968) && !EventFlag(12100868)) {
+        SetEventFlag(12100968, ON); // off
+    }
+    
+    // auto refill vials & bullets
+    if (!EventFlag(12100962) && !EventFlag(12100862)) {
+        SetEventFlag(12100862, ON); // on
+    }
+    
+    // item drop hunt
+    if (!EventFlag(12100955) && !EventFlag(12100855)) {
+        SetEventFlag(12100855, ON); // on
+    }
+    
+    // rest
+    if (!EventFlag(12100961) && !EventFlag(12100861)) {
+        SetEventFlag(12100961, ON); // off
+    }
+    
+    // auto rest
+    if (!EventFlag(12100958) && !EventFlag(12100858)) {
+        SetEventFlag(12100958, ON); // off
+    }
+    
+    // quick warp to boss
+    if (!EventFlag(12100957) && !EventFlag(12100857)) {
+        SetEventFlag(12100857, ON); // on
+    }
+    
+    // lamp menu
+    if (!EventFlag(12100972) && !EventFlag(12100872)) {
+        SetEventFlag(12100872, ON); // on
+    }
+    
+    // warp
+    if (!EventFlag(12100980) && !EventFlag(12100880)) {
+        SetEventFlag(12100880, ON); // on
+    }
+    
+    // level up
+    if (!EventFlag(12100979) && !EventFlag(12100879)) {
+        SetEventFlag(12100879, ON); // on
+    }
+    
+    // workshop
+    if (!EventFlag(12100978) && !EventFlag(12100878)) {
+        SetEventFlag(12100878, ON); // on
+    }
+    
+    // memory alter
+    if (!EventFlag(12100977) && !EventFlag(12100877)) {
+        SetEventFlag(12100877, ON); // on
+    }
+    
+    // storage
+    if (!EventFlag(12100976) && !EventFlag(12100876)) {
+        SetEventFlag(12100876, ON); // on
+    }
+    
+    // messengers
+    if (!EventFlag(12100975) && !EventFlag(12100875)) {
+        SetEventFlag(12100875, ON); // on
+    }
+    
+    // change appearance
+    if (!EventFlag(12100974) && !EventFlag(12100874)) {
+        SetEventFlag(12100874, ON); // on
+    }
+    
+    // boss rematches
+    if (!EventFlag(12100967) && !EventFlag(12100867)) {
+        SetEventFlag(12100867, ON); // on
+    }
+});
+
+// initialize lamp settings 2
+$Event(8401, Default, function() {
+    EndIf(ThisEvent());
+    
+    // enable Iosefka lamp from start
+    if (!EventFlag(12100953) && !EventFlag(12100853)) {
+        SetEventFlag(12100853, ON); // on
+    }
+});
+
+// initialize broken lamp settings
+$Event(8405, Default, function() {
+    EndIf(ThisEvent());
+    
+    // broken lamp
+    if (!EventFlag(12100965) && !EventFlag(12100865)) {
+        SetEventFlag(12100865, ON); // on
+    }
+    
+    // broken lamp respawn location on victory and hunter's mark - dream or lamp
+    if (!EventFlag(12100963) && !EventFlag(12100863)) {
+        SetEventFlag(12100963, ON); // dream
+    }
+    
+    // broken lamp respawn location on death - dream or lamp
+    if (!EventFlag(12100959) && !EventFlag(12100859)) {
+        SetEventFlag(12100959, ON); // dream
+    }
+});
+
+// initialize other settings
+$Event(8406, Default, function() {
+    EndIf(ThisEvent());
+    
+    // prevent auto ng+
+    if (!EventFlag(12100973) && !EventFlag(12100873)) {
+        SetEventFlag(12100873, ON); // on
+    }
+    
+    // stocked shop
+    if (!EventFlag(12100971) && !EventFlag(12100871)) {
+        SetEventFlag(12100871, ON); // on
+    }
+    
+    // rematch death - end rematch or restart
+    if (!EventFlag(12100964) && !EventFlag(12100864)) {
+        SetEventFlag(12100864, ON); // end
+    }
+    
+    // rematch cutscenes
+    if (!EventFlag(12100966) && !EventFlag(12100866)) {
+        SetEventFlag(12100966, ON); // off
+    }
+    
+    // auto unlock chalice doors
+    if (!EventFlag(12100960) && !EventFlag(12100860)) {
+        SetEventFlag(12100860, ON); // on
+    }
+    
+    // random time
+    if (!EventFlag(12100956) && !EventFlag(12100856)) {
+        SetEventFlag(12100856, ON); // on
+    }
+    
+    // doll gesture
+    if (!EventFlag(12100954) && !EventFlag(12100854)) {
+        SetEventFlag(12100954, ON); // off
+    }
+    
+    // unlock lamps
+    SetEventFlag(12102301, OFF);
+    
+    // unlock shortcuts
+    SetEventFlag(12102311, OFF);
+    
+    // game effect / dark fog
+    SetEventFlag(12102033, OFF);
+    SetEventFlag(12102034, ON);
+    SetEventFlag(12102035, OFF);
+    SetEventFlag(12102036, OFF);
+    
+    // increase cycle
+    SetEventFlag(12102022, ON);
+    SetEventFlag(12102023, OFF);
+    SetEventFlag(12102024, OFF);
+    SetEventFlag(12102025, OFF);
+    SetEventFlag(12102026, OFF);
+    SetEventFlag(12102027, OFF);
+    SetEventFlag(12102028, OFF);
+});
+
+// effect changed check
+$Event(12102030, Default, function() {
+    SetEventFlag(12102030, OFF);
+    WaitFor(ThisEvent());
+    SetEventFlag(12102031, ON);
+    RestartEvent();
+});
+
+// change effect
+$Event(12102032, Default, function() {
+    //EndEvent();
+    ClearSpEffect(10000, 5680);
+    WaitFixedTimeSeconds(0.5);
+    if (EventFlag(12102033)) {
+        // random
+        BatchSetEventFlags(12102050, 12102057, OFF);
+        RandomlySetEventFlagInRange(12102050, 12102052, ON);
+        if (EventFlag(12102050)) {
+            SetSpEffect(10000, 5680, false);
+        }
+    }
+    else if (EventFlag(12102034)) {
+        // default
+    }
+    else if (EventFlag(12102035)) {
+        // dark fog
+        SetSpEffect(10000, 5680, false);
+    }
+    WaitFor(EventFlag(12102031));
+    SetEventFlag(12102031, OFF);
+    RestartEvent();
+});
+
+// beast 
+$Event(12100770, Default, function() {
+    EndIf(ThisEvent());
+    SetEventFlag(12100870, ON);
+    WaitFor(ThisEvent());
+    AwardItemLot(3401850);
+    SetEventFlag(12100870, OFF);
+});
+
+// milkweed
+$Event(12100769, Default, function() {
+    EndIf(ThisEvent());
+    SetEventFlag(12100869, ON);
+    WaitFor(ThisEvent());
+    AwardItemLot(43020);
+    SetEventFlag(12100869, OFF);
+});
+
+// acquire all trick weapons
+$Event(12101300, Default, function() {
+    EndIf(ThisEvent());
+    SetEventFlag(12101400, ON);
+    WaitFor(ThisEvent());
+    SetEventFlag(12101301, ON);
+    SetEventFlag(12101302, ON);
+    SetEventFlag(12101303, ON);
+    SetEventFlag(12101400, OFF);
+});
+
+// acquire all standard trick weapons
+$Event(12101301, Default, function() {
+    EndIf(ThisEvent());
+    SetEventFlag(12101401, ON);
+    WaitFor(ThisEvent());
+    EventValueOperation(12104010, 1, 1, 0, 1, CalculationType.Assign);
+    DirectlyGivePlayerItem(ItemType.Weapon, 25000000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 9000000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 23000000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 24000000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 4000000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 29000000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 28000000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 5100000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 2000000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 30000000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 26000000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 5000000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 8000000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 38000000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 12000000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 8100000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 27000000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 10100000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 10000000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 7000000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 7100000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 32000000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 11000000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 22000000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 13000000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 31000000, 12104010, 1);
+    if (EventFlag(12101302) && EventFlag(12101303)) {
+        SetEventFlag(12101300, ON);
+    }
+    SetEventFlag(12101401, OFF);
+});
+
+// acquire all uncanny trick weapons
+$Event(12101302, Default, function() {
+    EndIf(ThisEvent());
+    SetEventFlag(12101402, ON);
+    WaitFor(ThisEvent());
+    EventValueOperation(12104010, 1, 1, 0, 1, CalculationType.Assign);
+    DirectlyGivePlayerItem(ItemType.Weapon, 2010000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 4010000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 5010000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 5110000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 7010000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 7110000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 8010000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 8110000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 9010000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 10010000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 10110000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 11010000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 12010000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 13010000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 22010000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 23010000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 24010000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 25010000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 26010000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 27010000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 28010000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 29010000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 30010000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 31010000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 32010000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 38010000, 12104010, 1);
+    if (EventFlag(12101301) && EventFlag(12101303)) {
+        SetEventFlag(12101300, ON);
+    }
+    SetEventFlag(12101402, OFF);
+});
+
+// acquire all lost trick weapons
+$Event(12101303, Default, function() {
+    EndIf(ThisEvent());
+    SetEventFlag(12101403, ON);
+    WaitFor(ThisEvent());
+    EventValueOperation(12104010, 1, 1, 0, 1, CalculationType.Assign);
+    DirectlyGivePlayerItem(ItemType.Weapon, 2020000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 4020000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 5020000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 5120000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 7020000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 7120000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 8020000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 8120000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 9020000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 10020000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 10120000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 11020000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 12020000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 13020000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 22020000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 23020000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 24020000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 25020000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 26020000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 27020000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 28020000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 29020000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 30020000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 31020000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 32020000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 38020000, 12104010, 1);
+    if (EventFlag(12101301) && EventFlag(12101302)) {
+        SetEventFlag(12101300, ON);
+    }
+    SetEventFlag(12101403, OFF);
+});
+
+// acquire all secondary weapons
+$Event(12101310, Default, function() {
+    EndIf(ThisEvent());
+    SetEventFlag(12101410, ON);
+    WaitFor(ThisEvent());
+    EventValueOperation(12104010, 1, 1, 0, 1, CalculationType.Assign);
+    DirectlyGivePlayerItem(ItemType.Weapon, 15000000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 35000000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 14100000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 34000000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 18100000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 33000000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 20000000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 19100000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 6100000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 36000000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 14200000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 18000000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 20100000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 19000000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 6000000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 14000000, 12104010, 1);
+    SetEventFlag(12101410, OFF);
+});
+
+// acquire all hunter tools
+$Event(12101320, Default, function() {
+    EndIf(ThisEvent());
+    SetEventFlag(12101420, ON);
+    WaitFor(ThisEvent());
+    EventValueOperation(12104010, 1, 1, 0, 1, CalculationType.Assign);
+    DirectlyGivePlayerItem(ItemType.Goods, 2010, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 2130, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 2000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 2020, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 2120, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 2050, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 1310, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 2080, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 2140, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 2110, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 2060, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 2070, 12104010, 1);
+    SetEventFlag(12101420, OFF);
+});
+
+// acquire all armor pieces
+$Event(12101330, Default, function() {
+    EndIf(ThisEvent());
+    SetEventFlag(12101430, ON);
+    WaitFor(ThisEvent());
+    SetEventFlag(12101331, ON);
+    SetEventFlag(12101332, ON);
+    SetEventFlag(12101333, ON);
+    SetEventFlag(12101334, ON);
+    SetEventFlag(12101430, OFF);
+});
+    
+// acquire all head pieces
+$Event(12101331, Default, function() {
+    EndIf(ThisEvent());
+    SetEventFlag(12101431, ON);
+    WaitFor(ThisEvent());
+    EventValueOperation(12104010, 1, 1, 0, 1, CalculationType.Assign);
+    DirectlyGivePlayerItem(ItemType.Armor, 180000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 110000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 230000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 20000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 120000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 60000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 40000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 390000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 330000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 100000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 250000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 220000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 430000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 130000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 200000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 150000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 30000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 10000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 340000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 50000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 70000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 270000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 80000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 210000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 370000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 260000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 190000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 350000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 360000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 380000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 320000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 140000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 280000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 290000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 400000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 90000, 12104010, 1);
+    if (EventFlag(12101332) && EventFlag(12101333) && EventFlag(12101334)) {
+        SetEventFlag(12101330, ON);
+    }
+    SetEventFlag(12101431, OFF);
+});
+
+// acquire all torse pieces
+$Event(12101332, Default, function() {
+    EndIf(ThisEvent());
+    SetEventFlag(12101432, ON);
+    WaitFor(ThisEvent());
+    EventValueOperation(12104010, 1, 1, 0, 1, CalculationType.Assign);
+    DirectlyGivePlayerItem(ItemType.Armor, 241000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 391000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 111000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 331000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 41000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 101000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 11000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 121000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 381000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 181000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 361000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 221000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 151000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 231000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 131000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 201000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 31000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 341000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 51000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 281000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 71000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 71000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 401000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 81000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 211000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 371000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 311000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 351000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 191000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 301000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 321000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 141000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 291000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 21000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 61000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 91000, 12104010, 1);
+    if (EventFlag(12101331) && EventFlag(12101333) && EventFlag(12101334)) {
+        SetEventFlag(12101330, ON);
+    }
+    SetEventFlag(12101432, OFF);
+});
+
+// acquire all hand pieces
+$Event(12101333, Default, function() {
+    EndIf(ThisEvent());
+    SetEventFlag(12101433, ON);
+    WaitFor(ThisEvent());
+    EventValueOperation(12104010, 1, 1, 0, 1, CalculationType.Assign);
+    DirectlyGivePlayerItem(ItemType.Armor, 242000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 392000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 42000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 332000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 102000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 12000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 122000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 182000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 222000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 152000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 132000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 32000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 342000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 52000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 72000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 82000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 212000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 372000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 402000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 352000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 232000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 112000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 142000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 22000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 62000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 382000, 12104010, 1);
+    if (EventFlag(12101331) && EventFlag(12101332) && EventFlag(12101334)) {
+        SetEventFlag(12101330, ON);
+    }
+    SetEventFlag(12101433, OFF);
+});
+
+// acquire all leg pieces
+$Event(12101334, Default, function() {
+    EndIf(ThisEvent());
+    SetEventFlag(12101434, ON);
+    WaitFor(ThisEvent());
+    EventValueOperation(12104010, 1, 1, 0, 1, CalculationType.Assign);
+    DirectlyGivePlayerItem(ItemType.Armor, 313000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 243000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 113000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 393000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 43000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 333000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 103000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 13000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 123000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 383000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 183000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 363000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 223000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 153000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 233000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 133000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 203000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 33000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 343000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 53000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 73000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 83000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 213000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 373000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 353000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 193000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 143000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 403000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 293000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 23000, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 63000, 12104010, 1);
+    if (EventFlag(12101331) && EventFlag(12101332) && EventFlag(12101333)) {
+        SetEventFlag(12101330, ON);
+    }
+    SetEventFlag(12101434, OFF);
+});
+
+// acquire all chalices
+$Event(12101340, Default, function() {
+    EndIf(ThisEvent());
+    SetEventFlag(12101440, ON);
+    WaitFor(ThisEvent());
+    EventValueOperation(12104010, 1, 1, 0, 1, CalculationType.Assign);
+    DirectlyGivePlayerItem(ItemType.Goods, 6100, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6109, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6200, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6209, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6210, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6219, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6300, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6302, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6309, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6310, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6312, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6319, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6401, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6409, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6420, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6429, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6500, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6502, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6509, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6520, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6522, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6529, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6530, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6532, 12104010, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6539, 12104010, 1);
+    SetEventFlag(12101440, OFF);
+});
+
+// fill upgrade materials
+$Event(12101360, Default, function() {
+    SetEventFlag(12101360, ON);
+    WaitFor(!ThisEvent());
+    
+    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    StoreItemAmountHeldInEventValue(ItemType.Goods, 3000, 12104020, 8);
+    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 3000, 12104010, 8);
+    
+    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    StoreItemAmountHeldInEventValue(ItemType.Goods, 3010, 12104020, 8);
+    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 3010, 12104010, 8);
+    
+    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    StoreItemAmountHeldInEventValue(ItemType.Goods, 3020, 12104020, 8);
+    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 3020, 12104010, 8);
+    
+    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    StoreItemAmountHeldInEventValue(ItemType.Goods, 3030, 12104020, 8);
+    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 3030, 12104010, 8);
+    
+    RestartEvent();
+});
+
+// fill chalice materials
+$Event(12101361, Default, function() {
+    SetEventFlag(12101361, ON);
+    WaitFor(!ThisEvent());
+    
+    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    StoreItemAmountHeldInEventValue(ItemType.Goods, 7000, 12104020, 8);
+    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7000, 12104010, 8);
+    
+    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    StoreItemAmountHeldInEventValue(ItemType.Goods, 7001, 12104020, 8);
+    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7001, 12104010, 8);
+    
+    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    StoreItemAmountHeldInEventValue(ItemType.Goods, 7002, 12104020, 8);
+    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7002, 12104010, 8);
+    
+    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    StoreItemAmountHeldInEventValue(ItemType.Goods, 7003, 12104020, 8);
+    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7003, 12104010, 8);
+    
+    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    StoreItemAmountHeldInEventValue(ItemType.Goods, 7004, 12104020, 8);
+    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7004, 12104010, 8);
+    
+    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    StoreItemAmountHeldInEventValue(ItemType.Goods, 7012, 12104020, 8);
+    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7012, 12104010, 8);
+    
+    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    StoreItemAmountHeldInEventValue(ItemType.Goods, 7013, 12104020, 8);
+    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7013, 12104010, 8);
+    
+    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    StoreItemAmountHeldInEventValue(ItemType.Goods, 7014, 12104020, 8);
+    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7014, 12104010, 8);
+    
+    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    StoreItemAmountHeldInEventValue(ItemType.Goods, 7020, 12104020, 8);
+    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7020, 12104010, 8);
+    
+    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    StoreItemAmountHeldInEventValue(ItemType.Goods, 7021, 12104020, 8);
+    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7021, 12104010, 8);
+    
+    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    StoreItemAmountHeldInEventValue(ItemType.Goods, 7022, 12104020, 8);
+    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7022, 12104010, 8);
+    
+    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    StoreItemAmountHeldInEventValue(ItemType.Goods, 7023, 12104020, 8);
+    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7023, 12104010, 8);
+    
+    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    StoreItemAmountHeldInEventValue(ItemType.Goods, 7024, 12104020, 8);
+    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7024, 12104010, 8);
+    
+    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    StoreItemAmountHeldInEventValue(ItemType.Goods, 7050, 12104020, 8);
+    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7050, 12104010, 8);
+    
+    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    StoreItemAmountHeldInEventValue(ItemType.Goods, 7100, 12104020, 8);
+    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7100, 12104010, 8);
+    
+    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    StoreItemAmountHeldInEventValue(ItemType.Goods, 7110, 12104020, 8);
+    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7110, 12104010, 8);
+    
+    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    StoreItemAmountHeldInEventValue(ItemType.Goods, 7120, 12104020, 8);
+    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7120, 12104010, 8);
+    
+    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    StoreItemAmountHeldInEventValue(ItemType.Goods, 7121, 12104020, 8);
+    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7121, 12104010, 8);
+    
+    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    StoreItemAmountHeldInEventValue(ItemType.Goods, 7130, 12104020, 8);
+    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7130, 12104010, 8);
+    
+    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    StoreItemAmountHeldInEventValue(ItemType.Goods, 7131, 12104020, 8);
+    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7131, 12104010, 8);
+    
+    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    StoreItemAmountHeldInEventValue(ItemType.Goods, 7140, 12104020, 8);
+    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7140, 12104010, 8);
+    
+    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    StoreItemAmountHeldInEventValue(ItemType.Goods, 7150, 12104020, 8);
+    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7150, 12104010, 8);
+    
+    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    StoreItemAmountHeldInEventValue(ItemType.Goods, 7200, 12104020, 8);
+    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7200, 12104010, 8);
+    
+    RestartEvent();
+});
+
+// Buy/Sell Messenger_Lineup Expansion_Time Zone Flag
+$Event(12101010, Default, function() {
+    SetNetworkSyncState(Disabled);
+    EndIf(!CharacterType(10000, TargetType.Alive));
+    if (EventFlag(9800)) {
+        SetEventFlag(5900, ON);
+    }
+    if (EventFlag(9801)) {
+        SetEventFlag(5901, ON);
+    }
+    if (EventFlag(9802)) {
+        SetEventFlag(5902, ON);
+    }
+    if (EventFlag(12801800)) {
+        SetEventFlag(5903, ON);
+    }
+    if (EventFlag(12601800)) {
+        SetEventFlag(5904, ON);
+    }
+    if (EventFlag(6603)) {
+        BatchSetEventFlags(5900, 5904, ON);
+    }
+});
+
+// Item Possession Judgment_XX
+$Event(12100020, Default, function(X0_4, X4_4, X8_4) {
+    SetNetworkSyncState(Disabled);
+    EndIf(!CharacterType(10000, TargetType.Alive));
+    if (X8_4 != 0) {
+        SetEventFlag(X4_4, OFF);
+    }
+    WaitFor(PlayerHasItem(ItemType.Goods, X0_4));
+    SetEventFlag(X4_4, ON);
+});
+
+// dress-up messenger_flag control_naked only
+$Event(12105060, Restart, function() {
+    SetNetworkSyncState(Disabled);
+    EndIf(!CharacterType(10000, TargetType.Alive));
+    SetEventFlag(12105061, OFF);
+    WaitFor(EventFlag(72100140));
+    SetEventFlag(12105061, ON);
+    SetEventFlag(72100140, OFF);
+    BatchSetEventFlags(6011, 6025, OFF);
+    RotateCharacter(10000, 2100218, 101310, false);
+    WaitFixedTimeSeconds(1);
+    ForceAnimationPlayback(2100218, 7003, false, false, false);
+    WaitFixedTimeFrames(39);
+    ChangeCharacterDispmask(2100218, 20, OFF);
+    ChangeCharacterDispmask(2100218, 21, OFF);
+    ChangeCharacterDispmask(2100218, 22, OFF);
+    ChangeCharacterDispmask(2100218, 23, OFF);
+    ChangeCharacterDispmask(2100218, 24, OFF);
+    ChangeCharacterDispmask(2100218, 25, OFF);
+    ChangeCharacterDispmask(2100218, 26, OFF);
+    ChangeCharacterDispmask(2100218, 27, OFF);
+    ChangeCharacterDispmask(2100218, 28, OFF);
+    ForceAnimationPlayback(2100218, 7004, false, false, false);
+    WaitFixedTimeFrames(49);
+    ForceAnimationPlayback(2100218, 7001, true, false, false);
+    RestartEvent();
+});
+
+// Dress-up Messenger_Determine if you have at least one item
+$Event(12105062, Default, function() {
+    SetNetworkSyncState(Disabled);
+    if (!EventFlag(12105063)) {
+        ForceAnimationPlayback(2100218, 0, true, false, false);
+        EndIf(!CharacterType(10000, TargetType.Alive));
+        if (EventFlag(6011)) {
+            ChangeCharacterDispmask(2100218, 20, ON);
+        }
+        if (EventFlag(6012)) {
+            ChangeCharacterDispmask(2100218, 21, ON);
+        }
+        if (EventFlag(6013)) {
+            ChangeCharacterDispmask(2100218, 22, ON);
+        }
+        if (EventFlag(6014)) {
+            ChangeCharacterDispmask(2100218, 23, ON);
+        }
+        if (EventFlag(6015)) {
+            ChangeCharacterDispmask(2100218, 24, ON);
+        }
+        if (EventFlag(6016)) {
+            ChangeCharacterDispmask(2100218, 25, ON);
+        }
+        if (EventFlag(6017)) {
+            ChangeCharacterDispmask(2100218, 26, ON);
+        }
+        if (EventFlag(6018)) {
+            ChangeCharacterDispmask(2100218, 27, ON);
+        }
+        if (EventFlag(6019)) {
+            ChangeCharacterDispmask(2100218, 28, ON);
+        }
+        WaitFor(
+            EventFlag(6071)
+                || EventFlag(6072)
+                || EventFlag(6073)
+                || EventFlag(6074)
+                || EventFlag(6075)
+                || EventFlag(6076)
+                || EventFlag(6077)
+                || EventFlag(6078)
+                || EventFlag(6079)
+                || EventFlag(6080)
+                || EventFlag(6081)
+                || EventFlag(6082)
+                || EventFlag(6083)
+                || EventFlag(6084)
+                || EventFlag(6085));
+        ForceAnimationPlayback(2100218, 7004, false, false, false);
+        WaitFixedTimeFrames(89);
+    }
+L0:
+    ForceAnimationPlayback(2100218, 7001, true, false, false);
+    EndIf(!CharacterType(10000, TargetType.Alive));
+    SetEventFlag(12105063, ON);
+    WaitFor(
+        !(EventFlag(6071)
+            || EventFlag(6072)
+            || EventFlag(6073)
+            || EventFlag(6074)
+            || EventFlag(6075)
+            || EventFlag(6076)
+            || EventFlag(6077)
+            || EventFlag(6078)
+            || EventFlag(6079)
+            || EventFlag(6080)
+            || EventFlag(6081)
+            || EventFlag(6082)
+            || EventFlag(6083)
+            || EventFlag(6084)
+            || EventFlag(6085)));
+    SetEventFlag(12105063, OFF);
+    ForceAnimationPlayback(2100218, 7003, false, false, false);
+    WaitFixedTimeFrames(39);
+    RestartEvent();
+});
+
+// Kisekae messenger_DLC validity judgment
+$Event(12105064, Default, function() {
+    SetNetworkSyncState(Disabled);
+    ForceAnimationPlayback(2100232, 7053, true, false, false);
+    EndIf(HasMultiplayerState(MultiplayerState.Client));
+    WaitFor(
+        (EventFlag(6900) && !EventFlag(6071))
+            || (EventFlag(6901) && !EventFlag(6072))
+            || (EventFlag(6902) && !EventFlag(6073)));
+    ForceAnimationPlayback(2100232, 7054, false, false, false);
+    WaitFixedTimeFrames(30);
+    WaitFixedTimeFrames(79);
+    ForceAnimationPlayback(2100232, 7051, true, false, false);
+    WaitFor(CharacterType(10000, TargetType.Alive) && ActionButtonInArea(6025, 2100232));
+    GotoIf(S0, EventFlag(6071));
+    GotoIf(S0, !EventFlag(6900));
+    AwardItemLot(2100900);
+    SetEventFlag(6071, ON);
+S0:
+    GotoIf(S1, EventFlag(6072));
+    GotoIf(S1, !EventFlag(6901));
+    AwardItemLot(2100910);
+    SetEventFlag(6072, ON);
+S1:
+    GotoIf(S2, EventFlag(6073));
+    GotoIf(S2, !EventFlag(6902));
+    AwardItemLot(2100920);
+    SetEventFlag(6073, ON);
+S2:
+    ForceAnimationPlayback(2100232, 7052, false, false, false);
+    WaitFixedTimeFrames(74);
+L0:
+    ChangeCharacterEnableState(2100232, Disabled);
+});
+
+// dress-up messenger_flag control_other than naked
+$Event(12105070, Restart, function(X0_4, X4_4, X8_1) {
+    SetNetworkSyncState(Disabled);
+    EndIf(!CharacterType(10000, TargetType.Alive));
+    SetEventFlag(12105061, OFF);
+    WaitFor(EventFlag(X0_4));
+    SetEventFlag(12105061, ON);
+    SetEventFlag(X0_4, OFF);
+    BatchSetEventFlags(6011, 6025, OFF);
+    RotateCharacter(10000, 2100218, 101310, false);
+    WaitFixedTimeSeconds(1);
+    ForceAnimationPlayback(2100218, 7003, false, false, false);
+    WaitFixedTimeFrames(39);
+    SetEventFlag(X4_4, ON);
+    ChangeCharacterDispmask(2100218, 20, OFF);
+    ChangeCharacterDispmask(2100218, 21, OFF);
+    ChangeCharacterDispmask(2100218, 22, OFF);
+    ChangeCharacterDispmask(2100218, 23, OFF);
+    ChangeCharacterDispmask(2100218, 24, OFF);
+    ChangeCharacterDispmask(2100218, 25, OFF);
+    ChangeCharacterDispmask(2100218, 26, OFF);
+    ChangeCharacterDispmask(2100218, 27, OFF);
+    ChangeCharacterDispmask(2100218, 28, OFF);
+    ChangeCharacterDispmask(2100218, X8_1, ON);
+    ForceAnimationPlayback(2100218, 7004, false, false, false);
+    WaitFixedTimeFrames(49);
+    ForceAnimationPlayback(2100218, 7001, true, false, false);
+    RestartEvent();
+});
+
+// Headstone warp function (warp to a lamp)
+$Event(12107000, Default, function(X0_4, X4_4, X8_4) {
+    EndIf(HasMultiplayerState(MultiplayerState.Client));
+    WaitFor(EventFlag(X0_4));
+    if (EventFlag(12100761)) {
+        SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, 140);
+        WaitFixedTimeSeconds(2);
+    }
+    else {
+        RotateCharacter(10000, X4_4, 101164, false);
+        WaitFixedTimeSeconds(4);
+    }
+    // WarpPlayerToRespawnPoint(X8_4);
+    SetPlayerRespawnPoint(X8_4);
+    SetSpEffect(10000, 2101, false);
+});
+
+// Warp OBJ_Warp to Dungeon_First Half_XX
+$Event(12107100, Default, function(X0_4, X4_4, X8_4) {
+    EndIf(HasMultiplayerState(MultiplayerState.Client));
+    WaitFor(EventFlag(X0_4));
+    if (EventFlag(12100761)) {
+        SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, 140);
+        WaitFixedTimeSeconds(2);
+    }
+    else {
+        RotateCharacter(10000, X4_4, 101164, false);
+        WaitFixedTimeSeconds(4);
+    }
+    SetEventFlag(9020, OFF);
+    SetEventFlag(9021, OFF);
+    SetEventFlag(9022, OFF);
+    SetEventFlag(9023, OFF);
+    SetEventFlag(9024, OFF);
+    SetEventFlag(9025, OFF);
+    SetEventFlag(9026, OFF);
+    SetEventFlag(X8_4, ON);
+    SetEventFlag(X0_4, OFF);
+    EndEvent();
+});
+
+// Warp OBJ_Warp to Dungeon_Late_XX
+$Event(12107200, Default, function(X0_4, X4_4, X8_4) {
+    WaitFor(EventFlag(X0_4));
+    SetEventFlag(X0_4, OFF);
+    WarpPlayerToRespawnPoint(X4_4);
+    SetEventFlag(X8_4, ON);
+});
+
+// Remove DLC_XX
 $Event(3500, Default, function(X0_4, X4_4, X8_4, X12_4) {
     SetNetworkSyncState(Disabled);
     EndIf(!CharacterType(10000, TargetType.Alive));
@@ -459,7 +2208,7 @@ $Event(3500, Default, function(X0_4, X4_4, X8_4, X12_4) {
     SetEventFlag(X12_4, OFF);
 });
 
-// DLC削除_03
+// Remove DLC_03
 $Event(3503, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(!CharacterType(10000, TargetType.Alive));
@@ -491,13 +2240,13 @@ $Event(3503, Default, function() {
     WarpPlayerToRespawnPoint(2102961);
 });
 
-// 常に立っている、立っていないフラグ
+// always raised, never raised flag
 $Event(6002, Restart, function() {
     SetEventFlag(6000, ON);
     SetEventFlag(6001, OFF);
 });
 
-// 売買メッセンジャー_ダンジョンショップ購入を拠点ショップ販売に反映_XX
+// Trading messenger_reflect dungeon shop purchases in base shop sales_XX
 $Event(5500, Restart, function(X0_4) {
     SetNetworkSyncState(Disabled);
     EndIf(!CharacterType(10000, TargetType.Alive));
@@ -506,7 +2255,7 @@ $Event(5500, Restart, function(X0_4) {
     WaitFixedTimeSeconds(0);
 });
 
-// 売買メッセンジャー_ラインナップ拡充_獣の爪
+// Buy/Sell Messenger_Lineup Expansion_Beast Claw
 $Event(6680, Default, function() {
     SetNetworkSyncState(Disabled);
     if (CharacterType(10000, TargetType.Alive)) {
@@ -531,7 +2280,7 @@ L0:
     WaitFixedTimeSeconds(0);
 });
 
-// 売買メッセンジャー_ラインナップ拡充_大砲
+// Trading messenger_Lineup expansion_Cannon
 $Event(6681, Default, function() {
     SetNetworkSyncState(Disabled);
     if (CharacterType(10000, TargetType.Alive)) {
@@ -556,7 +2305,7 @@ L0:
     WaitFixedTimeSeconds(0);
 });
 
-// 売買メッセンジャー_ラインナップ拡充_獣狩りの松明
+// Buy/Sell Messenger_Lineup Expansion_Beast Hunting Torch
 $Event(6682, Default, function() {
     SetNetworkSyncState(Disabled);
     if (CharacterType(10000, TargetType.Alive)) {
@@ -581,7 +2330,7 @@ L0:
     WaitFixedTimeSeconds(0);
 });
 
-// 売買メッセンジャー_ラインナップ拡充_獣狩りの曲刀
+// Buy/Sell Messenger_Lineup Expansion_Beast Hunting Curved Sword
 $Event(6683, Default, function() {
     SetNetworkSyncState(Disabled);
     if (CharacterType(10000, TargetType.Alive)) {
@@ -606,7 +2355,7 @@ L0:
     WaitFixedTimeSeconds(0);
 });
 
-// 売買メッセンジャー_ラインナップ拡充_獣肉断ち
+// Trading messenger_Expansion of line-up_Beast cut
 $Event(6684, Default, function() {
     SetNetworkSyncState(Disabled);
     if (CharacterType(10000, TargetType.Alive)) {
@@ -631,7 +2380,7 @@ L0:
     WaitFixedTimeSeconds(0);
 });
 
-// 売買メッセンジャー_ラインナップ拡充_教会の杭
+// Buy/Sell Messenger_Lineup Expansion_Church Stake
 $Event(6685, Default, function() {
     SetNetworkSyncState(Disabled);
     if (CharacterType(10000, TargetType.Alive)) {
@@ -656,7 +2405,7 @@ L0:
     WaitFixedTimeSeconds(0);
 });
 
-// 売買メッセンジャー_ラインナップ拡充_シモンの弓剣
+// Trading messenger_Lineup expansion_Simon's bow sword
 $Event(6686, Default, function() {
     SetNetworkSyncState(Disabled);
     if (CharacterType(10000, TargetType.Alive)) {
@@ -681,7 +2430,7 @@ L0:
     WaitFixedTimeSeconds(0);
 });
 
-// 売買メッセンジャー_ラインナップ拡充_月光の聖剣
+// Trading messenger_Lineup expansion_Sacred sword of moonlight
 $Event(6687, Default, function() {
     SetNetworkSyncState(Disabled);
     if (CharacterType(10000, TargetType.Alive)) {
@@ -706,7 +2455,7 @@ L0:
     WaitFixedTimeSeconds(0);
 });
 
-// 売買メッセンジャー_ラインナップ拡充_落葉
+// Buy/Sell Messenger_Expansion Lineup_Falling Leaves
 $Event(6688, Default, function() {
     SetNetworkSyncState(Disabled);
     if (CharacterType(10000, TargetType.Alive)) {
@@ -731,7 +2480,7 @@ L0:
     WaitFixedTimeSeconds(0);
 });
 
-// 売買メッセンジャー_ラインナップ拡充_回転ノコギリ
+// Trading messenger_Lineup expansion_Rotating saw
 $Event(6689, Default, function() {
     SetNetworkSyncState(Disabled);
     if (CharacterType(10000, TargetType.Alive)) {
@@ -756,7 +2505,7 @@ L0:
     WaitFixedTimeSeconds(0);
 });
 
-// 売買メッセンジャー_ラインナップ拡充_爆発金槌
+// Buy/Sell Messenger_Lineup Expansion_Explosive Hammer
 $Event(6690, Default, function() {
     SetNetworkSyncState(Disabled);
     if (CharacterType(10000, TargetType.Alive)) {
@@ -781,7 +2530,7 @@ L0:
     WaitFixedTimeSeconds(0);
 });
 
-// 売買メッセンジャー_ラインナップ拡充_瀉血の槌
+// Buy/Sell Messenger_Lineup Expansion_Bloodletting Hammer
 $Event(6691, Default, function() {
     SetNetworkSyncState(Disabled);
     if (CharacterType(10000, TargetType.Alive)) {
@@ -806,7 +2555,7 @@ L0:
     WaitFixedTimeSeconds(0);
 });
 
-// 売買メッセンジャー_ラインナップ拡充_小アメンの腕
+// Trading messenger_Lineup expansion_Small Amen arm
 $Event(6692, Default, function() {
     SetNetworkSyncState(Disabled);
     if (CharacterType(10000, TargetType.Alive)) {
@@ -831,7 +2580,7 @@ L0:
     WaitFixedTimeSeconds(0);
 });
 
-// 売買メッセンジャー_ラインナップ拡充_ゴースの寄生虫
+// Buy/Sell Messenger_Lineup Expansion_Gose's Parasite
 $Event(6693, Default, function() {
     SetNetworkSyncState(Disabled);
     if (CharacterType(10000, TargetType.Alive)) {
@@ -856,7 +2605,7 @@ L0:
     WaitFixedTimeSeconds(0);
 });
 
-// 売買メッセンジャー_ラインナップ拡充_ガトリング銃
+// Trading messenger_Lineup expansion_Gatling gun
 $Event(6694, Default, function() {
     SetNetworkSyncState(Disabled);
     if (CharacterType(10000, TargetType.Alive)) {
@@ -881,7 +2630,7 @@ L0:
     WaitFixedTimeSeconds(0);
 });
 
-// 売買メッセンジャー_ラインナップ拡充_教会砲
+// Trading messenger_Lineup expansion_Church cannon
 $Event(6695, Default, function() {
     SetNetworkSyncState(Disabled);
     if (CharacterType(10000, TargetType.Alive)) {
@@ -906,7 +2655,7 @@ L0:
     WaitFixedTimeSeconds(0);
 });
 
-// 売買メッセンジャー_ラインナップ拡充_ガラシャの拳
+// Buy/Sell Messenger_Lineup Expansion_Garasha's Fist
 $Event(6696, Default, function() {
     SetNetworkSyncState(Disabled);
     if (CharacterType(10000, TargetType.Alive)) {
@@ -931,7 +2680,7 @@ L0:
     WaitFixedTimeSeconds(0);
 });
 
-// 売買メッセンジャー_ラインナップ拡充_湖の盾
+// Buy/Sell Messenger_Lineup Expansion_Lake Shield
 $Event(6697, Default, function() {
     SetNetworkSyncState(Disabled);
     if (CharacterType(10000, TargetType.Alive)) {
@@ -956,7 +2705,7 @@ L0:
     WaitFixedTimeSeconds(0);
 });
 
-// 連盟_アイテム使用1
+// Alliance_item use 1
 $Event(6788, Default, function() {
     SetNetworkSyncState(Disabled);
     WaitFor(CharacterHasSpEffect(10000, 6141));
@@ -965,7 +2714,7 @@ $Event(6788, Default, function() {
     RestartEvent();
 });
 
-// 連盟_アイテム使用2
+// Federation_item use 2
 $Event(6789, Default, function() {
     SetNetworkSyncState(Disabled);
     WaitFor(CharacterHasSpEffect(10000, 6143));
@@ -979,7 +2728,7 @@ $Event(6789, Default, function() {
     RestartEvent();
 });
 
-// 連盟_アイテム使用回数X以上
+// Alliance_item usage X or more
 $Event(6809, Default, function() {
     SetNetworkSyncState(Disabled);
     WaitFor(EventValue(6800, 9) >= 1);
@@ -990,7 +2739,7 @@ $Event(6809, Default, function() {
     SetEventFlag(6812, ON);
 });
 
-// 連盟_長になったときの特殊効果
+// special effect when becoming the federation_master
 $Event(6815, Default, function() {
     SetNetworkSyncState(Disabled);
     WaitFor(EventFlag(6813) && CharacterHasSpEffect(10000, 6142));
@@ -1000,7 +2749,7 @@ $Event(6815, Default, function() {
     RestartEvent();
 });
 
-// 連盟_杖入手後の特殊効果
+// Federation_special effect after obtaining a staff
 $Event(6816, Default, function() {
     SetNetworkSyncState(Disabled);
     WaitFor(EventFlag(6814) && CharacterHasSpEffect(10000, 6142));
@@ -1010,27 +2759,28 @@ $Event(6816, Default, function() {
     RestartEvent();
 });
 
-// ワープOBJ_登録_XX
-$Event(7000, Default, function(X0_4, X4_4, X8_4, X12_4) {
+// Warp OBJ_Registration_XX
+// InitializeEvent(5, 7000, 2300950, 2301950, 999, 12307800, -1);
+$Event(7000, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4) {
     SetNetworkSyncState(Disabled);
     ChangeCharacterEnableState(X0_4, Disabled);
-    DeactivateObject(X4_4, Disabled);
+    DeactivateObject(X4_4, Disabled); // <----------------------- removed? not sure if that was intentional
     WaitFor(CharacterBackreadStatus(X0_4));
     if (!EventFlag(X8_4)) {
         ChangeCharacterEnableState(X0_4, Disabled);
         DeactivateObject(X4_4, Disabled);
-        WaitFor(EventFlag(X8_4));
+        WaitFor(EventFlag(X8_4) && !EventFlag(X16_4));
         DeactivateObject(X4_4, Enabled);
         ChangeCharacterEnableState(X0_4, Enabled);
         SpawnOneshotSFX(TargetEntityType.Object, X4_4, 100, 100330);
     }
-L0:
+L0: 
     DeactivateObject(X4_4, Enabled);
     ChangeCharacterEnableState(X0_4, Enabled);
     RegisterHealingFountain(X12_4, X4_4, 0, 0, 0, 0);
 });
 
-// ワープOBJ_起動_XX
+// Warp OBJ_Start_XX
 $Event(7100, Default, function(X0_4, X4_4) {
     EndIf(EventFlag(X0_4));
     WaitFor(EventFlag(X0_4));
@@ -1044,23 +2794,33 @@ $Event(7100, Default, function(X0_4, X4_4) {
     SetEventFlag(6715, ON);
 });
 
-// ワープOBJ_拠点へのワープ_XX
+// Warp OBJ_Warp to Base_XX
 $Event(7200, Default, function(X0_4, X4_4, X8_4) {
     EndIf(HasMultiplayerState(MultiplayerState.Client));
     WaitFor(EventFlag(X0_4));
     SetEventFlag(X0_4, OFF);
-    RotateCharacter(10000, X4_4, 101160, false);
-    WaitFixedTimeSeconds(1);
-    SpawnOneshotSFX(TargetEntityType.Object, X4_4, 100, 100320);
-    WaitFixedTimeSeconds(3);
+    if (!EventFlag(12100761)) {
+        RotateCharacter(10000, X4_4, 101160, false);
+        WaitFixedTimeSeconds(1);
+        SpawnOneshotSFX(TargetEntityType.Object, X4_4, 100, 100320);
+        SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, 140);
+        WaitFixedTimeSeconds(3);
+    }
+    else {
+        SpawnOneshotSFX(TargetEntityType.Object, X4_4, 100, 100320);
+        SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, 140);
+        WaitFixedTimeSeconds(2);
+    }
     if (EventFlag(9401)) {
-        WarpPlayerToRespawnPoint(X8_4);
+        // WarpPlayerToRespawnPoint(X8_4);
+        SetPlayerRespawnPoint(X8_4);
+        SetSpEffect(10000, 2101, false);
         EndEvent();
     }
     WarpPlayerToRespawnPoint(2102962);
 });
 
-// ワープOBJ_拠点からのワープ_XX
+// Warp OBJ_Warp from Base_XX
 $Event(7300, Default, function(X0_4, X4_4) {
     EndIf(HasMultiplayerState(MultiplayerState.Client));
     WaitFor(EventFlag(X0_4));
@@ -1070,7 +2830,7 @@ $Event(7300, Default, function(X0_4, X4_4) {
     SetEventFlag(X0_4, OFF);
 });
 
-// マルチ閉じ込め壁_XX
+// Multi Confinement Wall_XX
 $Event(7600, Default, function(X0_4, X4_4) {
     SetNetworkSyncState(Disabled);
     DeactivateObject(X0_4, Disabled);
@@ -1086,7 +2846,189 @@ $Event(7600, Default, function(X0_4, X4_4) {
     RestartEvent();
 });
 
-// 誓約BJ固有効果_XX
+const effect_id = 1000030;
+
+// rematch boss triggered
+$Event(7700, Default, function(X0_4, X4_4, X8_4, X12_4) { // event_flag_11, event_flag_12, spawn_point
+    WaitFor(EventFlag(X0_4));
+    SetEventFlag(X0_4, OFF);
+    SetEventFlag(X4_4, ON);
+    SetSpEffect(10000, 4681, false);
+    RequestCharacterAnimationReset(10000, Interpolation.Interpolated);
+    ForceAnimationPlayback(10000, 101161, false, false, false);
+    SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, X12_4);
+    SpawnOneshotSFX(TargetEntityType.Character, 10000, 240, X12_4);
+    WaitFixedTimeFrames(59);
+    // WarpPlayerToRespawnPoint(X8_4);
+    SetPlayerRespawnPoint(X8_4);
+    SetSpEffect(10000, 2101, false);
+});
+
+// rematch victory
+$Event(7800, Default, function(X0_4, X4_4) {
+    RequestCharacterAnimationReset(10000, Interpolation.Interpolated);
+    ForceAnimationPlayback(10000, 101161, false, false, false);
+    
+    // 15: super fx
+    // 240: centered, subtle
+    // 236 or 243?: ground
+    // PlaySE(10000, SoundType.sSFX, 7012);
+    SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, X4_4);
+    SpawnOneshotSFX(TargetEntityType.Character, 10000, 240, X4_4);
+    // SpawnOneshotSFX(TargetEntityType.Character, 10000, 240, 928028);
+    // SpawnOneshotSFX(TargetEntityType.Character, 10000, 15, effect_id);
+    
+    WaitFixedTimeFrames(59);
+    if (EventFlag(12100750) && EventFlag(12100963)) {
+        WarpPlayerToRespawnPoint(2102969);
+    }
+    else {
+        // WarpPlayerToRespawnPoint(X0_4);
+        SetPlayerRespawnPoint(X0_4);
+        SetSpEffect(10000, 2101, false);
+    }
+});
+
+// return/quick warp to boss
+$Event(7900, Default, function(X0_4, X4_4, X8_1, X12_1, X16_4) {
+    WaitFor(EventFlag(X0_4)); // 12801899
+    SetEventFlag(X0_4, OFF);
+    SetEventFlag(7999, ON);
+    WaitFixedTimeFrames(1);
+    SetEventFlag(X16_4, OFF); // 8540
+    
+    if (!AnyBatchEventFlags(8500, 8599)) {
+        ForceAnimationPlayback(10000, 101170, false, false, false);
+        WaitFixedTimeSeconds(2);
+    }
+    else {
+        WaitFixedTimeSeconds(0.5);
+    }
+    DummyPlayCutsceneAndWarpPlayer(X4_4, X8_1, X12_1);
+    SetCharacterAnimationState(10000, Enabled);
+    SetCharacterTeamType(10000, TeamType.Host);
+    ActivateHit(10000, Enabled);
+    RestartEvent();
+});
+
+// reset statuses (poison, etc.) and restock bullets and vials
+
+//spawn_checker, hunt_region, lamp_spawn_region, area_id, block_id, bypass spawn_checker, hidden_region
+$Event(8300, Default, function(X0_4, X4_4, X8_4, X12_1, X16_1, X20_4, X24_4) {
+    // EndIf(EventFlag(12100962));
+    WaitFor(InArea(10000, X0_4) || EventFlag(1509) || EventFlag(X20_4));
+    if (EventFlag(1509)) {
+        EndEvent();
+    }
+    SetEventFlag(1509, ON);
+    SetSpEffect(10000, 110, false);
+    SetSpEffect(10000, 111, false);
+    SetSpEffect(10000, 112, false);
+    SetSpEffect(10000, 113, false);
+    SetSpEffect(10000, 114, false);
+    SetSpEffect(10000, 115, false);
+    SetSpEffect(10000, 116, false);
+    if (EventFlag(12100862)) {
+        RemoveItemFromPlayer(ItemType.Goods, 900, 99);
+        RemoveItemFromPlayer(ItemType.Goods, 1000, 99)
+        // IssueShortWarpRequest(10000, TargetEntityType.Area, X24_4, -1);
+        if (EventFlag(12100955)) { // hunt off
+            IssueShortWarpRequest(10000, TargetEntityType.Area, X24_4, -1);
+        } else {
+            IssueShortWarpRequest(10000, TargetEntityType.Area, X4_4, -1);
+        }
+        WaitFixedTimeFrames(1);
+        EventValueOperation(12104010, 8, 1, 0, 1, CalculationType.Assign);
+        DirectlyGivePlayerItem(ItemType.Goods, 900, 12104010, 8);
+        DirectlyGivePlayerItem(ItemType.Goods, 1000, 12104010, 8);
+        EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+        DirectlyGivePlayerItem(ItemType.Goods, 900, 12104010, 8);
+        DirectlyGivePlayerItem(ItemType.Goods, 1000, 12104010, 8);
+        DummyPlayCutsceneAndWarpPlayer(X8_4, X12_1, X16_1); // lamp spawn or rematch spawn
+        RequestCharacterAnimationReset(10000, Interpolation.Uninterpolated);
+        ForceAnimationPlayback(10000, 101200, false, false, true);
+    }
+});
+
+// rest
+$Event(8500, Default, function(X0_4, X4_4, X8_4) {
+    SetEventFlag(X0_4, OFF); // this event slot
+    WaitFixedTimeFrames(1);
+    if (EventFlag(1510)) { // a chalice menu has been opened
+        WaitFixedTimeSeconds(0.5);
+        SetEventFlag(1510, OFF);
+        SetEventFlag(X0_4, ON);
+    }
+    WaitFor(ThisEventSlot()); // menu opened, trigger animation
+    RotateCharacter(10000, X4_4, 101280, false);
+    PlaySE(10000, SoundType.sSFX, 777777774);
+    SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, 140);
+    SetCharacterAnimationState(10000, Disabled);
+    SetCharacterTeamType(10000, TeamType.Baby);
+    ActivateHit(10000, Disabled);
+    WaitFor(!ThisEventSlot()); // wait for menu closed (8540)
+    if (EventFlag(7999)) {
+        SetEventFlag(7999, OFF);
+        RestartEvent();
+    }
+    if (EventFlag(1510) ) {
+        RestartEvent();
+    }
+    InitializeEvent(0, 8600, 0);
+    SetEventFlag(X8_4, ON);
+    RestartEvent();
+});
+
+// fade
+$Event(8600, Default, function(){
+    WaitFixedTimeSeconds(1);
+    DisplayBanner(TextBannerType.StadiumLoss);
+});
+
+// Disable restock after spawn
+$Event(8700, Default, function() {
+    WaitFixedTimeSeconds(1);
+    SetEventFlag(1509, ON);
+});
+
+// hide lamp during rematch
+$Event(8800, Default, function(X0_4, X4_4, X8_4, X12_4) {
+    WaitFor(EventFlag(X0_4));
+    ChangeCharacterEnableState(X4_4, Disabled);
+    DeactivateObject(X8_4, Disabled);
+    WaitFixedTimeFrames(1);
+    CharacterWarpRequest(X4_4, TargetEntityType.Area, X12_4, -1);
+});
+
+// EventFlag(12100964) // rematch on death is on
+// Auto restart rematch if dead
+$Event(8900, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4) { // defeat-1, respawn_point
+    EndIf(!ThisEventSlot()); // game's state is not in rematch mode
+    WaitFor(HPRatio(10000) <= 0);
+    if (X12_4 != 0 && EventFlag(X12_4)) {
+        SetEventFlag(X16_4, ON);
+    }
+    SetEventFlag(X8_4, ON);
+    if (EventFlag(12100864)) { // auto rematch enabled
+        SetEventFlag(X0_4, ON);
+        if (EventFlag(12100750) && EventFlag(12100963)) { // initiated from dream and death respawn location is dream
+            SetEventFlag(12100850, ON); // flag to set respawn location back to dream
+        }
+        SetPlayerRespawnPoint(X4_4);
+        SetEventFlag(8950, ON);
+    } // auto rematch disabled
+    else {
+        EndIf(!EventFlag(12100650));
+        if (EventFlag(12100859)) { // death respawn location is boss lamp
+            SetPlayerRespawnPoint(X4_4);
+        }
+        else {
+            SetPlayerRespawnPoint(2102969); // respawn at broken lamp
+        }
+    }
+});
+
+// Covenant BJ Unique Effect_XX
 $Event(9030, Default, function(X0_4, X4_4) {
     SetNetworkSyncState(Disabled);
     WaitFor(CharacterHasSpEffect(10000, X0_4));
@@ -1096,7 +3038,7 @@ $Event(9030, Default, function(X0_4, X4_4) {
     RestartEvent();
 });
 
-// 誓約BJ固有効果_協力ゲスト専用_XX
+// Pledge BJ Unique Effect_Cooperative Guests Only_XX
 $Event(9035, Default, function(X0_4, X4_4) {
     SetNetworkSyncState(Disabled);
     WaitFor(CharacterHasSpEffect(10000, X0_4) && CharacterType(10000, TargetType.WhitePhantom));
@@ -1106,7 +3048,7 @@ $Event(9035, Default, function(X0_4, X4_4) {
     RestartEvent();
 });
 
-// NPCアイテム入手_XX
+// Get NPC item_XX
 $Event(9040, Default, function(X0_4, X4_4) {
     EndIf(EventFlag(X0_4));
     EndIf(!CharacterType(10000, TargetType.Alive));
@@ -1114,7 +3056,7 @@ $Event(9040, Default, function(X0_4, X4_4) {
     AwardItemLot(X4_4);
 });
 
-// NPCアイテム入手_何度でも_XX
+// Obtain NPC item_any number of times_XX
 $Event(9100, Default, function(X0_4, X4_4) {
     EndIf(!CharacterType(10000, TargetType.Alive));
     WaitFor(EventFlag(X0_4));
@@ -1123,7 +3065,7 @@ $Event(9100, Default, function(X0_4, X4_4) {
     RestartEvent();
 });
 
-// NPCアイテム入手_周回変化_XX
+// Get NPC item_Circulation change_XX
 $Event(9110, Default, function(X0_4, X4_4, X8_4, X12_4) {
     EndIf(EventFlag(X0_4));
     EndIf(HasMultiplayerState(MultiplayerState.Client));
@@ -1135,7 +3077,7 @@ $Event(9110, Default, function(X0_4, X4_4, X8_4, X12_4) {
     }
 });
 
-// 啓蒙返却1
+// Return Enlightenment 1
 $Event(9181, Default, function() {
     EndIf(!CharacterType(10000, TargetType.Alive));
     WaitFor(NumberOfClientsOfType(ClientType.Coop) >= 1);
@@ -1144,7 +3086,7 @@ $Event(9181, Default, function() {
     RestartEvent();
 });
 
-// 啓蒙返却2
+// Return Enlightenment 2
 $Event(9182, Default, function() {
     EndIf(!CharacterType(10000, TargetType.Alive));
     SetEventFlag(9184, OFF);
@@ -1158,7 +3100,7 @@ $Event(9182, Default, function() {
     RestartEvent();
 });
 
-// 啓蒙返却3
+// Return Enlightenment 3
 $Event(9183, Default, function() {
     EndIf(!CharacterType(10000, TargetType.Alive));
     WaitFor(!CharacterHasSpEffect(10000, 9000) && EventFlag(9185) && !EventFlag(9184));
@@ -1169,35 +3111,30 @@ $Event(9183, Default, function() {
     RestartEvent();
 });
 
-// NPC召喚実行できるか判定
+// Determine if NPC summoning can be executed
 $Event(9186, Default, function() {
     SetNetworkSyncState(Disabled);
     SetEventFlag(9187, ON);
-    chrFlag &= CharacterType(10000, TargetType.Alive);
     EndIf(!chrFlag);
     SetEventFlag(9187, ON);
-    chrFlag &= PlayerInsightAmount() >= 1 && !EventFlag(6009);
+    chrFlag = CharacterType(10000, TargetType.Alive) && PlayerInsightAmount() >= 1 && !EventFlag(6009);
     WaitFor(chrFlag);
     SetEventFlag(9187, OFF);
     WaitFor(!(PlayerInsightAmount() >= 1 && !EventFlag(6009)));
     RestartEvent();
 });
 
-// ホストプレイ中の特殊効果
+// Special effects during host play
 $Event(9190, Default, function() {
     SetNetworkSyncState(Disabled);
-    WaitFor(
-        HasMultiplayerState(MultiplayerState.Multiplayer)
-            && HasMultiplayerState(MultiplayerState.Host));
+    WaitFor(HasMultiplayerState(MultiplayerState.Multiplayer) && HasMultiplayerState(MultiplayerState.Host));
     SetSpEffect(10000, 9001, false);
-    WaitFor(
-        !(HasMultiplayerState(MultiplayerState.Multiplayer)
-            && HasMultiplayerState(MultiplayerState.Host)));
+    WaitFor(!(HasMultiplayerState(MultiplayerState.Multiplayer) && HasMultiplayerState(MultiplayerState.Host)));
     ClearSpEffect(10000, 9001);
     RestartEvent();
 });
 
-// マルチ時間帯解禁フラグ制御_ホスト
+// Multi-time zone unlock flag control_host
 $Event(9191, Default, function() {
     EndIf(HasMultiplayerState(MultiplayerState.Client));
     if (!(PlayerInMap(29, 0) || PlayerInMap(26, 0) || PlayerInMap(33, 0))) {
@@ -1215,7 +3152,7 @@ L0:
     EndEvent();
 });
 
-// マルチ時間帯解禁フラグ制御_ゲスト
+// Multi-time zone unlock flag control_guest
 $Event(9192, Default, function() {
     EndIf(HasMultiplayerState(MultiplayerState.Client));
     SetEventFlag(6400, ON);
@@ -1227,7 +3164,7 @@ $Event(9192, Default, function() {
     SetEventFlag(6403, ON);
 });
 
-// 血に酔った狩人
+// blood-drunk hunter
 $Event(9193, Default, function() {
     EndIf(HasMultiplayerState(MultiplayerState.Client));
     WaitFor(EventFlag(6006));
@@ -1237,7 +3174,7 @@ $Event(9193, Default, function() {
     RestartEvent();
 });
 
-// 狩人呼びの鐘使用Msg
+// Use the hunter's bell Msg
 $Event(9198, Default, function() {
     if (!EventFlag(9199)) {
         WaitFor(CharacterType(10000, TargetType.Alive) && CharacterHasSpEffect(10000, 9000));
@@ -1252,15 +3189,12 @@ L0:
     RestartEvent();
 });
 
-// SAN値で幻聴が聞こえる_XX
+// Auditory hallucinations with SAN values ​​_XX
 $Event(9200, Default, function(X0_4) {
     SetNetworkSyncState(Disabled);
     SetMapSoundState(X0_4, Disabled);
     WaitFor(
-        (PlayerInsightAmount() >= 60 || EventFlag(9802))
-            && !EventFlag(9180)
-            && !EventFlag(9462)
-            && !PlayerInMap(26, 0));
+        (PlayerInsightAmount() >= 60 || EventFlag(9802)) && !EventFlag(9180) && !EventFlag(9462) && !PlayerInMap(26, 0));
     SetMapSoundState(X0_4, Enabled);
     WaitFor(
         !((PlayerInsightAmount() >= 60 || EventFlag(9802))
@@ -1270,7 +3204,7 @@ $Event(9200, Default, function(X0_4) {
     RestartEvent();
 });
 
-// 漁村 or 時計塔で殺し屋の鐘が聞こえる
+// Hear the killer's bell at the fishing village or clock tower
 $Event(9215, Default, function() {
     SetNetworkSyncState(Disabled);
     WaitFor(EventFlag(9468) && !EventFlag(1730) && (PlayerInMap(35, 0) || PlayerInMap(36, 0)));
@@ -1281,7 +3215,7 @@ $Event(9215, Default, function() {
     RestartEvent();
 });
 
-// 出現寡婦_出現_XX
+// Appearance Widow_Appearance_XX
 $Event(9220, Restart, function(X0_4, X4_4, X8_4, X12_4, X16_1, X17_1) {
     if (EventFlag(X8_4)) {
         SetCharacterAIState(X0_4, Disabled);
@@ -1310,7 +3244,7 @@ L0:
     SetEventFlag(X4_4, ON);
 });
 
-// 出現寡婦_鐘を鳴らす_XX
+// Appearance Widow_Ring Bell_XX
 $Event(9240, Restart, function(X0_4, X4_4, X8_4, X12_4, X16_1, X17_1) {
     EndIf(EventFlag(X8_4));
     WaitFor(
@@ -1328,15 +3262,13 @@ $Event(9240, Restart, function(X0_4, X4_4, X8_4, X12_4, X16_1, X17_1) {
     RestartEvent();
 });
 
-// 出現寡婦_鐘を止める_XX
+// Appearing Widow_Stop Bell_XX
 $Event(9260, Restart, function(X0_4, X4_4, X8_4, X12_4, X16_1, X17_1) {
     EndIf(EventFlag(X8_4));
     WaitFor(
         EventFlag(X4_4)
             && EventFlag(X12_4)
-            && (EventFlag(X8_4)
-                || NumberOfClientsOfType(ClientType.Invader) >= 1
-                || !PlayerInMap(X16_1, X17_1)));
+            && (EventFlag(X8_4) || NumberOfClientsOfType(ClientType.Invader) >= 1 || !PlayerInMap(X16_1, X17_1)));
     WaitFor(CharacterType(10000, TargetType.Alive));
     ClearSpEffect(10000, 9020);
     ClearSpEffect(X0_4, 9100);
@@ -1345,7 +3277,7 @@ $Event(9260, Restart, function(X0_4, X4_4, X8_4, X12_4, X16_1, X17_1) {
     RestartEvent();
 });
 
-// 出現寡婦_消滅_XX
+// Appearing Widow_Disappearing_XX
 $Event(9280, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4, X20_1, X21_1) {
     EndIf(EventFlag(X8_4) || EventFlag(X12_4) || EventFlag(X16_4));
     hp = HPRatio(X0_4) == 0;
@@ -1364,7 +3296,7 @@ L0:
     ForceAnimationPlayback(X0_4, 7010, false, false, false);
 });
 
-// SAN値獲得
+// get SAN value
 $Event(9350, Default, function(X0_4) {
     EndIf(HasMultiplayerState(MultiplayerState.Client));
     if (X0_4 != 1) {
@@ -1415,7 +3347,7 @@ L1:
     WaitFixedTimeFrames(10);
 });
 
-// 血族BJを付けてNPC殺害_XX
+// Kill NPC with bloodline BJ_XX
 $Event(9360, Default, function(X0_4, X4_4, X8_4, X12_4) {
     EndIf(ThisEventSlot());
     EndIf(EventFlag(X0_4));
@@ -1431,7 +3363,7 @@ $Event(9360, Default, function(X0_4, X4_4, X8_4, X12_4) {
     AwardItemsIncludingClients(5520);
 });
 
-// 初回死亡で拠点へ
+// First death to base
 $Event(9400, Default, function() {
     EndIf(HasMultiplayerState(MultiplayerState.Client));
     EndIf(EventFlag(12410999));
@@ -1444,7 +3376,7 @@ $Event(9400, Default, function() {
     SetPlayerRespawnPoint(2102962);
 });
 
-// SAN値1以上で初回死亡
+// First death with a SAN value of 1 or higher
 $Event(9404, Default, function() {
     EndIf(HasMultiplayerState(MultiplayerState.Client));
     EndIf(ThisEvent());
@@ -1452,16 +3384,15 @@ $Event(9404, Default, function() {
     SetPlayerRespawnPoint(2102961);
 });
 
-// 大学クリアで生贄にワープ_アイテム入手
+// Sacrifice warp_item when clearing university
 $Event(9410, Default, function() {
     EndIf(ThisEvent());
-    WaitFor(
-        EventFlag(13201803) && CharacterType(10000, TargetType.Alive) && InArea(10000, 2802010));
+    WaitFor(EventFlag(13201803) && CharacterType(10000, TargetType.Alive) && InArea(10000, 2802010));
     WaitFixedTimeSeconds(0);
     AwardItemLot(3200800);
 });
 
-// 初回生贄_00
+// First Sacrifice_00
 $Event(9421, Default, function() {
     EndIf(EventFlag(9423));
     EndIf(HasMultiplayerState(MultiplayerState.Client));
@@ -1470,7 +3401,7 @@ $Event(9421, Default, function() {
     SetEventFlag(9420, OFF);
 });
 
-// 初回生贄_01
+// First Sacrifice_01
 $Event(9422, Default, function() {
     EndIf(EventFlag(9423));
     EndIf(HasMultiplayerState(MultiplayerState.Client));
@@ -1483,7 +3414,7 @@ $Event(9422, Default, function() {
     SetSpEffect(10000, 4680, false);
 });
 
-// 誓約ボディジェム入手_XX
+// Get Covenant Body Gem_XX
 $Event(9440, Default, function(X0_4, X4_4) {
     SetNetworkSyncState(Disabled);
     EndIf(ThisEventSlot());
@@ -1492,7 +3423,7 @@ $Event(9440, Default, function(X0_4, X4_4) {
     AwardItemLot(X4_4);
 });
 
-// 血族BJを付けてNPC殺害2_XX
+// Kill NPC with bloodline BJ 2_XX
 $Event(9480, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4) {
     EndIf(ThisEventSlot());
     EndIf(EventFlag(X0_4));
@@ -1508,7 +3439,7 @@ $Event(9480, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4) {
     AwardItemsIncludingClients(5520);
 });
 
-// 魔石原石使用_XX
+// Magic stone used_XX
 $Event(9500, Default, function(X0_4, X4_4) {
     SetNetworkSyncState(Disabled);
     WaitFor(CharacterHasSpEffect(10000, X0_4));
@@ -1517,63 +3448,59 @@ $Event(9500, Default, function(X0_4, X4_4) {
     RestartEvent();
 });
 
-// 拠点老人_ランダム居眠り2
+// base old man_random doze 2
 $Event(9700, Default, function(X0_4, X4_4) {
     WaitFor(EventFlag(1021) && EventFlag(72100121) && !PlayerInMap(21, 0));
     BatchSetEventFlags(X0_4, X4_4, OFF);
     SetEventFlag(1022, ON);
 });
 
-// 拠点老人_ランダム居眠り3
+// base old man_random doze 3
 $Event(9701, Default, function(X0_4, X4_4) {
     WaitFor(EventFlag(1023) && EventFlag(72100123) && !PlayerInMap(21, 0));
     BatchSetEventFlags(X0_4, X4_4, OFF);
     SetEventFlag(1024, ON);
 });
 
-// 拠点老人_ランダム居眠り4
+// base old man_random doze 4
 $Event(9702, Default, function(X0_4, X4_4) {
     WaitFor(EventFlag(1025) && EventFlag(72100125) && !PlayerInMap(21, 0));
     BatchSetEventFlags(X0_4, X4_4, OFF);
     SetEventFlag(1026, ON);
 });
 
-// 拠点老人_ランダム居眠り5
+// base old man_random doze 5
 $Event(9703, Default, function(X0_4, X4_4) {
     WaitFor(EventFlag(1026) && EventFlag(9802) && EventFlag(72100128) && !PlayerInMap(21, 0));
     BatchSetEventFlags(X0_4, X4_4, OFF);
     SetEventFlag(1027, ON);
 });
 
-// 人形のヒロイン_お帰りなさい
+// doll heroine_welcome home
 $Event(9710, Default, function(X0_4, X4_4) {
     WaitFor(EventFlag(1000) && EventFlag(72100110) && !PlayerInMap(21, 0));
     BatchSetEventFlags(X0_4, X4_4, OFF);
     SetEventFlag(1001, ON);
 });
 
-// 復讐者_ワープOBJ使用制限_ガスコイン部屋
+// Avenger_Warp OBJ usage limit_Gascoin room
 $Event(9720, Default, function() {
-    if (!ThisEvent()) {
-        if (!EventFlag(12410810)) {
-            if (!EventFlag(9467)) {
-                flagMap = EventFlag(1362) && EventFlag(72400520) && PlayerInMap(21, 0);
-                flag = EventFlag(1363);
-                flag2 = (EventFlag(1701) || EventFlag(1702)) && (EventFlag(1368) || EventFlag(1369));
-                flag3 = EventFlag(12410810) || EventFlag(9467);
-                WaitFor(flagMap || flag || flag2 || flag3);
-                if (!flag3.Passed) {
-                    SetEventFlag(70002413, ON);
-                    WaitFor(EventFlag(12410810) || EventFlag(9467));
-                }
-            }
-        }
-    }
+    GotoIf(L0, ThisEvent());
+    GotoIf(L0, EventFlag(12410810));
+    GotoIf(L0, EventFlag(9467));
+    flagMap = EventFlag(1362) && EventFlag(72400520) && PlayerInMap(21, 0);
+    flag = EventFlag(1363);
+    flag2 = (EventFlag(1701) || EventFlag(1702)) && (EventFlag(1368) || EventFlag(1369));
+    flag3 = EventFlag(12410810) || EventFlag(9467);
+    WaitFor(flagMap || flag || flag2 || flag3);
+    GotoIf(L0, flag3.Passed);
+    SetEventFlag(70002413, ON);
+    WaitFor(EventFlag(12410810) || EventFlag(9467));
 L0:
     SetEventFlag(70002413, OFF);
 });
 
-// 復讐者_ワープOBJ使用制限_聖女ビースト部屋
+// Revenge_Warp OBJ usage restriction_Saint Beast room
 $Event(9721, Default, function() {
     if (!ThisEvent()) {
         WaitFor(EventFlag(1371) || (EventFlag(1705) && CharacterDead(2400902)));
@@ -1582,7 +3509,7 @@ L0:
     SetEventFlag(70002401, OFF);
 });
 
-// 復讐者_衰弱
+// Avenger_Energy
 $Event(9722, Default, function() {
     EndIf(!CharacterType(10000, TargetType.Alive));
     WaitFor(EventFlag(1373) && EventFlag(9802));
@@ -1591,7 +3518,7 @@ $Event(9722, Default, function() {
     SetEventFlag(70002401, ON);
 });
 
-// 復讐者_闇堕ち
+// Avenger_Darkness
 $Event(9723, Default, function() {
     EndIf(!CharacterType(10000, TargetType.Alive));
     WaitFor(EventFlag(1374) && EventFlag(9802));
@@ -1600,7 +3527,7 @@ $Event(9723, Default, function() {
     SetEventFlag(70002401, ON);
 });
 
-// 感染者の乞食_他NPC殺害カウント_地上
+// Infected beggar_other NPC killing count_ground
 $Event(9755, Default, function() {
     WaitFor(
         (EventFlag(1205) || EventFlag(1207))
@@ -1624,7 +3551,7 @@ $Event(9755, Default, function() {
     RestartEvent();
 });
 
-// 感染者の乞食_他NPC殺害カウント_ダンジョン
+// Infected Beggar_Other NPC Killing Count_Dungeon
 $Event(9756, Default, function() {
     WaitFor(
         (EventFlag(1205) || EventFlag(1207))
@@ -1638,20 +3565,20 @@ $Event(9756, Default, function() {
     RestartEvent();
 });
 
-// 血族狩り_古城以外に移動した
+// Bloodline Hunting_Moved outside the old castle
 $Event(9770, Default, function() {
     WaitFor(EventFlag(1351) && !PlayerInMap(25, 0));
     SetEventFlag(72500359, ON);
 });
 
-// クモ男パッチ_ダンジョンにいる
+// Spider-man patch_in the dungeon
 $Event(9780, Default, function() {
     WaitFor(EventFlag(1422) && !PlayerInMap(32, 0) && EventFlag(73200326));
     BatchSetEventFlags(1420, 1437, OFF);
     SetEventFlag(1423, ON);
 });
 
-// クモ男パッチ_森に到達したので住民を乗っ取る
+// Spider-Man Patch_Take over the inhabitants as they reached the forest
 $Event(9781, Default, function() {
     EndIf(ThisEvent());
     WaitFor(CharacterType(10000, TargetType.Alive) && PlayerInMap(27, 0));
@@ -1660,30 +3587,28 @@ $Event(9781, Default, function() {
     SetEventFlag(72410382, ON);
 });
 
-// クモ男_(話を聞いている&拠点に行ったor死んだ)orクモ男が死んだので乗っとり終了
+// Spider-Man_(listening to story & went to base or died) or Spider-Man died so hijacking ended
 $Event(9782, Default, function() {
-    WaitFor(
-        (PlayerHasItem(ItemType.Goods, 4310) && (PlayerInMap(21, 0) || CharacterDead(10000)))
-            || EventFlag(1431));
+    WaitFor((PlayerHasItem(ItemType.Goods, 4310) && (PlayerInMap(21, 0) || CharacterDead(10000))) || EventFlag(1431));
     SetEventFlag(1438, ON);
     SetEventFlag(1439, OFF);
 });
 
-// Cエンド分岐_判定
+// C end branch_decision
 $Event(9909, Default, function() {
     EndIf(EventFlag(9900));
     WaitFor(EventValue(9901, 4) >= 3);
     SetEventFlag(9900, ON);
 });
 
-// Cエンド分岐_3本目のへその緒使用個数カウント_XX
+// C end branch_3rd umbilical cord usage count_XX
 $Event(9905, Default, function(X0_4) {
     EndIf(ThisEventSlot());
     WaitFor(CharacterHasSpEffect(10000, X0_4));
     IncrementEventValue(9901, 4, 4);
 });
 
-// ザクザクフラグ制御
+// Crunchy flag control
 $Event(9910, Default, function() {
     SetNetworkSyncState(Disabled);
     EndIf(!CharacterType(10000, TargetType.Alive));
@@ -1828,5 +3753,3 @@ $Event(9910, Default, function() {
         SetEventFlag(50002261, OFF);
     }
 });
-
-
