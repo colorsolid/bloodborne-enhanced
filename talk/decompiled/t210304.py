@@ -407,11 +407,16 @@ def t210304_x13():
             """State 2"""
             ClearTalkListData()
             """State 6"""
-            AddTalkListData(1, 15000100, -1)
+            if GetEventStatus(12100854) == 1:
+                AddTalkListData(1, 200012, 12100998) # enhanced features
+            else:
+                AddTalkListData(1, 200012, -1) # enhanced features
+            AddTalkListData(2, 15000100, -1)
+            AddTalkListData(5, 200006, 12100999) # end the night
             AddTalkListData(50, 15000005, -1)
             """State 3"""
             ShowShopMessage(0, 0, 0)
-            if GetTalkListEntryResult() == 1:
+            if GetTalkListEntryResult() == 2:
                 """State 4"""
                 DebugEvent('レベルアップ')
                 if GetEventStatus(6700) == 1:
@@ -441,6 +446,20 @@ def t210304_x13():
                 DebugEvent('会話終了通知_立ち去る')
                 ReportConversationEndToHavokBehavior()
                 break
+            elif GetTalkListEntryResult() == 5: # end the night
+                call = t210304_x16()
+                if call.Get() == 1:
+                    return 0
+                elif call.Done():
+                    ForceCloseGenericDialog()
+                    continue
+            elif GetTalkListEntryResult() == 1: # enhanced features
+                call = t210304_x17()
+                if call.Get() == 1:
+                    ForceCloseMenu()
+                    continue
+                elif call.Done():
+                    pass
     else:
         """State 12"""
         OpenGenericDialog(7, 10011010, 1, 0, 1)
@@ -498,24 +517,24 @@ def t210304_x15():
 
 # NG+
 def t210304_x16():
-    if GetEventStatus(12100800) == 1:
-        OpenGenericDialog(2, 200007, 3, 4, 2)
-        def WhilePaused():
-            SetTalkTime(0.33)
-        if GetGenericDialogButtonResult() == 1:
-            DebugEvent('OK')
-            SetEventState(12100700, 1)
-            return 1
-        elif not IsGenericDialogOpen():
-            DebugEvent('CANCEL')
-            return 0
-    elif GetEventStatus(12100802) == 1:
+    if GetEventStatus(12101850) == 1:
         OpenGenericDialog(2, 200008, 3, 4, 2)
         def WhilePaused():
             SetTalkTime(0.33)
         if GetGenericDialogButtonResult() == 1:
             DebugEvent('OK')
             SetEventState(12100702, 1)
+            return 1
+        elif not IsGenericDialogOpen():
+            DebugEvent('CANCEL')
+            return 0
+    elif GetEventStatus(12101800) == 1:
+        OpenGenericDialog(2, 200007, 3, 4, 2)
+        def WhilePaused():
+            SetTalkTime(0.33)
+        if GetGenericDialogButtonResult() == 1:
+            DebugEvent('OK')
+            SetEventState(12100700, 1)
             return 1
         elif not IsGenericDialogOpen():
             DebugEvent('CANCEL')

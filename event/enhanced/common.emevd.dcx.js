@@ -74,6 +74,9 @@ $Event(0, Default, function() {
     InitializeEvent(0, 12100770, 0);
     InitializeEvent(0, 12100769, 0);
     
+    // lesser hunter's mark
+    InitializeEvent(0, 12100768, 0);
+    
     InitializeEvent(0, 12101010, 0);
     
     InitializeEvent(0, 8700, 0); // disable item refill after time limit
@@ -608,49 +611,98 @@ $Event(12102200, Default, function() {
     //SetEventFlag(72110200, ON);
     SetEventFlag(12117810, ON);
     
-    SetEventFlag(12207810, ON);
-    SetEventFlag(12207830, ON);
+    SetEventFlag(12117810, ON);
+    SetEventFlag(72110200, ON);
     SetEventFlag(12307810, ON);
-    SetEventFlag(12307830, ON);
-    SetEventFlag(12307850, ON);
+    SetEventFlag(72300200, ON);
     SetEventFlag(12407810, ON);
+    SetEventFlag(72400200, ON);
     SetEventFlag(12407830, ON);
+    SetEventFlag(72400201, ON);
     SetEventFlag(12417810, ON);
+    SetEventFlag(72410200, ON);
     SetEventFlag(12417830, ON);
+    SetEventFlag(72410201, ON);
     SetEventFlag(12417850, ON);
+    SetEventFlag(72410202, ON);
     SetEventFlag(12417870, ON);
+    SetEventFlag(72410203, ON);
     SetEventFlag(12427810, ON);
+    SetEventFlag(72420200, ON);
     SetEventFlag(12427830, ON);
+    SetEventFlag(72420201, ON);
     SetEventFlag(12427850, ON);
-    SetEventFlag(12507810, ON);
-    SetEventFlag(12507830, ON);
-    SetEventFlag(12507850, ON);
-    SetEventFlag(12607810, ON);
-    SetEventFlag(12607830, ON);
-    SetEventFlag(12607850, ON);
-    SetEventFlag(12607870, ON);
+    SetEventFlag(72420202, ON);
+    SetEventFlag(12307830, ON);
+    SetEventFlag(72300201, ON);
+    SetEventFlag(12307850, ON);
+    SetEventFlag(72300202, ON);
+    SetEventFlag(12207810, ON);
+    SetEventFlag(72200200, ON);
+    SetEventFlag(12207830, ON);
+    SetEventFlag(72200201, ON);
     SetEventFlag(12707810, ON);
+    SetEventFlag(72700200, ON);
     SetEventFlag(12707830, ON);
+    SetEventFlag(72700201, ON);
     SetEventFlag(12807810, ON);
+    SetEventFlag(72800200, ON);
     SetEventFlag(12807830, ON);
+    SetEventFlag(72800201, ON);
     SetEventFlag(12807850, ON);
+    SetEventFlag(72800202, ON);
     SetEventFlag(12807870, ON);
+    SetEventFlag(72800203, ON);
+    SetEventFlag(12507810, ON);
+    SetEventFlag(72500200, ON);
+    SetEventFlag(12507830, ON);
+    SetEventFlag(72500201, ON);
+    SetEventFlag(12507850, ON);
+    SetEventFlag(72500202, ON);
+    SetEventFlag(12607810, ON);
+    SetEventFlag(72600200, ON);
+    SetEventFlag(12607830, ON);
+    SetEventFlag(72600201, ON);
+    SetEventFlag(12607850, ON);
+    SetEventFlag(72600202, ON);
+    SetEventFlag(12607870, ON);
+    SetEventFlag(72600203, ON);
     SetEventFlag(13207810, ON);
+    SetEventFlag(73200200, ON);
     SetEventFlag(13207830, ON);
+    SetEventFlag(73200201, ON);
     SetEventFlag(13207850, ON);
+    SetEventFlag(73200202, ON);
     SetEventFlag(13207870, ON);
+    SetEventFlag(73200203, ON);
     SetEventFlag(13307810, ON);
+    SetEventFlag(73300200, ON);
     SetEventFlag(13307830, ON);
+    SetEventFlag(73300201, ON);
     SetEventFlag(13407810, ON);
+    SetEventFlag(73400200, ON);
     SetEventFlag(13407830, ON);
+    SetEventFlag(73400201, ON);
     SetEventFlag(13407850, ON);
+    SetEventFlag(73400202, ON);
     SetEventFlag(13407870, ON);
+    SetEventFlag(73400203, ON);
     SetEventFlag(13507810, ON);
+    SetEventFlag(73500200, ON);
     SetEventFlag(13507830, ON);
+    SetEventFlag(73500201, ON);
     SetEventFlag(13507850, ON);
+    SetEventFlag(73500202, ON);
     SetEventFlag(13607810, ON);
+    SetEventFlag(73600200, ON);
     SetEventFlag(13607830, ON);
+    SetEventFlag(73600201, ON);
     SetEventFlag(13607850, ON);
+    SetEventFlag(73600202, ON);
+    
+    if (!PlayerHasItem(ItemType.Goods, 1402)) {
+        AwardItemLot(37010);
+    }
     
     SetEventFlag(12102202, OFF);
 });
@@ -780,6 +832,7 @@ $Event(12102210, Default, function() {
 });
 
 $Event(12102220, Default, function(X0_4, X4_4) {
+    EndEvent();
     EndIf(!EventFlag(12102200) || ThisEventSlot());
     WaitFor(CharacterBackreadStatus(X4_4));
     WaitFixedTimeSeconds(1);
@@ -905,6 +958,15 @@ $Event(12102041, Default, function() {
 $Event(12102043, Default, function() {
     EndIf(ThisEvent());
     WaitFor(EventFlag(12411800) || EventFlag(13401800) || EventFlag(13601800) || EventFlag(12101850) || EventFlag(12601800));
+    SetEventFlag(12102043, ON);
+});
+
+// rematch scaling
+// boss_rematch_flag, boss_id, speffect_id
+$Event(12102070, Default, function(X0_4, X4_4, X8_4) {
+    EndIf(EventFlag(12100952));
+    WaitFor(EventFlag(X0_4));
+    SetSpEffect(X4_4, X8_4, false);
 });
 
 $Event(13100000, Default, function() {
@@ -1317,6 +1379,11 @@ $Event(8406, Default, function() {
         SetEventFlag(12100954, ON); // off
     }
     
+    // rematch scaling
+    if (!EventFlag(12100952) && !EventFlag(12100852)) {
+        SetEventFlag(12100952, ON); // off
+    }
+    
     // unlock lamps
     SetEventFlag(12102301, OFF);
     
@@ -1384,6 +1451,14 @@ $Event(12100769, Default, function() {
     WaitFor(ThisEvent());
     AwardItemLot(43020);
     SetEventFlag(12100869, OFF);
+});
+
+// return to dream / lesser hunter's mark
+$Event(12100768, Default, function() {
+    WaitFor(CharacterHasSpEffect(10000, 2102));
+    SetPlayerRespawnPoint(2102962);
+    WaitFixedTimeFrames(1);
+    SetSpEffect(10000, 2101, false);
 });
 
 // acquire all trick weapons
@@ -2765,7 +2840,12 @@ $Event(7000, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4) {
 L0: 
     DeactivateObject(X4_4, Enabled);
     ChangeCharacterEnableState(X0_4, Enabled);
-    RegisterHealingFountain(X12_4, X4_4, 0, 0, 0, 0);
+    if (!EventFlag(12102200)) {
+        RegisterHealingFountain(X12_4, X4_4, 0, 0, 0, 0);
+    }
+    else {
+        RegisterHealingFountain(999, X4_4, 0, 0, 0, 0);
+    }
 });
 
 // Warp OBJ_Start_XX
@@ -2867,7 +2947,7 @@ $Event(7800, Default, function(X0_4, X4_4) {
     // SpawnOneshotSFX(TargetEntityType.Character, 10000, 15, effect_id);
     
     WaitFixedTimeFrames(59);
-    if (EventFlag(12100750) && EventFlag(12100963)) {
+    if (EventFlag(12100750) && EventFlag(12100963)) { // rematch started from broken lamp and return to dream enabled
         WarpPlayerToRespawnPoint(2102969);
     }
     else {

@@ -4,7 +4,7 @@
 // @game    Bloodborne
 // @string    "PC情報_拠点到達時\u0000ボス_撃破\u0000PC情報_ボス撃破_拠点ボス\u0000ボス_戦闘開始\u0000ボス_撃破時間\u0000PC情報_ボス撃破_拠点ボス2\u0000ボス_戦闘開始2\u0000ボス_撃破時間2\u0000N:\\SPRJ\\data\\Param\\event\\common.emevd\u0000"
 // @linked    [164]
-// @version    3.4.1
+// @version    3.4.2
 // ==/EMEVD==
 
 const area_id = 21;
@@ -103,7 +103,7 @@ const orphan_lamp_id = 3601952;
 // constructor
 $Event(0, Default, function() {
     InitializeEvent(0, 12100005, 0);
-    InitializeEvent(0, 8800, 0); // broken lamp enable/disable
+    InitializeEvent(0, 8701, 0); // broken lamp enable/disable
     
     InitializeEvent(30, 8300, 2102318, 2102308, 2102319, 21, 0, -1, 2102328);
     
@@ -748,18 +748,21 @@ $Event(12102000, Default, function() {
     }
 });
 
-// Hide broken lamp if disabled
-$Event(8800, Default, function() {
-    if (EventFlag(12100965)) {
+// Toggle broken lamp
+$Event(8701, Default, function() {
+    if (EventFlag(12100965)) { // hidden
         ChangeCharacterEnableState(2100500, Disabled);
         DeactivateObject(2105099, Disabled);
+        SetCharacterBackreadState(2100250, true);
         WaitFor(EventFlag(12100865));
         ChangeCharacterEnableState(2100500, Enabled);
         DeactivateObject(2105099, Enabled);
+        SetCharacterBackreadState(2100250, false);
         RestartEvent();
     }
-    else {
+    else { // active
         WaitFor(EventFlag(12100965));
+        SetCharacterBackreadState(2100250, true);
         ChangeCharacterEnableState(2100500, Disabled);
         DeactivateObject(2105099, Disabled);
         RestartEvent();

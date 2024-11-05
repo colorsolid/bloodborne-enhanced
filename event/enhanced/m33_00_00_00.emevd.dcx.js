@@ -4,7 +4,7 @@
 // @game    Bloodborne
 // @string    "クリア時間_通し\u0000クリア時間_1プレイ\u0000ボス_撃破\u0000PC情報_ボス撃破_邪神\u0000ボス_戦闘開始\u0000ボス戦_撃破時間\u0000ギミック_エレベーター起動\u0000PC情報_故郷到達時\u0000N:\\SPRJ\\data\\Param\\event\\common.emevd\u0000\u0000"
 // @linked    [162]
-// @version    3.4.1
+// @version    3.4.2
 // ==/EMEVD==
 
 const area_id = 33;
