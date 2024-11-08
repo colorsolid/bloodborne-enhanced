@@ -4,7 +4,7 @@
 // @game    Bloodborne
 // @string    "PC情報_現実拠点到達時\u0000N:\\SPRJ\\data\\Param\\event\\common.emevd\u0000\u0000\u0000\u0000\u0000\u0000"
 // @linked    [26]
-// @version    3.4.1
+// @version    3.4.2
 // ==/EMEVD==
 
 const lamp_offset = 52;
@@ -12,8 +12,9 @@ const lamp_id = 2111950;
 
 // constructor
 $Event(0, Default, function() {
-    InitializeEvent(lamp_offset, 8300, lamp_id+2000, lamp_id+3000, lamp_id+4000, 21, 1, -1, lamp_id+6000);
+    InitializeEvent(lamp_offset, 8300, lamp_id+2000, lamp_id+3000, lamp_id+4000, 21, 1, -1, lamp_id+6000, 12102110);
     InitializeEvent(lamp_offset, 8500, 8500+lamp_offset, lamp_id, 72112525);
+    InitializeEvent(lamp_offset, 8100, 8100+lamp_offset, 12102110);
     
     InitializeEvent(2500, 12107000, 72112500, 2111950, 2412950);
     InitializeEvent(2501, 12107000, 72112501, 2111950, 2412951);
@@ -237,19 +238,25 @@ L2:
             ActivateMapPart(2114002, Enabled);
             ActivateMapPart(2114000, Disabled);
             ActivateMapPart(2114001, Disabled);
-            EndEvent();
+            WaitFor(EventFlag(12102065));
+            WaitFixedTimeSeconds(5);
+            RestartEvent();
         }
 L1:
         ActivateMapPart(2114002, Disabled);
         ActivateMapPart(2114000, Enabled);
         ActivateMapPart(2114001, Disabled);
-        EndEvent();
+        WaitFor(EventFlag(12102065));
+        WaitFixedTimeSeconds(5);
+        RestartEvent();
     }
 L0:
     ActivateMapPart(2114002, Disabled);
     ActivateMapPart(2114000, Disabled);
     ActivateMapPart(2114001, Enabled);
-    EndEvent();
+    WaitFor(EventFlag(12102065));
+    WaitFixedTimeSeconds(5);
+    RestartEvent();
 });
 
 // Map first entry_play log

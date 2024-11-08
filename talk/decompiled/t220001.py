@@ -258,8 +258,10 @@ def t220001_x60(action1=_):
                 AddTalkListData(6, 70000000, 12100876)
                 AddTalkListData(7, 200003, 12100875)
                 AddTalkListData(8, 200004, 12100874)
-                # AddTalkListData(30, 200153, 12102202) # activate all lamps
-                # AddTalkListData(31, 200155, 12102212) # activate all shortcuts
+                if GetEventStatus(12100000 + 220 * 10 + 1 * 2) == 0 or GetEventStatus(12100000 + 220 * 10 + 1 * 2 + 1) == 0:
+                    AddTalkListData(9, 200168, 12100851)
+                else:
+                    pass
             else:
                 pass
             AddTalkListData(9, 200041, 12100867)
@@ -375,6 +377,12 @@ def t220001_x60(action1=_):
                 call = t220001_x110()
                 if call.Done():
                     pass
+            # offer insight
+            elif GetTalkListEntryResult() == 9:
+                SetEventState(8100+1, 1)
+                def WhilePaused():
+                    SetTalkTime(0.33)
+                assert not IsGenericDialogOpen()
             # boss rematch
             elif GetTalkListEntryResult() == 9:
                 call = t220001_x59()
@@ -387,28 +395,6 @@ def t220001_x60(action1=_):
             elif GetTalkListEntryResult() == 20:
                 SetEventState(12100761, 1)
                 SetEventState(8500+1, 1)
-            # elif GetTalkListEntryResult() == 30: # activate all lamps
-            #     OpenGenericDialog(2, 200154, 3, 4, 2)
-            #     def WhilePaused():
-            #         SetTalkTime(0.33)
-            #     if GetGenericDialogButtonResult() == 1:
-            #         DebugEvent('OK')
-            #         SetEventState(12102201, 1)
-            #         OpenGenericDialog(1, 200158, 1, 0, 1)            
-            #         def WhilePaused():
-            #             SetTalkTime(0.33)
-            #         assert not IsGenericDialogOpen()
-            # elif GetTalkListEntryResult() == 31: # activate all shortcuts
-            #     OpenGenericDialog(2, 200156, 3, 4, 2)
-            #     def WhilePaused():
-            #         SetTalkTime(0.33)
-            #     if GetGenericDialogButtonResult() == 1:
-            #         DebugEvent('OK')
-            #         SetEventState(12102211, 1)
-            #         OpenGenericDialog(1, 200157, 1, 0, 1)            
-            #         def WhilePaused():
-            #             SetTalkTime(0.33)
-            #         assert not IsGenericDialogOpen()
     else:
         return 0
     SetEventState(8500+1, 0)

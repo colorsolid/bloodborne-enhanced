@@ -4,7 +4,7 @@
 // @game    Bloodborne
 // @string    "クリア時間_通し\u0000クリア時間_1プレイ\u0000ボス_撃破\u0000PC情報_ボス撃破_アイコレクター\u0000ボス_戦闘開始\u0000ボス戦_撃破時間\u0000ギミック_m22_最初の門を開けた\u0000ギミック_m22_SC開通\u0000ギミック_エレベーター起動\u0000PC情報_墓地街到達\u0000N:\\SPRJ\\data\\Param\\event\\common.emevd\u0000\u0000\u0000\u0000\u0000"
 // @linked    [236]
-// @version    3.4.1
+// @version    3.4.2
 // ==/EMEVD==
 
 const area_id = 22;
@@ -12,6 +12,7 @@ const block_id = 0;
 
 const hemwick_lamp_offset = 0;
 const hemwick_lamp_id = 2201950;
+const hemwick_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10);
 
 const witches_offset = 4;
 const witches_lamp_offset = 1;
@@ -19,7 +20,10 @@ const witches_defeat = 12201800;
 const witches_met = 12201802;
 const witches_return = 2201899;
 const witches_lamp_id = 2201951;
+const witches_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 2;
 const witches_region = 2202802;
+const witches_id = 2200800;
+const witches_id2 = 2200801;
 
 // gate 2201002
 // elevator 2201210
@@ -34,7 +38,10 @@ $Event(0, Default, function() {
     InitializeEvent(hemwick_lamp_offset, 8500, 8500+hemwick_lamp_offset, hemwick_lamp_id, 72111212);
     InitializeEvent(witches_lamp_offset, 8500, 8500+witches_lamp_offset, witches_lamp_id, 72111313);
     
-    InitializeEvent(hemwick_lamp_offset, 8300, hemwick_lamp_id+2000, hemwick_lamp_id+3000, hemwick_lamp_id+4000, area_id, block_id, -1, hemwick_lamp_id+6000);
+    InitializeEvent(hemwick_lamp_offset, 8100, 8100+hemwick_lamp_offset, hemwick_lamp_kindle);
+    InitializeEvent(witches_lamp_offset, 8100, 8100+witches_lamp_offset, witches_lamp_kindle);
+    
+    InitializeEvent(hemwick_lamp_offset, 8300, hemwick_lamp_id+2000, hemwick_lamp_id+3000, hemwick_lamp_id+4000, area_id, block_id, -1, hemwick_lamp_id+6000, hemwick_lamp_kindle);
     
     if(EventFlag(witches_defeat+13) && !EventFlag(witches_defeat-1)) {
         if (EventFlag(witches_defeat-2)) {
@@ -43,7 +50,7 @@ $Event(0, Default, function() {
         }
         SetEventFlag(witches_defeat+13, OFF);
         SetEventFlag(witches_defeat, ON);
-        InitializeEvent(witches_lamp_offset, 8300, witches_lamp_id+2000, witches_lamp_id+3000, witches_lamp_id+4000, area_id, block_id, 999, witches_lamp_id+6000);
+        InitializeEvent(witches_lamp_offset, 8300, witches_lamp_id+2000, witches_lamp_id+3000, witches_lamp_id+4000, area_id, block_id, 999, witches_lamp_id+6000, 12102202, witches_lamp_kindle);
     }
     else if (EventFlag(witches_defeat+12) || EventFlag(witches_defeat-1)) {
         if (EventFlag(witches_defeat-2)) {
@@ -57,11 +64,13 @@ $Event(0, Default, function() {
         SetEventFlag(witches_defeat+13, ON);
         SetEventFlag(witches_defeat-1, OFF);
         SetEventFlag(8900+witches_offset, ON);
-        InitializeEvent(witches_lamp_offset, 8300, witches_lamp_id+2000, witches_lamp_id+3000, witches_lamp_id+5000, area_id, block_id, -1, witches_lamp_id+6000);
+        InitializeEvent(witches_lamp_offset, 8300, witches_lamp_id+2000, witches_lamp_id+3000, witches_lamp_id+5000, area_id, block_id, -1, witches_lamp_id+6000, 12102202, witches_lamp_kindle);
     }
     else {
-        InitializeEvent(witches_lamp_offset, 8300, witches_lamp_id+2000, witches_lamp_id+3000, witches_lamp_id+4000, area_id, block_id, -1, witches_lamp_id+6000);
+        InitializeEvent(witches_lamp_offset, 8300, witches_lamp_id+2000, witches_lamp_id+3000, witches_lamp_id+4000, area_id, block_id, -1, witches_lamp_id+6000, 12102202, witches_lamp_kindle);
     }
+    
+    InitializeEvent(witches_offset, 12102070, witches_defeat+13, 0, 7418, witches_id, witches_id2);
     
     InitializeEvent(witches_offset, 8900, witches_defeat-1, witches_lamp_id+1000, witches_defeat-2);
     InitializeEvent(witches_offset, 7700, witches_defeat+11, witches_defeat+12, witches_lamp_id+1000, 822000);
@@ -1552,10 +1561,17 @@ L2:
         ActivateMapPart(2206001, Enabled);
     }
 L3:
+    if (EventFlag(12102036) && EventFlag(12100856)) {
+        Goto(L4);
+    }
     WaitFor(
         EventFlagState(CHANGE, TargetEventFlagType.EventFlag, 9800)
             || EventFlagState(CHANGE, TargetEventFlagType.EventFlag, 9801)
             || EventFlagState(CHANGE, TargetEventFlagType.EventFlag, 9802));
+    RestartEvent();
+L4:
+    WaitFor(EventFlag(12102065));
+    WaitFixedTimeSeconds(5);
     RestartEvent();
 });
 

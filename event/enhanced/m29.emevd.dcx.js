@@ -4,7 +4,7 @@
 // @game    Bloodborne
 // @string    "ダンジョン_トラップ発動_錆びた宝箱\u0000ダンジョン_ギミック起動_魔法壁消失\u0000ダンジョン_トラップ発動_錆びた扉\u0000ダンジョン_トラップ発動_テレポーター\u0000ダンジョン_トラップ発動_落とし穴\u0000ダンジョン_トラップ発動_火矢作動\u0000ダンジョン_ギミック起動_跳ね橋降下\u0000ボス_撃破\u0000PC情報_ボス撃破_上層\u0000PC情報_ボス撃破_中層\u0000PC情報_ボス撃破_下層\u0000PC情報_ボス撃破_最下層\u0000クリア時間_通し\u0000PC情報_ダンジョン到達時\u0000ダンジョン_上層_クリア時間_通し\u0000ダンジョン_上層_クリア時間_1プレイ\u0000ダンジョン_中層_クリア時間_通し\u0000ダンジョン_中層_クリア時間_1プレイ\u0000ダンジョン_下層_クリア時間_通し\u0000ダンジョン_下層_クリア時間_1プレイ\u0000ダンジョン_最下層_クリア時間_通し\u0000ダンジョン_最下層_クリア時間_1プレイ\u0000ダンジョン_トラップ発動_落下敵\u0000ダンジョン_ギミック起動_血舐め発生\u0000ダンジョン_トラップ発動_悪霊女出現\u0000ダンジョン_トラップ発動_ギロチン\u0000ダンジョン_トラップ発動_クモ天井待機\u0000ダンジョン_トラップ発動_クモ天井待機_領域使用\u0000ダンジョン_トラップ発動_飛び出す敵\u0000ダンジョン_トラップ発動_領域で飛び出す敵\u0000ダンジョン_トラップ発動_モンスタールーム\u0000ダンジョン_ギミック起動_強化憑依\u0000ダンジョン_トラップ発動_鐘を鳴らす\u0000ダンジョン_トラップ発動_モンスタールーム_巣に帰る\u0000ダンジョン_トラップ発動_伏兵落下\u0000ボス_戦闘開始\u0000ダンジョン_ボスラッシュ前座_撃破時間\u0000ダンジョン_上層_ボス戦_撃破時間\u0000ダンジョン_中層_ボス戦_撃破時間\u0000ダンジョン_下層_ボス戦_撃破時間\u0000ダンジョン_最下層_ボス戦_撃破時間\u0000ダンジョン_トラップ発動_火薬タル爆発\u0000\u0000"
 // @linked    []
-// @version    3.4.1
+// @version    3.4.2
 // ==/EMEVD==
 
 var area_id = 29;
@@ -12,40 +12,49 @@ var block_id = 0;
 
 const lamp_1_offset = 70;
 const lamp_1_id = 2901950;
+const lamp_1_kindle = 12100000 + (area_id * 100) + (block_id * 10);
 
 const lamp_2_offset = 71;
 const lamp_2_id = 2901951;
+const lamp_2_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 2;
 
 const boss_1_lamp_offset = 72;
 const boss_1_offset = 42;
 const boss_1_lamp_id = 2901952;
+const boss_1_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 4;
 const boss_1_return = 2902820;
 const boss_1_defeat = 12901800;
 
 const lamp_4_offset = 73;
 const lamp_4_id = 2901953;
+const lamp_4_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 6;
 
 const boss_2_lamp_offset = 74;
 const boss_2_offset = 44;
 const boss_2_lamp_id = 2901954;
+const boss_2_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 8;
 const boss_2_return = 2902840;
 const boss_2_defeat = 12901801;
 
 const lamp_6_offset = 75;
 const lamp_6_id = 2901955;
+const lamp_6_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 10;
 
 const boss_3_lamp_offset = 76;
 const boss_3_offset = 46;
 const boss_3_lamp_id = 2901956;
+const boss_3_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 12;
 const boss_3_return = 2902860;
 const boss_3_defeat = 12901802;
 
 const lamp_8_offset = 77;
 const lamp_8_id = 2901957;
+const lamp_8_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 14;
 
 const boss_4_lamp_offset = 78;
 const boss_4_offset = 48;
 const boss_4_lamp_id = 2901958;
+const boss_4_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 16;
 const boss_4_return = 2902880;
 const boss_4_defeat = 12901803;
 
@@ -97,16 +106,26 @@ $Event(0, Default, function() {
     InitializeEvent(boss_3_offset, 7700, boss_3_defeat+1031, boss_3_defeat+1032, boss_3_lamp_id+1000);
     InitializeEvent(boss_4_offset, 7700, boss_4_defeat+1041, boss_4_defeat+1042, boss_4_lamp_id+1000);
     
-    InitializeEvent(lamp_1_offset, 8300, lamp_1_id+2000, lamp_1_id+3000, lamp_1_id+4000, 29, 0, -1);
-    InitializeEvent(lamp_2_offset, 8300, lamp_2_id+2000, lamp_2_id+3000, lamp_2_id+4000, 29, 0, -1);
-    InitializeEvent(lamp_4_offset, 8300, lamp_4_id+2000, lamp_4_id+3000, lamp_4_id+4000, 29, 0, -1);
-    InitializeEvent(lamp_6_offset, 8300, lamp_6_id+2000, lamp_6_id+3000, lamp_6_id+4000, 29, 0, -1);
-    InitializeEvent(lamp_8_offset, 8300, lamp_8_id+2000, lamp_8_id+3000, lamp_8_id+4000, 29, 0, -1);
+    InitializeEvent(lamp_1_offset, 8100, 8100+lamp_1_offset, lamp_1_kindle);
+    InitializeEvent(lamp_2_offset, 8100, 8100+lamp_2_offset, lamp_2_kindle);
+    InitializeEvent(boss_1_lamp_offset, 8100, 8100+boss_1_lamp_offset, boss_1_lamp_kindle);
+    InitializeEvent(lamp_4_offset, 8100, 8100+lamp_4_offset, lamp_4_kindle);
+    InitializeEvent(boss_2_lamp_offset, 8100, 8100+boss_2_lamp_offset, boss_2_lamp_kindle);
+    InitializeEvent(lamp_6_offset, 8100, 8100+lamp_6_offset, lamp_6_kindle);
+    InitializeEvent(boss_3_lamp_offset, 8100, 8100+boss_3_lamp_offset, boss_3_lamp_kindle);
+    InitializeEvent(lamp_8_offset, 8100, 8100+lamp_8_offset, lamp_8_kindle);
+    InitializeEvent(boss_4_lamp_offset, 8100, 8100+boss_4_lamp_offset, boss_4_lamp_kindle);
+    
+    InitializeEvent(lamp_1_offset, 8300, lamp_1_id+2000, lamp_1_id+3000, lamp_1_id+4000, 29, 0, -1, lamp_1_kindle);
+    InitializeEvent(lamp_2_offset, 8300, lamp_2_id+2000, lamp_2_id+3000, lamp_2_id+4000, 29, 0, -1, lamp_2_kindle);
+    InitializeEvent(lamp_4_offset, 8300, lamp_4_id+2000, lamp_4_id+3000, lamp_4_id+4000, 29, 0, -1, lamp_4_kindle);
+    InitializeEvent(lamp_6_offset, 8300, lamp_6_id+2000, lamp_6_id+3000, lamp_6_id+4000, 29, 0, -1, lamp_6_kindle);
+    InitializeEvent(lamp_8_offset, 8300, lamp_8_id+2000, lamp_8_id+3000, lamp_8_id+4000, 29, 0, -1, lamp_8_kindle);
     
     if(EventFlag(boss_1_defeat+1013) && !EventFlag(boss_1_defeat+1019)) {
         SetEventFlag(boss_1_defeat+1013, OFF);
         SetEventFlag(boss_1_defeat, ON);
-        InitializeEvent(boss_1_lamp_offset, 8300, boss_1_lamp_id+2000, boss_1_lamp_id+3000, boss_1_lamp_id+4000, area_id, block_id, 999);
+        InitializeEvent(boss_1_lamp_offset, 8300, boss_1_lamp_id+2000, boss_1_lamp_id+3000, boss_1_lamp_id+4000, area_id, block_id, 999, boss_1_lamp_kindle);
     }
     else if (EventFlag(boss_1_defeat+1012) || EventFlag(boss_1_defeat+1019)) {
         SetEventFlag(boss_1_defeat, OFF);
@@ -114,16 +133,16 @@ $Event(0, Default, function() {
         SetEventFlag(boss_1_defeat+1013, ON);
         SetEventFlag(boss_1_defeat+1019, OFF);
         SetEventFlag(8900+boss_1_offset, ON);
-        InitializeEvent(boss_1_lamp_offset, 8300, boss_1_lamp_id+2000, boss_1_lamp_id+3000, boss_1_lamp_id+6000, area_id, block_id, -1);
+        InitializeEvent(boss_1_lamp_offset, 8300, boss_1_lamp_id+2000, boss_1_lamp_id+3000, boss_1_lamp_id+6000, area_id, block_id, -1, boss_1_lamp_kindle);
     }
     else {
-        InitializeEvent(boss_1_lamp_offset, 8300, boss_1_lamp_id+2000, boss_1_lamp_id+3000, boss_1_lamp_id+4000, area_id, block_id, -1);
+        InitializeEvent(boss_1_lamp_offset, 8300, boss_1_lamp_id+2000, boss_1_lamp_id+3000, boss_1_lamp_id+4000, area_id, block_id, -1, boss_1_lamp_kindle);
     }
     
     if(EventFlag(boss_2_defeat+1023) && !EventFlag(boss_2_defeat+1029)) {
         SetEventFlag(boss_2_defeat+1023, OFF);
         SetEventFlag(boss_2_defeat, ON);
-        InitializeEvent(boss_2_lamp_offset, 8300, boss_2_lamp_id+2000, boss_2_lamp_id+3000, boss_2_lamp_id+4000, area_id, block_id, 999);
+        InitializeEvent(boss_2_lamp_offset, 8300, boss_2_lamp_id+2000, boss_2_lamp_id+3000, boss_2_lamp_id+4000, area_id, block_id, 999, boss_2_lamp_kindle);
     }
     else if (EventFlag(boss_2_defeat+1022) || EventFlag(boss_2_defeat+1029)) {
         SetEventFlag(boss_2_defeat, OFF);
@@ -131,16 +150,16 @@ $Event(0, Default, function() {
         SetEventFlag(boss_2_defeat+1023, ON);
         SetEventFlag(boss_2_defeat+1029, OFF);
         SetEventFlag(8900+boss_2_offset, ON);
-        InitializeEvent(boss_2_lamp_offset, 8300, boss_2_lamp_id+2000, boss_2_lamp_id+3000, boss_2_lamp_id+6000, area_id, block_id, -1);
+        InitializeEvent(boss_2_lamp_offset, 8300, boss_2_lamp_id+2000, boss_2_lamp_id+3000, boss_2_lamp_id+6000, area_id, block_id, -1, boss_2_lamp_kindle);
     }
     else {
-        InitializeEvent(boss_2_lamp_offset, 8300, boss_2_lamp_id+2000, boss_2_lamp_id+3000, boss_2_lamp_id+4000, area_id, block_id, -1);
+        InitializeEvent(boss_2_lamp_offset, 8300, boss_2_lamp_id+2000, boss_2_lamp_id+3000, boss_2_lamp_id+4000, area_id, block_id, -1, boss_2_lamp_kindle);
     }
     
     if(EventFlag(boss_3_defeat+1033) && !EventFlag(boss_3_defeat+1039)) {
         SetEventFlag(boss_3_defeat+1033, OFF);
         SetEventFlag(boss_3_defeat, ON);
-        InitializeEvent(boss_3_lamp_offset, 8300, boss_3_lamp_id+2000, boss_3_lamp_id+3000, boss_3_lamp_id+4000, area_id, block_id, 999);
+        InitializeEvent(boss_3_lamp_offset, 8300, boss_3_lamp_id+2000, boss_3_lamp_id+3000, boss_3_lamp_id+4000, area_id, block_id, 999, boss_3_lamp_kindle);
     }
     else if (EventFlag(boss_3_defeat+1032) || EventFlag(boss_3_defeat+1039)) {
         SetEventFlag(boss_3_defeat, OFF);
@@ -148,16 +167,16 @@ $Event(0, Default, function() {
         SetEventFlag(boss_3_defeat+1033, ON);
         SetEventFlag(boss_3_defeat+1039, OFF);
         SetEventFlag(8900+boss_3_offset, ON);
-        InitializeEvent(boss_3_lamp_offset, 8300, boss_3_lamp_id+2000, boss_3_lamp_id+3000, boss_3_lamp_id+6000, area_id, block_id, -1);
+        InitializeEvent(boss_3_lamp_offset, 8300, boss_3_lamp_id+2000, boss_3_lamp_id+3000, boss_3_lamp_id+6000, area_id, block_id, -1, boss_3_lamp_kindle);
     }
     else {
-        InitializeEvent(boss_3_lamp_offset, 8300, boss_3_lamp_id+2000, boss_3_lamp_id+3000, boss_3_lamp_id+4000, area_id, block_id, -1);
+        InitializeEvent(boss_3_lamp_offset, 8300, boss_3_lamp_id+2000, boss_3_lamp_id+3000, boss_3_lamp_id+4000, area_id, block_id, -1, boss_3_lamp_kindle);
     }
     
     if(EventFlag(boss_4_defeat+1043) && !EventFlag(boss_4_defeat+1049)) {
         SetEventFlag(boss_4_defeat+1043, OFF);
         SetEventFlag(boss_4_defeat, ON);
-        InitializeEvent(boss_4_lamp_offset, 8300, boss_4_lamp_id+2000, boss_4_lamp_id+3000, boss_4_lamp_id+4000, area_id, block_id, 999);
+        InitializeEvent(boss_4_lamp_offset, 8300, boss_4_lamp_id+2000, boss_4_lamp_id+3000, boss_4_lamp_id+4000, area_id, block_id, 999, boss_4_lamp_kindle);
     }
     else if (EventFlag(boss_4_defeat+1042) || EventFlag(boss_4_defeat+1049)) {
         SetEventFlag(boss_4_defeat, OFF);
@@ -165,10 +184,10 @@ $Event(0, Default, function() {
         SetEventFlag(boss_4_defeat+1043, ON);
         SetEventFlag(boss_4_defeat+1049, OFF);
         SetEventFlag(8900+boss_4_offset, ON);
-        InitializeEvent(boss_4_lamp_offset, 8300, boss_4_lamp_id+2000, boss_4_lamp_id+3000, boss_4_lamp_id+6000, area_id, block_id, -1);
+        InitializeEvent(boss_4_lamp_offset, 8300, boss_4_lamp_id+2000, boss_4_lamp_id+3000, boss_4_lamp_id+6000, area_id, block_id, -1, boss_4_lamp_kindle);
     }
     else {
-        InitializeEvent(boss_4_lamp_offset, 8300, boss_4_lamp_id+2000, boss_4_lamp_id+3000, boss_4_lamp_id+4000, area_id, block_id, -1);
+        InitializeEvent(boss_4_lamp_offset, 8300, boss_4_lamp_id+2000, boss_4_lamp_id+3000, boss_4_lamp_id+4000, area_id, block_id, -1, boss_4_lamp_kindle);
     }
     
     InitializeEvent(lamp_1_offset, 8500, 8500+lamp_1_offset, lamp_1_id, 72114444);
@@ -1625,6 +1644,36 @@ $Event(7900, Default, function(X0_4, X4_4, X8_1, X12_1, X16_4) {
     RestartEvent();
 });
 
+// kindle
+// this_event_slot, lamp_kindle_flag (12121100)
+$Event(8100, Default, function(X0_4, X4_4) {
+    SetEventFlag(X0_4, OFF);
+    WaitFor(ThisEventSlot());
+    if (PlayerInsightAmount() == 0) {
+        DisplayGenericDialog(200175, PromptType.OKCANCEL, NumberofOptions.OneButton, 10000, 3);
+        RestartEvent();
+    }
+    if (EventValue(X4_4, 2) == 3) {
+        DisplayGenericDialog(200171, PromptType.OKCANCEL, NumberofOptions.OneButton, 10000, 3);
+        // already maxed
+    }
+    else {
+        if (EventValue(X4_4, 2) == 1 && !PlayerHasItem(ItemType.Goods, 4002)) {
+            DisplayGenericDialog(200171, PromptType.OKCANCEL, NumberofOptions.OneButton, 10000, 3);
+        }
+        else {
+            DisplayGenericDialog(200170, PromptType.OKCANCEL, NumberofOptions.OneButton, 10000, 3);
+            SetSpEffect(10000, 4681, false);
+            //EventValueOperation(X4_4, 2, 1, 0, 1, CalculationType.Assign);
+            IncrementEventValue(X4_4, 2, 3);
+            if (EventValue(X4_4, 2) == 3) {
+                // max kindling reached
+            }
+        }
+    }
+    RestartEvent();
+});
+
 // chalice has been removed, return to dream
 $Event(1511, Default, function() {
     SetEventFlag(1511, OFF);
@@ -1637,7 +1686,7 @@ $Event(1511, Default, function() {
 
 // InitializeEvent(boss_1_lamp_offset, 8300, boss_1_lamp_id+2000, boss_1_lamp_id+3000, boss_1_lamp_id+5000, area_id, block_id, -1);
 // reset statuses (poison, etc.) and restock bullets and vials
-$Event(8300, Default, function(X0_4, X4_4, X8_4, X12_1, X16_1, X20_4) {
+$Event(8300, Default, function(X0_4, X4_4, X8_4, X12_1, X16_1, X20_4, X24_4) {
     // EndIf(EventFlag(12100962));
     WaitFor(InArea(10000, X0_4) || EventFlag(1509) || EventFlag(X20_4));
     if (EventFlag(1509)) {
@@ -1652,16 +1701,69 @@ $Event(8300, Default, function(X0_4, X4_4, X8_4, X12_1, X16_1, X20_4) {
     SetSpEffect(10000, 115, false);
     SetSpEffect(10000, 116, false);
     if (EventFlag(12100862)) {
-        RemoveItemFromPlayer(ItemType.Goods, 900, 99);
-        RemoveItemFromPlayer(ItemType.Goods, 1000, 99)
         IssueShortWarpRequest(10000, TargetEntityType.Area, X4_4, -1);
+        
         WaitFixedTimeFrames(1);
-        EventValueOperation(12104010, 8, 1, 0, 1, CalculationType.Assign);
-        DirectlyGivePlayerItem(ItemType.Goods, 900, 12104010, 8);
-        DirectlyGivePlayerItem(ItemType.Goods, 1000, 12104010, 8);
-        EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
-        DirectlyGivePlayerItem(ItemType.Goods, 900, 12104010, 8);
-        DirectlyGivePlayerItem(ItemType.Goods, 1000, 12104010, 8);
+        
+        StoreItemAmountHeldInEventValue(ItemType.Goods, 900, 12104030, 8);
+        WaitFixedTimeFrames(1);
+        bullet_cond1 = EventValue(X24_4, 2) == 0 && EventValue(12104030, 8) < 5;
+        bullet_cond2 = EventValue(X24_4, 2) == 1 && EventValue(12104030, 8) < 10;
+        bullet_cond3 = EventValue(X24_4, 2) == 2 && EventValue(12104030, 8) < 15;
+        bullet_cond4 = EventValue(X24_4, 2) == 3;
+        if (bullet_cond1 || bullet_cond2 || bullet_cond3 || bullet_cond4) {
+            RemoveItemFromPlayer(ItemType.Goods, 900, 99);
+            WaitFixedTimeFrames(1);
+            EventValueOperation(12104040, 8, 1, 0, 0, CalculationType.Assign);
+            DirectlyGivePlayerItem(ItemType.Goods, 900, 12104040, 8);
+        }
+        if (EventValue(X24_4, 2) == 0 && EventValue(12104030, 8) < 5) {
+            EventValueOperation(12104040, 8, 4, 0, 0, CalculationType.Assign);
+            DirectlyGivePlayerItem(ItemType.Goods, 900, 12104040, 8);
+        }
+        else if (EventValue(X24_4, 2) == 1 && EventValue(12104030, 8) < 10) {
+            EventValueOperation(12104040, 8, 9, 0, 0, CalculationType.Assign);
+            DirectlyGivePlayerItem(ItemType.Goods, 900, 12104040, 8);
+        }
+        else if (EventValue(X24_4, 2) == 2 && EventValue(12104030, 8) < 15) {
+            EventValueOperation(12104040, 8, 14, 0, 0, CalculationType.Assign);
+            DirectlyGivePlayerItem(ItemType.Goods, 900, 12104040, 8);
+        }
+        else if (EventValue(X24_4, 2) == 3) {
+            EventValueOperation(12104040, 8, 99, 0, 0, CalculationType.Assign);
+            DirectlyGivePlayerItem(ItemType.Goods, 900, 12104040, 8);
+        }
+        
+        StoreItemAmountHeldInEventValue(ItemType.Goods, 1000, 12104030, 8);
+        WaitFixedTimeFrames(1);
+        vial_cond1 = EventValue(X24_4, 2) == 0 && EventValue(12104030, 8) < 5;
+        vial_cond2 = EventValue(X24_4, 2) == 1 && EventValue(12104030, 8) < 10;
+        vial_cond3 = EventValue(X24_4, 2) == 2 && EventValue(12104030, 8) < 15;
+        vial_cond4 = EventValue(X24_4, 2) == 3;
+        
+        if (vial_cond1 || vial_cond2 || vial_cond3 || vial_cond4) {
+            RemoveItemFromPlayer(ItemType.Goods, 1000, 99);
+            WaitFixedTimeFrames(1);
+            EventValueOperation(12104050, 8, 1, 0, 0, CalculationType.Assign);
+            DirectlyGivePlayerItem(ItemType.Goods, 1000, 12104050, 8);
+        }
+        if (EventValue(X24_4, 2) == 0 && EventValue(12104030, 8) < 5) {
+            EventValueOperation(12104050, 8, 4, 0, 0, CalculationType.Assign);
+            DirectlyGivePlayerItem(ItemType.Goods, 1000, 12104050, 8);
+        }
+        else if (EventValue(X24_4, 2) == 1 && EventValue(12104030, 8) < 10) {
+            EventValueOperation(12104050, 8, 9, 0, 0, CalculationType.Assign);
+            DirectlyGivePlayerItem(ItemType.Goods, 1000, 12104050, 8);
+        }
+        else if (EventValue(X24_4, 2) == 2 && EventValue(12104030, 8) < 15) {
+            EventValueOperation(12104050, 8, 14, 0, 0, CalculationType.Assign);
+            DirectlyGivePlayerItem(ItemType.Goods, 1000, 12104050, 8);
+        }
+        else if (EventValue(X24_4, 2) == 3) {
+            EventValueOperation(12104050, 8, 99, 0, 0, CalculationType.Assign);
+            DirectlyGivePlayerItem(ItemType.Goods, 1000, 12104050, 8);
+        }
+        WaitFixedTimeFrames(1);
         DummyPlayCutsceneAndWarpPlayer(X8_4, X12_1, X16_1); // lamp spawn or rematch spawn
         RequestCharacterAnimationReset(10000, Interpolation.Uninterpolated);
         ForceAnimationPlayback(10000, 101200, false, false, true);

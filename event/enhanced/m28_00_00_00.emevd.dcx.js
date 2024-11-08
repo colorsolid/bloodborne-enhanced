@@ -4,7 +4,7 @@
 // @game    Bloodborne
 // @string    "クリア時間_通し\u0000クリア時間_1プレイ\u0000生贄の街_テレポーター使用_00\u0000生贄の街_テレポーター使用_01\u0000生贄の街_テレポーター領域侵入_00\u0000生贄の街_テレポーター領域侵入_01\u0000\u0000ボス_撃破\u0000PC情報_ボス撃破_なりそこないの邪神\u0000ボス_戦闘開始\u0000ボス戦_撃破時間\u0000PC情報_生贄の街到達時\u0000N:\\SPRJ\\data\\Param\\event\\common.emevd\u0000\u0000\u0000\u0000\u0000\u0000"
 // @linked    [298]
-// @version    3.4.1
+// @version    3.4.2
 // ==/EMEVD==
 
 const area_id = 28;
@@ -12,19 +12,24 @@ const block_id = 0;
 
 const yahargul_lamp_offset = 40;
 const yahargul_lamp_id = 2801950;
+const yahargul_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10);
 
 const chapel_lamp_offset = 43;
 const chapel_lamp_id = 2801953;
+const chapel_lamp_kindle = 112100000 + (area_id * 100) + (block_id * 10) + 2;
 
 const gaol_lamp_offset = 42;
 const gaol_lamp_id = 2801952;
+const gaol_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 4;
 
 const one_reborn_lamp_offset = 41;
 const one_reborn_offset = 8;
 const one_reborn_defeat = 12801800;
 const one_reborn_return = 2801899;
 const one_reborn_lamp_id = 2801951;
+const one_reborn_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 6;
 const one_reborn_region = 2802802;
+const one_reborn_id = 2800800;
 
 const paarl_return = 2301799;
 
@@ -51,9 +56,14 @@ $Event(0, Default, function() {
     InitializeEvent(gaol_lamp_offset, 8500, 8500+gaol_lamp_offset, gaol_lamp_id, 72112021);
     InitializeEvent(one_reborn_lamp_offset, 8500, 8500+one_reborn_lamp_offset, one_reborn_lamp_id, 72112020);
     
-    InitializeEvent(yahargul_lamp_offset, 8300, yahargul_lamp_id+2000, yahargul_lamp_id+3000, yahargul_lamp_id+4000, area_id, block_id, -1, yahargul_lamp_id+6000);
-    InitializeEvent(chapel_lamp_offset, 8300, chapel_lamp_id+2000, chapel_lamp_id+3000, chapel_lamp_id+4000, area_id, block_id, -1, chapel_lamp_id+6000);
-    InitializeEvent(gaol_lamp_offset, 8300, gaol_lamp_id+2000, gaol_lamp_id+3000, gaol_lamp_id+4000, area_id, block_id, -1, gaol_lamp_id+6000);
+    InitializeEvent(yahargul_lamp_offset, 8100, 8100+yahargul_lamp_offset, yahargul_lamp_kindle);
+    InitializeEvent(chapel_lamp_offset, 8100, 8100+chapel_lamp_offset, chapel_lamp_kindle);
+    InitializeEvent(gaol_lamp_offset, 8100, 8100+gaol_lamp_offset, gaol_lamp_kindle);
+    InitializeEvent(one_reborn_lamp_offset, 8100, 8100+one_reborn_lamp_offset, 12100000 + (area_id * 100) + (block_id * 10) + 6);
+    
+    InitializeEvent(yahargul_lamp_offset, 8300, yahargul_lamp_id+2000, yahargul_lamp_id+3000, yahargul_lamp_id+4000, area_id, block_id, -1, yahargul_lamp_id+6000, yahargul_lamp_kindle);
+    InitializeEvent(chapel_lamp_offset, 8300, chapel_lamp_id+2000, chapel_lamp_id+3000, chapel_lamp_id+4000, area_id, block_id, -1, chapel_lamp_id+6000, chapel_lamp_kindle);
+    InitializeEvent(gaol_lamp_offset, 8300, gaol_lamp_id+2000, gaol_lamp_id+3000, gaol_lamp_id+4000, area_id, block_id, -1, gaol_lamp_id+6000, gaol_lamp_kindle);
     
     if(EventFlag(one_reborn_defeat+13) && !EventFlag(one_reborn_defeat-1)) {
         if (EventFlag(one_reborn_defeat-2)) {
@@ -62,7 +72,7 @@ $Event(0, Default, function() {
         }
         SetEventFlag(one_reborn_defeat+13, OFF);
         SetEventFlag(one_reborn_defeat, ON);
-        InitializeEvent(one_reborn_lamp_offset, 8300, one_reborn_lamp_id+2000, one_reborn_lamp_id+3000, one_reborn_lamp_id+4000, area_id, block_id, 999, one_reborn_lamp_id+6000);
+        InitializeEvent(one_reborn_lamp_offset, 8300, one_reborn_lamp_id+2000, one_reborn_lamp_id+3000, one_reborn_lamp_id+4000, area_id, block_id, 999, one_reborn_lamp_id+6000, one_reborn_lamp_kindle);
     }
     else if (EventFlag(one_reborn_defeat+12) || EventFlag(one_reborn_defeat-1)) {
         if (EventFlag(one_reborn_defeat-2)) {
@@ -75,11 +85,13 @@ $Event(0, Default, function() {
         SetEventFlag(one_reborn_defeat+13, ON);
         SetEventFlag(one_reborn_defeat-1, OFF);
         SetEventFlag(8900+one_reborn_offset, ON);
-        InitializeEvent(one_reborn_lamp_offset, 8300, one_reborn_lamp_id+2000, one_reborn_lamp_id+3000, one_reborn_lamp_id+5000, area_id, block_id, -1, one_reborn_lamp_id+6000);
+        InitializeEvent(one_reborn_lamp_offset, 8300, one_reborn_lamp_id+2000, one_reborn_lamp_id+3000, one_reborn_lamp_id+5000, area_id, block_id, -1, one_reborn_lamp_id+6000, one_reborn_lamp_kindle);
     }
     else {
-        InitializeEvent(one_reborn_lamp_offset, 8300, one_reborn_lamp_id+2000, one_reborn_lamp_id+3000, one_reborn_lamp_id+4000, area_id, block_id, -1, one_reborn_lamp_id+6000);
+        InitializeEvent(one_reborn_lamp_offset, 8300, one_reborn_lamp_id+2000, one_reborn_lamp_id+3000, one_reborn_lamp_id+4000, area_id, block_id, -1, one_reborn_lamp_id+6000, one_reborn_lamp_kindle);
     }
+    
+    InitializeEvent(one_reborn_offset, 12102070, one_reborn_defeat+13, 0, 7458, one_reborn_id);
     
     InitializeEvent(one_reborn_offset, 8900, one_reborn_defeat-1, one_reborn_lamp_id+1000);
     InitializeEvent(one_reborn_offset, 7700, one_reborn_defeat+11, one_reborn_defeat+12, one_reborn_lamp_id+1000, 828000);
@@ -1912,10 +1924,17 @@ L2:
         SetCharacterBackreadState(2800723, true);
     }
 L3:
+    if (EventFlag(12102036) && EventFlag(12100856)) {
+        Goto(L4);
+    }
     WaitFor(
         EventFlagState(CHANGE, TargetEventFlagType.EventFlag, 9800)
             || EventFlagState(CHANGE, TargetEventFlagType.EventFlag, 9801)
             || EventFlagState(CHANGE, TargetEventFlagType.EventFlag, 9802));
+    RestartEvent();
+L4:
+    WaitFor(EventFlag(12102065));
+    WaitFixedTimeSeconds(5);
     RestartEvent();
 });
 

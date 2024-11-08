@@ -4,7 +4,7 @@
 // @game    Bloodborne
 // @string    "クリア時間_通し\u0000クリア時間_1プレイ\u0000ボス_撃破\u0000PC情報_ボス撃破_教区長\u0000ボス_戦闘開始\u0000ボス戦_撃破時間\u0000PC情報_ボス撃破_ガスコイン\u0000\u0000PC情報_聖堂街B到達時\u0000N:\\SPRJ\\data\\Param\\event\\common.emevd\u0000\u0000\u0000\u0000"
 // @linked    [174]
-// @version    3.4.1
+// @version    3.4.2
 // ==/EMEVD==
 
 const area_id = 24;
@@ -12,9 +12,11 @@ const block_id = 1;
 
 const iosefka_lamp_offset = 15;
 const iosefka_lamp_id = 2411950;
+const iosefka_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10);
 
 const central_lamp_offset = 16;
 const central_lamp_id = 2411951;
+const central_lamp_kindle = 112100000 + (area_id * 100) + (block_id * 10) + 2;
 
 const cleric_beast_offset = 0;
 const cleric_beast_lamp_offset = 17;
@@ -22,13 +24,18 @@ const cleric_beast_defeat = 12411700;
 const cleric_beast_return = 2411759;
 const cleric_beast_lamp_id = 2411952;
 const cleric_beast_region = 2412802;
+const cleric_beast_id = 2410800;
+const cleric_beast_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 4;
 
 const gascoigne_offset = 1;
 const gascoigne_lamp_offset = 18;
 const gascoigne_defeat = 12411800;
 const gascoigne_return = 2411859;
 const gascoigne_lamp_id = 2411953;
+const gascoigne_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 6;
 const gascoigne_region = 2412812;
+const gascoigne_id = 2410810;
+const gascoigne_id2 = 2410811;
 
 // clinic gate 2411300
 // street gate 2411302
@@ -54,8 +61,13 @@ $Event(0, Default, function() {
     InitializeEvent(cleric_beast_lamp_offset, 8500, 8500+cleric_beast_lamp_offset, cleric_beast_lamp_id, 72110202);
     InitializeEvent(gascoigne_lamp_offset, 8500, 8500+gascoigne_lamp_offset, gascoigne_lamp_id, 72110303);
     
-    InitializeEvent(iosefka_lamp_offset, 8300, iosefka_lamp_id+2000, iosefka_lamp_id+3000, iosefka_lamp_id+4000, area_id, block_id, -1, iosefka_lamp_id+6000);
-    InitializeEvent(central_lamp_offset, 8300, central_lamp_id+2000, central_lamp_id+3000, central_lamp_id+4000, area_id, block_id, -1, central_lamp_id+6000);
+    InitializeEvent(iosefka_lamp_offset, 8100, 8100+iosefka_lamp_offset, iosefka_lamp_kindle);
+    InitializeEvent(central_lamp_offset, 8100, 8100+central_lamp_offset, central_lamp_kindle);
+    InitializeEvent(cleric_beast_lamp_offset, 8100, 8100+cleric_beast_lamp_offset, 12100000 + (area_id * 100) + (block_id * 10) + 4);
+    InitializeEvent(gascoigne_lamp_offset, 8100, 8100+gascoigne_lamp_offset, 12100000 + (area_id * 100) + (block_id * 10) + 6);
+    
+    InitializeEvent(iosefka_lamp_offset, 8300, iosefka_lamp_id+2000, iosefka_lamp_id+3000, iosefka_lamp_id+4000, area_id, block_id, -1, iosefka_lamp_id+6000, iosefka_lamp_kindle);
+    InitializeEvent(central_lamp_offset, 8300, central_lamp_id+2000, central_lamp_id+3000, central_lamp_id+4000, area_id, block_id, -1, central_lamp_id+6000, central_lamp_kindle);
     
     SetEventFlag(gascoigne_defeat+15, OFF);
     if (EventFlag(gascoigne_defeat+14)) {
@@ -71,7 +83,7 @@ $Event(0, Default, function() {
         }
         SetEventFlag(cleric_beast_defeat+13, OFF);
         SetEventFlag(cleric_beast_defeat, ON);
-        InitializeEvent(cleric_beast_lamp_offset, 8300, cleric_beast_lamp_id+2000, cleric_beast_lamp_id+3000, cleric_beast_lamp_id+4000, area_id, block_id, 999, cleric_beast_lamp_id+6000);
+        InitializeEvent(cleric_beast_lamp_offset, 8300, cleric_beast_lamp_id+2000, cleric_beast_lamp_id+3000, cleric_beast_lamp_id+4000, area_id, block_id, 999, cleric_beast_lamp_id+6000, cleric_beast_kindle);
     } // rematch has started
     else if (EventFlag(cleric_beast_defeat+12) || EventFlag(cleric_beast_defeat-1)) {
         if (EventFlag(cleric_beast_defeat-2)) {
@@ -84,14 +96,11 @@ $Event(0, Default, function() {
         SetEventFlag(cleric_beast_defeat+13, ON);
         SetEventFlag(cleric_beast_defeat-1, OFF);
         SetEventFlag(8900+cleric_beast_offset, ON);
-        InitializeEvent(cleric_beast_lamp_offset, 8300, cleric_beast_lamp_id+2000, cleric_beast_lamp_id+3000, cleric_beast_lamp_id+5000, area_id, block_id, -1, cleric_beast_lamp_id+6000);
+        InitializeEvent(cleric_beast_lamp_offset, 8300, cleric_beast_lamp_id+2000, cleric_beast_lamp_id+3000, cleric_beast_lamp_id+5000, area_id, block_id, -1, cleric_beast_lamp_id+6000, cleric_beast_kindle);
     }
     else {
-        InitializeEvent(cleric_beast_lamp_offset, 8300, cleric_beast_lamp_id+2000, cleric_beast_lamp_id+3000, cleric_beast_lamp_id+4000, area_id, block_id, -1, cleric_beast_lamp_id+6000);
+        InitializeEvent(cleric_beast_lamp_offset, 8300, cleric_beast_lamp_id+2000, cleric_beast_lamp_id+3000, cleric_beast_lamp_id+4000, area_id, block_id, -1, cleric_beast_lamp_id+6000, cleric_beast_kindle);
     }
-    
-    InitializeEvent(cleric_beast_offset, 8900, cleric_beast_defeat-1, cleric_beast_lamp_id+1000, cleric_beast_defeat-2);
-    InitializeEvent(cleric_beast_offset, 7700, cleric_beast_defeat+11, cleric_beast_defeat+12, cleric_beast_lamp_id+1000, 824100);
     
     if (EventFlag(gascoigne_defeat+13) && !EventFlag(gascoigne_defeat-1)) {
         if (EventFlag(gascoigne_defeat-2)) {
@@ -100,7 +109,7 @@ $Event(0, Default, function() {
         }
         SetEventFlag(gascoigne_defeat+13, OFF);
         SetEventFlag(gascoigne_defeat, ON);
-        InitializeEvent(gascoigne_lamp_offset, 8300, gascoigne_lamp_id+2000, gascoigne_lamp_id+3000, gascoigne_lamp_id+4000, area_id, block_id, 999, gascoigne_lamp_id+6000);
+        InitializeEvent(gascoigne_lamp_offset, 8300, gascoigne_lamp_id+2000, gascoigne_lamp_id+3000, gascoigne_lamp_id+4000, area_id, block_id, 999, gascoigne_lamp_id+6000, gascoigne_lamp_kindle);
         
         // Oedon Tomb Key
         if (!PlayerHasItem(ItemType.Goods, 4000)) {
@@ -120,13 +129,19 @@ $Event(0, Default, function() {
         SetEventFlag(gascoigne_defeat+13, ON);
         SetEventFlag(gascoigne_defeat-1, OFF);
         SetEventFlag(8900+gascoigne_offset, ON);
-        InitializeEvent(gascoigne_lamp_offset, 8300, gascoigne_lamp_id+2000, gascoigne_lamp_id+3000, gascoigne_lamp_id+5000, area_id, block_id, -1, gascoigne_lamp_id+6000);
+        InitializeEvent(gascoigne_lamp_offset, 8300, gascoigne_lamp_id+2000, gascoigne_lamp_id+3000, gascoigne_lamp_id+5000, area_id, block_id, -1, gascoigne_lamp_id+6000, gascoigne_lamp_kindle);
     }
     else {
-        InitializeEvent(gascoigne_lamp_offset, 8300, gascoigne_lamp_id+2000, gascoigne_lamp_id+3000, gascoigne_lamp_id+4000, area_id, block_id, -1, gascoigne_lamp_id+6000);
+        InitializeEvent(gascoigne_lamp_offset, 8300, gascoigne_lamp_id+2000, gascoigne_lamp_id+3000, gascoigne_lamp_id+4000, area_id, block_id, -1, gascoigne_lamp_id+6000, gascoigne_lamp_kindle);
     }
     
+    InitializeEvent(cleric_beast_offset, 12102070, cleric_beast_defeat+13, 0, 7447, cleric_beast_id);
+    InitializeEvent(gascoigne_offset, 12102070, gascoigne_defeat+13, 0, 7448, gascoigne_id);
+    
+    InitializeEvent(cleric_beast_offset, 8900, cleric_beast_defeat-1, cleric_beast_lamp_id+1000, cleric_beast_defeat-2);
     InitializeEvent(gascoigne_offset, 8900, gascoigne_defeat-1, gascoigne_lamp_id+1000, gascoigne_defeat-2, gascoigne_defeat+15, gascoigne_defeat+14);
+    
+    InitializeEvent(cleric_beast_offset, 7700, cleric_beast_defeat+11, cleric_beast_defeat+12, cleric_beast_lamp_id+1000, 824100);
     InitializeEvent(gascoigne_offset, 7700, gascoigne_defeat+11, gascoigne_defeat+12, gascoigne_lamp_id+1000, 824102);
     
     InitializeEvent(0, 12107000, 72110000, 2411950, 2412950);
@@ -2890,10 +2905,17 @@ L2:
     ActivateMapPart(2414051, Disabled);
     DeleteMapSFX(2413350, false);
 L3:
+    if (EventFlag(12102036) && EventFlag(12100856)) {
+        Goto(L4);
+    }
     WaitFor(
         EventFlagState(CHANGE, TargetEventFlagType.EventFlag, 9800)
             || EventFlagState(CHANGE, TargetEventFlagType.EventFlag, 9801)
             || EventFlagState(CHANGE, TargetEventFlagType.EventFlag, 9802));
+    RestartEvent();
+L4:
+    WaitFor(EventFlag(12102065));
+    WaitFixedTimeSeconds(5);
     RestartEvent();
 });
 

@@ -4,7 +4,7 @@
 // @game    Bloodborne
 // @string    "クリア時間_通し\u0000クリア時間_1プレイ\u0000ボス_撃破\u0000PC情報_ボス撃破_闇の旅団\u0000ボス_戦闘開始\u0000ボス戦_撃破時間\u0000ギミック_エレベーター起動\u0000PC情報_森到達時\u0000N:\\SPRJ\\data\\Param\\event\\common.emevd\u0000"
 // @linked    [164]
-// @version    3.4.1
+// @version    3.4.2
 // ==/EMEVD==
 
 const area_id = 27;
@@ -12,13 +12,18 @@ const block_id = 0;
 
 const woods_lamp_offset = 35;
 const woods_lamp_id = 2701950;
+const woods_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10);
 
 const shadows_lamp_offset = 36;
 const shadows_offset = 5;
 const shadows_defeat = 12701800;
 const shadows_return = 2701899;
 const shadows_lamp_id = 2701951;
+const shadows_lamp_kindle = 112100000 + (area_id * 100) + (block_id * 10) + 2;
 const shadows_region = 2702802;
+const shadows_id = 2700800;
+const shadows_id2 = 2700801;
+const shadows_id3 = 2700802;
 
 // 2 elevators
 // elevator door
@@ -29,9 +34,17 @@ $Event(0, Default, function() {
     
     SetEventFlag(8900+shadows_offset, OFF);
     
+    //InitializeEvent(0, 12701820, 0);
+    
     InitializeEvent(19, 7900, 10000000+shadows_return, shadows_return, area_id, block_id, 8500+woods_lamp_offset);
     
-    InitializeEvent(woods_lamp_offset, 8300, woods_lamp_id+2000, woods_lamp_id+3000, woods_lamp_id+4000, area_id, block_id, -1, woods_lamp_id+6000);
+    InitializeEvent(woods_lamp_offset, 8500, 8500+woods_lamp_offset, woods_lamp_id, 72111414);
+    InitializeEvent(shadows_lamp_offset, 8500, 8500+shadows_lamp_offset, shadows_lamp_id, 72111515);
+    
+    InitializeEvent(woods_lamp_offset, 8100, 8100+woods_lamp_offset, woods_lamp_kindle);
+    InitializeEvent(shadows_lamp_offset, 8100, 8100+shadows_lamp_offset, shadows_lamp_kindle);
+    
+    InitializeEvent(woods_lamp_offset, 8300, woods_lamp_id+2000, woods_lamp_id+3000, woods_lamp_id+4000, area_id, block_id, -1, woods_lamp_id+6000, woods_lamp_kindle);
     
     if(EventFlag(shadows_defeat+13) && !EventFlag(shadows_defeat-1)) {
         if (EventFlag(shadows_defeat-2)) {
@@ -40,7 +53,7 @@ $Event(0, Default, function() {
         }
         SetEventFlag(shadows_defeat+13, OFF);
         SetEventFlag(shadows_defeat, ON);
-        InitializeEvent(shadows_lamp_offset, 8300, shadows_lamp_id+2000, shadows_lamp_id+3000, shadows_lamp_id+4000, area_id, block_id, 999, shadows_lamp_id+6000);
+        InitializeEvent(shadows_lamp_offset, 8300, shadows_lamp_id+2000, shadows_lamp_id+3000, shadows_lamp_id+4000, area_id, block_id, 999, shadows_lamp_id+6000, shadows_lamp_kindle);
     }
     else if (EventFlag(shadows_defeat+12) || EventFlag(shadows_defeat-1)) {
         if (EventFlag(shadows_defeat-2)) {
@@ -53,14 +66,13 @@ $Event(0, Default, function() {
         SetEventFlag(shadows_defeat+13, ON);
         SetEventFlag(shadows_defeat-1, OFF);
         SetEventFlag(8900+shadows_offset, ON);
-        InitializeEvent(shadows_lamp_offset, 8300, shadows_lamp_id+2000, shadows_lamp_id+3000, shadows_lamp_id+5000, area_id, block_id, -1, shadows_lamp_id+6000);
+        InitializeEvent(shadows_lamp_offset, 8300, shadows_lamp_id+2000, shadows_lamp_id+3000, shadows_lamp_id+5000, area_id, block_id, -1, shadows_lamp_id+6000, shadows_lamp_kindle);
     }
     else {
-        InitializeEvent(shadows_lamp_offset, 8300, shadows_lamp_id+2000, shadows_lamp_id+3000, shadows_lamp_id+4000, area_id, block_id, -1, shadows_lamp_id+6000);
+        InitializeEvent(shadows_lamp_offset, 8300, shadows_lamp_id+2000, shadows_lamp_id+3000, shadows_lamp_id+4000, area_id, block_id, -1, shadows_lamp_id+6000, shadows_lamp_kindle);
     }
     
-    InitializeEvent(woods_lamp_offset, 8500, 8500+woods_lamp_offset, woods_lamp_id, 72111414);
-    InitializeEvent(shadows_lamp_offset, 8500, 8500+shadows_lamp_offset, shadows_lamp_id, 72111515);
+    InitializeEvent(shadows_offset, 12102070, shadows_defeat+13, 0, 7419, shadows_id, shadows_id2, shadows_id3);
     
     InitializeEvent(shadows_offset, 8900, shadows_defeat-1, shadows_lamp_id+1000, shadows_defeat-2);
     InitializeEvent(shadows_offset, 7700, shadows_defeat+11, shadows_defeat+12, shadows_lamp_id+1000, 827000);
@@ -694,6 +706,12 @@ $Event(50, Default, function() {
     InitializeEvent(0, 12700175, 0);
 });
 
+
+$Event(12701820, Default, function() {
+    WaitFixedTimeSeconds(5);
+    SpawnOneshotSFX(TargetEntityType.Character, 10000, 240, 927220);
+});
+
 // Boss Defeat_Dark Brigade
 $Event(12701800, Default, function() {
     if (ThisEvent()) {
@@ -734,6 +752,9 @@ L0:
             AwardItemLot(2700990);
         } else {
             AwardItemLot(2700995);
+        }
+        if (!PlayerHasItem(ItemType.Goods, 4002)) {
+            AwardItemLot(2700970);
         }
         SetEventFlag(2700, ON);
         SetEventFlag(2701, ON);

@@ -4,7 +4,7 @@
 // @game    Bloodborne
 // @string    "ボス_撃破\u0000PC情報_ボス撃破_ラスボス\u0000ボス_戦闘開始\u0000ボス戦_撃破時間\u0000N:\\SPRJ\\data\\Param\\event\\common.emevd\u0000\u0000\u0000\u0000\u0000"
 // @linked    [76]
-// @version    3.4.1
+// @version    3.4.2
 // ==/EMEVD==
 
 const area_id = 36;
@@ -12,16 +12,21 @@ const block_id = 0;
 
 const hamlet_lamp_offset = 65;
 const hamlet_lamp_id = 3601950;
+const hamlet_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10);
 
 const lighthouse_lamp_offset = 66;
 const lighthouse_lamp_id = 3601951;
+const lighthouse_lamp_kindle = 112100000 + (area_id * 100) + (block_id * 10) + 2;
 
 const orphan_lamp_offset = 67;
 const orphan_offset = 21;
 const orphan_defeat = 13601800;
 const orphan_return = 3601899;
 const orphan_lamp_id = 3601952;
+const orphan_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 4;
 const orphan_region = 3602802;
+const orphan_id = 3600800;
+const orphan_id2 = 3600801;
 
 // ladder
 // 2nd lamp door
@@ -39,8 +44,12 @@ $Event(0, Default, function() {
     InitializeEvent(lighthouse_lamp_offset, 8500, 8500+lighthouse_lamp_offset, lighthouse_lamp_id, 72114242);
     InitializeEvent(orphan_lamp_offset, 8500, 8500+orphan_lamp_offset, orphan_lamp_id, 72114343);
     
-    InitializeEvent(hamlet_lamp_offset, 8300, hamlet_lamp_id+2000, hamlet_lamp_id+3000, hamlet_lamp_id+4000, area_id, block_id, -1, hamlet_lamp_id+6000);
-    InitializeEvent(lighthouse_lamp_offset, 8300, lighthouse_lamp_id+2000, lighthouse_lamp_id+3000, lighthouse_lamp_id+4000, area_id, block_id, -1, lighthouse_lamp_id+6000);
+    InitializeEvent(hamlet_lamp_offset, 8100, 8100+hamlet_lamp_offset, hamlet_lamp_kindle);
+    InitializeEvent(lighthouse_lamp_offset, 8100, 8100+lighthouse_lamp_offset, lighthouse_lamp_kindle);
+    InitializeEvent(orphan_lamp_offset, 8100, 8100+orphan_lamp_offset, orphan_lamp_kindle);
+    
+    InitializeEvent(hamlet_lamp_offset, 8300, hamlet_lamp_id+2000, hamlet_lamp_id+3000, hamlet_lamp_id+4000, area_id, block_id, -1, hamlet_lamp_id+6000, hamlet_lamp_kindle);
+    InitializeEvent(lighthouse_lamp_offset, 8300, lighthouse_lamp_id+2000, lighthouse_lamp_id+3000, lighthouse_lamp_id+4000, area_id, block_id, -1, lighthouse_lamp_id+6000, lighthouse_lamp_kindle);
     
     SetEventFlag(orphan_defeat+15, OFF);
     if (EventFlag(orphan_defeat+14)) {
@@ -56,7 +65,7 @@ $Event(0, Default, function() {
         }
         SetEventFlag(orphan_defeat+13, OFF);
         SetEventFlag(orphan_defeat, ON);
-        InitializeEvent(orphan_lamp_offset, 8300, orphan_lamp_id+2000, orphan_lamp_id+3000, orphan_lamp_id+4000, area_id, block_id, 999, orphan_lamp_id+6000);
+        InitializeEvent(orphan_lamp_offset, 8300, orphan_lamp_id+2000, orphan_lamp_id+3000, orphan_lamp_id+4000, area_id, block_id, 999, orphan_lamp_id+6000, orphan_lamp_kindle);
     } // rematch has started
     else if (EventFlag(orphan_defeat+12) || EventFlag(orphan_defeat-1)) {
         if (EventFlag(orphan_defeat-2)) {
@@ -70,11 +79,13 @@ $Event(0, Default, function() {
         SetEventFlag(orphan_defeat+13, ON);
         SetEventFlag(orphan_defeat-1, OFF);
         SetEventFlag(8900+orphan_offset, ON);
-        InitializeEvent(orphan_lamp_offset, 8300, orphan_lamp_id+2000, orphan_lamp_id+3000, orphan_lamp_id+5000, area_id, block_id, -1, orphan_lamp_id+6000);
+        InitializeEvent(orphan_lamp_offset, 8300, orphan_lamp_id+2000, orphan_lamp_id+3000, orphan_lamp_id+5000, area_id, block_id, -1, orphan_lamp_id+6000, orphan_lamp_kindle);
     }
     else {
-        InitializeEvent(orphan_lamp_offset, 8300, orphan_lamp_id+2000, orphan_lamp_id+3000, orphan_lamp_id+4000, area_id, block_id, -1, orphan_lamp_id+6000);
+        InitializeEvent(orphan_lamp_offset, 8300, orphan_lamp_id+2000, orphan_lamp_id+3000, orphan_lamp_id+4000, area_id, block_id, -1, orphan_lamp_id+6000, orphan_lamp_kindle);
     }
+    
+    InitializeEvent(orphan_offset, 12102070, orphan_defeat+13, 0, 7506, orphan_id, orphan_id2);
     
     InitializeEvent(orphan_offset, 8900, orphan_defeat-1, orphan_lamp_id+1000, orphan_defeat-2, orphan_defeat+15, orphan_defeat+14);
     InitializeEvent(orphan_offset, 7700, orphan_defeat+11, orphan_defeat+12, orphan_lamp_id+1000, 836000);

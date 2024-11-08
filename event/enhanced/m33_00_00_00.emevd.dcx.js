@@ -12,13 +12,16 @@ const block_id = 0;
 
 const frontier_lamp_offset = 50;
 const frontier_lamp_id = 3301950;
+const frontier_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10);
 
 const amygdala_lamp_offset = 51;
 const amygdala_offset = 9;
 const amygdala_defeat = 13301800;
 const amygdala_return = 3301899;
 const amygdala_lamp_id = 3301951;
+const amygdala_lamp_kindle = 112100000 + (area_id * 100) + (block_id * 10) + 2;
 const amygdala_region = 3302802;
+const amygdala_id = 3300800;
 
 // +1000: boss lamp spawn point
 // +2000: spawn checker
@@ -40,7 +43,10 @@ $Event(0, Default, function() {
     InitializeEvent(frontier_lamp_offset, 8500, 8500+frontier_lamp_offset, frontier_lamp_id, 72112828);
     InitializeEvent(amygdala_lamp_offset, 8500, 8500+amygdala_lamp_offset, amygdala_lamp_id, 72112929);
     
-    InitializeEvent(frontier_lamp_offset, 8300, frontier_lamp_id+2000, frontier_lamp_id+3000, frontier_lamp_id+4000, area_id, block_id, -1, frontier_lamp_id+6000);
+    InitializeEvent(frontier_lamp_offset, 8100, 8100+frontier_lamp_offset, frontier_lamp_kindle);
+    InitializeEvent(amygdala_lamp_offset, 8100, 8100+amygdala_lamp_offset, amygdala_lamp_kindle);
+    
+    InitializeEvent(frontier_lamp_offset, 8300, frontier_lamp_id+2000, frontier_lamp_id+3000, frontier_lamp_id+4000, area_id, block_id, -1, frontier_lamp_id+6000, frontier_lamp_kindle);
     
     if(EventFlag(amygdala_defeat+13) && !EventFlag(amygdala_defeat-1)) {
         if (EventFlag(amygdala_defeat-2)) {
@@ -49,7 +55,7 @@ $Event(0, Default, function() {
         }
         SetEventFlag(amygdala_defeat+13, OFF);
         SetEventFlag(amygdala_defeat, ON);
-        InitializeEvent(amygdala_lamp_offset, 8300, amygdala_lamp_id+2000, amygdala_lamp_id+3000, amygdala_lamp_id+4000, area_id, block_id, 999, amygdala_lamp_id+6000);
+        InitializeEvent(amygdala_lamp_offset, 8300, amygdala_lamp_id+2000, amygdala_lamp_id+3000, amygdala_lamp_id+4000, area_id, block_id, 999, amygdala_lamp_id+6000, amygdala_lamp_kindle);
     }
     else if (EventFlag(amygdala_defeat+12) || EventFlag(amygdala_defeat-1)) {
         if (EventFlag(amygdala_defeat-2)) {
@@ -62,11 +68,13 @@ $Event(0, Default, function() {
         SetEventFlag(amygdala_defeat+13, ON);
         SetEventFlag(amygdala_defeat-1, OFF);
         SetEventFlag(8900+amygdala_offset, ON);
-        InitializeEvent(amygdala_lamp_offset, 8300, amygdala_lamp_id+2000, amygdala_lamp_id+3000, amygdala_lamp_id+5000, area_id, block_id, -1, amygdala_lamp_id+6000);
+        InitializeEvent(amygdala_lamp_offset, 8300, amygdala_lamp_id+2000, amygdala_lamp_id+3000, amygdala_lamp_id+5000, area_id, block_id, -1, amygdala_lamp_id+6000, amygdala_lamp_kindle);
     }
     else {
-        InitializeEvent(amygdala_lamp_offset, 8300, amygdala_lamp_id+2000, amygdala_lamp_id+3000, amygdala_lamp_id+4000, area_id, block_id, -1, amygdala_lamp_id+6000);
+        InitializeEvent(amygdala_lamp_offset, 8300, amygdala_lamp_id+2000, amygdala_lamp_id+3000, amygdala_lamp_id+4000, area_id, block_id, -1, amygdala_lamp_id+6000, amygdala_lamp_kindle);
     }
+    
+    InitializeEvent(amygdala_offset, 12102070, amygdala_defeat+13, 0, 7446, amygdala_id);
     
     InitializeEvent(amygdala_offset, 8900, amygdala_defeat-1, amygdala_lamp_id+1000, amygdala_defeat-2);
     InitializeEvent(amygdala_offset, 7700, amygdala_defeat+11, amygdala_defeat+12, amygdala_lamp_id+1000, 833000);

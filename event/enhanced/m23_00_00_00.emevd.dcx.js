@@ -4,7 +4,7 @@
 // @game    Bloodborne
 // @string    "クリア時間_通し\u0000クリア時間_1プレイ\u0000ボス_撃破\u0000PC情報_ボス撃破_血に渇いた獣\u0000ボス_戦闘開始\u0000ボス戦_撃破時間\u0000PC情報_ボス撃破_嵐の獣（骨）\u0000PC情報_廃墟到達時\u0000廃墟_スナイパー領域侵入\u0000廃墟_ご神体破壊\u0000N:\\SPRJ\\data\\Param\\event\\common.emevd\u0000\u0000\u0000\u0000\u0000"
 // @linked    [220]
-// @version    3.4.1
+// @version    3.4.2
 // ==/EMEVD==
 
 const area_id = 23;
@@ -12,20 +12,25 @@ const block_id = 0;
 
 const old_yharnam_lamp_offset = 5;
 const old_yharnam_lamp_id = 2301950;
+const old_yharnam_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10);
 
 const bsb_offset = 3;
 const bsb_lamp_offset = 6;
 const bsb_defeat = 12301800;
 const bsb_return = 2301899;
 const bsb_lamp_id = 2301951;
+const bsb_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 2;
 const bsb_region = 2302802;
+const bsb_id = 2300800;
 
 const paarl_offset = 7;
 const paarl_lamp_offset = 7;
 const paarl_defeat = 12301700;
 const paarl_return = 2301799;
 const paarl_lamp_id = 2301952;
+const paarl_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 4;
 const paarl_region = 2302812;
+const paarl_id = 2300810;
 
 // front ladder gate 2301700
 // gun ladder gate 2301701
@@ -42,7 +47,11 @@ $Event(0, Default, function() {
     InitializeEvent(bsb_lamp_offset, 8500, 8500+bsb_lamp_offset, bsb_lamp_id, 72111010);
     InitializeEvent(paarl_lamp_offset, 8500, 8500+paarl_lamp_offset, paarl_lamp_id, 72111111);
     
-    InitializeEvent(old_yharnam_lamp_offset, 8300, old_yharnam_lamp_id+2000, old_yharnam_lamp_id+3000, old_yharnam_lamp_id+4000, area_id, block_id, -1, old_yharnam_lamp_id+6000);
+    InitializeEvent(old_yharnam_lamp_offset, 8100, 8100+old_yharnam_lamp_offset, old_yharnam_lamp_kindle);
+    InitializeEvent(bsb_lamp_offset, 8100, 8100+bsb_lamp_offset, bsb_lamp_kindle);
+    InitializeEvent(paarl_lamp_offset, 8100, 8100+paarl_lamp_offset, paarl_lamp_kindle);
+    
+    InitializeEvent(old_yharnam_lamp_offset, 8300, old_yharnam_lamp_id+2000, old_yharnam_lamp_id+3000, old_yharnam_lamp_id+4000, area_id, block_id, -1, old_yharnam_lamp_id+6000, old_yharnam_lamp_kindle);
     
     if(EventFlag(bsb_defeat+13) && !EventFlag(bsb_defeat-1)) {
         if (EventFlag(bsb_defeat-2)) {
@@ -51,7 +60,7 @@ $Event(0, Default, function() {
         }
         SetEventFlag(bsb_defeat+13, OFF);
         SetEventFlag(bsb_defeat, ON);
-        InitializeEvent(bsb_lamp_offset, 8300, bsb_lamp_id+2000, bsb_lamp_id+3000, bsb_lamp_id+4000, area_id, block_id, 999, bsb_lamp_id+6000);
+        InitializeEvent(bsb_lamp_offset, 8300, bsb_lamp_id+2000, bsb_lamp_id+3000, bsb_lamp_id+4000, area_id, block_id, 999, bsb_lamp_id+6000, bsb_lamp_kindle);
     }
     else if (EventFlag(bsb_defeat+12) || EventFlag(bsb_defeat-1)) {
         if (EventFlag(bsb_defeat-2)) {
@@ -64,14 +73,11 @@ $Event(0, Default, function() {
         SetEventFlag(bsb_defeat+13, ON);
         SetEventFlag(bsb_defeat-1, OFF);
         SetEventFlag(8900+bsb_offset, ON);
-        InitializeEvent(bsb_lamp_offset, 8300, bsb_lamp_id+2000, bsb_lamp_id+3000, bsb_lamp_id+5000, area_id, block_id, -1, bsb_lamp_id+6000);
+        InitializeEvent(bsb_lamp_offset, 8300, bsb_lamp_id+2000, bsb_lamp_id+3000, bsb_lamp_id+5000, area_id, block_id, -1, bsb_lamp_id+6000, bsb_lamp_kindle);
     }
     else {
-        InitializeEvent(bsb_lamp_offset, 8300, bsb_lamp_id+2000, bsb_lamp_id+3000, bsb_lamp_id+4000, area_id, block_id, -1, bsb_lamp_id+6000);
+        InitializeEvent(bsb_lamp_offset, 8300, bsb_lamp_id+2000, bsb_lamp_id+3000, bsb_lamp_id+4000, area_id, block_id, -1, bsb_lamp_id+6000, bsb_lamp_kindle);
     }
-    
-    InitializeEvent(bsb_offset, 8900, bsb_defeat-1, bsb_lamp_id+1000, bsb_defeat-2);
-    InitializeEvent(bsb_offset, 7700, bsb_defeat+11, bsb_defeat+12, bsb_lamp_id+1000, 823000);
     
     if(EventFlag(paarl_defeat+13) && !EventFlag(paarl_defeat-1)) {
         if (EventFlag(paarl_defeat-2)) {
@@ -80,7 +86,7 @@ $Event(0, Default, function() {
         }
         SetEventFlag(paarl_defeat+13, OFF);
         SetEventFlag(paarl_defeat, ON);
-        InitializeEvent(paarl_lamp_offset, 8300, paarl_lamp_id+2000, paarl_lamp_id+3000, paarl_lamp_id+4000, area_id, block_id, 999, paarl_lamp_id+6000);
+        InitializeEvent(paarl_lamp_offset, 8300, paarl_lamp_id+2000, paarl_lamp_id+3000, paarl_lamp_id+4000, area_id, block_id, 999, paarl_lamp_id+6000, paarl_lamp_kindle);
     }
     else if (EventFlag(paarl_defeat+12) || EventFlag(paarl_defeat-1)) {
         if (EventFlag(paarl_defeat-2)) {
@@ -93,13 +99,19 @@ $Event(0, Default, function() {
         SetEventFlag(paarl_defeat+13, ON);
         SetEventFlag(paarl_defeat-1, OFF);
         SetEventFlag(8900+paarl_offset, ON);
-        InitializeEvent(paarl_lamp_offset, 8300, paarl_lamp_id+2000, paarl_lamp_id+3000, paarl_lamp_id+5000, area_id, block_id, -1, paarl_lamp_id+6000);
+        InitializeEvent(paarl_lamp_offset, 8300, paarl_lamp_id+2000, paarl_lamp_id+3000, paarl_lamp_id+5000, area_id, block_id, -1, paarl_lamp_id+6000, paarl_lamp_kindle);
     }
     else {
-        InitializeEvent(paarl_lamp_offset, 8300, paarl_lamp_id+2000, paarl_lamp_id+3000, paarl_lamp_id+4000, area_id, block_id, -1, paarl_lamp_id+6000);
+        InitializeEvent(paarl_lamp_offset, 8300, paarl_lamp_id+2000, paarl_lamp_id+3000, paarl_lamp_id+4000, area_id, block_id, -1, paarl_lamp_id+6000, paarl_lamp_kindle);
     }
     
+    InitializeEvent(bsb_offset, 12102070, bsb_defeat+13, 0, 7416, bsb_id);
+    InitializeEvent(paarl_offset, 12102070, paarl_defeat+13, 0, 7449, paarl_id);
+    
+    InitializeEvent(bsb_offset, 8900, bsb_defeat-1, bsb_lamp_id+1000, bsb_defeat-2);
     InitializeEvent(paarl_offset, 8900, paarl_defeat-1, paarl_lamp_id+1000, paarl_defeat-1);
+    
+    InitializeEvent(bsb_offset, 7700, bsb_defeat+11, bsb_defeat+12, bsb_lamp_id+1000, 823000);
     InitializeEvent(paarl_offset, 7700, paarl_defeat+11, paarl_defeat+12, paarl_lamp_id+1000, 823001);
     
     InitializeEvent(900, 12107000, 72110900, 2301950, 2412950);
@@ -2054,10 +2066,17 @@ L0:
         Goto(L1);
     }
 L1:
+    if (EventFlag(12102036) && EventFlag(12100856)) {
+        Goto(L2);
+    }
     WaitFor(
         EventFlagState(CHANGE, TargetEventFlagType.EventFlag, 9800)
             || EventFlagState(CHANGE, TargetEventFlagType.EventFlag, 9801)
             || EventFlagState(CHANGE, TargetEventFlagType.EventFlag, 9802));
+    RestartEvent();
+L2:
+    WaitFor(EventFlag(12102065));
+    WaitFixedTimeSeconds(5);
     RestartEvent();
 });
 

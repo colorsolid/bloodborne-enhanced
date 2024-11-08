@@ -547,6 +547,7 @@ def t210304_x17():
         ClearTalkListData()
         AddTalkListData(1, 200031, -1) # lamp settings
         AddTalkListData(2, 200086, -1) # broken lamp
+        AddTalkListData(3, 200174, -1) # balancing
         AddTalkListData(10, 200032, -1) # misc settings
         ShowShopMessage(0, 0, 0)
         def WhilePaused():
@@ -561,6 +562,12 @@ def t210304_x17():
                 pass
         elif GetTalkListEntryResult() == 2: # broken lamp
             call = t210304_x19()
+            if call.Get() == 1:
+                ForceCloseMenu()
+            elif call.Done():
+                pass
+        elif GetTalkListEntryResult() == 3: # balancing/difficulty
+            call = t210304_x20()
             if call.Get() == 1:
                 ForceCloseMenu()
             elif call.Done():
@@ -792,6 +799,43 @@ def t210304_x19():
             SetEventState(12100959, 1)
             SetEventState(12100859, 0)
 
+# balance/difficulty settings
+def t210304_x20():
+    while True:
+        ClearTalkListData()
+
+        AddTalkListData(1, 200164, 12100952) # enable - rematch scaling
+        AddTalkListData(2, 200165, 12100852) # disable - rematch scaling
+
+        AddTalkListData(3, 200172, 12100951) # enable - lamp kindling
+        AddTalkListData(4, 200173, 12100851) # disable - lamp kindling
+
+        AddTalkListData(20, 200145, 12102010) # increase cycle
+
+        ShowShopMessage(0, 0, 0)
+        def WhilePaused():
+            SetTalkTime(0.33)
+        if not GetTalkListEntryResult() or not IsTalkExclusiveMenuOpen():
+            return 1
+        elif GetTalkListEntryResult() == 1: # enable - rematch scaling
+            SetEventState(12100952, 0)
+            SetEventState(12100852, 1)
+        elif GetTalkListEntryResult() == 2: # disable - rematch scaling
+            SetEventState(12100952, 1)
+            SetEventState(12100852, 0)
+        elif GetTalkListEntryResult() == 3: # enable - lamp kindling
+            SetEventState(12100951, 0)
+            SetEventState(12100851, 1)
+        elif GetTalkListEntryResult() == 4: # disable - lamp kindling
+            SetEventState(12100951, 1)
+            SetEventState(12100851, 0)
+        elif GetTalkListEntryResult() == 20: # increase cycle
+            call = t210304_x50()
+            if call.Get() == 1:
+                ForceCloseMenu()
+            elif call.Done():
+                pass
+
 # misc settings
 def t210304_x30():
     while True:
@@ -827,11 +871,10 @@ def t210304_x30():
         AddTalkListData(13, 200138, 12100954)
         AddTalkListData(14, 200139, 12100854)
 
-        AddTalkListData(20, 200145, 12102010) # increase cycle
-
-        AddTalkListData(21, 200161, 12102033) # random enabled - switch to none
+        AddTalkListData(21, 200161, 12102033) # random spawn enabled - switch to random time
+        AddTalkListData(24, 200166, 12102036) # random time enabled - switch to none
         AddTalkListData(22, 200162, 12102034) # none enabled - switch to dark fog
-        AddTalkListData(23, 200163, 12102035) # dark fog enabled - switch to random
+        AddTalkListData(23, 200163, 12102035) # dark fog enabled - switch to random spawn
 
         AddTalkListData(30, 200153, 12102202) # activate all lamps
         AddTalkListData(31, 200155, 12102212) # activate all shortcuts
@@ -883,27 +926,30 @@ def t210304_x30():
         elif GetTalkListEntryResult() == 14: # disable - doll gesture
             SetEventState(12100954, 1)
             SetEventState(12100854, 0)
-        elif GetTalkListEntryResult() == 20: # increase cycle
-            call = t210304_x50()
-            if call.Get() == 1:
-                ForceCloseMenu()
-            elif call.Done():
-                pass
-        elif GetTalkListEntryResult() == 21: # switch from random to no effect
+        elif GetTalkListEntryResult() == 21: # switch from random spawn to random time
+            SetEventState(12102031, 1)
+            SetEventState(12102033, 0)
+            SetEventState(12102034, 0)
+            SetEventState(12102035, 0)
+            SetEventState(12102036, 1)
+        elif GetTalkListEntryResult() == 24: # switch from random time to no effect
             SetEventState(12102031, 1)
             SetEventState(12102033, 0)
             SetEventState(12102034, 1)
             SetEventState(12102035, 0)
+            SetEventState(12102036, 0)
         elif GetTalkListEntryResult() == 22: # switch from no effect to dark fog
             SetEventState(12102031, 1)
             SetEventState(12102033, 0)
             SetEventState(12102034, 0)
             SetEventState(12102035, 1)
+            SetEventState(12102036, 0)
         elif GetTalkListEntryResult() == 23: # switch from dark fog to random effect
             SetEventState(12102031, 1)
             SetEventState(12102033, 1)
             SetEventState(12102034, 0)
             SetEventState(12102035, 0)
+            SetEventState(12102036, 0)
         elif GetTalkListEntryResult() == 30: # activate all lamps
             call = t210304_x51()
             if call.Get() == 1:

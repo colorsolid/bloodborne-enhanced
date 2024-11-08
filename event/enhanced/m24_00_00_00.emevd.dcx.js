@@ -4,7 +4,7 @@
 // @game    Bloodborne
 // @string    "\u0000聖堂街A_邪神投げ開始\u0000聖堂街A_扉を閉じる領域侵入\u0000聖堂街A_ショートカット領域侵入\u0000聖堂街A_トラップ発動\u0000ボス_撃破\u0000PC情報_ボス撃破_聖女ビースト\u0000ボス_戦闘開始\u0000ボス戦_撃破時間\u0000PC情報_聖堂街A到達時\u0000N:\\SPRJ\\data\\Param\\event\\common.emevd\u0000\u0000\u0000\u0000\u0000"
 // @linked    [220]
-// @version    3.4.1
+// @version    3.4.2
 // ==/EMEVD==
 
 const area_id = 24;
@@ -12,13 +12,16 @@ const block_id = 0;
 
 const cathedral_ward_lamp_offset = 10;
 const cathedral_ward_lamp_id = 2401950;
+const cathedral_ward_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10);
 
 const amelia_offset = 2;
 const amelia_lamp_offset = 11;
 const amelia_defeat = 12401800;
 const amelia_return = 2401899;
 const amelia_lamp_id = 2401951;
+const amelia_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 2;
 const amelia_region = 2402802;
+const amelia_id = 2400800;
 
 // 3 main gates 2401220, 2401208, 2401207
 // lamp door 2401202
@@ -28,10 +31,13 @@ $Event(0, Default, function() {
     InitializeEvent(cathedral_ward_lamp_offset, 8500, 8500+cathedral_ward_lamp_offset, cathedral_ward_lamp_id, 72110404);
     InitializeEvent(amelia_lamp_offset, 8500, 8500+amelia_lamp_offset, amelia_lamp_id, 72110505);
     
+    InitializeEvent(cathedral_ward_lamp_offset, 8100, 8100+cathedral_ward_lamp_offset, cathedral_ward_lamp_kindle);
+    InitializeEvent(amelia_lamp_offset, 8100, 8100+amelia_lamp_offset, 12100000 + (area_id * 100) + (block_id * 10) + 2);
+    
     InitializeEvent(3, 7900, 10000000+amelia_return, amelia_return, area_id, block_id, 8500+cathedral_ward_lamp_offset);
     
     SetEventFlag(8900+amelia_offset, OFF);
-    InitializeEvent(cathedral_ward_lamp_offset, 8300, cathedral_ward_lamp_id+2000, cathedral_ward_lamp_id+3000, cathedral_ward_lamp_id+4000, area_id, block_id, -1, cathedral_ward_lamp_id+6000);
+    InitializeEvent(cathedral_ward_lamp_offset, 8300, cathedral_ward_lamp_id+2000, cathedral_ward_lamp_id+3000, cathedral_ward_lamp_id+4000, area_id, block_id, -1, cathedral_ward_lamp_id+6000, cathedral_ward_lamp_kindle);
     
     if(EventFlag(amelia_defeat+13) && !EventFlag(amelia_defeat-1)) {
         if (EventFlag(amelia_defeat-2)) {
@@ -40,7 +46,7 @@ $Event(0, Default, function() {
         }
         SetEventFlag(amelia_defeat+13, OFF);
         SetEventFlag(amelia_defeat, ON);
-        InitializeEvent(amelia_lamp_offset, 8300, amelia_lamp_id+2000, amelia_lamp_id+3000, amelia_lamp_id+4000, area_id, block_id, 999, amelia_lamp_id+6000);
+        InitializeEvent(amelia_lamp_offset, 8300, amelia_lamp_id+2000, amelia_lamp_id+3000, amelia_lamp_id+4000, area_id, block_id, 999, amelia_lamp_id+6000, amelia_lamp_kindle);
     }
     else if (EventFlag(amelia_defeat+12) || EventFlag(amelia_defeat-1)) {
         if (EventFlag(amelia_defeat-2)) {
@@ -53,11 +59,13 @@ $Event(0, Default, function() {
         SetEventFlag(amelia_defeat+13, ON);
         SetEventFlag(amelia_defeat-1, OFF);
         SetEventFlag(8900+amelia_offset, ON);
-        InitializeEvent(amelia_lamp_offset, 8300, amelia_lamp_id+2000, amelia_lamp_id+3000, amelia_lamp_id+5000, area_id, block_id, -1, amelia_lamp_id+6000);
+        InitializeEvent(amelia_lamp_offset, 8300, amelia_lamp_id+2000, amelia_lamp_id+3000, amelia_lamp_id+5000, area_id, block_id, -1, amelia_lamp_id+6000, amelia_lamp_kindle);
     }
     else {
-        InitializeEvent(amelia_lamp_offset, 8300, amelia_lamp_id+2000, amelia_lamp_id+3000, amelia_lamp_id+4000, area_id, block_id, -1, amelia_lamp_id+6000);
+        InitializeEvent(amelia_lamp_offset, 8300, amelia_lamp_id+2000, amelia_lamp_id+3000, amelia_lamp_id+4000, area_id, block_id, -1, amelia_lamp_id+6000, amelia_lamp_kindle);
     }
+    
+    InitializeEvent(amelia_offset, 12102070, amelia_defeat+13, 0, 7417, amelia_id);
     
     InitializeEvent(amelia_offset, 8900, amelia_defeat-1, amelia_lamp_id+1000, amelia_defeat-2);
     InitializeEvent(amelia_offset, 7700, amelia_defeat+11, amelia_defeat+12, amelia_lamp_id+1000, 824000);
@@ -1439,10 +1447,17 @@ L2:
         SetCharacterBackreadState(2400125, true);
     }
 L3:
+    if (EventFlag(12102036) && EventFlag(12100856)) {
+        Goto(L4);
+    }
     WaitFor(
         EventFlagState(CHANGE, TargetEventFlagType.EventFlag, 9800)
             || EventFlagState(CHANGE, TargetEventFlagType.EventFlag, 9801)
             || EventFlagState(CHANGE, TargetEventFlagType.EventFlag, 9802));
+    RestartEvent();
+L4:
+    WaitFor(EventFlag(12102065));
+    WaitFixedTimeSeconds(5);
     RestartEvent();
 });
 

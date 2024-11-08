@@ -74,11 +74,14 @@ const gehrman_offset = 15;
 const gehrman_defeat = 12101800;
 const gehrman_region = 12102802;
 const gehrman_trigger_short_warp = 2102810;
+const gehrman_id = 2100800;
 
 const moon_presence_offset = 16;
 const moon_presence_defeat = 12101850;
 const moon_presence_region = 12102802;
+const moon_presence_npc = 540000;
 const moon_presence_trigger_short_warp = 2102805;
+const moon_presence_id = 2100810;
 
 const ludwig_offset = 17;
 const ludwig_defeat = 13401800;
@@ -133,11 +136,6 @@ $Event(0, Default, function() {
         SetEventFlag(orphan_defeat+14, OFF);
         SetEventFlag(orphan_defeat+15, ON); 
     }
-    
-    if (!EventFlag(moon_presence_defeat+15)) {
-        InitializeEvent(gehrman_offset, 7700, gehrman_defeat+11, gehrman_defeat+12, 2102969, 821000);
-    }
-    InitializeEvent(moon_presence_offset, 7700, moon_presence_defeat+11, moon_presence_defeat+12, 2102969, 821000);
     
     if(EventFlag(gehrman_defeat+13) && !EventFlag(gehrman_defeat-1)) {
         if (EventFlag(gehrman_defeat-2)) {
@@ -196,10 +194,18 @@ $Event(0, Default, function() {
         InitializeEvent(31, 8300, 2102968, 2102308, 2102967, 21, 0, -1, 2102328);
     }
     
+    if (!EventFlag(moon_presence_defeat+15)) {
+        InitializeEvent(gehrman_offset, 7700, gehrman_defeat+11, gehrman_defeat+12, 2102969, 821000);
+    }
+    InitializeEvent(moon_presence_offset, 7700, moon_presence_defeat+11, moon_presence_defeat+12, 2102969, 821000);
+    
     InitializeEvent(gehrman_offset, 8900, gehrman_defeat-1, 2102969, gehrman_defeat-2);
     InitializeEvent(moon_presence_offset, 8900, moon_presence_defeat-1, 2102969, moon_presence_defeat-2, moon_presence_defeat+15, moon_presence_defeat+14);
     
     InitializeEvent(0, 12102000, 0); // reset rematch flags
+    
+    InitializeEvent(gehrman_offset, 12102070, gehrman_defeat+13, moon_presence_defeat+15, 7463, gehrman_id);
+    InitializeEvent(moon_presence_offset, 12102070, moon_presence_defeat+13, 0, 7464, moon_presence_id);
     
     // prevent infinite rewarp
     SetEventFlag(72110544, OFF);
@@ -757,10 +763,15 @@ $Event(8701, Default, function() {
         WaitFor(EventFlag(12100865));
         ChangeCharacterEnableState(2100500, Enabled);
         DeactivateObject(2105099, Enabled);
-        SetCharacterBackreadState(2100250, false);
+        if (EventFlag(12102042)) {
+            SetCharacterBackreadState(2100250, false);
+        }
         RestartEvent();
     }
     else { // active
+        if (!EventFlag(12102042)) {
+            SetCharacterBackreadState(2100250, true);
+        }
         WaitFor(EventFlag(12100965));
         SetCharacterBackreadState(2100250, true);
         ChangeCharacterEnableState(2100500, Disabled);
@@ -1484,7 +1495,9 @@ L3:
             DeleteMapSFX(2103505, false);
             DeleteMapSFX(2103506, false);
             DeleteMapSFX(2103507, false);
-            EndEvent();
+            WaitFor(EventFlag(12102065));
+            WaitFixedTimeSeconds(5);
+            RestartEvent();
         }
 L4: 
         if (EventFlag(12100956)) {
@@ -1507,7 +1520,9 @@ L4:
                 DeactivateObject(2101301, Enabled);
             }
         }
-        EndEvent();
+        WaitFor(EventFlag(12102065));
+        WaitFixedTimeSeconds(5);
+        RestartEvent();
     }
 L5:
     if (EventFlag(12100956)) {
@@ -1530,6 +1545,9 @@ L5:
             DeactivateObject(2101301, Enabled);
         }
     }
+    WaitFor(EventFlag(12102065));
+    WaitFixedTimeSeconds(5);
+    RestartEvent();
 });
 
 // Base BGM change

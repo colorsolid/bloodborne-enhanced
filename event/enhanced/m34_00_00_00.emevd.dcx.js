@@ -4,7 +4,7 @@
 // @game    Bloodborne
 // @string    "ボス_撃破\u0000PC情報_ボス撃破_ルドウイーク\u0000ボス_戦闘開始\u0000ボス戦_撃破時間\u0000PC情報_ボス撃破_教区長Ω\u0000N:\\SPRJ\\data\\Param\\event\\common.emevd\u0000\u0000\u0000\u0000"
 // @linked    [110]
-// @version    3.4.1
+// @version    3.4.2
 // ==/EMEVD==
 
 const area_id = 34;
@@ -12,23 +12,30 @@ const block_id = 0;
 
 const nightmare_lamp_offset = 55;
 const nightmare_lamp_id = 3401950;
+const nightmare_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10);
 
 const church_lamp_offset = 56;
 const church_lamp_id = 3401951;
+const church_lamp_kindle = 112100000 + (area_id * 100) + (block_id * 10) + 2;
 
 const ludwig_lamp_offset = 57;
 const ludwig_offset = 17;
 const ludwig_defeat = 13401800;
 const ludwig_return = 3401899;
 const ludwig_lamp_id = 3401952;
+const ludwig_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 4;
 const ludwig_region = 3402802;
+const ludwig_id = 3400800;
+const ludwig_id2 = 3400801;
 
 const laurence_lamp_offset = 58;
 const laurence_offset = 18;
 const laurence_defeat = 13401850;
 const laurence_return = 3401859;
 const laurence_lamp_id = 3401953;
+const laurence_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 6;
 const laurence_region = 3402852;
+const laurence_id = 3400850;
 
 // door at start
 // gate near start
@@ -51,8 +58,13 @@ $Event(0, Default, function() {
     InitializeEvent(ludwig_lamp_offset, 8500, 8500+ludwig_lamp_offset, ludwig_lamp_id, 72113737);
     InitializeEvent(laurence_lamp_offset, 8500, 8500+laurence_lamp_offset, laurence_lamp_id, 72113636);
     
-    InitializeEvent(nightmare_lamp_offset, 8300, nightmare_lamp_id+2000, nightmare_lamp_id+3000, nightmare_lamp_id+4000, area_id, block_id, -1, nightmare_lamp_id+6000);
-    InitializeEvent(church_lamp_offset, 8300, church_lamp_id+2000, church_lamp_id+3000, church_lamp_id+4000, area_id, block_id, -1, church_lamp_id+6000);
+    InitializeEvent(nightmare_lamp_offset, 8100, 8100+nightmare_lamp_offset, nightmare_lamp_kindle);
+    InitializeEvent(church_lamp_offset, 8100, 8100+church_lamp_offset, church_lamp_kindle);
+    InitializeEvent(ludwig_lamp_offset, 8100, 8100+ludwig_lamp_offset, ludwig_lamp_kindle);
+    InitializeEvent(laurence_lamp_offset, 8100, 8100+laurence_lamp_offset, laurence_lamp_kindle);
+    
+    InitializeEvent(nightmare_lamp_offset, 8300, nightmare_lamp_id+2000, nightmare_lamp_id+3000, nightmare_lamp_id+4000, area_id, block_id, -1, nightmare_lamp_id+6000, nightmare_lamp_kindle);
+    InitializeEvent(church_lamp_offset, 8300, church_lamp_id+2000, church_lamp_id+3000, church_lamp_id+4000, area_id, block_id, -1, church_lamp_id+6000, church_lamp_kindle);
     
     SetEventFlag(ludwig_defeat+15, OFF);
     if (EventFlag(ludwig_defeat+14)) {
@@ -74,7 +86,7 @@ $Event(0, Default, function() {
         SetEventFlag(ludwig_defeat+13, OFF);
         SetEventFlag(9471, ON);
         SetEventFlag(ludwig_defeat, ON);
-        InitializeEvent(ludwig_lamp_offset, 8300, ludwig_lamp_id+2000, ludwig_lamp_id+3000, ludwig_lamp_id+4000, area_id, block_id, 999, ludwig_lamp_id+6000);
+        InitializeEvent(ludwig_lamp_offset, 8300, ludwig_lamp_id+2000, ludwig_lamp_id+3000, ludwig_lamp_id+4000, area_id, block_id, 999, ludwig_lamp_id+6000, ludwig_lamp_kindle);
     }
     else if (EventFlag(ludwig_defeat+12) || EventFlag(ludwig_defeat-1)) {
         if (EventFlag(ludwig_defeat-2)) {
@@ -91,14 +103,11 @@ $Event(0, Default, function() {
         SetEventFlag(8900+ludwig_offset, ON);
         SetCharacterBackreadState(3400900, true);
         ChangeCharacterEnableState(3400900, Disabled);
-        InitializeEvent(ludwig_lamp_offset, 8300, ludwig_lamp_id+2000, ludwig_lamp_id+3000, ludwig_lamp_id+5000, area_id, block_id, -1, ludwig_lamp_id+6000);
+        InitializeEvent(ludwig_lamp_offset, 8300, ludwig_lamp_id+2000, ludwig_lamp_id+3000, ludwig_lamp_id+5000, area_id, block_id, -1, ludwig_lamp_id+6000, ludwig_lamp_kindle);
     }
     else {
-        InitializeEvent(ludwig_lamp_offset, 8300, ludwig_lamp_id+2000, ludwig_lamp_id+3000, ludwig_lamp_id+4000, area_id, block_id, -1, ludwig_lamp_id+6000);
+        InitializeEvent(ludwig_lamp_offset, 8300, ludwig_lamp_id+2000, ludwig_lamp_id+3000, ludwig_lamp_id+4000, area_id, block_id, -1, ludwig_lamp_id+6000, ludwig_lamp_kindle);
     }
-    
-    InitializeEvent(ludwig_offset, 8900, ludwig_defeat-1, ludwig_lamp_id+1000, ludwig_defeat-2, ludwig_defeat+15, ludwig_defeat+14);
-    InitializeEvent(ludwig_offset, 7700, ludwig_defeat+11, ludwig_defeat+12, ludwig_lamp_id+1000, 834000);
     
     if(EventFlag(laurence_defeat+13) && !EventFlag(laurence_defeat-1)) {
         if (EventFlag(laurence_defeat-2)) {
@@ -107,7 +116,7 @@ $Event(0, Default, function() {
         }
         SetEventFlag(laurence_defeat+13, OFF);
         SetEventFlag(laurence_defeat, ON);
-        InitializeEvent(laurence_lamp_offset, 8300, laurence_lamp_id+2000, laurence_lamp_id+3000, laurence_lamp_id+4000, area_id, block_id, 999, laurence_lamp_id+6000);
+        InitializeEvent(laurence_lamp_offset, 8300, laurence_lamp_id+2000, laurence_lamp_id+3000, laurence_lamp_id+4000, area_id, block_id, 999, laurence_lamp_id+6000, laurence_lamp_kindle);
     }
     else if (EventFlag(laurence_defeat+12) || EventFlag(laurence_defeat-1)) {
         if (EventFlag(laurence_defeat-2)) {
@@ -121,13 +130,19 @@ $Event(0, Default, function() {
         SetEventFlag(laurence_defeat+13, ON);
         SetEventFlag(laurence_defeat-1, OFF);
         SetEventFlag(8900+laurence_offset, ON);
-        InitializeEvent(laurence_lamp_offset, 8300, laurence_lamp_id+2000, laurence_lamp_id+3000, laurence_lamp_id+5000, area_id, block_id, -1, laurence_lamp_id+6000);
+        InitializeEvent(laurence_lamp_offset, 8300, laurence_lamp_id+2000, laurence_lamp_id+3000, laurence_lamp_id+5000, area_id, block_id, -1, laurence_lamp_id+6000, laurence_lamp_kindle);
     }
     else {
-        InitializeEvent(laurence_lamp_offset, 8300, laurence_lamp_id+2000, laurence_lamp_id+3000, laurence_lamp_id+4000, area_id, block_id, -1, laurence_lamp_id+6000);
+        InitializeEvent(laurence_lamp_offset, 8300, laurence_lamp_id+2000, laurence_lamp_id+3000, laurence_lamp_id+4000, area_id, block_id, -1, laurence_lamp_id+6000, laurence_lamp_kindle);
     }
     
+    InitializeEvent(laurence_offset, 12102070, laurence_defeat+13, 0, 7499, laurence_id);
+    InitializeEvent(ludwig_offset, 12102070, ludwig_defeat+13, 0, 7498, ludwig_id, ludwig_id2);
+    
     InitializeEvent(laurence_offset, 8900, laurence_defeat-1, laurence_lamp_id+1000, laurence_defeat-2);
+    InitializeEvent(ludwig_offset, 8900, ludwig_defeat-1, ludwig_lamp_id+1000, ludwig_defeat-2, ludwig_defeat+15, ludwig_defeat+14);
+    
+    InitializeEvent(ludwig_offset, 7700, ludwig_defeat+11, ludwig_defeat+12, ludwig_lamp_id+1000, 834000);
     InitializeEvent(laurence_offset, 7700, laurence_defeat+11, laurence_defeat+12, laurence_lamp_id+1000, 834002);
     
     InitializeEvent(3400, 12107000, 72113400, 3401950, 2412950);

@@ -4,7 +4,7 @@
 // @game    Bloodborne
 // @string    "クリア時間_通し\u0000クリア時間_1プレイ\u0000ボス戦_撃破時間\u0000ボス_撃破\u0000PC情報_ボス撃破_月の落とし子\u0000ボス_戦闘開始\u0000PC情報_ボス撃破_月からの使者\u0000PC情報_聖堂街C到達時\u0000N:\\SPRJ\\data\\Param\\event\\common.emevd\u0000"
 // @linked    [180]
-// @version    3.4.1
+// @version    3.4.2
 // ==/EMEVD==
 
 const area_id = 24;
@@ -12,20 +12,25 @@ const block_id = 2;
 
 const upper_ward_lamp_offset = 20;
 const upper_ward_lamp_id = 2421950;
+const upper_ward_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10);
 
 const celestial_emissary_lamp_offset = 21;
 const celestial_emissary_offset = 12;
 const celestial_emissary_defeat = 12421700;
 const celestial_emissary_return = 2421799;
 const celestial_emissary_lamp_id = 2421952;
+const celestial_emissary_lamp_kindle = 112100000 + (area_id * 100) + (block_id * 10) + 2;
 const celestial_emissary_region = 2422812;
+const celestial_emissary_id = 2420811;
 
 const ebrietas_lamp_offset = 22;
 const ebrietas_offset = 13;
 const ebrietas_defeat = 12421800;
 const ebrietas_return = 2421899;
 const ebrietas_lamp_id = 2421951;
+const ebrietas_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 4;
 const ebrietas_region = 2422802;
+const ebrietas_id = 2420800;
 
 // front gate 2421200
 
@@ -43,7 +48,11 @@ $Event(0, Default, function() {
     InitializeEvent(celestial_emissary_lamp_offset, 8500, 8500+celestial_emissary_lamp_offset, celestial_emissary_lamp_id, 72110707);
     InitializeEvent(ebrietas_lamp_offset, 8500, 8500+ebrietas_lamp_offset, ebrietas_lamp_id, 72110808);
     
-    InitializeEvent(upper_ward_lamp_offset, 8300, upper_ward_lamp_id+2000, upper_ward_lamp_id+3000, upper_ward_lamp_id+4000, area_id, block_id, -1, upper_ward_lamp_id+6000);
+    InitializeEvent(upper_ward_lamp_offset, 8100, 8100+upper_ward_lamp_offset, upper_ward_lamp_kindle);
+    InitializeEvent(celestial_emissary_lamp_offset, 8100, 8100+celestial_emissary_lamp_offset, celestial_emissary_lamp_kindle);
+    InitializeEvent(ebrietas_lamp_offset, 8100, 8100+ebrietas_lamp_offset, ebrietas_lamp_kindle);
+    
+    InitializeEvent(upper_ward_lamp_offset, 8300, upper_ward_lamp_id+2000, upper_ward_lamp_id+3000, upper_ward_lamp_id+4000, area_id, block_id, -1, upper_ward_lamp_id+6000, upper_ward_lamp_kindle);
     
     if(EventFlag(celestial_emissary_defeat+13) && ! EventFlag(celestial_emissary_defeat-1)) {
         if (EventFlag(celestial_emissary_defeat-2)) {
@@ -52,7 +61,7 @@ $Event(0, Default, function() {
         }
         SetEventFlag(celestial_emissary_defeat+13, OFF);
         SetEventFlag(celestial_emissary_defeat, ON);
-        InitializeEvent(celestial_emissary_lamp_offset, 8300, celestial_emissary_lamp_id+2000, celestial_emissary_lamp_id+3000, celestial_emissary_lamp_id+4000, area_id, block_id, 999, celestial_emissary_lamp_id+6000);
+        InitializeEvent(celestial_emissary_lamp_offset, 8300, celestial_emissary_lamp_id+2000, celestial_emissary_lamp_id+3000, celestial_emissary_lamp_id+4000, area_id, block_id, 999, celestial_emissary_lamp_id+6000, celestial_emissary_lamp_kindle);
     }
     else if (EventFlag(celestial_emissary_defeat+12) || EventFlag(celestial_emissary_defeat-1)) {
         if (EventFlag(celestial_emissary_defeat-2)) {
@@ -65,14 +74,11 @@ $Event(0, Default, function() {
         SetEventFlag(celestial_emissary_defeat+13, ON);
         SetEventFlag(celestial_emissary_defeat-1, OFF);
         SetEventFlag(8900+celestial_emissary_offset, ON);
-        InitializeEvent(celestial_emissary_lamp_offset, 8300, celestial_emissary_lamp_id+2000, celestial_emissary_lamp_id+3000, celestial_emissary_lamp_id+5000, area_id, block_id, -1, celestial_emissary_lamp_id+6000);
+        InitializeEvent(celestial_emissary_lamp_offset, 8300, celestial_emissary_lamp_id+2000, celestial_emissary_lamp_id+3000, celestial_emissary_lamp_id+5000, area_id, block_id, -1, celestial_emissary_lamp_id+6000, celestial_emissary_lamp_kindle);
     }
     else {
-        InitializeEvent(celestial_emissary_lamp_offset, 8300, celestial_emissary_lamp_id+2000, celestial_emissary_lamp_id+3000, celestial_emissary_lamp_id+4000, area_id, block_id, -1, celestial_emissary_lamp_id+6000);
+        InitializeEvent(celestial_emissary_lamp_offset, 8300, celestial_emissary_lamp_id+2000, celestial_emissary_lamp_id+3000, celestial_emissary_lamp_id+4000, area_id, block_id, -1, celestial_emissary_lamp_id+6000, celestial_emissary_lamp_kindle);
     }
-    
-    InitializeEvent(celestial_emissary_offset, 8900, celestial_emissary_defeat-1, celestial_emissary_lamp_id+1000);
-    InitializeEvent(celestial_emissary_offset, 7700, celestial_emissary_defeat+11, celestial_emissary_defeat+12, celestial_emissary_lamp_id+1000, 824200);
     
     if(EventFlag(ebrietas_defeat+13) && !EventFlag(ebrietas_defeat-1)) {
         if (EventFlag(ebrietas_defeat-2)) {
@@ -81,7 +87,7 @@ $Event(0, Default, function() {
         }
         SetEventFlag(ebrietas_defeat+13, OFF);
         SetEventFlag(ebrietas_defeat, ON);
-        InitializeEvent(ebrietas_lamp_offset, 8300, ebrietas_lamp_id+2000, ebrietas_lamp_id+3000, ebrietas_lamp_id+4000, area_id, block_id, 999, ebrietas_lamp_id+6000);
+        InitializeEvent(ebrietas_lamp_offset, 8300, ebrietas_lamp_id+2000, ebrietas_lamp_id+3000, ebrietas_lamp_id+4000, area_id, block_id, 999, ebrietas_lamp_id+6000, ebrietas_lamp_kindle);
     }
     else if (EventFlag(ebrietas_defeat+12) || EventFlag(ebrietas_defeat-1)) {
         if (EventFlag(ebrietas_defeat-2)) {
@@ -96,13 +102,19 @@ $Event(0, Default, function() {
         SetEventFlag(ebrietas_defeat+13, ON);
         SetEventFlag(ebrietas_defeat-1, OFF);
         SetEventFlag(8900+ebrietas_offset, ON);
-        InitializeEvent(ebrietas_lamp_offset, 8300, ebrietas_lamp_id+2000, ebrietas_lamp_id+3000, ebrietas_lamp_id+5000, area_id, block_id, -1, ebrietas_lamp_id+6000);
+        InitializeEvent(ebrietas_lamp_offset, 8300, ebrietas_lamp_id+2000, ebrietas_lamp_id+3000, ebrietas_lamp_id+5000, area_id, block_id, -1, ebrietas_lamp_id+6000, ebrietas_lamp_kindle);
     }
     else {
-        InitializeEvent(ebrietas_lamp_offset, 8300, ebrietas_lamp_id+2000, ebrietas_lamp_id+3000, ebrietas_lamp_id+4000, area_id, block_id, -1, ebrietas_lamp_id+6000);
+        InitializeEvent(ebrietas_lamp_offset, 8300, ebrietas_lamp_id+2000, ebrietas_lamp_id+3000, ebrietas_lamp_id+4000, area_id, block_id, -1, ebrietas_lamp_id+6000, ebrietas_lamp_kindle);
     }
     
+    InitializeEvent(celestial_emissary_offset, 12102070, celestial_emissary_defeat+13, 0, 7459, celestial_emissary_id);
+    InitializeEvent(ebrietas_offset, 12102070, ebrietas_defeat+13, 0, 7462, ebrietas_id);
+    
+    InitializeEvent(celestial_emissary_offset, 8900, celestial_emissary_defeat-1, celestial_emissary_lamp_id+1000);
     InitializeEvent(ebrietas_offset, 8900, ebrietas_defeat-1, ebrietas_lamp_id+1000);
+    
+    InitializeEvent(celestial_emissary_offset, 7700, celestial_emissary_defeat+11, celestial_emissary_defeat+12, celestial_emissary_lamp_id+1000, 824200);
     InitializeEvent(ebrietas_offset, 7700, ebrietas_defeat+11, ebrietas_defeat+12, ebrietas_lamp_id+1000, 824201);
     
     InitializeEvent(600, 12107000, 72110600, 2421950, 2412950);

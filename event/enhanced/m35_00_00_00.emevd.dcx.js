@@ -4,7 +4,7 @@
 // @game    Bloodborne
 // @string    "ボス撃破_女性ハンター\u0000PC情報_ボス撃破_女性ハンター\u0000ボス_戦闘開始\u0000ボス_撃破時間\u0000ボス撃破_患者B\u0000PC情報_ボス撃破_患者B\u0000ボス戦闘開始_患者B\u0000ボス撃破時間_患者B\u0000N:\\SPRJ\\data\\Param\\event\\common.emevd\u0000"
 // @linked    [180]
-// @version    3.4.1
+// @version    3.4.2
 // ==/EMEVD==
 
 const area_id = 35;
@@ -12,19 +12,24 @@ const block_id = 0;
 
 const research_hall_lamp_offset = 60;
 const research_hall_lamp_id = 3501950;
+const research_hall_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10);
 
 const living_failures_lamp_offset = 61;
 const living_failures_offset = 19;
 const living_failures_defeat = 13501850;
 const living_failures_return = 3501859;
 const living_failures_lamp_id = 3501951;
+const living_failures_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 2;
 const living_failures_region = 3502812;
+const living_failures_id = 3500850;
     
 const maria_lamp_offset = 62;
 const maria_offset = 20;
 const maria_defeat = 13501800;
 const maria_lamp_id = 3501952;
+const maria_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 4;
 const maria_region = 3502802;
+const maria_id = 3500800;
 
 // two elevators
 // main thing?
@@ -41,7 +46,11 @@ $Event(0, Default, function() {
     InitializeEvent(living_failures_lamp_offset, 8500, 8500+living_failures_lamp_offset, living_failures_lamp_id, 72113939);
     InitializeEvent(maria_lamp_offset, 8500, 8500+maria_lamp_offset, maria_lamp_id, 72114040);
     
-    InitializeEvent(research_hall_lamp_offset, 8300, research_hall_lamp_id+2000, research_hall_lamp_id+3000, research_hall_lamp_id+4000, area_id, block_id, -1, research_hall_lamp_id+6000);
+    InitializeEvent(research_hall_lamp_offset, 8100, 8100+research_hall_lamp_offset, research_hall_lamp_kindle);
+    InitializeEvent(living_failures_lamp_offset, 8100, 8100+living_failures_lamp_offset, living_failures_lamp_kindle);
+    InitializeEvent(maria_lamp_offset, 8100, 8100+maria_lamp_offset, );
+    
+    InitializeEvent(research_hall_lamp_offset, 8300, research_hall_lamp_id+2000, research_hall_lamp_id+3000, research_hall_lamp_id+4000, area_id, block_id, -1, research_hall_lamp_id+6000, research_hall_lamp_kindle);
     
     if(EventFlag(living_failures_defeat+13) && !EventFlag(living_failures_defeat-1)) {
         if (EventFlag(living_failures_defeat-2)) {
@@ -50,7 +59,7 @@ $Event(0, Default, function() {
         }
         SetEventFlag(living_failures_defeat+13, OFF);
         SetEventFlag(living_failures_defeat, ON);
-        InitializeEvent(living_failures_lamp_offset, 8300, living_failures_lamp_id+2000, living_failures_lamp_id+3000, living_failures_lamp_id+4000, area_id, block_id, 999, living_failures_lamp_id+6000);
+        InitializeEvent(living_failures_lamp_offset, 8300, living_failures_lamp_id+2000, living_failures_lamp_id+3000, living_failures_lamp_id+4000, area_id, block_id, 999, living_failures_lamp_id+6000, living_failures_lamp_kindle);
     }
     else if (EventFlag(living_failures_defeat+12) || EventFlag(living_failures_defeat-1)) {
         if (EventFlag(living_failures_defeat-2)) {
@@ -63,14 +72,11 @@ $Event(0, Default, function() {
         SetEventFlag(living_failures_defeat+13, ON);
         SetEventFlag(living_failures_defeat-1, OFF);
         SetEventFlag(8900+living_failures_offset, ON);
-        InitializeEvent(living_failures_lamp_offset, 8300, living_failures_lamp_id+2000, living_failures_lamp_id+3000, living_failures_lamp_id+5000, area_id, block_id, -1, living_failures_lamp_id+6000);
+        InitializeEvent(living_failures_lamp_offset, 8300, living_failures_lamp_id+2000, living_failures_lamp_id+3000, living_failures_lamp_id+5000, area_id, block_id, -1, living_failures_lamp_id+6000, living_failures_lamp_kindle);
     }
     else {
-        InitializeEvent(living_failures_lamp_offset, 8300, living_failures_lamp_id+2000, living_failures_lamp_id+3000, living_failures_lamp_id+4000, area_id, block_id, -1, living_failures_lamp_id+6000);
+        InitializeEvent(living_failures_lamp_offset, 8300, living_failures_lamp_id+2000, living_failures_lamp_id+3000, living_failures_lamp_id+4000, area_id, block_id, -1, living_failures_lamp_id+6000, living_failures_lamp_kindle);
     }
-    
-    InitializeEvent(living_failures_offset, 8900, living_failures_defeat-1, living_failures_lamp_id+1000, living_failures_defeat-2);
-    InitializeEvent(living_failures_offset, 7700, living_failures_defeat+11, living_failures_defeat+12, living_failures_lamp_id+1000, 835001);
     
     if(EventFlag(maria_defeat+13) && !EventFlag(maria_defeat-1)) {
         if (EventFlag(maria_defeat-2)) {
@@ -79,7 +85,7 @@ $Event(0, Default, function() {
         }
         SetEventFlag(maria_defeat+13, OFF);
         SetEventFlag(maria_defeat, ON);
-        InitializeEvent(maria_lamp_offset, 8300, maria_lamp_id+2000, maria_lamp_id+3000, maria_lamp_id+4000, area_id, block_id, 999, maria_lamp_id+6000);
+        InitializeEvent(maria_lamp_offset, 8300, maria_lamp_id+2000, maria_lamp_id+3000, maria_lamp_id+4000, area_id, block_id, 999, maria_lamp_id+6000, maria_lamp_kindle);
     }
     else if (EventFlag(maria_defeat+12) || EventFlag(maria_defeat-1)) {
         if (EventFlag(maria_defeat-2)) {
@@ -92,13 +98,19 @@ $Event(0, Default, function() {
         SetEventFlag(maria_defeat+13, ON);
         SetEventFlag(maria_defeat-1, OFF);
         SetEventFlag(8900+maria_offset, ON);
-        InitializeEvent(maria_lamp_offset, 8300, maria_lamp_id+2000, maria_lamp_id+3000, maria_lamp_id+4000, area_id, block_id, -1, maria_lamp_id+6000);
+        InitializeEvent(maria_lamp_offset, 8300, maria_lamp_id+2000, maria_lamp_id+3000, maria_lamp_id+4000, area_id, block_id, -1, maria_lamp_id+6000, maria_lamp_kindle);
     }
     else {
-        InitializeEvent(maria_lamp_offset, 8300, maria_lamp_id+2000, maria_lamp_id+3000, maria_lamp_id+4000, area_id, block_id, -1, maria_lamp_id+6000);
+        InitializeEvent(maria_lamp_offset, 8300, maria_lamp_id+2000, maria_lamp_id+3000, maria_lamp_id+4000, area_id, block_id, -1, maria_lamp_id+6000, maria_lamp_kindle);
     }
     
+    InitializeEvent(living_failures_offset, 12102070, living_failures_defeat+13, 0, 7504, living_failures_id);
+    InitializeEvent(maria_offset, 12102070, maria_defeat+13, 0, 7505, maria_id);
+    
+    InitializeEvent(living_failures_offset, 8900, living_failures_defeat-1, living_failures_lamp_id+1000, living_failures_defeat-2);
     InitializeEvent(maria_offset, 8900, maria_lamp_id-1, maria_lamp_id+1000, maria_lamp_id-2);
+    
+    InitializeEvent(living_failures_offset, 7700, living_failures_defeat+11, living_failures_defeat+12, living_failures_lamp_id+1000, 835001);
     InitializeEvent(maria_offset, 7700, maria_defeat+11, maria_defeat+12, maria_lamp_id+1000, 835002);
     
     InitializeEvent(3800, 12107000, 72113800, 3501950, 2412950);

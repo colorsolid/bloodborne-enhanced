@@ -193,6 +193,10 @@ def t290113_x60():
                 AddTalkListData(6, 70000000, 12100876)
                 AddTalkListData(7, 200003, 12100875)
                 AddTalkListData(8, 200004, 12100874)
+                if GetEventStatus(12100000 + 290 * 10 + 3 * 2) == 0 or GetEventStatus(12100000 + 290 * 10 + 3 * 2 + 1) == 0:
+                    AddTalkListData(9, 200168, 12100851)
+                else:
+                    pass
             else:
                 pass
             """State 2"""
@@ -305,6 +309,12 @@ def t290113_x60():
                 call = t290113_x110()
                 if call.Done():
                     pass
+            # offer insight
+            elif GetTalkListEntryResult() == 9:
+                SetEventState(8100+73, 1)
+                def WhilePaused():
+                    SetTalkTime(0.33)
+                assert not IsGenericDialogOpen()
             # rest
             elif GetTalkListEntryResult() == 20:
                 SetEventState(12100761, 1)
