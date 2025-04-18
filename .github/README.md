@@ -1,0 +1,1 @@
+Event script and talk script source files with comments
