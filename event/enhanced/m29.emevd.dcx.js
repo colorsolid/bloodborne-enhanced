@@ -12,49 +12,49 @@ var block_id = 0;
 
 const lamp_1_offset = 70;
 const lamp_1_id = 2901950;
-const lamp_1_kindle = 12100000 + (area_id * 100) + (block_id * 10);
+const lamp_1_kindle = 12900000 + (area_id * 100) + (block_id * 10);
 
 const lamp_2_offset = 71;
 const lamp_2_id = 2901951;
-const lamp_2_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 2;
+const lamp_2_kindle = 12900000 + (area_id * 100) + (block_id * 10) + 2;
 
 const boss_1_lamp_offset = 72;
 const boss_1_offset = 42;
 const boss_1_lamp_id = 2901952;
-const boss_1_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 4;
+const boss_1_lamp_kindle = 12900000 + (area_id * 100) + (block_id * 10) + 4;
 const boss_1_return = 2902820;
 const boss_1_defeat = 12901800;
 
 const lamp_4_offset = 73;
 const lamp_4_id = 2901953;
-const lamp_4_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 6;
+const lamp_4_kindle = 12900000 + (area_id * 100) + (block_id * 10) + 6;
 
 const boss_2_lamp_offset = 74;
 const boss_2_offset = 44;
 const boss_2_lamp_id = 2901954;
-const boss_2_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 8;
+const boss_2_lamp_kindle = 12900000 + (area_id * 100) + (block_id * 10) + 8;
 const boss_2_return = 2902840;
 const boss_2_defeat = 12901801;
 
 const lamp_6_offset = 75;
 const lamp_6_id = 2901955;
-const lamp_6_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 10;
+const lamp_6_kindle = 12900000 + (area_id * 100) + (block_id * 10) + 10;
 
 const boss_3_lamp_offset = 76;
 const boss_3_offset = 46;
 const boss_3_lamp_id = 2901956;
-const boss_3_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 12;
+const boss_3_lamp_kindle = 12900000 + (area_id * 100) + (block_id * 10) + 12;
 const boss_3_return = 2902860;
 const boss_3_defeat = 12901802;
 
 const lamp_8_offset = 77;
 const lamp_8_id = 2901957;
-const lamp_8_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 14;
+const lamp_8_kindle = 12900000 + (area_id * 100) + (block_id * 10) + 14;
 
 const boss_4_lamp_offset = 78;
 const boss_4_offset = 48;
 const boss_4_lamp_id = 2901958;
-const boss_4_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 16;
+const boss_4_lamp_kindle = 12900000 + (area_id * 100) + (block_id * 10) + 16;
 const boss_4_return = 2902880;
 const boss_4_defeat = 12901803;
 
@@ -116,16 +116,17 @@ $Event(0, Default, function() {
     InitializeEvent(lamp_8_offset, 8100, 8100+lamp_8_offset, lamp_8_kindle);
     InitializeEvent(boss_4_lamp_offset, 8100, 8100+boss_4_lamp_offset, boss_4_lamp_kindle);
     
-    InitializeEvent(lamp_1_offset, 8300, lamp_1_id+2000, lamp_1_id+3000, lamp_1_id+4000, 29, 0, -1, lamp_1_kindle);
-    InitializeEvent(lamp_2_offset, 8300, lamp_2_id+2000, lamp_2_id+3000, lamp_2_id+4000, 29, 0, -1, lamp_2_kindle);
-    InitializeEvent(lamp_4_offset, 8300, lamp_4_id+2000, lamp_4_id+3000, lamp_4_id+4000, 29, 0, -1, lamp_4_kindle);
-    InitializeEvent(lamp_6_offset, 8300, lamp_6_id+2000, lamp_6_id+3000, lamp_6_id+4000, 29, 0, -1, lamp_6_kindle);
-    InitializeEvent(lamp_8_offset, 8300, lamp_8_id+2000, lamp_8_id+3000, lamp_8_id+4000, 29, 0, -1, lamp_8_kindle);
+    InitializeEvent(lamp_1_offset, 8300, lamp_1_id+2000, -1, lamp_1_kindle, lamp_1_id+6000, lamp_1_id+3000)
+    InitializeEvent(lamp_1_offset, 8300, lamp_2_id+2000, -1, lamp_2_kindle, lamp_2_id+6000, lamp_2_id+3000)
+    InitializeEvent(lamp_1_offset, 8300, lamp_4_id+2000, -1, lamp_4_kindle, lamp_4_id+6000, lamp_4_id+3000)
+    InitializeEvent(lamp_1_offset, 8300, lamp_6_id+2000, -1, lamp_6_kindle, lamp_6_id+6000, lamp_6_id+3000)
+    InitializeEvent(lamp_1_offset, 8300, lamp_8_id+2000, -1, lamp_8_kindle, lamp_8_id+6000, lamp_8_id+3000)
     
     if(EventFlag(boss_1_defeat+1013) && !EventFlag(boss_1_defeat+1019)) {
         SetEventFlag(boss_1_defeat+1013, OFF);
         SetEventFlag(boss_1_defeat, ON);
-        InitializeEvent(boss_1_lamp_offset, 8300, boss_1_lamp_id+2000, boss_1_lamp_id+3000, boss_1_lamp_id+4000, area_id, block_id, 999, boss_1_lamp_kindle);
+        InitializeEvent(boss_1_lamp_offset, 8300, boss_1_lamp_id+2000, 999, boss_1_lamp_kindle, boss_1_lamp_id+6000, boss_1_lamp_id+3000);
+        DummyPlayCutsceneAndWarpPlayer(boss_1_lamp_id+4000, area_id, block_id);
     }
     else if (EventFlag(boss_1_defeat+1012) || EventFlag(boss_1_defeat+1019)) {
         SetEventFlag(boss_1_defeat, OFF);
@@ -133,16 +134,17 @@ $Event(0, Default, function() {
         SetEventFlag(boss_1_defeat+1013, ON);
         SetEventFlag(boss_1_defeat+1019, OFF);
         SetEventFlag(8900+boss_1_offset, ON);
-        InitializeEvent(boss_1_lamp_offset, 8300, boss_1_lamp_id+2000, boss_1_lamp_id+3000, boss_1_lamp_id+6000, area_id, block_id, -1, boss_1_lamp_kindle);
+        InitializeEvent(boss_1_lamp_offset, 8300, boss_1_lamp_id+2000, -1, boss_1_lamp_kindle, boss_1_lamp_id+6000, boss_1_lamp_id+3000);
     }
     else {
-        InitializeEvent(boss_1_lamp_offset, 8300, boss_1_lamp_id+2000, boss_1_lamp_id+3000, boss_1_lamp_id+4000, area_id, block_id, -1, boss_1_lamp_kindle);
+        InitializeEvent(boss_1_lamp_offset, 8300, boss_1_lamp_id+2000, -1, boss_1_lamp_kindle, boss_1_lamp_id+6000, boss_1_lamp_id+3000);
     }
     
     if(EventFlag(boss_2_defeat+1023) && !EventFlag(boss_2_defeat+1029)) {
         SetEventFlag(boss_2_defeat+1023, OFF);
         SetEventFlag(boss_2_defeat, ON);
-        InitializeEvent(boss_2_lamp_offset, 8300, boss_2_lamp_id+2000, boss_2_lamp_id+3000, boss_2_lamp_id+4000, area_id, block_id, 999, boss_2_lamp_kindle);
+        InitializeEvent(boss_2_lamp_offset, 8300, boss_2_lamp_id+2000, 999, boss_2_lamp_kindle, boss_2_lamp_id+6000, boss_2_lamp_id+3000);
+        DummyPlayCutsceneAndWarpPlayer(boss_2_lamp_id+4000, area_id, block_id);
     }
     else if (EventFlag(boss_2_defeat+1022) || EventFlag(boss_2_defeat+1029)) {
         SetEventFlag(boss_2_defeat, OFF);
@@ -150,16 +152,17 @@ $Event(0, Default, function() {
         SetEventFlag(boss_2_defeat+1023, ON);
         SetEventFlag(boss_2_defeat+1029, OFF);
         SetEventFlag(8900+boss_2_offset, ON);
-        InitializeEvent(boss_2_lamp_offset, 8300, boss_2_lamp_id+2000, boss_2_lamp_id+3000, boss_2_lamp_id+6000, area_id, block_id, -1, boss_2_lamp_kindle);
+        InitializeEvent(boss_2_lamp_offset, 8300, boss_2_lamp_id+2000, -1, boss_2_lamp_kindle, boss_2_lamp_id+6000, boss_2_lamp_id+3000);
     }
     else {
-        InitializeEvent(boss_2_lamp_offset, 8300, boss_2_lamp_id+2000, boss_2_lamp_id+3000, boss_2_lamp_id+4000, area_id, block_id, -1, boss_2_lamp_kindle);
+        InitializeEvent(boss_2_lamp_offset, 8300, boss_2_lamp_id+2000, -1, boss_2_lamp_kindle, boss_2_lamp_id+6000, boss_2_lamp_id+3000);
     }
     
     if(EventFlag(boss_3_defeat+1033) && !EventFlag(boss_3_defeat+1039)) {
         SetEventFlag(boss_3_defeat+1033, OFF);
         SetEventFlag(boss_3_defeat, ON);
-        InitializeEvent(boss_3_lamp_offset, 8300, boss_3_lamp_id+2000, boss_3_lamp_id+3000, boss_3_lamp_id+4000, area_id, block_id, 999, boss_3_lamp_kindle);
+        InitializeEvent(boss_3_lamp_offset, 8300, boss_3_lamp_id+2000, 999, boss_3_lamp_kindle, boss_3_lamp_id+6000, boss_3_lamp_id+3000);
+        DummyPlayCutsceneAndWarpPlayer(boss_3_lamp_id+4000, area_id, block_id);
     }
     else if (EventFlag(boss_3_defeat+1032) || EventFlag(boss_3_defeat+1039)) {
         SetEventFlag(boss_3_defeat, OFF);
@@ -167,16 +170,17 @@ $Event(0, Default, function() {
         SetEventFlag(boss_3_defeat+1033, ON);
         SetEventFlag(boss_3_defeat+1039, OFF);
         SetEventFlag(8900+boss_3_offset, ON);
-        InitializeEvent(boss_3_lamp_offset, 8300, boss_3_lamp_id+2000, boss_3_lamp_id+3000, boss_3_lamp_id+6000, area_id, block_id, -1, boss_3_lamp_kindle);
+        InitializeEvent(boss_3_lamp_offset, 8300, boss_3_lamp_id+2000, -1, boss_3_lamp_kindle, boss_3_lamp_id+6000, boss_3_lamp_id+3000);
     }
     else {
-        InitializeEvent(boss_3_lamp_offset, 8300, boss_3_lamp_id+2000, boss_3_lamp_id+3000, boss_3_lamp_id+4000, area_id, block_id, -1, boss_3_lamp_kindle);
+        InitializeEvent(boss_3_lamp_offset, 8300, boss_3_lamp_id+2000, -1, boss_3_lamp_kindle, boss_3_lamp_id+6000, boss_3_lamp_id+3000);
     }
     
     if(EventFlag(boss_4_defeat+1043) && !EventFlag(boss_4_defeat+1049)) {
         SetEventFlag(boss_4_defeat+1043, OFF);
         SetEventFlag(boss_4_defeat, ON);
-        InitializeEvent(boss_4_lamp_offset, 8300, boss_4_lamp_id+2000, boss_4_lamp_id+3000, boss_4_lamp_id+4000, area_id, block_id, 999, boss_4_lamp_kindle);
+        InitializeEvent(boss_4_lamp_offset, 8300, boss_4_lamp_id+2000, 999, boss_4_lamp_kindle, boss_4_lamp_id+6000, boss_4_lamp_id+3000);
+        DummyPlayCutsceneAndWarpPlayer(boss_4_lamp_id+4000, area_id, block_id);
     }
     else if (EventFlag(boss_4_defeat+1042) || EventFlag(boss_4_defeat+1049)) {
         SetEventFlag(boss_4_defeat, OFF);
@@ -184,10 +188,10 @@ $Event(0, Default, function() {
         SetEventFlag(boss_4_defeat+1043, ON);
         SetEventFlag(boss_4_defeat+1049, OFF);
         SetEventFlag(8900+boss_4_offset, ON);
-        InitializeEvent(boss_4_lamp_offset, 8300, boss_4_lamp_id+2000, boss_4_lamp_id+3000, boss_4_lamp_id+6000, area_id, block_id, -1, boss_4_lamp_kindle);
+        InitializeEvent(boss_4_lamp_offset, 8300, boss_4_lamp_id+2000, -1, boss_4_lamp_kindle, boss_4_lamp_id+6000, boss_4_lamp_id+3000);
     }
     else {
-        InitializeEvent(boss_4_lamp_offset, 8300, boss_4_lamp_id+2000, boss_4_lamp_id+3000, boss_4_lamp_id+4000, area_id, block_id, -1, boss_4_lamp_kindle);
+        InitializeEvent(boss_4_lamp_offset, 8300, boss_4_lamp_id+2000, -1, boss_4_lamp_kindle, boss_4_lamp_id+6000, boss_4_lamp_id+3000);
     }
     
     InitializeEvent(lamp_1_offset, 8500, 8500+lamp_1_offset, lamp_1_id, 72114444);
@@ -202,10 +206,10 @@ $Event(0, Default, function() {
     
     InitializeEvent(0, 8700, 0); // disable item refill after time limit
     
-    InitializeEvent(boss_1_offset, 8900, boss_1_defeat+1019, boss_1_lamp_id+1000);
-    InitializeEvent(boss_2_offset, 8900, boss_2_defeat+1029, boss_2_lamp_id+1000);
-    InitializeEvent(boss_3_offset, 8900, boss_3_defeat+1039, boss_3_lamp_id+1000);
-    InitializeEvent(boss_4_offset, 8900, boss_4_defeat+1049, boss_4_lamp_id+1000);
+    InitializeEvent(boss_1_offset, 8900, boss_1_defeat+1019, boss_1_lamp_id+1000, boss_1_lamp_id+5000);
+    InitializeEvent(boss_2_offset, 8900, boss_2_defeat+1029, boss_2_lamp_id+1000, boss_2_lamp_id+5000);
+    InitializeEvent(boss_3_offset, 8900, boss_3_defeat+1039, boss_3_lamp_id+1000, boss_3_lamp_id+5000);
+    InitializeEvent(boss_4_offset, 8900, boss_4_defeat+1049, boss_4_lamp_id+1000, boss_4_lamp_id+5000);
     
     InitializeEvent(0, 12101000, 4110, 2100211, 2561);
     InitializeEvent(1, 12101000, 4111, 2100211, 3330);
@@ -219,6 +223,7 @@ $Event(0, Default, function() {
     InitializeEvent(9, 12101000, 4119, 2100213, 3842);
     
     InitializeEvent(0, 12101010, 0);
+    InitializeEvent(0, 12100005, 0);
     
     // specialty items
     InitializeEvent(0, 12101300, 0);
@@ -1613,9 +1618,11 @@ $Event(7700, Default, function(X0_4, X4_4, X8_4) { // event_flag_11, event_flag_
 $Event(7800, Default, function(X0_4) {
     RequestCharacterAnimationReset(10000, Interpolation.Interpolated);
     ForceAnimationPlayback(10000, 101161, false, false, false);
+    AwardItemLot(17020);
     SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, 829000);
     SpawnOneshotSFX(TargetEntityType.Character, 10000, 240, 829000);
     WaitFixedTimeFrames(59);
+    
     
     // SpawnOneshotSFX(TargetEntityType.Character, 10000, 15, effect_id);
     if (EventFlag(12100995)) { // whether or not rematch was triggered from the hunter's dream
@@ -1647,27 +1654,34 @@ $Event(7900, Default, function(X0_4, X4_4, X8_1, X12_1, X16_4) {
 // kindle
 // this_event_slot, lamp_kindle_flag (12121100)
 $Event(8100, Default, function(X0_4, X4_4) {
-    SetEventFlag(X0_4, OFF);
+    const this_event_slot = X0_4;
+    const lamp_kindle_flag = X4_4;
+    SetEventFlag(this_event_slot, OFF);
     WaitFor(ThisEventSlot());
     if (PlayerInsightAmount() == 0) {
+        // no insight
         DisplayGenericDialog(200175, PromptType.OKCANCEL, NumberofOptions.OneButton, 10000, 3);
         RestartEvent();
     }
-    if (EventValue(X4_4, 2) == 3) {
-        DisplayGenericDialog(200171, PromptType.OKCANCEL, NumberofOptions.OneButton, 10000, 3);
+    if (EventValue(lamp_kindle_flag, 2) == 3) {
         // already maxed
+        DisplayGenericDialog(200171, PromptType.OKCANCEL, NumberofOptions.OneButton, 10000, 3);
     }
     else {
-        if (EventValue(X4_4, 2) == 1 && !PlayerHasItem(ItemType.Goods, 4002)) {
-            DisplayGenericDialog(200171, PromptType.OKCANCEL, NumberofOptions.OneButton, 10000, 3);
+        if (EventValue(lamp_kindle_flag, 2) == 1 && !PlayerHasItem(ItemType.Goods, 4002)) {
+            // need rite of kindling
+            DisplayGenericDialog(200169, PromptType.OKCANCEL, NumberofOptions.OneButton, 10000, 3);
         }
         else {
-            DisplayGenericDialog(200170, PromptType.OKCANCEL, NumberofOptions.OneButton, 10000, 3);
-            SetSpEffect(10000, 4681, false);
-            //EventValueOperation(X4_4, 2, 1, 0, 1, CalculationType.Assign);
-            IncrementEventValue(X4_4, 2, 3);
-            if (EventValue(X4_4, 2) == 3) {
+            SetSpEffect(10000, 4681, false); // take insight
+            IncrementEventValue(lamp_kindle_flag, 2, 3);
+            if (EventValue(lamp_kindle_flag, 2) == 3) {
                 // max kindling reached
+                DisplayGenericDialog(200171, PromptType.OKCANCEL, NumberofOptions.OneButton, 10000, 3);
+            }
+            else {
+                // increased
+                DisplayGenericDialog(200170, PromptType.OKCANCEL, NumberofOptions.OneButton, 10000, 3);
             }
         }
     }
@@ -1684,11 +1698,19 @@ $Event(1511, Default, function() {
     WarpPlayerToRespawnPoint(2102962);
 });
 
-// InitializeEvent(boss_1_lamp_offset, 8300, boss_1_lamp_id+2000, boss_1_lamp_id+3000, boss_1_lamp_id+5000, area_id, block_id, -1);
 // reset statuses (poison, etc.) and restock bullets and vials
-$Event(8300, Default, function(X0_4, X4_4, X8_4, X12_1, X16_1, X20_4, X24_4) {
-    // EndIf(EventFlag(12100962));
-    WaitFor(InArea(10000, X0_4) || EventFlag(1509) || EventFlag(X20_4));
+$Event(8300, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4) {
+    const spawn_checker_region = X0_4;
+    const bypass_spawn_checker = X4_4;
+    const lamp_kindle_flag = X8_4;
+    const hidden_region = X12_4;
+    const hidden_region2 = X16_4;
+    const kindling_enabled_flag = 12100851;
+    const restock_enabled_flag = 12100862;
+    kindling_enabled = EventFlag(kindling_enabled_flag);
+    restock_enabled = EventFlag(restock_enabled_flag);
+    
+    WaitFor(InArea(10000, spawn_checker_region) || EventFlag(1509) || EventFlag(bypass_spawn_checker));
     if (EventFlag(1509)) {
         EndEvent();
     }
@@ -1700,73 +1722,62 @@ $Event(8300, Default, function(X0_4, X4_4, X8_4, X12_1, X16_1, X20_4, X24_4) {
     SetSpEffect(10000, 114, false);
     SetSpEffect(10000, 115, false);
     SetSpEffect(10000, 116, false);
-    if (EventFlag(12100862)) {
-        IssueShortWarpRequest(10000, TargetEntityType.Area, X4_4, -1);
+    
+    if (restock_enabled.Passed) {
         
-        WaitFixedTimeFrames(1);
+        // EventValueOperation stores value in baseEventFlagId, the operand is only used if baseEventFlagIdOperand = 0
+        // baseEventFlagIdOperand or operand is applied to baseEventFlagId, e.g.
+        //     EventValueOperation(<10>, 8, 0, <2>, 8, CalculationType.Sub) == 8;
         
-        StoreItemAmountHeldInEventValue(ItemType.Goods, 900, 12104030, 8);
-        WaitFixedTimeFrames(1);
-        bullet_cond1 = EventValue(X24_4, 2) == 0 && EventValue(12104030, 8) < 5;
-        bullet_cond2 = EventValue(X24_4, 2) == 1 && EventValue(12104030, 8) < 10;
-        bullet_cond3 = EventValue(X24_4, 2) == 2 && EventValue(12104030, 8) < 15;
-        bullet_cond4 = EventValue(X24_4, 2) == 3;
-        if (bullet_cond1 || bullet_cond2 || bullet_cond3 || bullet_cond4) {
-            RemoveItemFromPlayer(ItemType.Goods, 900, 99);
-            WaitFixedTimeFrames(1);
-            EventValueOperation(12104040, 8, 1, 0, 0, CalculationType.Assign);
-            DirectlyGivePlayerItem(ItemType.Goods, 900, 12104040, 8);
-        }
-        if (EventValue(X24_4, 2) == 0 && EventValue(12104030, 8) < 5) {
-            EventValueOperation(12104040, 8, 4, 0, 0, CalculationType.Assign);
-            DirectlyGivePlayerItem(ItemType.Goods, 900, 12104040, 8);
-        }
-        else if (EventValue(X24_4, 2) == 1 && EventValue(12104030, 8) < 10) {
-            EventValueOperation(12104040, 8, 9, 0, 0, CalculationType.Assign);
-            DirectlyGivePlayerItem(ItemType.Goods, 900, 12104040, 8);
-        }
-        else if (EventValue(X24_4, 2) == 2 && EventValue(12104030, 8) < 15) {
-            EventValueOperation(12104040, 8, 14, 0, 0, CalculationType.Assign);
-            DirectlyGivePlayerItem(ItemType.Goods, 900, 12104040, 8);
-        }
-        else if (EventValue(X24_4, 2) == 3) {
-            EventValueOperation(12104040, 8, 99, 0, 0, CalculationType.Assign);
-            DirectlyGivePlayerItem(ItemType.Goods, 900, 12104040, 8);
-        }
-        
-        StoreItemAmountHeldInEventValue(ItemType.Goods, 1000, 12104030, 8);
-        WaitFixedTimeFrames(1);
-        vial_cond1 = EventValue(X24_4, 2) == 0 && EventValue(12104030, 8) < 5;
-        vial_cond2 = EventValue(X24_4, 2) == 1 && EventValue(12104030, 8) < 10;
-        vial_cond3 = EventValue(X24_4, 2) == 2 && EventValue(12104030, 8) < 15;
-        vial_cond4 = EventValue(X24_4, 2) == 3;
-        
-        if (vial_cond1 || vial_cond2 || vial_cond3 || vial_cond4) {
-            RemoveItemFromPlayer(ItemType.Goods, 1000, 99);
-            WaitFixedTimeFrames(1);
+        if (!EventFlag(kindling_enabled_flag) || EventValue(lamp_kindle_flag, 2) == 3) { // kindling disabled or full kindle
+            MoveBloodstainAndDroppedItems(spawn_checker_region, hidden_region2);
+            RemoveItemFromPlayer(ItemType.Goods, 900, 255);
+            RemoveItemFromPlayer(ItemType.Goods, 1000, 255);
             EventValueOperation(12104050, 8, 1, 0, 0, CalculationType.Assign);
+            DirectlyGivePlayerItem(ItemType.Goods, 900, 12104050, 8);
             DirectlyGivePlayerItem(ItemType.Goods, 1000, 12104050, 8);
-        }
-        if (EventValue(X24_4, 2) == 0 && EventValue(12104030, 8) < 5) {
-            EventValueOperation(12104050, 8, 4, 0, 0, CalculationType.Assign);
+            EventValueOperation(12104050, 8, 255, 0, 0, CalculationType.Assign);
+            DirectlyGivePlayerItem(ItemType.Goods, 900, 12104050, 8);
             DirectlyGivePlayerItem(ItemType.Goods, 1000, 12104050, 8);
+            MoveBloodstainAndDroppedItems(spawn_checker_region, hidden_region);
+            MoveBloodstainAndDroppedItems(hidden_region2, spawn_checker_region);
         }
-        else if (EventValue(X24_4, 2) == 1 && EventValue(12104030, 8) < 10) {
-            EventValueOperation(12104050, 8, 9, 0, 0, CalculationType.Assign);
-            DirectlyGivePlayerItem(ItemType.Goods, 1000, 12104050, 8);
+        else { // kindling enabled and not full kindle
+            StoreItemAmountHeldInEventValue(ItemType.Goods, 900, 12104030, 8);
+            StoreItemAmountHeldInEventValue(ItemType.Goods, 1000, 12104040, 8);
+            
+            if (EventValue(lamp_kindle_flag, 2) == 0 && EventValue(12104030, 8) < 5) {
+                EventValueOperation(12104050, 8, 5, 0, 0, CalculationType.Assign);
+                EventValueOperation(12104050, 8, 0, 12104030, 8, CalculationType.Sub);
+                DirectlyGivePlayerItem(ItemType.Goods, 900, 12104050, 8);
+            }
+            else if (EventValue(lamp_kindle_flag, 2) == 1 && EventValue(12104030, 8) < 10) {
+                EventValueOperation(12104050, 8, 10, 0, 0, CalculationType.Assign);
+                EventValueOperation(12104050, 8, 0, 12104030, 8, CalculationType.Sub);
+                DirectlyGivePlayerItem(ItemType.Goods, 900, 12104050, 8);
+            }
+            else if (EventValue(lamp_kindle_flag, 2) == 2 && EventValue(12104030, 8) < 15) {
+                EventValueOperation(12104050, 8, 15, 0, 0, CalculationType.Assign);
+                EventValueOperation(12104050, 8, 0, 12104030, 8, CalculationType.Sub);
+                DirectlyGivePlayerItem(ItemType.Goods, 900, 12104050, 8);
+            }
+            
+            if (EventValue(lamp_kindle_flag, 2) == 0 && EventValue(12104040, 8) < 5) {
+                EventValueOperation(12104050, 8, 5, 0, 0, CalculationType.Assign);
+                EventValueOperation(12104050, 8, 0, 12104040, 8, CalculationType.Sub);
+                DirectlyGivePlayerItem(ItemType.Goods, 1000, 12104050, 8);
+            }
+            else if (EventValue(lamp_kindle_flag, 2) == 1 && EventValue(12104040, 8) < 10) {
+                EventValueOperation(12104050, 8, 10, 0, 0, CalculationType.Assign);
+                EventValueOperation(12104050, 8, 0, 12104040, 8, CalculationType.Sub);
+                DirectlyGivePlayerItem(ItemType.Goods, 1000, 12104050, 8);
+            }
+            else if (EventValue(lamp_kindle_flag, 2) == 2 && EventValue(12104040, 8) < 15) {
+                EventValueOperation(12104050, 8, 15, 0, 0, CalculationType.Assign);
+                EventValueOperation(12104050, 8, 0, 12104040, 8, CalculationType.Sub);
+                DirectlyGivePlayerItem(ItemType.Goods, 1000, 12104050, 8);
+            }
         }
-        else if (EventValue(X24_4, 2) == 2 && EventValue(12104030, 8) < 15) {
-            EventValueOperation(12104050, 8, 14, 0, 0, CalculationType.Assign);
-            DirectlyGivePlayerItem(ItemType.Goods, 1000, 12104050, 8);
-        }
-        else if (EventValue(X24_4, 2) == 3) {
-            EventValueOperation(12104050, 8, 99, 0, 0, CalculationType.Assign);
-            DirectlyGivePlayerItem(ItemType.Goods, 1000, 12104050, 8);
-        }
-        WaitFixedTimeFrames(1);
-        DummyPlayCutsceneAndWarpPlayer(X8_4, X12_1, X16_1); // lamp spawn or rematch spawn
-        RequestCharacterAnimationReset(10000, Interpolation.Uninterpolated);
-        ForceAnimationPlayback(10000, 101200, false, false, true);
     }
 });
 
@@ -1780,7 +1791,6 @@ $Event(8500, Default, function(X0_4, X4_4, X8_4) {
         SetEventFlag(X0_4, ON);
     }
     WaitFor(ThisEventSlot()); // menu opened, trigger animation
-    //DisplayBanner(TextBannerType.BlackPhantomDeath);
     RotateCharacter(10000, X4_4, 101280, false);
     PlaySE(10000, SoundType.sSFX, 777777774);
     SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, 140);
@@ -1821,17 +1831,22 @@ $Event(8800, Default, function(X0_4, X4_4, X8_4, X12_4) {
     CharacterWarpRequest(X4_4, TargetEntityType.Area, X12_4, -1);
 });
 
-// Auto restart rematch if dead
-$Event(8900, Default, function(X0_4, X4_4) { // defeat-1, respawn_point
+// InitializeEvent(gascoigne_offset, 8900, gascoigne_defeat-1, gascoigne_lamp_id+1000, gascoigne_defeat-2, gascoigne_defeat+15, gascoigne_defeat+14);
+// Auto restart rematch if dead + move player to rematch point
+$Event(8900, Default, function(X0_4, X4_4, X8_4) {
+    const auto_rematch_flag = X0_4;
+    const lamp_spawn_point = X4_4;
+    const rematch_start_region = X8_4;
     EndIf(!ThisEventSlot()); // game's state is in rematch mode
+    DummyPlayCutsceneAndWarpPlayer(rematch_start_region, area_id, block_id);
     WaitFor(HPRatio(10000) <= 0);
     if (EventFlag(12100864)) { // auto rematch enabled
-        SetEventFlag(X0_4, ON);
-        SetPlayerRespawnPoint(X4_4);
+        SetEventFlag(auto_rematch_flag, ON);
+        SetPlayerRespawnPoint(lamp_spawn_point);
         SetEventFlag(8950, ON);
     }
     else {
-        SetPlayerRespawnPoint(X4_4);
+        SetPlayerRespawnPoint(lamp_spawn_point);
     }
 });
 
@@ -6549,6 +6564,9 @@ $Event(12904776, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4, X20_4, X24_4,
     WaitFixedTimeSeconds(2.5);
     SpawnOneshotSFX(TargetEntityType.Character, X0_4, 205, X24_4);
     WaitFixedTimeFrames(10);
+    if (EventFlag(boss_1_defeat+1013) || EventFlag(boss_1_defeat+1023) || EventFlag(boss_1_defeat+1033) || EventFlag(boss_1_defeat+1043)) {
+        WaitFixedTimeSeconds(2);
+    }
     ChangeCharacterEnableState(X0_4, Enabled);
     ActivateMultiplayerdependantBuffs(X0_4);
     SetCharacterAIState(X0_4, Enabled);
@@ -6930,6 +6948,9 @@ L2:
 L3:
     SetSpEffect(X0_4, 7501, true);
 L4:
+    if (EventFlag(boss_1_defeat+1013) || EventFlag(boss_1_defeat+1023) || EventFlag(boss_1_defeat+1033) || EventFlag(boss_1_defeat+1043)) {
+        WaitFixedTimeSeconds(2);
+    }
     SetCharacterAIState(X0_4, Enabled);
     DisplayBossHealthBar(Enabled, X0_4, 0, 304001);
     SetCharacterHPBarDisplay(X0_4, Disabled);
@@ -7018,6 +7039,9 @@ L2:
 L3:
     SetSpEffect(X0_4, 7501, true);
 L4:
+    if (EventFlag(boss_1_defeat+1013) || EventFlag(boss_1_defeat+1023) || EventFlag(boss_1_defeat+1033) || EventFlag(boss_1_defeat+1043)) {
+        WaitFixedTimeSeconds(2);
+    }
     SetCharacterAIState(X0_4, Enabled);
     DisplayBossHealthBar(Enabled, X0_4, 0, X12_4);
     SetCharacterHPBarDisplay(X0_4, Disabled);
@@ -7065,6 +7089,9 @@ $Event(12904887, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4, X20_4) {
     WaitFor(EventFlag(X8_4) && HPRatio(X4_4) <= X20_4);
     IssueShortWarpRequest(X0_4, TargetEntityType.Character, X4_4, -1);
     IssueShortWarpRequest(X0_4, TargetEntityType.Area, X12_4, -1);
+    if (EventFlag(boss_1_defeat+1013) || EventFlag(boss_1_defeat+1023) || EventFlag(boss_1_defeat+1033) || EventFlag(boss_1_defeat+1043)) {
+        WaitFixedTimeSeconds(2);
+    }
     ChangeCharacterEnableState(X0_4, Enabled);
     DisplayBossHealthBar(Enabled, X0_4, 1, X16_4);
     SpawnOneshotSFX(TargetEntityType.Character, X0_4, 203, 929203);
@@ -7092,6 +7119,9 @@ $Event(12904890, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4, X20_4, X24_4,
     SpawnOneshotSFX(TargetEntityType.Character, X0_4, 205, 929227);
     WaitFor(X24_4 == X24_4);
     WaitFixedTimeFrames(10);
+    if (EventFlag(boss_1_defeat+1013) || EventFlag(boss_1_defeat+1023) || EventFlag(boss_1_defeat+1033) || EventFlag(boss_1_defeat+1043)) {
+        WaitFixedTimeSeconds(2);
+    }
     ChangeCharacterEnableState(X0_4, Enabled);
     ActivateMultiplayerdependantBuffs(X0_4);
     ForceAnimationPlayback(X0_4, 7010, false, true, false);
@@ -7116,6 +7146,9 @@ $Event(12904891, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4, X20_4, X24_4,
     SpawnOneshotSFX(TargetEntityType.Character, X0_4, 205, 929227);
     WaitFor(X24_4 == X24_4);
     WaitFixedTimeFrames(10);
+    if (EventFlag(boss_1_defeat+1013) || EventFlag(boss_1_defeat+1023) || EventFlag(boss_1_defeat+1033) || EventFlag(boss_1_defeat+1043)) {
+        WaitFixedTimeSeconds(2);
+    }
     ChangeCharacterEnableState(X0_4, Enabled);
     ActivateMultiplayerdependantBuffs(X0_4);
     ForceAnimationPlayback(X0_4, 7010, false, true, false);
@@ -10575,6 +10608,9 @@ L3:
     SetSpEffect(X0_4, 7501, true);
     Goto(L4);
 L4:
+    if (EventFlag(boss_1_defeat+1013) || EventFlag(boss_1_defeat+1023) || EventFlag(boss_1_defeat+1033) || EventFlag(boss_1_defeat+1043)) {
+        WaitFixedTimeSeconds(2);
+    }
     SetCharacterAIState(X0_4, Enabled);
     SetCharacterInvincibility(X0_4, Disabled);
     DisplayBossHealthBar(Enabled, X0_4, 0, X4_4);
@@ -10680,6 +10716,9 @@ L3:
     SetSpEffect(X24_4, 7501, true);
     Goto(L4);
 L4:
+    if (EventFlag(boss_1_defeat+1013) || EventFlag(boss_1_defeat+1023) || EventFlag(boss_1_defeat+1033) || EventFlag(boss_1_defeat+1043)) {
+        WaitFixedTimeSeconds(2);
+    }
     SetCharacterAIState(X0_4, Enabled);
     SetCharacterAIState(X20_4, Enabled);
     SetCharacterAIState(X24_4, Enabled);
@@ -10820,6 +10859,9 @@ L3:
     SetSpEffect(X0_4, 7501, true);
     Goto(L4);
 L4:
+    if (EventFlag(boss_1_defeat+1013) || EventFlag(boss_1_defeat+1023) || EventFlag(boss_1_defeat+1033) || EventFlag(boss_1_defeat+1043)) {
+        WaitFixedTimeSeconds(2);
+    }
     SetCharacterAIState(X0_4, Enabled);
     SetCharacterInvincibility(X0_4, Disabled);
     DisplayBossHealthBar(Enabled, X0_4, 0, X4_4);
@@ -10956,6 +10998,9 @@ L0:
         ChangeCharacterEnableState(X0_4, Disabled);
         WaitFor(EventFlag(X8_4) && HPRatio(X4_4) <= X20_4);
         IssueShortWarpRequest(X0_4, TargetEntityType.Area, X12_4, -1);
+        if (EventFlag(boss_1_defeat+1013) || EventFlag(boss_1_defeat+1023) || EventFlag(boss_1_defeat+1033) || EventFlag(boss_1_defeat+1043)) {
+            WaitFixedTimeSeconds(2);
+        }
         ChangeCharacterEnableState(X0_4, Enabled);
         SpawnOneshotSFX(TargetEntityType.Character, X0_4, 6, 929203);
     }

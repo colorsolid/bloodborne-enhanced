@@ -12,18 +12,18 @@ const block_id = 0;
 
 const hamlet_lamp_offset = 65;
 const hamlet_lamp_id = 3601950;
-const hamlet_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10);
+const hamlet_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10);
 
 const lighthouse_lamp_offset = 66;
 const lighthouse_lamp_id = 3601951;
-const lighthouse_lamp_kindle = 112100000 + (area_id * 100) + (block_id * 10) + 2;
+const lighthouse_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10) + 2;
 
 const orphan_lamp_offset = 67;
 const orphan_offset = 21;
 const orphan_defeat = 13601800;
 const orphan_return = 3601899;
 const orphan_lamp_id = 3601952;
-const orphan_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 4;
+const orphan_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10) + 4;
 const orphan_region = 3602802;
 const orphan_id = 3600800;
 const orphan_id2 = 3600801;
@@ -48,8 +48,8 @@ $Event(0, Default, function() {
     InitializeEvent(lighthouse_lamp_offset, 8100, 8100+lighthouse_lamp_offset, lighthouse_lamp_kindle);
     InitializeEvent(orphan_lamp_offset, 8100, 8100+orphan_lamp_offset, orphan_lamp_kindle);
     
-    InitializeEvent(hamlet_lamp_offset, 8300, hamlet_lamp_id+2000, hamlet_lamp_id+3000, hamlet_lamp_id+4000, area_id, block_id, -1, hamlet_lamp_id+6000, hamlet_lamp_kindle);
-    InitializeEvent(lighthouse_lamp_offset, 8300, lighthouse_lamp_id+2000, lighthouse_lamp_id+3000, lighthouse_lamp_id+4000, area_id, block_id, -1, lighthouse_lamp_id+6000, lighthouse_lamp_kindle);
+    InitializeEvent(hamlet_lamp_offset, 8300, hamlet_lamp_id+2000, -1, hamlet_lamp_kindle, hamlet_lamp_id+6000, hamlet_lamp_id+3000);
+    InitializeEvent(lighthouse_lamp_offset, 8300, lighthouse_lamp_id+2000, -1, lighthouse_lamp_kindle, lighthouse_lamp_id+6000, lighthouse_lamp_id+3000);
     
     SetEventFlag(orphan_defeat+15, OFF);
     if (EventFlag(orphan_defeat+14)) {
@@ -61,16 +61,17 @@ $Event(0, Default, function() {
     if(EventFlag(orphan_defeat+13) && !EventFlag(orphan_defeat-1)) {
         if (EventFlag(orphan_defeat-2)) {
             SetEventFlag(orphan_defeat-2, OFF);
-            MoveBloodstainAndDroppedItems(orphan_region, orphan_lamp_id+4000);
+            InitializeEvent(orphan_offset, 7500, orphan_region, orphan_lamp_id+4000);
         }
         SetEventFlag(orphan_defeat+13, OFF);
         SetEventFlag(orphan_defeat, ON);
-        InitializeEvent(orphan_lamp_offset, 8300, orphan_lamp_id+2000, orphan_lamp_id+3000, orphan_lamp_id+4000, area_id, block_id, 999, orphan_lamp_id+6000, orphan_lamp_kindle);
+        InitializeEvent(orphan_lamp_offset, 8300, orphan_lamp_id+2000, 999, orphan_lamp_kindle, orphan_lamp_id+6000, orphan_lamp_id+3000);
+        DummyPlayCutsceneAndWarpPlayer(orphan_lamp_id+4000, area_id, block_id);
     } // rematch has started
     else if (EventFlag(orphan_defeat+12) || EventFlag(orphan_defeat-1)) {
         if (EventFlag(orphan_defeat-2)) {
             SetEventFlag(orphan_defeat-2, OFF);
-            MoveBloodstainAndDroppedItems(orphan_region, orphan_lamp_id+5000);
+            InitializeEvent(orphan_offset, 7500, orphan_region, orphan_lamp_id+5000);
         }
         SetEventFlag(orphan_defeat, OFF);
         SetEventFlag(orphan_defeat+1, OFF);
@@ -79,15 +80,15 @@ $Event(0, Default, function() {
         SetEventFlag(orphan_defeat+13, ON);
         SetEventFlag(orphan_defeat-1, OFF);
         SetEventFlag(8900+orphan_offset, ON);
-        InitializeEvent(orphan_lamp_offset, 8300, orphan_lamp_id+2000, orphan_lamp_id+3000, orphan_lamp_id+5000, area_id, block_id, -1, orphan_lamp_id+6000, orphan_lamp_kindle);
+        InitializeEvent(orphan_lamp_offset, 8300, orphan_lamp_id+2000, -1, orphan_lamp_kindle, orphan_lamp_id+6000, orphan_lamp_id+3000);
     }
     else {
-        InitializeEvent(orphan_lamp_offset, 8300, orphan_lamp_id+2000, orphan_lamp_id+3000, orphan_lamp_id+4000, area_id, block_id, -1, orphan_lamp_id+6000, orphan_lamp_kindle);
+        InitializeEvent(orphan_lamp_offset, 8300, orphan_lamp_id+2000, -1, orphan_lamp_kindle, orphan_lamp_id+6000, orphan_lamp_id+3000);
     }
     
     InitializeEvent(orphan_offset, 12102070, orphan_defeat+13, 0, 7506, orphan_id, orphan_id2);
     
-    InitializeEvent(orphan_offset, 8900, orphan_defeat-1, orphan_lamp_id+1000, orphan_defeat-2, orphan_defeat+15, orphan_defeat+14);
+    InitializeEvent(orphan_offset, 8900, orphan_defeat-1, orphan_lamp_id+1000, orphan_defeat-2, orphan_defeat+15, orphan_defeat+14, orphan_lamp_id+5000, area_id, block_id);
     InitializeEvent(orphan_offset, 7700, orphan_defeat+11, orphan_defeat+12, orphan_lamp_id+1000, 836000);
     
     InitializeEvent(4100, 12107000, 72114100, 3601950, 2412950);
@@ -1206,6 +1207,12 @@ L0:
     DeleteMapSFX(3603801, true);
     SetLockcamSlotNumber(36, 0, 0);
     WaitFixedTimeSeconds(3);
+    if (EventFlag(orphan_defeat+15)) {
+        AwardItemLot(17030);
+    }
+    else if (EventFlag(orphan_defeat+13)) {
+        AwardItemLot(17020);
+    }
     if (!chr2.Passed) {
         HandleBossDefeat(3600800);
     } else {
@@ -1504,6 +1511,9 @@ L3:
     AdaptHpchangingSpEffectToNPCPartOfTarget(3600801);
     Goto(L4);
 L4:
+    if (EventFlag(orphan_defeat+13)) {
+        WaitFixedTimeSeconds(2);
+    }
     if (EventFlag(orphan_defeat+15)) {
         DisplayBossHealthBar(Enabled, 3600800, 1, 453000);
         DisplayBossHealthBar(Enabled, 3600801, 0, 454000);

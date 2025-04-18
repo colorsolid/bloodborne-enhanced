@@ -258,8 +258,8 @@ def t350002_x60(action1=_):
                 AddTalkListData(6, 70000000, 12100876)
                 AddTalkListData(7, 200003, 12100875)
                 AddTalkListData(8, 200004, 12100874)
-                if GetEventStatus(12100000 + 350 * 10 + 2 * 2) == 0 or GetEventStatus(12100000 + 350 * 10 + 2 * 2 + 1) == 0:
-                    AddTalkListData(9, 200168, 12100851)
+                if GetEventStatus(12110000 + 350 * 10 + 2 * 2) == 0 or GetEventStatus(12110000 + 350 * 10 + 2 * 2 + 1) == 0:
+                    AddTalkListData(11, 200168, 12100851)
                 else:
                     pass
             else:
@@ -378,7 +378,7 @@ def t350002_x60(action1=_):
                 if call.Done():
                     pass
             # offer insight
-            elif GetTalkListEntryResult() == 9:
+            elif GetTalkListEntryResult() == 11:
                 SetEventState(8100+62, 1)
                 def WhilePaused():
                     SetTalkTime(0.33)

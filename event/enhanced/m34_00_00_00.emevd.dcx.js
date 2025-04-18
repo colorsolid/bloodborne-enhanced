@@ -12,18 +12,18 @@ const block_id = 0;
 
 const nightmare_lamp_offset = 55;
 const nightmare_lamp_id = 3401950;
-const nightmare_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10);
+const nightmare_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10);
 
 const church_lamp_offset = 56;
 const church_lamp_id = 3401951;
-const church_lamp_kindle = 112100000 + (area_id * 100) + (block_id * 10) + 2;
+const church_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10) + 2;
 
 const ludwig_lamp_offset = 57;
 const ludwig_offset = 17;
 const ludwig_defeat = 13401800;
 const ludwig_return = 3401899;
 const ludwig_lamp_id = 3401952;
-const ludwig_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 4;
+const ludwig_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10) + 4;
 const ludwig_region = 3402802;
 const ludwig_id = 3400800;
 const ludwig_id2 = 3400801;
@@ -33,7 +33,7 @@ const laurence_offset = 18;
 const laurence_defeat = 13401850;
 const laurence_return = 3401859;
 const laurence_lamp_id = 3401953;
-const laurence_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 6;
+const laurence_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10) + 6;
 const laurence_region = 3402852;
 const laurence_id = 3400850;
 
@@ -63,8 +63,8 @@ $Event(0, Default, function() {
     InitializeEvent(ludwig_lamp_offset, 8100, 8100+ludwig_lamp_offset, ludwig_lamp_kindle);
     InitializeEvent(laurence_lamp_offset, 8100, 8100+laurence_lamp_offset, laurence_lamp_kindle);
     
-    InitializeEvent(nightmare_lamp_offset, 8300, nightmare_lamp_id+2000, nightmare_lamp_id+3000, nightmare_lamp_id+4000, area_id, block_id, -1, nightmare_lamp_id+6000, nightmare_lamp_kindle);
-    InitializeEvent(church_lamp_offset, 8300, church_lamp_id+2000, church_lamp_id+3000, church_lamp_id+4000, area_id, block_id, -1, church_lamp_id+6000, church_lamp_kindle);
+    InitializeEvent(nightmare_lamp_offset, 8300, nightmare_lamp_id+2000, -1, nightmare_lamp_kindle, nightmare_lamp_id+6000, nightmare_lamp_id+3000);
+    InitializeEvent(church_lamp_offset, 8300, church_lamp_id+2000, -1, church_lamp_kindle, church_lamp_id+6000, church_lamp_id+3000);
     
     SetEventFlag(ludwig_defeat+15, OFF);
     if (EventFlag(ludwig_defeat+14)) {
@@ -81,17 +81,18 @@ $Event(0, Default, function() {
     if(EventFlag(ludwig_defeat+13) && !EventFlag(ludwig_defeat-1)) {
         if (EventFlag(ludwig_defeat-2)) {
             SetEventFlag(ludwig_defeat-2, OFF);
-            MoveBloodstainAndDroppedItems(ludwig_region, ludwig_lamp_id+4000);
+            InitializeEvent(ludwig_offset, 7500, ludwig_region, ludwig_lamp_id+4000);
         }
         SetEventFlag(ludwig_defeat+13, OFF);
         SetEventFlag(9471, ON);
         SetEventFlag(ludwig_defeat, ON);
-        InitializeEvent(ludwig_lamp_offset, 8300, ludwig_lamp_id+2000, ludwig_lamp_id+3000, ludwig_lamp_id+4000, area_id, block_id, 999, ludwig_lamp_id+6000, ludwig_lamp_kindle);
+        InitializeEvent(ludwig_lamp_offset, 8300, ludwig_lamp_id+2000, 999, ludwig_lamp_kindle, ludwig_lamp_id+6000, ludwig_lamp_id+3000);
+        DummyPlayCutsceneAndWarpPlayer(ludwig_lamp_id+4000, area_id, block_id);
     }
     else if (EventFlag(ludwig_defeat+12) || EventFlag(ludwig_defeat-1)) {
         if (EventFlag(ludwig_defeat-2)) {
             SetEventFlag(ludwig_defeat-2, OFF);
-            MoveBloodstainAndDroppedItems(ludwig_region, ludwig_lamp_id+5000);
+            InitializeEvent(ludwig_offset, 7500, ludwig_region, ludwig_lamp_id+5000);
         }
         SetEventFlag(9471, OFF);
         SetEventFlag(ludwig_defeat, OFF);
@@ -103,25 +104,26 @@ $Event(0, Default, function() {
         SetEventFlag(8900+ludwig_offset, ON);
         SetCharacterBackreadState(3400900, true);
         ChangeCharacterEnableState(3400900, Disabled);
-        InitializeEvent(ludwig_lamp_offset, 8300, ludwig_lamp_id+2000, ludwig_lamp_id+3000, ludwig_lamp_id+5000, area_id, block_id, -1, ludwig_lamp_id+6000, ludwig_lamp_kindle);
+        InitializeEvent(ludwig_lamp_offset, 8300, ludwig_lamp_id+2000, -1, ludwig_lamp_kindle, ludwig_lamp_id+6000, ludwig_lamp_id+3000);
     }
     else {
-        InitializeEvent(ludwig_lamp_offset, 8300, ludwig_lamp_id+2000, ludwig_lamp_id+3000, ludwig_lamp_id+4000, area_id, block_id, -1, ludwig_lamp_id+6000, ludwig_lamp_kindle);
+        InitializeEvent(ludwig_lamp_offset, 8300, ludwig_lamp_id+2000, -1, ludwig_lamp_kindle, ludwig_lamp_id+6000, ludwig_lamp_id+3000);
     }
     
     if(EventFlag(laurence_defeat+13) && !EventFlag(laurence_defeat-1)) {
         if (EventFlag(laurence_defeat-2)) {
             SetEventFlag(laurence_defeat-2, OFF);
-            MoveBloodstainAndDroppedItems(laurence_region, laurence_lamp_id+4000);
+            InitializeEvent(laurence_offset, 7500, laurence_region, laurence_lamp_id+4000);
         }
         SetEventFlag(laurence_defeat+13, OFF);
         SetEventFlag(laurence_defeat, ON);
-        InitializeEvent(laurence_lamp_offset, 8300, laurence_lamp_id+2000, laurence_lamp_id+3000, laurence_lamp_id+4000, area_id, block_id, 999, laurence_lamp_id+6000, laurence_lamp_kindle);
+        InitializeEvent(laurence_lamp_offset, 8300, laurence_lamp_id+2000, 999, laurence_lamp_kindle, laurence_lamp_id+6000, laurence_lamp_id+3000);
+        DummyPlayCutsceneAndWarpPlayer(laurence_lamp_id+4000, area_id, block_id);
     }
     else if (EventFlag(laurence_defeat+12) || EventFlag(laurence_defeat-1)) {
         if (EventFlag(laurence_defeat-2)) {
             SetEventFlag(laurence_defeat-2, OFF);
-            MoveBloodstainAndDroppedItems(laurence_region, laurence_lamp_id+5000);
+            InitializeEvent(laurence_offset, 7500, laurence_region, laurence_lamp_id+5000);
         }
         SetEventFlag(laurence_defeat, OFF);
         SetEventFlag(laurence_defeat+1, OFF);
@@ -130,17 +132,17 @@ $Event(0, Default, function() {
         SetEventFlag(laurence_defeat+13, ON);
         SetEventFlag(laurence_defeat-1, OFF);
         SetEventFlag(8900+laurence_offset, ON);
-        InitializeEvent(laurence_lamp_offset, 8300, laurence_lamp_id+2000, laurence_lamp_id+3000, laurence_lamp_id+5000, area_id, block_id, -1, laurence_lamp_id+6000, laurence_lamp_kindle);
+        InitializeEvent(laurence_lamp_offset, 8300, laurence_lamp_id+2000, -1, laurence_lamp_kindle, laurence_lamp_id+6000, laurence_lamp_id+3000);
     }
     else {
-        InitializeEvent(laurence_lamp_offset, 8300, laurence_lamp_id+2000, laurence_lamp_id+3000, laurence_lamp_id+4000, area_id, block_id, -1, laurence_lamp_id+6000, laurence_lamp_kindle);
+        InitializeEvent(laurence_lamp_offset, 8300, laurence_lamp_id+2000, -1, laurence_lamp_kindle, laurence_lamp_id+6000, laurence_lamp_id+3000);
     }
     
     InitializeEvent(laurence_offset, 12102070, laurence_defeat+13, 0, 7499, laurence_id);
     InitializeEvent(ludwig_offset, 12102070, ludwig_defeat+13, 0, 7498, ludwig_id, ludwig_id2);
     
-    InitializeEvent(laurence_offset, 8900, laurence_defeat-1, laurence_lamp_id+1000, laurence_defeat-2);
-    InitializeEvent(ludwig_offset, 8900, ludwig_defeat-1, ludwig_lamp_id+1000, ludwig_defeat-2, ludwig_defeat+15, ludwig_defeat+14);
+    InitializeEvent(laurence_offset, 8900, laurence_defeat-1, laurence_lamp_id+1000, laurence_defeat-2, 0, 0, laurence_lamp_id+5000, area_id, block_id);
+    InitializeEvent(ludwig_offset, 8900, ludwig_defeat-1, ludwig_lamp_id+1000, ludwig_defeat-2, ludwig_defeat+15, ludwig_defeat+14, ludwig_lamp_id+5000, area_id, block_id);
     
     InitializeEvent(ludwig_offset, 7700, ludwig_defeat+11, ludwig_defeat+12, ludwig_lamp_id+1000, 834000);
     InitializeEvent(laurence_offset, 7700, laurence_defeat+11, laurence_defeat+12, laurence_lamp_id+1000, 834002);
@@ -1478,6 +1480,12 @@ L0:
     DeleteMapSFX(3403800, true);
     SetLockcamSlotNumber(34, 0, 0);
     WaitFixedTimeSeconds(3);
+    if (EventFlag(ludwig_defeat+15)) {
+        AwardItemLot(17030);
+    }
+    else if (EventFlag(ludwig_defeat+13)) {
+        AwardItemLot(17020);
+    }
     if (!chr2.Passed) {
         HandleBossDefeat(3400800);
     } else {
@@ -1700,6 +1708,9 @@ L3:
     AdaptHpchangingSpEffectToNPCPartOfTarget(3400801);
     Goto(L4);
 L4:
+    if (EventFlag(ludwig_defeat+13)) {
+        WaitFixedTimeSeconds(2);
+    }
     if (EventFlag(ludwig_defeat+15)) {
         SetCharacterAIState(3400800, Enabled);
         SetNetworkUpdateRate(3400800, true, CharacterUpdateFrequency.AlwaysUpdate);
@@ -2044,6 +2055,7 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.Weapon, 80, PlayLogMultiplayerType.HostOnly);
         ParameterOutput(PlayerPlayLogParameter.Armor, 80, PlayLogMultiplayerType.HostOnly);
         if (EventFlag(laurence_defeat+13)) {
+            AwardItemLot(17020);
             InitializeEvent(laurence_offset, 7800, laurence_lamp_id+1000, 834002);
         }
         EndEvent();
@@ -2209,6 +2221,9 @@ L3:
     AdaptHpchangingSpEffectToNPCPartOfTarget(3400850);
     Goto(L4);
 L4:
+    if (EventFlag(laurence_defeat+13)) {
+        WaitFixedTimeSeconds(2);
+    }
     if (EventFlag(laurence_defeat+15)) {
         SetCharacterAIState(3400850, Enabled);
         DisplayBossHealthBar(Enabled, 3400850, 1, 450000);

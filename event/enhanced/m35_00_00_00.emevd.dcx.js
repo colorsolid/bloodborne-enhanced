@@ -12,14 +12,14 @@ const block_id = 0;
 
 const research_hall_lamp_offset = 60;
 const research_hall_lamp_id = 3501950;
-const research_hall_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10);
+const research_hall_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10);
 
 const living_failures_lamp_offset = 61;
 const living_failures_offset = 19;
 const living_failures_defeat = 13501850;
 const living_failures_return = 3501859;
 const living_failures_lamp_id = 3501951;
-const living_failures_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 2;
+const living_failures_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10) + 2;
 const living_failures_region = 3502812;
 const living_failures_id = 3500850;
     
@@ -27,7 +27,7 @@ const maria_lamp_offset = 62;
 const maria_offset = 20;
 const maria_defeat = 13501800;
 const maria_lamp_id = 3501952;
-const maria_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 4;
+const maria_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10) + 4;
 const maria_region = 3502802;
 const maria_id = 3500800;
 
@@ -48,9 +48,9 @@ $Event(0, Default, function() {
     
     InitializeEvent(research_hall_lamp_offset, 8100, 8100+research_hall_lamp_offset, research_hall_lamp_kindle);
     InitializeEvent(living_failures_lamp_offset, 8100, 8100+living_failures_lamp_offset, living_failures_lamp_kindle);
-    InitializeEvent(maria_lamp_offset, 8100, 8100+maria_lamp_offset, );
+    InitializeEvent(maria_lamp_offset, 8100, 8100+maria_lamp_offset, maria_lamp_kindle);
     
-    InitializeEvent(research_hall_lamp_offset, 8300, research_hall_lamp_id+2000, research_hall_lamp_id+3000, research_hall_lamp_id+4000, area_id, block_id, -1, research_hall_lamp_id+6000, research_hall_lamp_kindle);
+    InitializeEvent(research_hall_lamp_offset, 8300, research_hall_lamp_id+2000, -1, research_hall_lamp_kindle, research_hall_lamp_id+6000, research_hall_lamp_id+3000);
     
     if(EventFlag(living_failures_defeat+13) && !EventFlag(living_failures_defeat-1)) {
         if (EventFlag(living_failures_defeat-2)) {
@@ -59,7 +59,8 @@ $Event(0, Default, function() {
         }
         SetEventFlag(living_failures_defeat+13, OFF);
         SetEventFlag(living_failures_defeat, ON);
-        InitializeEvent(living_failures_lamp_offset, 8300, living_failures_lamp_id+2000, living_failures_lamp_id+3000, living_failures_lamp_id+4000, area_id, block_id, 999, living_failures_lamp_id+6000, living_failures_lamp_kindle);
+        InitializeEvent(living_failures_lamp_offset, 8300, living_failures_lamp_id+2000, 999, living_failures_lamp_kindle, living_failures_lamp_id+6000, living_failures_lamp_id+3000);
+        DummyPlayCutsceneAndWarpPlayer(living_failures_lamp_id+4000, area_id, block_id);
     }
     else if (EventFlag(living_failures_defeat+12) || EventFlag(living_failures_defeat-1)) {
         if (EventFlag(living_failures_defeat-2)) {
@@ -72,10 +73,10 @@ $Event(0, Default, function() {
         SetEventFlag(living_failures_defeat+13, ON);
         SetEventFlag(living_failures_defeat-1, OFF);
         SetEventFlag(8900+living_failures_offset, ON);
-        InitializeEvent(living_failures_lamp_offset, 8300, living_failures_lamp_id+2000, living_failures_lamp_id+3000, living_failures_lamp_id+5000, area_id, block_id, -1, living_failures_lamp_id+6000, living_failures_lamp_kindle);
+        InitializeEvent(living_failures_lamp_offset, 8300, living_failures_lamp_id+2000, -1, living_failures_lamp_kindle, living_failures_lamp_id+6000, living_failures_lamp_id+3000);
     }
     else {
-        InitializeEvent(living_failures_lamp_offset, 8300, living_failures_lamp_id+2000, living_failures_lamp_id+3000, living_failures_lamp_id+4000, area_id, block_id, -1, living_failures_lamp_id+6000, living_failures_lamp_kindle);
+        InitializeEvent(living_failures_lamp_offset, 8300, living_failures_lamp_id+2000, -1, living_failures_lamp_kindle, living_failures_lamp_id+6000, living_failures_lamp_id+3000);
     }
     
     if(EventFlag(maria_defeat+13) && !EventFlag(maria_defeat-1)) {
@@ -85,7 +86,8 @@ $Event(0, Default, function() {
         }
         SetEventFlag(maria_defeat+13, OFF);
         SetEventFlag(maria_defeat, ON);
-        InitializeEvent(maria_lamp_offset, 8300, maria_lamp_id+2000, maria_lamp_id+3000, maria_lamp_id+4000, area_id, block_id, 999, maria_lamp_id+6000, maria_lamp_kindle);
+        InitializeEvent(maria_lamp_offset, 8300, maria_lamp_id+2000, 999, maria_lamp_kindle, maria_lamp_id+6000, maria_lamp_id+3000);
+        DummyPlayCutsceneAndWarpPlayer(maria_lamp_id+4000, area_id, block_id);
     }
     else if (EventFlag(maria_defeat+12) || EventFlag(maria_defeat-1)) {
         if (EventFlag(maria_defeat-2)) {
@@ -98,17 +100,17 @@ $Event(0, Default, function() {
         SetEventFlag(maria_defeat+13, ON);
         SetEventFlag(maria_defeat-1, OFF);
         SetEventFlag(8900+maria_offset, ON);
-        InitializeEvent(maria_lamp_offset, 8300, maria_lamp_id+2000, maria_lamp_id+3000, maria_lamp_id+4000, area_id, block_id, -1, maria_lamp_id+6000, maria_lamp_kindle);
+        InitializeEvent(maria_lamp_offset, 8300, maria_lamp_id+2000, -1, maria_lamp_kindle, maria_lamp_id+6000, maria_lamp_id+3000);
     }
     else {
-        InitializeEvent(maria_lamp_offset, 8300, maria_lamp_id+2000, maria_lamp_id+3000, maria_lamp_id+4000, area_id, block_id, -1, maria_lamp_id+6000, maria_lamp_kindle);
+        InitializeEvent(maria_lamp_offset, 8300, maria_lamp_id+2000, -1, maria_lamp_kindle, maria_lamp_id+6000, maria_lamp_id+3000);
     }
     
     InitializeEvent(living_failures_offset, 12102070, living_failures_defeat+13, 0, 7504, living_failures_id);
     InitializeEvent(maria_offset, 12102070, maria_defeat+13, 0, 7505, maria_id);
     
-    InitializeEvent(living_failures_offset, 8900, living_failures_defeat-1, living_failures_lamp_id+1000, living_failures_defeat-2);
-    InitializeEvent(maria_offset, 8900, maria_lamp_id-1, maria_lamp_id+1000, maria_lamp_id-2);
+    InitializeEvent(living_failures_offset, 8900, living_failures_defeat-1, living_failures_lamp_id+1000, living_failures_defeat-2, 0, 0, living_failures_lamp_id+5000, area_id, block_id);
+    InitializeEvent(maria_offset, 8900, maria_defeat-1, maria_lamp_id+1000, maria_defeat-2, 0, 0, maria_lamp_id+5000, area_id, block_id);
     
     InitializeEvent(living_failures_offset, 7700, living_failures_defeat+11, living_failures_defeat+12, living_failures_lamp_id+1000, 835001);
     InitializeEvent(maria_offset, 7700, maria_defeat+11, maria_defeat+12, maria_lamp_id+1000, 835002);
@@ -1234,7 +1236,8 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.Weapon, 24, PlayLogMultiplayerType.HostOnly);
         ParameterOutput(PlayerPlayLogParameter.Armor, 24, PlayLogMultiplayerType.HostOnly);
         if (EventFlag(maria_defeat+13)) {
-            InitializeEvent(maria_offset, 7800, maria_lamp_id+1000);
+            AwardItemLot(17020);
+            InitializeEvent(maria_offset, 7800, maria_lamp_id+1000, 835001);
         }
         EndEvent();
     }
@@ -1450,6 +1453,9 @@ L3:
     AdaptHpchangingSpEffectToNPCPartOfTarget(3500800);
     Goto(L4);
 L4:
+    if (EventFlag(maria_defeat+13)) {
+        WaitFixedTimeSeconds(2);
+    }
     SetCharacterAIState(3500800, Enabled);
     DisplayBossHealthBar(Enabled, 3500800, 0, 452000);
     SetCharacterInvincibility(3500800, Disabled);
@@ -1608,7 +1614,8 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.Weapon, 108, PlayLogMultiplayerType.HostOnly);
         ParameterOutput(PlayerPlayLogParameter.Armor, 108, PlayLogMultiplayerType.HostOnly);
         if (EventFlag(living_failures_defeat+13)) {
-            InitializeEvent(living_failures_offset, 7800, living_failures_lamp_id+1000);
+            AwardItemLot(17020);
+            InitializeEvent(living_failures_offset, 7800, living_failures_lamp_id+1000, 835002);
         }
         EndEvent();
     }
@@ -1734,6 +1741,9 @@ L3:
     AdaptHpchangingSpEffectToNPCPartOfTarget(3500850);
     Goto(L4);
 L4:
+    if (EventFlag(living_failures_defeat+13)) {
+        WaitFixedTimeSeconds(2);
+    }
     SetCharacterAIState(3500851, Enabled);
     SetCharacterAIState(3500852, Enabled);
     SetCharacterAIState(3500853, Enabled);

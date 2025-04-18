@@ -12,11 +12,11 @@ const block_id = 1;
 
 const iosefka_lamp_offset = 15;
 const iosefka_lamp_id = 2411950;
-const iosefka_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10);
+const iosefka_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10);
 
 const central_lamp_offset = 16;
 const central_lamp_id = 2411951;
-const central_lamp_kindle = 112100000 + (area_id * 100) + (block_id * 10) + 2;
+const central_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10) + 2;
 
 const cleric_beast_offset = 0;
 const cleric_beast_lamp_offset = 17;
@@ -25,14 +25,14 @@ const cleric_beast_return = 2411759;
 const cleric_beast_lamp_id = 2411952;
 const cleric_beast_region = 2412802;
 const cleric_beast_id = 2410800;
-const cleric_beast_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 4;
+const cleric_beast_kindle = 12110000 + (area_id * 100) + (block_id * 10) + 4;
 
 const gascoigne_offset = 1;
 const gascoigne_lamp_offset = 18;
 const gascoigne_defeat = 12411800;
 const gascoigne_return = 2411859;
 const gascoigne_lamp_id = 2411953;
-const gascoigne_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 6;
+const gascoigne_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10) + 6;
 const gascoigne_region = 2412812;
 const gascoigne_id = 2410810;
 const gascoigne_id2 = 2410811;
@@ -46,6 +46,9 @@ const gascoigne_id2 = 2410811;
 
 // constructor
 $Event(0, Default, function() {
+    //InitializeEvent(0, 12411500, 0);
+    //InitializeEvent(0, 12410815, 0);
+    //SetEventFlag(62411319, OFF);
     SetEventFlag(8900+cleric_beast_offset, OFF);
     SetEventFlag(8900+gascoigne_offset, OFF);
     
@@ -63,11 +66,11 @@ $Event(0, Default, function() {
     
     InitializeEvent(iosefka_lamp_offset, 8100, 8100+iosefka_lamp_offset, iosefka_lamp_kindle);
     InitializeEvent(central_lamp_offset, 8100, 8100+central_lamp_offset, central_lamp_kindle);
-    InitializeEvent(cleric_beast_lamp_offset, 8100, 8100+cleric_beast_lamp_offset, 12100000 + (area_id * 100) + (block_id * 10) + 4);
-    InitializeEvent(gascoigne_lamp_offset, 8100, 8100+gascoigne_lamp_offset, 12100000 + (area_id * 100) + (block_id * 10) + 6);
+    InitializeEvent(cleric_beast_lamp_offset, 8100, 8100+cleric_beast_lamp_offset, cleric_beast_kindle);
+    InitializeEvent(gascoigne_lamp_offset, 8100, 8100+gascoigne_lamp_offset, gascoigne_lamp_kindle);
     
-    InitializeEvent(iosefka_lamp_offset, 8300, iosefka_lamp_id+2000, iosefka_lamp_id+3000, iosefka_lamp_id+4000, area_id, block_id, -1, iosefka_lamp_id+6000, iosefka_lamp_kindle);
-    InitializeEvent(central_lamp_offset, 8300, central_lamp_id+2000, central_lamp_id+3000, central_lamp_id+4000, area_id, block_id, -1, central_lamp_id+6000, central_lamp_kindle);
+    InitializeEvent(iosefka_lamp_offset, 8300, iosefka_lamp_id+2000, -1, iosefka_lamp_kindle, iosefka_lamp_id+6000, iosefka_lamp_id+3000);
+    InitializeEvent(central_lamp_offset, 8300, central_lamp_id+2000, -1, central_lamp_kindle, central_lamp_id+6000, central_lamp_id+3000);
     
     SetEventFlag(gascoigne_defeat+15, OFF);
     if (EventFlag(gascoigne_defeat+14)) {
@@ -79,16 +82,17 @@ $Event(0, Default, function() {
     if(EventFlag(cleric_beast_defeat+13) && !EventFlag(cleric_beast_defeat-1)) {
         if (EventFlag(cleric_beast_defeat-2)) {
             SetEventFlag(cleric_beast_defeat-2, OFF);
-            MoveBloodstainAndDroppedItems(cleric_beast_region, cleric_beast_lamp_id+4000);
+            InitializeEvent(cleric_beast_offset, 7500, cleric_beast_region, cleric_beast_lamp_id+4000);
         }
         SetEventFlag(cleric_beast_defeat+13, OFF);
         SetEventFlag(cleric_beast_defeat, ON);
-        InitializeEvent(cleric_beast_lamp_offset, 8300, cleric_beast_lamp_id+2000, cleric_beast_lamp_id+3000, cleric_beast_lamp_id+4000, area_id, block_id, 999, cleric_beast_lamp_id+6000, cleric_beast_kindle);
+        InitializeEvent(cleric_beast_lamp_offset, 8300, cleric_beast_lamp_id+2000, 999, cleric_beast_kindle, cleric_beast_lamp_id+6000, cleric_beast_lamp_id+3000);
+        DummyPlayCutsceneAndWarpPlayer(cleric_beast_lamp_id+4000, area_id, block_id);
     } // rematch has started
     else if (EventFlag(cleric_beast_defeat+12) || EventFlag(cleric_beast_defeat-1)) {
         if (EventFlag(cleric_beast_defeat-2)) {
             SetEventFlag(cleric_beast_defeat-2, OFF);
-            MoveBloodstainAndDroppedItems(cleric_beast_region, cleric_beast_lamp_id+5000);
+            InitializeEvent(cleric_beast_offset, 7500, cleric_beast_region, cleric_beast_lamp_id+5000);
         }
         SetEventFlag(cleric_beast_defeat, OFF);
         SetEventFlag(cleric_beast_defeat+2, OFF);
@@ -96,20 +100,21 @@ $Event(0, Default, function() {
         SetEventFlag(cleric_beast_defeat+13, ON);
         SetEventFlag(cleric_beast_defeat-1, OFF);
         SetEventFlag(8900+cleric_beast_offset, ON);
-        InitializeEvent(cleric_beast_lamp_offset, 8300, cleric_beast_lamp_id+2000, cleric_beast_lamp_id+3000, cleric_beast_lamp_id+5000, area_id, block_id, -1, cleric_beast_lamp_id+6000, cleric_beast_kindle);
+        InitializeEvent(cleric_beast_lamp_offset, 8300, cleric_beast_lamp_id+2000, -1, cleric_beast_kindle, cleric_beast_lamp_id+6000, cleric_beast_lamp_id+3000);
     }
     else {
-        InitializeEvent(cleric_beast_lamp_offset, 8300, cleric_beast_lamp_id+2000, cleric_beast_lamp_id+3000, cleric_beast_lamp_id+4000, area_id, block_id, -1, cleric_beast_lamp_id+6000, cleric_beast_kindle);
+        InitializeEvent(cleric_beast_lamp_offset, 8300, cleric_beast_lamp_id+2000, -1, cleric_beast_kindle, cleric_beast_lamp_id+6000, cleric_beast_lamp_id+3000);
     }
     
     if (EventFlag(gascoigne_defeat+13) && !EventFlag(gascoigne_defeat-1)) {
         if (EventFlag(gascoigne_defeat-2)) {
             SetEventFlag(gascoigne_defeat-2, OFF);
-            MoveBloodstainAndDroppedItems(gascoigne_region, gascoigne_lamp_id+4000);
+            InitializeEvent(gascoigne_offset, 7500, gascoigne_region, gascoigne_lamp_id+4000);
         }
         SetEventFlag(gascoigne_defeat+13, OFF);
         SetEventFlag(gascoigne_defeat, ON);
-        InitializeEvent(gascoigne_lamp_offset, 8300, gascoigne_lamp_id+2000, gascoigne_lamp_id+3000, gascoigne_lamp_id+4000, area_id, block_id, 999, gascoigne_lamp_id+6000, gascoigne_lamp_kindle);
+        InitializeEvent(gascoigne_lamp_offset, 8300, gascoigne_lamp_id+2000, 999, gascoigne_lamp_kindle, gascoigne_lamp_id+6000, gascoigne_lamp_id+3000);
+        DummyPlayCutsceneAndWarpPlayer(gascoigne_lamp_id+4000, area_id, block_id);
         
         // Oedon Tomb Key
         if (!PlayerHasItem(ItemType.Goods, 4000)) {
@@ -120,7 +125,7 @@ $Event(0, Default, function() {
     else if (EventFlag(gascoigne_defeat+12) || EventFlag(gascoigne_defeat-1)) {
         if (EventFlag(gascoigne_defeat-2)) {
             SetEventFlag(gascoigne_defeat-2, OFF);
-            MoveBloodstainAndDroppedItems(gascoigne_region, gascoigne_lamp_id+5000);
+            InitializeEvent(gascoigne_offset, 7500, gascoigne_region, gascoigne_lamp_id+5000);
         }
         RemoveItemFromPlayer(ItemType.Goods, 4000, 1);
         SetEventFlag(gascoigne_defeat, OFF);
@@ -129,17 +134,17 @@ $Event(0, Default, function() {
         SetEventFlag(gascoigne_defeat+13, ON);
         SetEventFlag(gascoigne_defeat-1, OFF);
         SetEventFlag(8900+gascoigne_offset, ON);
-        InitializeEvent(gascoigne_lamp_offset, 8300, gascoigne_lamp_id+2000, gascoigne_lamp_id+3000, gascoigne_lamp_id+5000, area_id, block_id, -1, gascoigne_lamp_id+6000, gascoigne_lamp_kindle);
+        InitializeEvent(gascoigne_lamp_offset, 8300, gascoigne_lamp_id+2000, -1, gascoigne_lamp_kindle, gascoigne_lamp_id+6000, gascoigne_lamp_id+3000);
     }
     else {
-        InitializeEvent(gascoigne_lamp_offset, 8300, gascoigne_lamp_id+2000, gascoigne_lamp_id+3000, gascoigne_lamp_id+4000, area_id, block_id, -1, gascoigne_lamp_id+6000, gascoigne_lamp_kindle);
+        InitializeEvent(gascoigne_lamp_offset, 8300, gascoigne_lamp_id+2000, -1, gascoigne_lamp_kindle, gascoigne_lamp_id+6000, gascoigne_lamp_id+3000);
     }
     
     InitializeEvent(cleric_beast_offset, 12102070, cleric_beast_defeat+13, 0, 7447, cleric_beast_id);
-    InitializeEvent(gascoigne_offset, 12102070, gascoigne_defeat+13, 0, 7448, gascoigne_id);
+    InitializeEvent(gascoigne_offset, 12102070, gascoigne_defeat+13, gascoigne_defeat+15, 7448, gascoigne_id, gascoigne_id2);
     
-    InitializeEvent(cleric_beast_offset, 8900, cleric_beast_defeat-1, cleric_beast_lamp_id+1000, cleric_beast_defeat-2);
-    InitializeEvent(gascoigne_offset, 8900, gascoigne_defeat-1, gascoigne_lamp_id+1000, gascoigne_defeat-2, gascoigne_defeat+15, gascoigne_defeat+14);
+    InitializeEvent(cleric_beast_offset, 8900, cleric_beast_defeat-1, cleric_beast_lamp_id+1000, cleric_beast_defeat-2, 0, 0, cleric_beast_lamp_id+5000, area_id, block_id);
+    InitializeEvent(gascoigne_offset, 8900, gascoigne_defeat-1, gascoigne_lamp_id+1000, gascoigne_defeat-2, gascoigne_defeat+15, gascoigne_defeat+14, gascoigne_lamp_id+5000, area_id, block_id);
     
     InitializeEvent(cleric_beast_offset, 7700, cleric_beast_defeat+11, cleric_beast_defeat+12, cleric_beast_lamp_id+1000, 824100);
     InitializeEvent(gascoigne_offset, 7700, gascoigne_defeat+11, gascoigne_defeat+12, gascoigne_lamp_id+1000, 824102);
@@ -994,6 +999,7 @@ S2:
     InitializeEvent(1, 12410850, 70000051, 6030, 2410871);
     InitializeEvent(2, 12410850, 70000070, 6030, 2410872);
     InitializeEvent(3, 12410850, 70000071, 6030, 2410873);
+    InitializeEvent(0, 12410859, 70000598, 6030, 2410874);
     InitializeEvent(0, 12410860, 2410770, 103089);
     InitializeEvent(0, 12410870, 2410770, 103082, 153);
     InitializeEvent(0, 12410880, 2410770, 103086);
@@ -1112,6 +1118,7 @@ S2:
     InitializeEvent(0, 12414100, 2411000, 7400, 10012000);
     InitializeEvent(1, 12414100, 2411001, 7401, 10012001);
     InitializeEvent(4, 12414100, 2411004, 7404, 10012004);
+    // InitializeEvent(0, 12410816, 0);
 });
 
 // pre-constructor
@@ -1159,6 +1166,11 @@ $Event(50, Default, function() {
     }
 });
 
+$Event(12411500, Default, function(){
+    WaitFor(EventFlag(62411319));
+    DisplayBanner(TextBannerType.BlackPhantomDeath);
+});
+
 $Event(12410720, Default, function(){
     WaitFixedTimeSeconds(0.1);
     if (EventFlag(12100953)) {
@@ -1167,6 +1179,15 @@ $Event(12410720, Default, function(){
     else {
         InitializeEvent(70, 7000, 2410950, 2411950, 999, 12417800, -1);
     }
+});
+
+// ng+ only enemy test
+$Event(12410816, Default, function() {
+    DisplayBanner(TextBannerType.Dead);
+    SetCharacterAIState(2410975, Disabled);
+    EndIf(GameCycle() == 0);
+    DisplayBanner(TextBannerType.BlackPhantomDeath);
+    SetCharacterAIState(2410975, Enabled);
 });
 
 // Cutscene after character creation
@@ -1666,14 +1687,14 @@ $Event(12415498, Restart, function(X0_4, X4_4) {
 $Event(12410815, Default, function() {
     SetSpEffect(2410600, 5686, false);
     WaitFixedTimeFrames(10);
-    WaitFor(EventFlag(9802) || PlayerInsightAmount() >= 20);
+    WaitFor(EventFlag(9802) || PlayerInsightAmount() >= 0);
     ChangeCharacterDispmask(2410600, 0, ON);
     ChangeCharacterDispmask(2410600, 2, ON);
     ChangeCharacterDispmask(2410600, 10, ON);
     ChangeCharacterEnableState(2410600, Enabled);
     ClearSpEffect(2410600, 5686);
-    WaitFor(PlayerInsightAmount() <= 18 && !EventFlag(9802));
-    RestartEvent();
+    //WaitFor(PlayerInsightAmount() <= 18 && !EventFlag(9802));
+    //RestartEvent();
 });
 
 // [Event version] Disconnect map connection
@@ -1746,6 +1767,7 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.Weapon, 52, PlayLogMultiplayerType.HostOnly);
         ParameterOutput(PlayerPlayLogParameter.Armor, 52, PlayLogMultiplayerType.HostOnly);
         if (EventFlag(cleric_beast_defeat+13)) {
+            AwardItemLot(17020);
             InitializeEvent(cleric_beast_offset, 7800, cleric_beast_lamp_id+1000, 824100);
         }
         EndEvent();
@@ -1884,54 +1906,22 @@ L0:
     GotoIf(L1, NumberOfCoopClients() == 0);
     GotoIf(L2, NumberOfCoopClients() == 1);
     GotoIf(L3, NumberOfCoopClients() == 2);
-    //if (PlayersSoulLevel() >= 80) {
-    //    Goto(L7);
-    //}
-    //if (PlayerHasItemIncludingBBox(ItemType.Weapon, 1)) {
-    //    Goto(L7);
-    //}
-    //if (PlayersSoulLevel() >= 60) {
-    //    Goto(L6);
-    //}
-    //if (PlayersSoulLevel() >= 40) {
-    //    Goto(L5);
-    //}
-    //if (PlayersSoulLevel() >= 20) {
-    //    Goto(L4);
-    //}
 L1:
-    Goto(L8);
+    Goto(L4);
 L2:
     SetSpEffect(2410800, 7500, true);
     WaitFixedTimeFrames(1);
     AdaptHpchangingSpEffectToNPCPartOfTarget(2410800);
-    Goto(L8);
+    Goto(L4);
 L3:
     SetSpEffect(2410800, 7501, true);
     WaitFixedTimeFrames(1);
     AdaptHpchangingSpEffectToNPCPartOfTarget(2410800);
-    Goto(L8);
+    Goto(L4);
 L4:
-    SetSpEffect(2410800, 7504, true);
-    WaitFixedTimeFrames(1);
-    AdaptHpchangingSpEffectToNPCPartOfTarget(2410800);
-    Goto(L8);
-L5:
-    SetSpEffect(2410800, 7504, true);
-    WaitFixedTimeFrames(1);
-    AdaptHpchangingSpEffectToNPCPartOfTarget(2410800);
-    Goto(L8);
-L6:
-    SetSpEffect(2410800, 7505, true);
-    WaitFixedTimeFrames(1);
-    AdaptHpchangingSpEffectToNPCPartOfTarget(2410800);
-    Goto(L8);
-L7:
-    SetSpEffect(2410800, 7506, true);
-    WaitFixedTimeFrames(1);
-    AdaptHpchangingSpEffectToNPCPartOfTarget(2410800);
-    Goto(L8);
-L8:
+    if (EventFlag(cleric_beast_defeat+13)) {
+        WaitFixedTimeSeconds(2);
+    }
     SetCharacterAIState(2410800, Enabled);
     DisplayBossHealthBar(Enabled, 2410800, 0, 500000);
     CreatePlaylog(80);
@@ -2091,6 +2081,14 @@ L0:
         AwardAchievement(14);
         if (!EventFlag(gascoigne_defeat+13)) {
             AwardItemLot(31000);
+        }
+        else {
+            if (EventFlag(gascoigne_defeat+15)) {
+                AwardItemLot(17030);
+            }
+            else if (EventFlag(gascoigne_defeat+13)) {
+                AwardItemLot(17020);
+            }
         }
         SetEventFlag(2412, ON);
         SetEventFlag(9457, ON);
@@ -2271,6 +2269,9 @@ L3:
     AdaptHpchangingSpEffectToNPCPartOfTarget(2410811);
     Goto(L4);
 L4:
+    if (EventFlag(gascoigne_defeat+13)) {
+        WaitFixedTimeSeconds(2);
+    }
     if (EventFlag(gascoigne_defeat+15)) {
         SetCharacterAIState(2410810, Enabled);
         DisplayBossHealthBar(Enabled, 2410810, 1, 271001);
@@ -4418,6 +4419,25 @@ $Event(12410850, Default, function(X0_4, X4_4, X8_4) {
     SetEventFlag(X0_4, ON);
     WaitFor(!EventFlag(X0_4));
     RestartEvent();
+});
+
+// bridge door
+$Event(12410859, Default, function(X0_4, X4_4, X8_4) {
+    DeactivateObject(X8_4, Disabled);
+    EndIf(EventFlag(12100949));
+    WaitFor(EventFlag(12411700));
+    DeactivateObject(X8_4, Enabled);
+    EndIf(!CharacterType(10000, TargetType.Alive));
+    SetEventFlag(X0_4, OFF);
+    WaitFor(!EventFlag(X0_4) && ActionButtonInArea(X4_4, X8_4));
+    IssueShortWarpRequest(10000, TargetEntityType.Object, X8_4, 210);
+    ForceAnimationPlayback(10000, 101320, false, false, false);
+    WaitFixedTimeFrames(25);
+    DisplayBanner(TextBannerType.StadiumLoss);
+    WaitFixedTimeFrames(20);
+    SetPlayerRespawnPoint(2408089);
+    WaitFixedTimeFrames(20);
+    SetSpEffect(10000, 2101, false);
 });
 
 // NPC General Purpose_Animation Control_Damage Taken_XX

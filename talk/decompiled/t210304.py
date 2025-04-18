@@ -548,6 +548,7 @@ def t210304_x17():
         AddTalkListData(1, 200031, -1) # lamp settings
         AddTalkListData(2, 200086, -1) # broken lamp
         AddTalkListData(3, 200174, -1) # balancing
+        AddTalkListData(4, 200200, -1) # respec
         AddTalkListData(10, 200032, -1) # misc settings
         ShowShopMessage(0, 0, 0)
         def WhilePaused():
@@ -568,6 +569,12 @@ def t210304_x17():
                 pass
         elif GetTalkListEntryResult() == 3: # balancing/difficulty
             call = t210304_x20()
+            if call.Get() == 1:
+                ForceCloseMenu()
+            elif call.Done():
+                pass
+        elif GetTalkListEntryResult() == 4: # respec
+            call = t210304_x60()
             if call.Get() == 1:
                 ForceCloseMenu()
             elif call.Done():
@@ -594,8 +601,11 @@ def t210304_x18():
 
         if GetEventStatus(12100862) == 1:
             # item drop hunt
-            AddTalkListData(5, 200127, 12100955)
-            AddTalkListData(6, 200128, 12100855)
+            # AddTalkListData(5, 200127, 12100955)
+            # AddTalkListData(6, 200128, 12100855)
+
+            AddTalkListData(35, 200172, 12100951) # enable - lamp kindling
+            AddTalkListData(36, 200173, 12100851) # disable - lamp kindling
         else:
             pass
 
@@ -651,7 +661,7 @@ def t210304_x18():
             AddTalkListData(31, 200133, 12100857)
             AddTalkListData(32, 200132, 12100957)
 
-            # quick warp to boss
+            # spawn clinic lamp at start
             AddTalkListData(33, 200144, 12100853)
             AddTalkListData(34, 200143, 12100953)
         else:
@@ -758,6 +768,13 @@ def t210304_x18():
         elif GetTalkListEntryResult() == 34: # enable - iosefka lamp spawn at start
             SetEventState(12100953, 0)
             SetEventState(12100853, 1)
+        elif GetTalkListEntryResult() == 35: # enable - lamp kindling
+            SetEventState(12100951, 0)
+            SetEventState(8413, 1)
+            SetEventState(12100851, 1)
+        elif GetTalkListEntryResult() == 36: # disable - lamp kindling
+            SetEventState(12100951, 1)
+            SetEventState(12100851, 0)
 
 # broken lamp settings
 def t210304_x19():
@@ -807,9 +824,6 @@ def t210304_x20():
         AddTalkListData(1, 200164, 12100952) # enable - rematch scaling
         AddTalkListData(2, 200165, 12100852) # disable - rematch scaling
 
-        AddTalkListData(3, 200172, 12100951) # enable - lamp kindling
-        AddTalkListData(4, 200173, 12100851) # disable - lamp kindling
-
         AddTalkListData(20, 200145, 12102010) # increase cycle
 
         ShowShopMessage(0, 0, 0)
@@ -823,12 +837,6 @@ def t210304_x20():
         elif GetTalkListEntryResult() == 2: # disable - rematch scaling
             SetEventState(12100952, 1)
             SetEventState(12100852, 0)
-        elif GetTalkListEntryResult() == 3: # enable - lamp kindling
-            SetEventState(12100951, 0)
-            SetEventState(12100851, 1)
-        elif GetTalkListEntryResult() == 4: # disable - lamp kindling
-            SetEventState(12100951, 1)
-            SetEventState(12100851, 0)
         elif GetTalkListEntryResult() == 20: # increase cycle
             call = t210304_x50()
             if call.Get() == 1:
@@ -870,6 +878,10 @@ def t210304_x30():
         # doll gesture
         AddTalkListData(13, 200138, 12100954)
         AddTalkListData(14, 200139, 12100854)
+
+        # bridge door
+        AddTalkListData(15, 200220, 12100949)
+        AddTalkListData(16, 200221, 12100849)
 
         AddTalkListData(21, 200161, 12102033) # random spawn enabled - switch to random time
         AddTalkListData(24, 200166, 12102036) # random time enabled - switch to none
@@ -926,6 +938,12 @@ def t210304_x30():
         elif GetTalkListEntryResult() == 14: # disable - doll gesture
             SetEventState(12100954, 1)
             SetEventState(12100854, 0)
+        elif GetTalkListEntryResult() == 15: # enable - bridge door
+            SetEventState(12100949, 0)
+            SetEventState(12100849, 1)
+        elif GetTalkListEntryResult() == 16: # disable - bridge door
+            SetEventState(12100949, 1)
+            SetEventState(12100849, 0)
         elif GetTalkListEntryResult() == 21: # switch from random spawn to random time
             SetEventState(12102031, 1)
             SetEventState(12102033, 0)
@@ -1029,3 +1047,115 @@ def t210304_x52():
         elif not IsGenericDialogOpen():
             DebugEvent('CANCEL')
             return 1
+        
+# respec
+def t210304_x60():
+    while True:
+        ClearTalkListData()
+
+        AddTalkListData(1, 200201, -1) # milquetoast
+        AddTalkListData(2, 200202, -1) # lone survivor
+        AddTalkListData(3, 200203, -1) # troubled childhood
+        AddTalkListData(4, 200204, -1) # violent past
+        AddTalkListData(5, 200205, -1) # professional
+        AddTalkListData(6, 200206, -1) # military veteran
+        AddTalkListData(7, 200207, -1) # noble scion
+        AddTalkListData(8, 200208, -1) # cruel fate
+        AddTalkListData(9, 200209, -1) # waste of skin
+
+        ShowShopMessage(0, 0, 0)
+        def WhilePaused():
+            SetTalkTime(0.33)
+        if not GetTalkListEntryResult() or not IsTalkExclusiveMenuOpen():
+            return 1
+        elif GetTalkListEntryResult() == 1: # milquetoast
+            call = t210304_x61(d1=200211, e1=12308040)
+            if call.Get() == 1:
+                ForceCloseMenu()
+            elif call.Done():
+                pass
+        elif GetTalkListEntryResult() == 2: # lone survivor
+            call = t210304_x61(d1=200212, e1=12308041)
+            if call.Get() == 1:
+                ForceCloseMenu()
+            elif call.Done():
+                pass
+        elif GetTalkListEntryResult() == 3: # troubled childhood
+            call = t210304_x61(d1=200213, e1=12308042)
+            if call.Get() == 1:
+                ForceCloseMenu()
+            elif call.Done():
+                pass
+        elif GetTalkListEntryResult() == 4: # violent past
+            call = t210304_x61(d1=200214, e1=12308043)
+            if call.Get() == 1:
+                ForceCloseMenu()
+            elif call.Done():
+                pass
+        elif GetTalkListEntryResult() == 5: # professional
+            call = t210304_x61(d1=200215, e1=12308044)
+            if call.Get() == 1:
+                ForceCloseMenu()
+            elif call.Done():
+                pass
+        elif GetTalkListEntryResult() == 6: # military veteran
+            call = t210304_x61(d1=200216, e1=12308045)
+            if call.Get() == 1:
+                ForceCloseMenu()
+            elif call.Done():
+                pass
+        elif GetTalkListEntryResult() == 7: # noble scion
+            call = t210304_x61(d1=200217, e1=12308046)
+            if call.Get() == 1:
+                ForceCloseMenu()
+            elif call.Done():
+                pass
+        elif GetTalkListEntryResult() == 8: # cruel fate
+            call = t210304_x61(d1=200218, e1=12308047)
+            if call.Get() == 1:
+                ForceCloseMenu()
+            elif call.Done():
+                pass
+        elif GetTalkListEntryResult() == 9: # waste of skin
+            call = t210304_x61(d1=200219, e1=12308048)
+            if call.Get() == 1:
+                ForceCloseMenu()
+            elif call.Done():
+                pass
+
+# character stats
+def t210304_x61(d1=0, e1=0):
+    while True:
+        OpenGenericDialog(2, d1, 3, 4, 2)
+        def WhilePaused():
+            SetTalkTime(0.33)
+        if GetGenericDialogButtonResult() == 1:
+            DebugEvent('OK')
+            call = t210304_x62(e1)
+            if call.Get() == 1:
+                ForceCloseMenu()
+            elif call.Done():
+                pass
+            return 0
+        elif not IsGenericDialogOpen():
+            DebugEvent('CANCEL')
+            return 1
+
+# final confirmation
+def t210304_x62(e1=0):
+    while True:
+        OpenGenericDialog(2, 200210, 3, 4, 2)
+        def WhilePaused():
+            SetTalkTime(0.33)
+        if GetGenericDialogButtonResult() == 1:
+            DebugEvent('OK')
+            SetEventState(12308030, 1)
+            SetEventState(e1, 1)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
+            return 0
+        elif not IsGenericDialogOpen():
+            DebugEvent('CANCEL')
+            return 1
+

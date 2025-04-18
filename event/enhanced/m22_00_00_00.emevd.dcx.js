@@ -12,7 +12,7 @@ const block_id = 0;
 
 const hemwick_lamp_offset = 0;
 const hemwick_lamp_id = 2201950;
-const hemwick_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10);
+const hemwick_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10);
 
 const witches_offset = 4;
 const witches_lamp_offset = 1;
@@ -20,7 +20,18 @@ const witches_defeat = 12201800;
 const witches_met = 12201802;
 const witches_return = 2201899;
 const witches_lamp_id = 2201951;
-const witches_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 2;
+const witches_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10) + 2;
+const witches_lamp_spawn_point = witches_lamp_id+1000;
+const witches_lamp_spawn_checker = witches_lamp_id+2000;
+const witches_lamp_hunt_region = witches_lamp_id+3000;
+const witches_lamp_spawn_region = witches_lamp_id+4000;
+const witches_rematch_start_region = witches_lamp_id+5000;
+const witches_lamp_hidden_region = witches_lamp_id+6000;
+const witches_rematch_death_occurred = witches_defeat-2;
+const witches_auto_rematch = witches_defeat-1;
+const witches_rematch_triggered = witches_defeat+11;
+const witches_rematch_started = witches_defeat+12;
+const witches_rematch_cleanup = witches_defeat+13;
 const witches_region = 2202802;
 const witches_id = 2200800;
 const witches_id2 = 2200801;
@@ -41,39 +52,40 @@ $Event(0, Default, function() {
     InitializeEvent(hemwick_lamp_offset, 8100, 8100+hemwick_lamp_offset, hemwick_lamp_kindle);
     InitializeEvent(witches_lamp_offset, 8100, 8100+witches_lamp_offset, witches_lamp_kindle);
     
-    InitializeEvent(hemwick_lamp_offset, 8300, hemwick_lamp_id+2000, hemwick_lamp_id+3000, hemwick_lamp_id+4000, area_id, block_id, -1, hemwick_lamp_id+6000, hemwick_lamp_kindle);
+    InitializeEvent(hemwick_lamp_offset, 8300, hemwick_lamp_id+2000, -1, hemwick_lamp_kindle, hemwick_lamp_id+6000,  hemwick_lamp_id+3000)
     
-    if(EventFlag(witches_defeat+13) && !EventFlag(witches_defeat-1)) {
-        if (EventFlag(witches_defeat-2)) {
-            SetEventFlag(witches_defeat-2, OFF);
-            MoveBloodstainAndDroppedItems(witches_region, witches_lamp_id+4000);
+    if(EventFlag(witches_rematch_cleanup) && !EventFlag(witches_auto_rematch)) {
+        if (EventFlag(witches_rematch_death_occurred)) {
+            SetEventFlag(witches_rematch_death_occurred, OFF);
+            MoveBloodstainAndDroppedItems(witches_region, witches_lamp_spawn_region);
         }
-        SetEventFlag(witches_defeat+13, OFF);
+        SetEventFlag(witches_rematch_cleanup, OFF);
         SetEventFlag(witches_defeat, ON);
-        InitializeEvent(witches_lamp_offset, 8300, witches_lamp_id+2000, witches_lamp_id+3000, witches_lamp_id+4000, area_id, block_id, 999, witches_lamp_id+6000, 12102202, witches_lamp_kindle);
+        InitializeEvent(witches_lamp_offset, 8300, witches_lamp_id+2000, 999, witches_lamp_kindle, witches_lamp_id+6000,  witches_lamp_id+3000);
+        DummyPlayCutsceneAndWarpPlayer(witches_lamp_id+4000, area_id, block_id);
     }
-    else if (EventFlag(witches_defeat+12) || EventFlag(witches_defeat-1)) {
-        if (EventFlag(witches_defeat-2)) {
-            SetEventFlag(witches_defeat-2, OFF);
-            MoveBloodstainAndDroppedItems(witches_region, witches_lamp_id+5000);
+    else if (EventFlag(witches_rematch_started) || EventFlag(witches_auto_rematch)) {
+        if (EventFlag(witches_rematch_death_occurred)) {
+            SetEventFlag(witches_rematch_death_occurred, OFF);
+            MoveBloodstainAndDroppedItems(witches_region, witches_rematch_start_region);
         }
         SetEventFlag(witches_defeat, OFF);
         SetEventFlag(witches_defeat+2, OFF);
         SetEventFlag(witches_defeat+3, OFF);
-        SetEventFlag(witches_defeat+12, OFF);
-        SetEventFlag(witches_defeat+13, ON);
-        SetEventFlag(witches_defeat-1, OFF);
+        SetEventFlag(witches_rematch_started, OFF);
+        SetEventFlag(witches_rematch_cleanup, ON);
+        SetEventFlag(witches_auto_rematch, OFF);
         SetEventFlag(8900+witches_offset, ON);
-        InitializeEvent(witches_lamp_offset, 8300, witches_lamp_id+2000, witches_lamp_id+3000, witches_lamp_id+5000, area_id, block_id, -1, witches_lamp_id+6000, 12102202, witches_lamp_kindle);
+        InitializeEvent(witches_lamp_offset, 8300, witches_lamp_id+2000, -1, witches_lamp_kindle, witches_lamp_id+6000,  witches_lamp_id+3000);
     }
     else {
-        InitializeEvent(witches_lamp_offset, 8300, witches_lamp_id+2000, witches_lamp_id+3000, witches_lamp_id+4000, area_id, block_id, -1, witches_lamp_id+6000, 12102202, witches_lamp_kindle);
+        InitializeEvent(witches_lamp_offset, 8300, witches_lamp_id+2000, -1, witches_lamp_kindle, witches_lamp_id+6000,  witches_lamp_id+3000);
     }
     
-    InitializeEvent(witches_offset, 12102070, witches_defeat+13, 0, 7418, witches_id, witches_id2);
+    InitializeEvent(witches_offset, 12102070, witches_rematch_cleanup, 0, 7418, witches_id, witches_id2);
     
-    InitializeEvent(witches_offset, 8900, witches_defeat-1, witches_lamp_id+1000, witches_defeat-2);
-    InitializeEvent(witches_offset, 7700, witches_defeat+11, witches_defeat+12, witches_lamp_id+1000, 822000);
+    InitializeEvent(witches_offset, 8900, witches_auto_rematch, witches_lamp_spawn_point, witches_rematch_death_occurred, 0, 0, witches_rematch_start_region, area_id, block_id);
+    InitializeEvent(witches_offset, 7700, witches_rematch_triggered, witches_rematch_started, witches_lamp_spawn_point, 822000);
     
     InitializeEvent(1200, 12107000, 72111200, 2201950, 2412950);
     InitializeEvent(1201, 12107000, 72111201, 2201950, 2412951);
@@ -677,6 +689,7 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.Weapon, 52, PlayLogMultiplayerType.HostOnly);
         ParameterOutput(PlayerPlayLogParameter.Armor, 52, PlayLogMultiplayerType.HostOnly);
         if (EventFlag(witches_defeat+13)) {
+            AwardItemLot(17020);
             InitializeEvent(witches_offset, 7800, witches_lamp_id+1000, 822000);
         }
         EndEvent();
@@ -843,6 +856,9 @@ L3:
     AdaptHpchangingSpEffectToNPCPartOfTarget(2200800);
     Goto(L4);
 L4:
+    if (EventFlag(witches_defeat+13)) {
+        WaitFixedTimeSeconds(2);
+    }
     SetCharacterAIState(2200800, Enabled);
     DisplayBossHealthBar(Enabled, 2200800, 0, 210000);
     CreatePlaylog(88);

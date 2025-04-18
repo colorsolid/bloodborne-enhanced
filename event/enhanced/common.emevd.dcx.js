@@ -9,14 +9,22 @@
 
 // constructor
 $Event(0, Default, function() {
+    //BatchSetEventFlags(15000000, 40000000, ON);
+    //SetEventFlag(21, ON);
     SetEventFlag(12102065, OFF);
     InitializeEvent(0, 12102037, 0);
+    
+    // SetSpEffect(10000, 1330, false);
+    
+    //RemoveItemFromPlayer(ItemType.Goods, 4002, 1);
+    
+    InitializeEvent(0, 8410, 0); // rite of kindling failsafe
+    InitializeEvent(0, 8411, 0); // remove right on deactivate
+    //InitializeEvent(0, 8412, 0); // test
     
     SetEventFlag(1509, OFF);
     SetEventFlag(1510, OFF);
     SetEventFlag(12100761, OFF); // re-enable rest in the menu
-    
-    SetSpEffect(10000, 8039, false);
     
     InitializeEvent(0, 12101000, 4110, 2100211, 2561);
     InitializeEvent(1, 12101000, 4111, 2100211, 3330);
@@ -602,6 +610,200 @@ L1:
     NoOp();
 });
 
+// initialize lamp settings
+$Event(8400, Default, function() {
+    // prevent lamp deactivation
+    if (!EventFlag(12100968) && !EventFlag(12100868)) {
+        SetEventFlag(12100968, ON); // off
+    }
+    
+    // auto refill vials & bullets
+    if (!EventFlag(12100962) && !EventFlag(12100862)) {
+        SetEventFlag(12100862, ON); // on
+    }
+    
+    // item drop hunt
+    if (!EventFlag(12100955) && !EventFlag(12100855)) {
+        SetEventFlag(12100855, ON); // on
+    }
+    
+    // rest
+    if (!EventFlag(12100961) && !EventFlag(12100861)) {
+        SetEventFlag(12100961, ON); // off
+    }
+    
+    // auto rest
+    if (!EventFlag(12100958) && !EventFlag(12100858)) {
+        SetEventFlag(12100958, ON); // off
+    }
+    
+    // quick warp to boss
+    if (!EventFlag(12100957) && !EventFlag(12100857)) {
+        SetEventFlag(12100857, ON); // on
+    }
+    
+    // lamp menu
+    if (!EventFlag(12100972) && !EventFlag(12100872)) {
+        SetEventFlag(12100872, ON); // on
+    }
+    
+    // warp
+    if (!EventFlag(12100980) && !EventFlag(12100880)) {
+        SetEventFlag(12100880, ON); // on
+    }
+    
+    // level up
+    if (!EventFlag(12100979) && !EventFlag(12100879)) {
+        SetEventFlag(12100879, ON); // on
+    }
+    
+    // workshop
+    if (!EventFlag(12100978) && !EventFlag(12100878)) {
+        SetEventFlag(12100878, ON); // on
+    }
+    
+    // memory alter
+    if (!EventFlag(12100977) && !EventFlag(12100877)) {
+        SetEventFlag(12100877, ON); // on
+    }
+    
+    // storage
+    if (!EventFlag(12100976) && !EventFlag(12100876)) {
+        SetEventFlag(12100876, ON); // on
+    }
+    
+    // messengers
+    if (!EventFlag(12100975) && !EventFlag(12100875)) {
+        SetEventFlag(12100875, ON); // on
+    }
+    
+    // change appearance
+    if (!EventFlag(12100974) && !EventFlag(12100874)) {
+        SetEventFlag(12100874, ON); // on
+    }
+    
+    // boss rematches
+    if (!EventFlag(12100967) && !EventFlag(12100867)) {
+        SetEventFlag(12100867, ON); // on
+    }
+});
+
+// initialize lamp settings 2
+$Event(8401, Default, function() {
+    // enable Iosefka lamp from start
+    if (!EventFlag(12100953) && !EventFlag(12100853)) {
+        SetEventFlag(12100853, ON); // on
+    }
+    
+    // kindling
+    if (!EventFlag(12100951) && !EventFlag(12100851)) {
+        SetEventFlag(12100851, ON); // on
+    }
+});
+
+// initialize broken lamp settings
+$Event(8405, Default, function() {
+    // broken lamp
+    if (!EventFlag(12100965) && !EventFlag(12100865)) {
+        SetEventFlag(12100865, ON); // on
+    }
+    
+    // broken lamp respawn location on victory and hunter's mark - dream or lamp
+    if (!EventFlag(12100963) && !EventFlag(12100863)) {
+        SetEventFlag(12100963, ON); // dream
+    }
+    
+    // broken lamp respawn location on death - dream or lamp
+    if (!EventFlag(12100959) && !EventFlag(12100859)) {
+        SetEventFlag(12100959, ON); // dream
+    }
+});
+
+// initialize other settings
+$Event(8406, Default, function() {
+    // prevent auto ng+
+    if (!EventFlag(12100973) && !EventFlag(12100873)) {
+        SetEventFlag(12100873, ON); // on
+    }
+    
+    // stocked shop
+    if (!EventFlag(12100971) && !EventFlag(12100871)) {
+        SetEventFlag(12100871, ON); // on
+    }
+    
+    // rematch death - end rematch or restart
+    if (!EventFlag(12100964) && !EventFlag(12100864)) {
+        SetEventFlag(12100864, ON); // end
+    }
+    
+    // rematch cutscenes
+    if (!EventFlag(12100966) && !EventFlag(12100866)) {
+        SetEventFlag(12100966, ON); // off
+    }
+    
+    // auto unlock chalice doors
+    if (!EventFlag(12100960) && !EventFlag(12100860)) {
+        SetEventFlag(12100860, ON); // on
+    }
+    
+    // random time
+    if (!EventFlag(12100956) && !EventFlag(12100856)) {
+        SetEventFlag(12100856, ON); // on
+    }
+    
+    // doll gesture
+    if (!EventFlag(12100954) && !EventFlag(12100854)) {
+        SetEventFlag(12100954, ON); // off
+    }
+    
+    // rematch scaling
+    if (!EventFlag(12100952) && !EventFlag(12100852)) {
+        SetEventFlag(12100952, ON); // off
+    }
+    
+    // bridge door
+    if (!EventFlag(12100949) && !EventFlag(12100849)) {
+        SetEventFlag(12100949, ON); // off
+    }
+    
+    // unlock lamps
+    SetEventFlag(12102301, OFF);
+    
+    // unlock shortcuts
+    SetEventFlag(12102311, OFF);
+    
+    // game effect / dark fog
+    if (!AnyBatchEventFlags(12102033, 12102036)) {
+        SetEventFlag(12102033, OFF);
+        SetEventFlag(12102034, ON);
+        SetEventFlag(12102035, OFF);
+        SetEventFlag(12102036, OFF);
+    }
+    
+    // increase cycle
+    if (!AnyBatchEventFlags(12102022, 12102028)) {
+        SetEventFlag(12102022, ON);
+        SetEventFlag(12102023, OFF);
+        SetEventFlag(12102024, OFF);
+        SetEventFlag(12102025, OFF);
+        SetEventFlag(12102026, OFF);
+        SetEventFlag(12102027, OFF);
+        SetEventFlag(12102028, OFF);
+    }
+});
+
+// Lantern lights up when passing area_XX
+$Event(12101602, Default, function(X0_4, X4_4) {
+    CreateObjectfollowingSFX(X4_4, 200, 8020);
+    ForceAnimationPlayback(X4_4, 200, true, true, false);
+    if (!ThisEventSlot()) {
+        WaitFor(InArea(10000, X0_4));
+    }
+    ForceAnimationPlayback(X4_4, 1000000, false, true, false);
+    CreateObjectfollowingSFX(X4_4, 100, 8023);
+    ForceAnimationPlayback(X4_4, 1000100, true, true, false);
+});
+
 // activate all lamps
 $Event(12102200, Default, function() {
     EndIf(ThisEvent());
@@ -991,84 +1193,90 @@ $Event(12102043, Default, function() {
 // rematch scaling
 // boss_rematch_flag, boss_rematch_flag2, speffect_id, boss_id, boss_id2, boss_id3
 $Event(12102070, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4, X20_4) {
+    const boss_rematch_flag = X0_4;
+    const boss_distorted_rematch_flag = X4_4;
+    const sp_effect_id = X8_4;
+    const boss1_id = X12_4;
+    const boss2_id = X16_4;
+    const boss3_id = X20_4;
     EndIf(EventFlag(12100952));
-    WaitFor(EventFlag(X0_4) || (X4_4 != 0 && EventFlag(X4_4)));
-    WaitFor(CharacterBackreadStatus(X12_4));
+    WaitFor(EventFlag(boss_rematch_flag) || (boss_distorted_rematch_flag > 0 && EventFlag(boss_distorted_rematch_flag)));
+    WaitFor(CharacterBackreadStatus(boss1_id));
     if (GameCycle() == 0) {
-        SetSpEffect(X12_4, X8_4, false);
-        if (X16_4 != 0) {
-            WaitFor(CharacterBackreadStatus(X16_4));
-            SetSpEffect(X16_4, X8_4, false);
+        SetSpEffect(boss1_id, sp_effect_id, false);
+        if (boss2_id != 0) {
+            WaitFor(CharacterBackreadStatus(boss2_id));
+            SetSpEffect(boss2_id, sp_effect_id, false);
         }
-        if (X20_4 != 0) {
-            WaitFor(CharacterBackreadStatus(X20_4));
-            SetSpEffect(X20_4, X8_4, false);
+        if (boss3_id != 0) {
+            WaitFor(CharacterBackreadStatus(boss3_id));
+            SetSpEffect(boss3_id, sp_effect_id, false);
         }
     }
     else if (GameCycle() == 1) {
-        SetSpEffect(X12_4, 7465, false);
-        if (X16_4 != 0) {
-            WaitFor(CharacterBackreadStatus(X16_4));
-            SetSpEffect(X16_4, 7465, false);
+        SetSpEffect(boss1_id, 7465, false);
+        if (boss2_id != 0) {
+            WaitFor(CharacterBackreadStatus(boss2_id));
+            SetSpEffect(boss2_id, 7465, false);
         }
-        if (X20_4 != 0) {
-            WaitFor(CharacterBackreadStatus(X20_4));
-            SetSpEffect(X20_4, 7465, false);
+        if (boss3_id != 0) {
+            WaitFor(CharacterBackreadStatus(boss3_id));
+            SetSpEffect(boss3_id, 7465, false);
         }
     }
     else if (GameCycle() == 2) {
-        SetSpEffect(X12_4, 7466, false);
-        if (X16_4 != 0) {
-            WaitFor(CharacterBackreadStatus(X16_4));
-            SetSpEffect(X16_4, 7466, false);
+        SetSpEffect(boss1_id, 7466, false);
+        if (boss2_id != 0) {
+            WaitFor(CharacterBackreadStatus(boss2_id));
+            SetSpEffect(boss2_id, 7466, false);
         }
-        if (X20_4 != 0) {
-            WaitFor(CharacterBackreadStatus(X20_4));
-            SetSpEffect(X20_4, 7466, false);
+        if (boss3_id != 0) {
+            WaitFor(CharacterBackreadStatus(boss3_id));
+            SetSpEffect(boss3_id, 7466, false);
         }
     }
     else if (GameCycle() == 3) {
-        SetSpEffect(X12_4, 7467, false);
-        if (X16_4 != 0) {
-            WaitFor(CharacterBackreadStatus(X16_4));
-            SetSpEffect(X16_4, 7467, false);
+        SetSpEffect(boss1_id, 7467, false);
+        if (boss2_id != 0) {
+            WaitFor(CharacterBackreadStatus(boss2_id));
+            SetSpEffect(boss2_id, 7467, false);
         }
-        if (X20_4 != 0) {
-            WaitFor(CharacterBackreadStatus(X20_4));
-            SetSpEffect(X20_4, 7467, false);
+        if (boss3_id != 0) {
+            WaitFor(CharacterBackreadStatus(boss3_id));
+            SetSpEffect(boss3_id, 7467, false);
         }
     }
     else if (GameCycle() == 4) {
-        SetSpEffect(X12_4, 7468, false);
-        if (X16_4 != 0) {
-            WaitFor(CharacterBackreadStatus(X16_4));
-            SetSpEffect(X16_4, 7468, false);
+        SetSpEffect(boss1_id, 7468, false);
+        if (boss2_id != 0) {
+            WaitFor(CharacterBackreadStatus(boss2_id));
+            SetSpEffect(boss2_id, 7468, false);
         }
-        if (X20_4 != 0) {
-            WaitFor(CharacterBackreadStatus(X20_4));
-            SetSpEffect(X20_4, 7468, false);
+        if (boss3_id != 0) {
+            WaitFor(CharacterBackreadStatus(boss3_id));
+            SetSpEffect(boss3_id, 7468, false);
         }
     }
     else if (GameCycle() == 5) {
-        SetSpEffect(X12_4, 7469, false);
-        if (X16_4 != 0) {
-            WaitFor(CharacterBackreadStatus(X16_4));
-            SetSpEffect(X16_4, 7469, false);
+        SetSpEffect(boss1_id, 7469, false);
+        if (boss2_id != 0) {
+            WaitFor(CharacterBackreadStatus(boss2_id));
+            SetSpEffect(boss2_id, 7469, false);
         }
-        if (X20_4 != 0) {
-            WaitFor(CharacterBackreadStatus(X20_4));
-            SetSpEffect(X20_4, 7469, false);
+        if (boss3_id != 0) {
+            WaitFor(CharacterBackreadStatus(boss3_id));
+            SetSpEffect(boss3_id, 7469, false);
         }
     }
     else if (GameCycle() >= 6) {
-        SetSpEffect(X12_4, 7470, false);
-        if (X16_4 != 0) {
-            WaitFor(CharacterBackreadStatus(X16_4));
-            SetSpEffect(X16_4, 7470, false);
+        SetSpEffect(boss1_id, 7470, false);
+        if (boss2_id != 0) {
+            WaitFor(CharacterBackreadStatus(boss2_id));
+            SetSpEffect(boss2_id, 7470, false);
         }
-        if (X20_4 != 0) {
-            WaitFor(CharacterBackreadStatus(X20_4));
-            SetSpEffect(X20_4, 7470, false);
+        if (boss3_id != 0) {
+            WaitFor(CharacterBackreadStatus(boss3_id));
+            SetSpEffect(boss3_id, 7470, false);
         }
     }
     //RestartEvent();
@@ -1084,7 +1292,7 @@ $Event(13100000, Default, function() {
     // 5679 fire back
     // 5703 vial heal
     // 5718 red leg
-    SetSpEffect(10000, 421, false);
+    // SetSpEffect(10000, 421, false);
 });
 
 // Trading messenger_Lineup expansion_XX
@@ -1095,9 +1303,6 @@ $Event(12101000, Default, function(X0_4, X4_4, X8_1, X9_1) {
     if (!EventFlag(12100004)) {
         ChangeCharacterDispmask(X4_4, X8_1, OFF);
         ChangeCharacterDispmask(X4_4, X9_1, OFF);
-    }
-    else {
-        // DisplayBanner(TextBannerType.BlackPhantomDeath);
     }
     WaitFor(PlayerHasItem(ItemType.Goods, X0_4));
     if (!EventFlag(12100004)) {
@@ -1343,186 +1548,45 @@ $Event(12105024, Restart, function() {
     RestartEvent();
 });
 
-// initialize lamp settings
-$Event(8400, Default, function() {
-    // prevent lamp deactivation
-    if (!EventFlag(12100968) && !EventFlag(12100868)) {
-        SetEventFlag(12100968, ON); // off
-    }
-    
-    // auto refill vials & bullets
-    if (!EventFlag(12100962) && !EventFlag(12100862)) {
-        SetEventFlag(12100862, ON); // on
-    }
-    
-    // item drop hunt
-    if (!EventFlag(12100955) && !EventFlag(12100855)) {
-        SetEventFlag(12100855, ON); // on
-    }
-    
-    // rest
-    if (!EventFlag(12100961) && !EventFlag(12100861)) {
-        SetEventFlag(12100961, ON); // off
-    }
-    
-    // auto rest
-    if (!EventFlag(12100958) && !EventFlag(12100858)) {
-        SetEventFlag(12100958, ON); // off
-    }
-    
-    // quick warp to boss
-    if (!EventFlag(12100957) && !EventFlag(12100857)) {
-        SetEventFlag(12100857, ON); // on
-    }
-    
-    // lamp menu
-    if (!EventFlag(12100972) && !EventFlag(12100872)) {
-        SetEventFlag(12100872, ON); // on
-    }
-    
-    // warp
-    if (!EventFlag(12100980) && !EventFlag(12100880)) {
-        SetEventFlag(12100880, ON); // on
-    }
-    
-    // level up
-    if (!EventFlag(12100979) && !EventFlag(12100879)) {
-        SetEventFlag(12100879, ON); // on
-    }
-    
-    // workshop
-    if (!EventFlag(12100978) && !EventFlag(12100878)) {
-        SetEventFlag(12100878, ON); // on
-    }
-    
-    // memory alter
-    if (!EventFlag(12100977) && !EventFlag(12100877)) {
-        SetEventFlag(12100877, ON); // on
-    }
-    
-    // storage
-    if (!EventFlag(12100976) && !EventFlag(12100876)) {
-        SetEventFlag(12100876, ON); // on
-    }
-    
-    // messengers
-    if (!EventFlag(12100975) && !EventFlag(12100875)) {
-        SetEventFlag(12100875, ON); // on
-    }
-    
-    // change appearance
-    if (!EventFlag(12100974) && !EventFlag(12100874)) {
-        SetEventFlag(12100874, ON); // on
-    }
-    
-    // boss rematches
-    if (!EventFlag(12100967) && !EventFlag(12100867)) {
-        SetEventFlag(12100867, ON); // on
-    }
+// rite of kindling failsafe
+$Event(8410, Default, function() {
+    SetEventFlag(8413, OFF);
+    WaitFor(EventFlag(12100851) && EventFlag(12701800) && EventFlag(8413) && !PlayerHasItemIncludingBBox(ItemType.Goods, 4002));
+    AwardItemLot(2700970);
+    RestartEvent();
 });
 
-// initialize lamp settings 2
-$Event(8401, Default, function() {
-    // enable Iosefka lamp from start
-    if (!EventFlag(12100953) && !EventFlag(12100853)) {
-        SetEventFlag(12100853, ON); // on
-    }
+// remove rite of kindling if disabled
+$Event(8411, Default, function() {
+    WaitFor(EventFlag(12100951) && PlayerHasItemIncludingBBox(ItemType.Goods, 4002));
+    RemoveItemFromPlayer(ItemType.Goods, 4002, 1);
+    RestartEvent();
 });
 
-// initialize broken lamp settings
-$Event(8405, Default, function() {
-    // broken lamp
-    if (!EventFlag(12100965) && !EventFlag(12100865)) {
-        SetEventFlag(12100865, ON); // on
-    }
+$Event(8412, Default, function() {
+    //give souls
+    SetSpEffect(10000, 126, false);
+    WaitFixedTimeFrames(1);
+    ClearSpEffect(10000, 126);
     
-    // broken lamp respawn location on victory and hunter's mark - dream or lamp
-    if (!EventFlag(12100963) && !EventFlag(12100863)) {
-        SetEventFlag(12100963, ON); // dream
-    }
-    
-    // broken lamp respawn location on death - dream or lamp
-    if (!EventFlag(12100959) && !EventFlag(12100859)) {
-        SetEventFlag(12100959, ON); // dream
-    }
-});
-
-// initialize other settings
-$Event(8406, Default, function() {
-    // prevent auto ng+
-    if (!EventFlag(12100973) && !EventFlag(12100873)) {
-        SetEventFlag(12100873, ON); // on
-    }
-    
-    // stocked shop
-    if (!EventFlag(12100971) && !EventFlag(12100871)) {
-        SetEventFlag(12100871, ON); // on
-    }
-    
-    // rematch death - end rematch or restart
-    if (!EventFlag(12100964) && !EventFlag(12100864)) {
-        SetEventFlag(12100864, ON); // end
-    }
-    
-    // rematch cutscenes
-    if (!EventFlag(12100966) && !EventFlag(12100866)) {
-        SetEventFlag(12100966, ON); // off
-    }
-    
-    // auto unlock chalice doors
-    if (!EventFlag(12100960) && !EventFlag(12100860)) {
-        SetEventFlag(12100860, ON); // on
-    }
-    
-    // random time
-    if (!EventFlag(12100956) && !EventFlag(12100856)) {
-        SetEventFlag(12100856, ON); // on
-    }
-    
-    // doll gesture
-    if (!EventFlag(12100954) && !EventFlag(12100854)) {
-        SetEventFlag(12100954, ON); // off
-    }
-    
-    // rematch scaling
-    if (!EventFlag(12100952) && !EventFlag(12100852)) {
-        SetEventFlag(12100952, ON); // off
-    }
-    
-    // kindling
-    if (!EventFlag(12100951) && !EventFlag(12100851)) {
-        SetEventFlag(12100851, ON); // on
-    }
-    
-    // unlock lamps
-    SetEventFlag(12102301, OFF);
-    
-    // unlock shortcuts
-    SetEventFlag(12102311, OFF);
-    
-    // game effect / dark fog
-    if (!AnyBatchEventFlags(12102033, 12102036)) {
-        SetEventFlag(12102033, OFF);
-        SetEventFlag(12102034, ON);
-        SetEventFlag(12102035, OFF);
-        SetEventFlag(12102036, OFF);
-    }
-    
-    // increase cycle
-    if (!AnyBatchEventFlags(12102022, 12102028)) {
-        SetEventFlag(12102022, ON);
-        SetEventFlag(12102023, OFF);
-        SetEventFlag(12102024, OFF);
-        SetEventFlag(12102025, OFF);
-        SetEventFlag(12102026, OFF);
-        SetEventFlag(12102027, OFF);
-        SetEventFlag(12102028, OFF);
-    }
+    //EventValueOperation(12308049, 1, 1, 0, 0, CalculationType.Assign);
+    //
+    //const itemIds = [
+    //    4020, 4019, 4003, 4021, 4017, 4011, 4009, 4014, 4012, 4013, 4000,
+    //    4312, 4006, 4305, 4304, 4300, 4310, 4018, 4015, 4308, 4010, 4330,
+    //    4117, 4119, 4111, 4120, 4113, 4112, 4115, 4110, 4118, 4114, 4116,
+    //    4102, 4103, 4104, 4002, 4105
+    //];
+    //const baseFlag = 12308050;    
+    //for (let i = 0; i < 38; i++) {
+    //    DirectlyGivePlayerItem(ItemType.Goods, itemIds[i], 12308049, 1);
+    //}
 });
 
 // change effect
 $Event(12102032, Default, function() {
     //EndEvent();
+    EndIf(EventFlag(12601815)); // Wet Nurse distorted
     ClearSpEffect(10000, 5680);
     WaitFixedTimeSeconds(0.5);
     if (EventFlag(12102033)) {
@@ -1548,20 +1612,21 @@ $Event(12102032, Default, function() {
 // dark fog - random time
 $Event(12102037, Default, function() {
     WaitFor(EventFlag(12102036));
+    WaitFixedTimeSeconds(1);
     BatchSetEventFlags(12102060, 12102062, OFF);
     SetEventFlag(12102065, OFF);
     RandomlySetEventFlagInRange(12102060, 12102062, ON);
-    if (!EventFlag(12102060)) {
+    if (!EventFlag(12102060) || CharacterHasSpEffect(10000, 5680)) {
         ClearSpEffect(10000, 5680);
-        WaitFor(RandomElapsedSeconds(60, 120));
+        WaitFor(RandomElapsedSeconds(300, 900));
         RestartEvent();
     }
     SetSpEffect(10000, 5680, false);
-    WaitFor(RandomElapsedSeconds(30, 90));
+    WaitFor(RandomElapsedSeconds(120, 300));
     SetEventFlag(12102065, ON);
     WaitFixedTimeSeconds(3);
     SetEventFlag(12102065, OFF);
-    WaitFor(RandomElapsedSeconds(30, 90));
+    WaitFor(RandomElapsedSeconds(120, 300));
     RestartEvent();
 });
 
@@ -2957,7 +3022,7 @@ $Event(6816, Default, function() {
 $Event(7000, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4) {
     SetNetworkSyncState(Disabled);
     ChangeCharacterEnableState(X0_4, Disabled);
-    DeactivateObject(X4_4, Disabled); // <----------------------- removed? not sure if that was intentional
+    DeactivateObject(X4_4, Disabled);
     WaitFor(CharacterBackreadStatus(X0_4));
     if (!EventFlag(X8_4)) {
         ChangeCharacterEnableState(X0_4, Disabled);
@@ -3028,6 +3093,12 @@ $Event(7300, Default, function(X0_4, X4_4) {
     SetEventFlag(X0_4, OFF);
 });
 
+// move bloodstain for rematches
+$Event(7500, Default, function(X0_4, X4_4) {
+    WaitFixedTimeSeconds(1);
+    MoveBloodstainAndDroppedItems(X0_4, X4_4);
+});
+
 // Multi Confinement Wall_XX
 $Event(7600, Default, function(X0_4, X4_4) {
     SetNetworkSyncState(Disabled);
@@ -3047,7 +3118,7 @@ $Event(7600, Default, function(X0_4, X4_4) {
 const effect_id = 1000030;
 
 // rematch boss triggered
-$Event(7700, Default, function(X0_4, X4_4, X8_4, X12_4) { // event_flag_11, event_flag_12, spawn_point
+$Event(7700, Default, function(X0_4, X4_4, X8_4, X12_4) { // event_flag_11, event_flag_12, spawn_point, fog_effect
     WaitFor(EventFlag(X0_4));
     SetEventFlag(X0_4, OFF);
     SetEventFlag(X4_4, ON);
@@ -3077,6 +3148,7 @@ $Event(7800, Default, function(X0_4, X4_4) {
     // SpawnOneshotSFX(TargetEntityType.Character, 10000, 15, effect_id);
     
     WaitFixedTimeFrames(59);
+    
     if (EventFlag(12100750) && EventFlag(12100963)) { // rematch started from broken lamp and return to dream enabled
         WarpPlayerToRespawnPoint(2102969);
     }
@@ -3113,27 +3185,34 @@ $Event(7900, Default, function(X0_4, X4_4, X8_1, X12_1, X16_4) {
 // kindle
 // this_event_slot, lamp_kindle_flag (12121100)
 $Event(8100, Default, function(X0_4, X4_4) {
-    SetEventFlag(X0_4, OFF);
+    const this_event_slot = X0_4;
+    const lamp_kindle_flag = X4_4;
+    SetEventFlag(this_event_slot, OFF);
     WaitFor(ThisEventSlot());
     if (PlayerInsightAmount() == 0) {
+        // no insight
         DisplayGenericDialog(200175, PromptType.OKCANCEL, NumberofOptions.OneButton, 10000, 3);
         RestartEvent();
     }
-    if (EventValue(X4_4, 2) == 3) {
-        DisplayGenericDialog(200171, PromptType.OKCANCEL, NumberofOptions.OneButton, 10000, 3);
+    if (EventValue(lamp_kindle_flag, 2) == 3) {
         // already maxed
+        DisplayGenericDialog(200171, PromptType.OKCANCEL, NumberofOptions.OneButton, 10000, 3);
     }
     else {
-        if (EventValue(X4_4, 2) == 1 && !PlayerHasItem(ItemType.Goods, 4002)) {
-            DisplayGenericDialog(200171, PromptType.OKCANCEL, NumberofOptions.OneButton, 10000, 3);
+        if (EventValue(lamp_kindle_flag, 2) == 1 && !PlayerHasItemIncludingBBox(ItemType.Goods, 4002)) {
+            // need rite of kindling
+            DisplayGenericDialog(200169, PromptType.OKCANCEL, NumberofOptions.OneButton, 10000, 3);
         }
         else {
-            SetSpEffect(10000, 4681, false);
-            DisplayGenericDialog(200170, PromptType.OKCANCEL, NumberofOptions.OneButton, 10000, 3);
-            //EventValueOperation(X4_4, 2, 1, 0, 1, CalculationType.Assign);
-            IncrementEventValue(X4_4, 2, 3);
-            if (EventValue(X4_4, 2) == 3) {
+            SetSpEffect(10000, 4681, false); // take insight
+            IncrementEventValue(lamp_kindle_flag, 2, 3);
+            if (EventValue(lamp_kindle_flag, 2) == 3) {
                 // max kindling reached
+                DisplayGenericDialog(200171, PromptType.OKCANCEL, NumberofOptions.OneButton, 10000, 3);
+            }
+            else {
+                // increased
+                DisplayGenericDialog(200170, PromptType.OKCANCEL, NumberofOptions.OneButton, 10000, 3);
             }
         }
     }
@@ -3141,11 +3220,20 @@ $Event(8100, Default, function(X0_4, X4_4) {
 });
 
 // reset statuses (poison, etc.) and restock bullets and vials
-// 900 = bullets, 1000 = vials
-//spawn_checker, hunt_region, lamp_spawn_region, area_id, block_id, bypass spawn_checker, hidden_region, value_flag
-$Event(8300, Default, function(X0_4, X4_4, X8_4, X12_1, X16_1, X20_4, X24_4, X28_4) {
-    // EndIf(EventFlag(12100962));
-    WaitFor(InArea(10000, X0_4) || EventFlag(1509) || EventFlag(X20_4));
+$Event(8300, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4) {
+    const spawn_checker_region = X0_4;
+    const bypass_spawn_checker = X4_4;
+    const lamp_kindle_flag = X8_4;
+    const hidden_region = X12_4;
+    const hunt_region = X16_4;
+    const kindling_enabled_flag = 12100851;
+    const hunt_enabled_flag = 12100855;
+    const restock_enabled_flag = 12100862;
+    kindling_enabled = EventFlag(kindling_enabled_flag);
+    hunt_enabled = EventFlag(hunt_enabled_flag);
+    restock_enabled = EventFlag(restock_enabled_flag);
+    
+    WaitFor(InArea(10000, spawn_checker_region) || EventFlag(1509) || EventFlag(bypass_spawn_checker));
     if (EventFlag(1509)) {
         EndEvent();
     }
@@ -3157,77 +3245,62 @@ $Event(8300, Default, function(X0_4, X4_4, X8_4, X12_1, X16_1, X20_4, X24_4, X28
     SetSpEffect(10000, 114, false);
     SetSpEffect(10000, 115, false);
     SetSpEffect(10000, 116, false);
-    if (EventFlag(12100862)) {
-        if (EventFlag(12100955)) { // hunt off
-            IssueShortWarpRequest(10000, TargetEntityType.Area, X24_4, -1);
-        } else {
-            IssueShortWarpRequest(10000, TargetEntityType.Area, X4_4, -1);
-        }
+    
+    if (restock_enabled.Passed) {
         
-        WaitFixedTimeFrames(1);
+        // EventValueOperation stores value in baseEventFlagId, the operand is only used if baseEventFlagIdOperand = 0
+        // baseEventFlagIdOperand or operand is applied to baseEventFlagId, e.g.
+        //     EventValueOperation(<10>, 8, 0, <2>, 8, CalculationType.Sub) == 8;
         
-        StoreItemAmountHeldInEventValue(ItemType.Goods, 900, 12104030, 8);
-        WaitFixedTimeFrames(1);
-        bullet_cond1 = EventValue(X28_4, 2) == 0 && EventValue(12104030, 8) < 5;
-        bullet_cond2 = EventValue(X28_4, 2) == 1 && EventValue(12104030, 8) < 10;
-        bullet_cond3 = EventValue(X28_4, 2) == 2 && EventValue(12104030, 8) < 15;
-        bullet_cond4 = EventValue(X28_4, 2) == 3;
-        if (bullet_cond1 || bullet_cond2 || bullet_cond3 || bullet_cond4) {
-            RemoveItemFromPlayer(ItemType.Goods, 900, 99);
-            WaitFixedTimeFrames(1);
-            EventValueOperation(12104040, 8, 1, 0, 0, CalculationType.Assign);
-            DirectlyGivePlayerItem(ItemType.Goods, 900, 12104040, 8);
-        }
-        if (EventValue(X28_4, 2) == 0 && EventValue(12104030, 8) < 5) {
-            EventValueOperation(12104040, 8, 4, 0, 0, CalculationType.Assign);
-            DirectlyGivePlayerItem(ItemType.Goods, 900, 12104040, 8);
-        }
-        else if (EventValue(X28_4, 2) == 1 && EventValue(12104030, 8) < 10) {
-            EventValueOperation(12104040, 8, 9, 0, 0, CalculationType.Assign);
-            DirectlyGivePlayerItem(ItemType.Goods, 900, 12104040, 8);
-        }
-        else if (EventValue(X28_4, 2) == 2 && EventValue(12104030, 8) < 15) {
-            EventValueOperation(12104040, 8, 14, 0, 0, CalculationType.Assign);
-            DirectlyGivePlayerItem(ItemType.Goods, 900, 12104040, 8);
-        }
-        else if (EventValue(X28_4, 2) == 3) {
-            EventValueOperation(12104040, 8, 99, 0, 0, CalculationType.Assign);
-            DirectlyGivePlayerItem(ItemType.Goods, 900, 12104040, 8);
-        }
-        
-        StoreItemAmountHeldInEventValue(ItemType.Goods, 1000, 12104030, 8);
-        WaitFixedTimeFrames(1);
-        vial_cond1 = EventValue(X28_4, 2) == 0 && EventValue(12104030, 8) < 5;
-        vial_cond2 = EventValue(X28_4, 2) == 1 && EventValue(12104030, 8) < 10;
-        vial_cond3 = EventValue(X28_4, 2) == 2 && EventValue(12104030, 8) < 15;
-        vial_cond4 = EventValue(X28_4, 2) == 3;
-        
-        if (vial_cond1 || vial_cond2 || vial_cond3 || vial_cond4) {
-            RemoveItemFromPlayer(ItemType.Goods, 1000, 99);
-            WaitFixedTimeFrames(1);
+        if (!EventFlag(kindling_enabled_flag) || EventValue(lamp_kindle_flag, 2) == 3) { // kindling disabled or full kindle
+            MoveBloodstainAndDroppedItems(spawn_checker_region, hunt_region);
+            RemoveItemFromPlayer(ItemType.Goods, 900, 255);
+            RemoveItemFromPlayer(ItemType.Goods, 1000, 255);
             EventValueOperation(12104050, 8, 1, 0, 0, CalculationType.Assign);
+            DirectlyGivePlayerItem(ItemType.Goods, 900, 12104050, 8);
             DirectlyGivePlayerItem(ItemType.Goods, 1000, 12104050, 8);
-        }
-        if (EventValue(X28_4, 2) == 0 && EventValue(12104030, 8) < 5) {
-            EventValueOperation(12104050, 8, 4, 0, 0, CalculationType.Assign);
+            EventValueOperation(12104050, 8, 255, 0, 0, CalculationType.Assign);
+            DirectlyGivePlayerItem(ItemType.Goods, 900, 12104050, 8);
             DirectlyGivePlayerItem(ItemType.Goods, 1000, 12104050, 8);
+            MoveBloodstainAndDroppedItems(spawn_checker_region, hidden_region);
+            MoveBloodstainAndDroppedItems(hunt_region, spawn_checker_region);
         }
-        else if (EventValue(X28_4, 2) == 1 && EventValue(12104030, 8) < 10) {
-            EventValueOperation(12104050, 8, 9, 0, 0, CalculationType.Assign);
-            DirectlyGivePlayerItem(ItemType.Goods, 1000, 12104050, 8);
+        else { // kindling enabled and not full kindle
+            StoreItemAmountHeldInEventValue(ItemType.Goods, 900, 12104030, 8);
+            StoreItemAmountHeldInEventValue(ItemType.Goods, 1000, 12104040, 8);
+            
+            if (EventValue(lamp_kindle_flag, 2) == 0 && EventValue(12104030, 8) < 5) {
+                EventValueOperation(12104050, 8, 5, 0, 0, CalculationType.Assign);
+                EventValueOperation(12104050, 8, 0, 12104030, 8, CalculationType.Sub);
+                DirectlyGivePlayerItem(ItemType.Goods, 900, 12104050, 8);
+            }
+            else if (EventValue(lamp_kindle_flag, 2) == 1 && EventValue(12104030, 8) < 10) {
+                EventValueOperation(12104050, 8, 10, 0, 0, CalculationType.Assign);
+                EventValueOperation(12104050, 8, 0, 12104030, 8, CalculationType.Sub);
+                DirectlyGivePlayerItem(ItemType.Goods, 900, 12104050, 8);
+            }
+            else if (EventValue(lamp_kindle_flag, 2) == 2 && EventValue(12104030, 8) < 15) {
+                EventValueOperation(12104050, 8, 15, 0, 0, CalculationType.Assign);
+                EventValueOperation(12104050, 8, 0, 12104030, 8, CalculationType.Sub);
+                DirectlyGivePlayerItem(ItemType.Goods, 900, 12104050, 8);
+            }
+            
+            if (EventValue(lamp_kindle_flag, 2) == 0 && EventValue(12104040, 8) < 5) {
+                EventValueOperation(12104050, 8, 5, 0, 0, CalculationType.Assign);
+                EventValueOperation(12104050, 8, 0, 12104040, 8, CalculationType.Sub);
+                DirectlyGivePlayerItem(ItemType.Goods, 1000, 12104050, 8);
+            }
+            else if (EventValue(lamp_kindle_flag, 2) == 1 && EventValue(12104040, 8) < 10) {
+                EventValueOperation(12104050, 8, 10, 0, 0, CalculationType.Assign);
+                EventValueOperation(12104050, 8, 0, 12104040, 8, CalculationType.Sub);
+                DirectlyGivePlayerItem(ItemType.Goods, 1000, 12104050, 8);
+            }
+            else if (EventValue(lamp_kindle_flag, 2) == 2 && EventValue(12104040, 8) < 15) {
+                EventValueOperation(12104050, 8, 15, 0, 0, CalculationType.Assign);
+                EventValueOperation(12104050, 8, 0, 12104040, 8, CalculationType.Sub);
+                DirectlyGivePlayerItem(ItemType.Goods, 1000, 12104050, 8);
+            }
         }
-        else if (EventValue(X28_4, 2) == 2 && EventValue(12104030, 8) < 15) {
-            EventValueOperation(12104050, 8, 14, 0, 0, CalculationType.Assign);
-            DirectlyGivePlayerItem(ItemType.Goods, 1000, 12104050, 8);
-        }
-        else if (EventValue(X28_4, 2) == 3) {
-            EventValueOperation(12104050, 8, 99, 0, 0, CalculationType.Assign);
-            DirectlyGivePlayerItem(ItemType.Goods, 1000, 12104050, 8);
-        }
-        WaitFixedTimeFrames(1);
-        DummyPlayCutsceneAndWarpPlayer(X8_4, X12_1, X16_1); // lamp spawn or rematch spawn
-        RequestCharacterAnimationReset(10000, Interpolation.Uninterpolated);
-        ForceAnimationPlayback(10000, 101200, false, false, true);
     }
 });
 
@@ -3282,26 +3355,36 @@ $Event(8800, Default, function(X0_4, X4_4, X8_4, X12_4) {
 });
 
 // EventFlag(12100964) // rematch on death is on
-// Auto restart rematch if dead
-$Event(8900, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4) { // defeat-1, respawn_point
+// InitializeEvent(cleric_beast_offset, 8900, cleric_beast_defeat-1, cleric_beast_lamp_id+1000, cleric_beast_defeat-2, 0, 0, cleric_beast_lamp_id+5000, area_id, block_id);
+// Auto restart rematch if dead + move player to rematch point
+$Event(8900, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4, X20_4, X24_1, X28_1) {
+    const auto_rematch_flag = X0_4;
+    const lamp_spawn_point = X4_4;
+    const rematch_death_occurred = X8_4;
+    const distorted_in_progress = X12_4;
+    const distorted_trigger = X16_4;
+    const rematch_start_region = X20_4;
+    const area_id = X24_1;
+    const block_id = X28_1;
     EndIf(!ThisEventSlot()); // game's state is not in rematch mode
+    DummyPlayCutsceneAndWarpPlayer(rematch_start_region, area_id, block_id);
     WaitFor(HPRatio(10000) <= 0);
-    if (X12_4 != 0 && EventFlag(X12_4)) {
-        SetEventFlag(X16_4, ON);
-    }
-    SetEventFlag(X8_4, ON);
+    SetEventFlag(rematch_death_occurred, ON); // used for moving bloodstain
     if (EventFlag(12100864)) { // auto rematch enabled
-        SetEventFlag(X0_4, ON);
+        if (distorted_in_progress != 0 && EventFlag(distorted_in_progress)) { // if distorted memory
+            SetEventFlag(distorted_trigger, ON);
+        }
+        SetEventFlag(auto_rematch_flag, ON);
         if (EventFlag(12100750) && EventFlag(12100963)) { // initiated from dream and death respawn location is dream
             SetEventFlag(12100850, ON); // flag to set respawn location back to dream
         }
-        SetPlayerRespawnPoint(X4_4);
+        SetPlayerRespawnPoint(lamp_spawn_point);
         SetEventFlag(8950, ON);
     } // auto rematch disabled
     else {
         EndIf(!EventFlag(12100650));
         if (EventFlag(12100859)) { // death respawn location is boss lamp
-            SetPlayerRespawnPoint(X4_4);
+            SetPlayerRespawnPoint(lamp_spawn_point);
         }
         else {
             SetPlayerRespawnPoint(2102969); // respawn at broken lamp

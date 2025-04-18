@@ -12,14 +12,14 @@ const block_id = 0;
 
 const old_yharnam_lamp_offset = 5;
 const old_yharnam_lamp_id = 2301950;
-const old_yharnam_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10);
+const old_yharnam_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10);
 
 const bsb_offset = 3;
 const bsb_lamp_offset = 6;
 const bsb_defeat = 12301800;
 const bsb_return = 2301899;
 const bsb_lamp_id = 2301951;
-const bsb_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 2;
+const bsb_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10) + 2;
 const bsb_region = 2302802;
 const bsb_id = 2300800;
 
@@ -28,7 +28,7 @@ const paarl_lamp_offset = 7;
 const paarl_defeat = 12301700;
 const paarl_return = 2301799;
 const paarl_lamp_id = 2301952;
-const paarl_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 4;
+const paarl_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10) + 4;
 const paarl_region = 2302812;
 const paarl_id = 2300810;
 
@@ -37,6 +37,7 @@ const paarl_id = 2300810;
     
 // constructor
 $Event(0, Default, function() {
+    InitializeEvent(0, 12302300, 0);
     SetEventFlag(8900+bsb_offset, OFF);
     SetEventFlag(8900+paarl_offset, OFF);
     
@@ -51,21 +52,22 @@ $Event(0, Default, function() {
     InitializeEvent(bsb_lamp_offset, 8100, 8100+bsb_lamp_offset, bsb_lamp_kindle);
     InitializeEvent(paarl_lamp_offset, 8100, 8100+paarl_lamp_offset, paarl_lamp_kindle);
     
-    InitializeEvent(old_yharnam_lamp_offset, 8300, old_yharnam_lamp_id+2000, old_yharnam_lamp_id+3000, old_yharnam_lamp_id+4000, area_id, block_id, -1, old_yharnam_lamp_id+6000, old_yharnam_lamp_kindle);
+    InitializeEvent(old_yharnam_lamp_offset, 8300, old_yharnam_lamp_id+2000, -1, old_yharnam_lamp_kindle, old_yharnam_lamp_id+6000, old_yharnam_lamp_id+3000)
     
     if(EventFlag(bsb_defeat+13) && !EventFlag(bsb_defeat-1)) {
         if (EventFlag(bsb_defeat-2)) {
             SetEventFlag(bsb_defeat-2, OFF);
-            MoveBloodstainAndDroppedItems(bsb_region, bsb_lamp_id+4000);
+            InitializeEvent(bsb_offset, 7500, bsb_region, bsb_lamp_id+4000);
         }
         SetEventFlag(bsb_defeat+13, OFF);
         SetEventFlag(bsb_defeat, ON);
-        InitializeEvent(bsb_lamp_offset, 8300, bsb_lamp_id+2000, bsb_lamp_id+3000, bsb_lamp_id+4000, area_id, block_id, 999, bsb_lamp_id+6000, bsb_lamp_kindle);
+        InitializeEvent(bsb_lamp_offset, 8300, bsb_lamp_id+2000, 999, bsb_lamp_kindle, bsb_lamp_id+6000, bsb_lamp_id+3000);
+        DummyPlayCutsceneAndWarpPlayer(bsb_lamp_id+4000, area_id, block_id);
     }
     else if (EventFlag(bsb_defeat+12) || EventFlag(bsb_defeat-1)) {
         if (EventFlag(bsb_defeat-2)) {
             SetEventFlag(bsb_defeat-2, OFF);
-            MoveBloodstainAndDroppedItems(bsb_region, bsb_lamp_id+5000);
+            InitializeEvent(bsb_offset, 7500, bsb_region, bsb_lamp_id+5000);
         }
         SetEventFlag(bsb_defeat, OFF);
         SetEventFlag(bsb_defeat+2, OFF);
@@ -73,25 +75,26 @@ $Event(0, Default, function() {
         SetEventFlag(bsb_defeat+13, ON);
         SetEventFlag(bsb_defeat-1, OFF);
         SetEventFlag(8900+bsb_offset, ON);
-        InitializeEvent(bsb_lamp_offset, 8300, bsb_lamp_id+2000, bsb_lamp_id+3000, bsb_lamp_id+5000, area_id, block_id, -1, bsb_lamp_id+6000, bsb_lamp_kindle);
+        InitializeEvent(bsb_lamp_offset, 8300, bsb_lamp_id+2000, -1, bsb_lamp_kindle, bsb_lamp_id+6000, bsb_lamp_id+3000);
     }
     else {
-        InitializeEvent(bsb_lamp_offset, 8300, bsb_lamp_id+2000, bsb_lamp_id+3000, bsb_lamp_id+4000, area_id, block_id, -1, bsb_lamp_id+6000, bsb_lamp_kindle);
+        InitializeEvent(bsb_lamp_offset, 8300, bsb_lamp_id+2000, -1, bsb_lamp_kindle, bsb_lamp_id+6000, bsb_lamp_id+3000);
     }
     
     if(EventFlag(paarl_defeat+13) && !EventFlag(paarl_defeat-1)) {
         if (EventFlag(paarl_defeat-2)) {
             SetEventFlag(paarl_defeat-2, OFF);
-            MoveBloodstainAndDroppedItems(paarl_region, paarl_lamp_id+4000);
+            InitializeEvent(paarl_offset, 7500, paarl_region, paarl_lamp_id+4000);
         }
         SetEventFlag(paarl_defeat+13, OFF);
         SetEventFlag(paarl_defeat, ON);
-        InitializeEvent(paarl_lamp_offset, 8300, paarl_lamp_id+2000, paarl_lamp_id+3000, paarl_lamp_id+4000, area_id, block_id, 999, paarl_lamp_id+6000, paarl_lamp_kindle);
+        InitializeEvent(paarl_lamp_offset, 8300, paarl_lamp_id+2000, 999, paarl_lamp_kindle, paarl_lamp_id+6000, paarl_lamp_id+3000);
+        DummyPlayCutsceneAndWarpPlayer(paarl_lamp_id+4000, area_id, block_id);
     }
     else if (EventFlag(paarl_defeat+12) || EventFlag(paarl_defeat-1)) {
         if (EventFlag(paarl_defeat-2)) {
             SetEventFlag(paarl_defeat-2, OFF);
-            MoveBloodstainAndDroppedItems(paarl_region, paarl_lamp_id+5000);
+            InitializeEvent(paarl_offset, 7500, paarl_region, paarl_lamp_id+5000);
         }
         SetEventFlag(paarl_defeat, OFF);
         SetEventFlag(paarl_defeat+2, OFF);
@@ -99,17 +102,17 @@ $Event(0, Default, function() {
         SetEventFlag(paarl_defeat+13, ON);
         SetEventFlag(paarl_defeat-1, OFF);
         SetEventFlag(8900+paarl_offset, ON);
-        InitializeEvent(paarl_lamp_offset, 8300, paarl_lamp_id+2000, paarl_lamp_id+3000, paarl_lamp_id+5000, area_id, block_id, -1, paarl_lamp_id+6000, paarl_lamp_kindle);
+        InitializeEvent(paarl_lamp_offset, 8300, paarl_lamp_id+2000, -1, paarl_lamp_kindle, paarl_lamp_id+6000, paarl_lamp_id+3000);
     }
     else {
-        InitializeEvent(paarl_lamp_offset, 8300, paarl_lamp_id+2000, paarl_lamp_id+3000, paarl_lamp_id+4000, area_id, block_id, -1, paarl_lamp_id+6000, paarl_lamp_kindle);
+        InitializeEvent(paarl_lamp_offset, 8300, paarl_lamp_id+2000, -1, paarl_lamp_kindle, paarl_lamp_id+6000, paarl_lamp_id+3000);
     }
     
     InitializeEvent(bsb_offset, 12102070, bsb_defeat+13, 0, 7416, bsb_id);
     InitializeEvent(paarl_offset, 12102070, paarl_defeat+13, 0, 7449, paarl_id);
     
-    InitializeEvent(bsb_offset, 8900, bsb_defeat-1, bsb_lamp_id+1000, bsb_defeat-2);
-    InitializeEvent(paarl_offset, 8900, paarl_defeat-1, paarl_lamp_id+1000, paarl_defeat-1);
+    InitializeEvent(bsb_offset, 8900, bsb_defeat-1, bsb_lamp_id+1000, bsb_defeat-2, 0, 0, bsb_lamp_id+5000, area_id, block_id);
+    InitializeEvent(paarl_offset, 8900, paarl_defeat-1, paarl_lamp_id+1000, paarl_defeat-2, 0, 0, paarl_lamp_id+5000, area_id, block_id);
     
     InitializeEvent(bsb_offset, 7700, bsb_defeat+11, bsb_defeat+12, bsb_lamp_id+1000, 823000);
     InitializeEvent(paarl_offset, 7700, paarl_defeat+11, paarl_defeat+12, paarl_lamp_id+1000, 823001);
@@ -992,6 +995,11 @@ $Event(50, Default, function() {
     SetCharacterMaphits(2303951, true);
 });
 
+$Event(12302300, Default, function() {
+    WaitFixedTimeSeconds(0.5);
+    ActivateMapPart(2304000, Disabled);
+});
+
 // Boss Defeat_Bloodthirsty Beast
 $Event(12301800, Default, function() {
     if (ThisEvent()) {
@@ -1031,6 +1039,7 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.Weapon, 52, PlayLogMultiplayerType.HostOnly);
         ParameterOutput(PlayerPlayLogParameter.Armor, 52, PlayLogMultiplayerType.HostOnly);
         if (EventFlag(bsb_defeat+13)) {
+            AwardItemLot(17020);
             InitializeEvent(bsb_offset, 7800, bsb_lamp_id+1000, 823000);
         }
         EndEvent();
@@ -1173,6 +1182,9 @@ L3:
     AdaptHpchangingSpEffectToNPCPartOfTarget(2300800);
     Goto(L4);
 L4:
+    if (EventFlag(bsb_defeat+13)) {
+        WaitFixedTimeSeconds(2);
+    }
     SetCharacterAIState(2300800, Enabled);
     DisplayBossHealthBar(Enabled, 2300800, 0, 209000);
     CreatePlaylog(86);
@@ -1302,6 +1314,7 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.Weapon, 120, PlayLogMultiplayerType.HostOnly);
         ParameterOutput(PlayerPlayLogParameter.Armor, 120, PlayLogMultiplayerType.HostOnly);
         if (EventFlag(paarl_defeat+13)) {
+            AwardItemLot(17020);
             InitializeEvent(paarl_offset, 7800, paarl_lamp_id+1000, 823001);
         }
         EndEvent();
@@ -1455,6 +1468,9 @@ L3:
     AdaptHpchangingSpEffectToNPCPartOfTarget(2300810);
     Goto(L4);
 L4:
+    if (EventFlag(paarl_defeat+13)) {
+        WaitFixedTimeSeconds(2);
+    }
     SetCharacterAIState(2300810, Enabled);
     DisplayBossHealthBar(Enabled, 2300810, 0, 508000);
     CreatePlaylog(86);

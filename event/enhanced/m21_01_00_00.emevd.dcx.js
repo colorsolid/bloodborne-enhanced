@@ -9,10 +9,13 @@
 
 const lamp_offset = 52;
 const lamp_id = 2111950;
+const area_id = 21;
+const block_id = 1;
+const lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10);
 
 // constructor
 $Event(0, Default, function() {
-    InitializeEvent(lamp_offset, 8300, lamp_id+2000, lamp_id+3000, lamp_id+4000, 21, 1, -1, lamp_id+6000, 12102110);
+    InitializeEvent(lamp_offset, 8300, lamp_id+2000, -1, lamp_kindle, lamp_id+6000, lamp_id+3000);
     InitializeEvent(lamp_offset, 8500, 8500+lamp_offset, lamp_id, 72112525);
     InitializeEvent(lamp_offset, 8100, 8100+lamp_offset, 12102110);
     

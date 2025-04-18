@@ -12,15 +12,15 @@ const block_id = 0;
 
 const byrgenwerth_lamp_offset = 45;
 const byrgenwerth_lamp_id = 3201950;
-const byrgenwerth_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10);
+const byrgenwerth_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10);
 
 const lecture_hall_1_lamp_offset = 46;
 const lecture_hall_1_lamp_id = 3201951;
-const lecture_hall_1_lamp_kindle = 112100000 + (area_id * 100) + (block_id * 10) + 2;
+const lecture_hall_1_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10) + 2;
 
 const lecture_hall_2_lamp_offset = 48;
 const lecture_hall_2_lamp_id = 3201953;
-const lecture_hall_2_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 4;
+const lecture_hall_2_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10) + 4;
 
 const rom_lamp_offset = 47;
 const rom_offset = 6;
@@ -52,24 +52,25 @@ $Event(0, Default, function() {
     InitializeEvent(lecture_hall_2_lamp_offset, 8100, 8100+lecture_hall_2_lamp_offset, lecture_hall_2_lamp_kindle);
     InitializeEvent(rom_lamp_offset, 8100, 8100+rom_lamp_offset, rom_lamp_kindle);
     
-    InitializeEvent(byrgenwerth_lamp_offset, 8300, byrgenwerth_lamp_id+2000, byrgenwerth_lamp_id+3000, byrgenwerth_lamp_id+4000, area_id, block_id, -1, byrgenwerth_lamp_id+6000, byrgenwerth_lamp_kindle);
-    InitializeEvent(lecture_hall_1_lamp_offset, 8300, lecture_hall_1_lamp_id+2000, lecture_hall_1_lamp_id+3000, lecture_hall_1_lamp_id+4000, area_id, block_id, -1, lecture_hall_1_lamp_id+6000, lecture_hall_1_lamp_kindle);
-    InitializeEvent(lecture_hall_2_lamp_offset, 8300, lecture_hall_2_lamp_id+2000, lecture_hall_2_lamp_id+3000, lecture_hall_2_lamp_id+4000, area_id, block_id, -1, lecture_hall_2_lamp_id+6000, lecture_hall_2_lamp_kindle);
+    InitializeEvent(byrgenwerth_lamp_offset, 8300, byrgenwerth_lamp_id+2000, -1, byrgenwerth_lamp_kindle, byrgenwerth_lamp_id+6000, byrgenwerth_lamp_id+3000);
+    InitializeEvent(lecture_hall_1_lamp_offset, 8300, lecture_hall_1_lamp_id+2000, -1, lecture_hall_1_lamp_kindle, lecture_hall_1_lamp_id+6000, lecture_hall_1_lamp_id+3000);
+    InitializeEvent(lecture_hall_2_lamp_offset, 8300, lecture_hall_2_lamp_id+2000, -1, lecture_hall_2_lamp_kindle, lecture_hall_2_lamp_id+6000, lecture_hall_2_lamp_id+3000);
     
     if(EventFlag(rom_defeat+13) && !EventFlag(rom_defeat-1)) {
         if (EventFlag(rom_defeat-2)) {
             SetEventFlag(rom_defeat-2, OFF);
-            MoveBloodstainAndDroppedItems(rom_region, rom_lamp_id+4000);
+            InitializeEvent(rom_offset, 7500, rom_region, rom_lamp_id+4000);
         }
         SetEventFlag(rom_defeat+13, OFF);
         SetEventFlag(rom_defeat, ON);
         SetEventFlag(rom_defeat+3, ON);
-        InitializeEvent(rom_lamp_offset, 8300, rom_lamp_id+2000, rom_lamp_id+3000, rom_lamp_id+4000, area_id, block_id, 999, rom_lamp_id+6000, rom_lamp_kindle);
+        InitializeEvent(rom_lamp_offset, 8300, rom_lamp_id+2000, 999, rom_lamp_kindle, rom_lamp_id+6000, rom_lamp_id+3000);
+        DummyPlayCutsceneAndWarpPlayer(rom_lamp_id+4000, area_id, block_id);
     }
     else if (EventFlag(rom_defeat+12) || EventFlag(rom_defeat-1)) {
         if (EventFlag(rom_defeat-2)) {
             SetEventFlag(rom_defeat-2, OFF);
-            MoveBloodstainAndDroppedItems(rom_region, rom_lamp_id+5000);
+            InitializeEvent(rom_offset, 7500, rom_region, rom_lamp_id+5000);
         }
         SetEventFlag(rom_defeat, OFF);
         SetEventFlag(rom_defeat+2, ON);
@@ -81,15 +82,15 @@ $Event(0, Default, function() {
         SetEventFlag(rom_defeat+13, ON);
         SetEventFlag(rom_defeat-1, OFF);
         SetEventFlag(8900+rom_offset, ON);
-        InitializeEvent(rom_lamp_offset, 8300, rom_lamp_id+2000, rom_lamp_id+3000, rom_lamp_id+5000, area_id, block_id, -1, rom_lamp_id+6000, rom_lamp_kindle);
+        InitializeEvent(rom_lamp_offset, 8300, rom_lamp_id+2000, -1, rom_lamp_kindle, rom_lamp_id+6000, rom_lamp_id+3000);
     }
     else {
-        InitializeEvent(rom_lamp_offset, 8300, rom_lamp_id+2000, rom_lamp_id+3000, rom_lamp_id+4000, area_id, block_id, -1, rom_lamp_id+6000, rom_lamp_kindle);
+        InitializeEvent(rom_lamp_offset, 8300, rom_lamp_id+2000, -1, rom_lamp_kindle, rom_lamp_id+6000, rom_lamp_id+3000);
     }
     
     InitializeEvent(rom_offset, 12102070, rom_defeat+13, 0, 7456, rom_id);
     
-    InitializeEvent(rom_offset, 8900, rom_defeat-1, rom_lamp_id+1000, rom_defeat-2);
+    InitializeEvent(rom_offset, 8900, rom_defeat-1, rom_lamp_id+1000, rom_defeat-2, 0, 0, rom_lamp_id+5000, area_id, block_id);
     InitializeEvent(rom_offset, 7700, rom_defeat+11, rom_defeat+12, rom_lamp_id+1000, 832001);
     
     InitializeEvent(1600, 12107000, 72111600, 3201950, 2412950);
@@ -1296,6 +1297,7 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.Weapon, 92, PlayLogMultiplayerType.HostOnly);
         ParameterOutput(PlayerPlayLogParameter.Armor, 92, PlayLogMultiplayerType.HostOnly);
         if (EventFlag(rom_defeat+13)) {
+            AwardItemLot(17020);
             InitializeEvent(rom_offset, 7800, rom_lamp_id+1000, 832001);
         }
         EndEvent();
@@ -1527,6 +1529,9 @@ L3:
     AdaptHpchangingSpEffectToNPCPartOfTarget(3200800);
     Goto(L4);
 L4:
+    if (EventFlag(rom_defeat+13)) {
+        WaitFixedTimeSeconds(2);
+    }
     SetCharacterAIState(3200800, Enabled);
     SetCharacterImmortality(3200800, Disabled);
     SetSpEffect(3200800, 3011, true);

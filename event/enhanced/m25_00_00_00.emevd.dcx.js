@@ -12,18 +12,18 @@ const block_id = 0;
 
 const cainhurst_lamp_offset = 25;
 const cainhurst_lamp_id = 2501950;
-const cainhurst_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10);
+const cainhurst_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10);
 
 const queens_lamp_offset = 26;
 const queens_lamp_id = 2501951;
-const queens_lamp_kindle = 112100000 + (area_id * 100) + (block_id * 10) + 2;
+const queens_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10) + 2;
 
 const logarius_offset = 14;
 const logarius_lamp_offset = 27;
 const logarius_defeat = 12501800;
 const logarius_return = 2501899;
 const logarius_lamp_id = 2501952;
-const logarius_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 4;
+const logarius_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10) + 4;
 const logarius_region = 2502802;
 const logarius_id = 2500800;
 
@@ -40,18 +40,18 @@ $Event(0, Default, function() {
     InitializeEvent(queens_lamp_offset, 8500, 8500+queens_lamp_offset, queens_lamp_id, 72112424);
     InitializeEvent(logarius_lamp_offset, 8500, 8500+logarius_lamp_offset, logarius_lamp_id, 72112323);
     
-    InitializeEvent(cainhurst_lamp_offset, 8100, 8100+cainhurst_lamp_offset, 12100000 + (area_id * 100) + (block_id * 10));
-    InitializeEvent(queens_lamp_offset, 8100, 8100+queens_lamp_offset, 112100000 + (area_id * 100) + (block_id * 10) + 2);
-    InitializeEvent(logarius_lamp_offset, 8100, 8100+logarius_lamp_offset, 12100000 + (area_id * 100) + (block_id * 10) + 4);
+    InitializeEvent(cainhurst_lamp_offset, 8100, 8100+cainhurst_lamp_offset, cainhurst_lamp_kindle);
+    InitializeEvent(queens_lamp_offset, 8100, 8100+queens_lamp_offset, queens_lamp_kindle);
+    InitializeEvent(logarius_lamp_offset, 8100, 8100+logarius_lamp_offset, logarius_lamp_kindle);
     
-    InitializeEvent(cainhurst_lamp_offset, 8300, cainhurst_lamp_id+2000, cainhurst_lamp_id+3000, cainhurst_lamp_id+4000, area_id, block_id, -1, cainhurst_lamp_id+6000, cainhurst_lamp_kindle);
-    InitializeEvent(queens_lamp_offset, 8300, queens_lamp_id+2000, queens_lamp_id+3000, queens_lamp_id+4000, area_id, block_id, -1, queens_lamp_id+6000, queens_lamp_kindle);
+    InitializeEvent(cainhurst_lamp_offset, 8300, cainhurst_lamp_id+2000, -1, cainhurst_lamp_kindle, cainhurst_lamp_id+6000, cainhurst_lamp_id+3000);
+    InitializeEvent(queens_lamp_offset, 8300, queens_lamp_id+2000, -1, queens_lamp_kindle, queens_lamp_id+6000, queens_lamp_id+3000)
     
     // rematch mode has ended 
     if(EventFlag(logarius_defeat+13) && !EventFlag(logarius_defeat-1)) {
         if (EventFlag(logarius_defeat-2)) {
             SetEventFlag(logarius_defeat-2, OFF);
-            MoveBloodstainAndDroppedItems(logarius_region, logarius_lamp_id+4000);
+            InitializeEvent(logarius_offset, 7500, logarius_region, logarius_lamp_id+4000);
         }
         
         // hidden area display check
@@ -61,12 +61,13 @@ $Event(0, Default, function() {
         }
         SetEventFlag(logarius_defeat+13, OFF);
         SetEventFlag(logarius_defeat, ON);
-        InitializeEvent(logarius_lamp_offset, 8300, logarius_lamp_id+2000, logarius_lamp_id+3000, logarius_lamp_id+4000, area_id, block_id, 999, logarius_lamp_id+6000, logarius_lamp_kindle);
+        InitializeEvent(logarius_lamp_offset, 8300, logarius_lamp_id+2000, 999, logarius_lamp_kindle, logarius_lamp_id+6000, logarius_lamp_id+3000);
+        DummyPlayCutsceneAndWarpPlayer(logarius_lamp_id+4000, area_id, block_id);
     } // rematch mode started, warp player to boss trigger point
     else if (EventFlag(logarius_defeat+12) || EventFlag(logarius_defeat-1)) {
         if (EventFlag(logarius_defeat-2)) {
             SetEventFlag(logarius_defeat-2, OFF);
-            MoveBloodstainAndDroppedItems(logarius_region, logarius_lamp_id+5000);
+            InitializeEvent(logarius_offset, 7500, logarius_region, logarius_lamp_id+5000);
         }
         if (EventFlag(12500810)) {
             SetEventFlag(12500810, OFF);
@@ -81,15 +82,15 @@ $Event(0, Default, function() {
         SetEventFlag(logarius_defeat+13, ON);
         SetEventFlag(logarius_defeat-1, OFF);
         SetEventFlag(8900+logarius_offset, ON);
-        InitializeEvent(logarius_lamp_offset, 8300, logarius_lamp_id+2000, logarius_lamp_id+3000, logarius_lamp_id+5000, area_id, block_id, -1, logarius_lamp_id+6000, logarius_lamp_kindle);
+        InitializeEvent(logarius_lamp_offset, 8300, logarius_lamp_id+2000, -1, logarius_lamp_kindle, logarius_lamp_id+6000, logarius_lamp_id+3000);
     }
     else {
-        InitializeEvent(logarius_lamp_offset, 8300, logarius_lamp_id+2000, logarius_lamp_id+3000, logarius_lamp_id+4000, area_id, block_id, -1, logarius_lamp_id+6000, logarius_lamp_kindle);
+        InitializeEvent(logarius_lamp_offset, 8300, logarius_lamp_id+2000, -1, logarius_lamp_kindle, logarius_lamp_id+6000, logarius_lamp_id+3000);
     }
     
     InitializeEvent(logarius_offset, 12102070, logarius_defeat+13, 0, 7457, logarius_id);
     
-    InitializeEvent(logarius_offset, 8900, logarius_defeat-1, logarius_lamp_id+1000, logarius_defeat-2);
+    InitializeEvent(logarius_offset, 8900, logarius_defeat-1, logarius_lamp_id+1000, logarius_defeat-2, 0, 0, logarius_lamp_id+5000, area_id, block_id);
     InitializeEvent(logarius_offset, 7700, logarius_defeat+11, logarius_defeat+12, logarius_lamp_id+1000, 825000);
     
     InitializeEvent(2200, 12107000, 72112200, 2501950, 2412950);
@@ -1777,6 +1778,7 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.Weapon, 52, PlayLogMultiplayerType.HostOnly);
         ParameterOutput(PlayerPlayLogParameter.Armor, 52, PlayLogMultiplayerType.HostOnly);
         if (EventFlag(logarius_defeat+13)) {
+            AwardItemLot(17020);
             InitializeEvent(logarius_offset, 7800, logarius_lamp_id+1000, 825000);
         }
         EndEvent();
@@ -1972,6 +1974,9 @@ L3:
     AdaptHpchangingSpEffectToNPCPartOfTarget(2500802);
     Goto(L4);
 L4:
+    if (EventFlag(logarius_defeat+13)) {
+        WaitFixedTimeSeconds(2);
+    }
     SetCharacterAIState(2500800, Enabled);
     DisplayBossHealthBar(Enabled, 2500800, 0, 232000);
     CreatePlaylog(82);

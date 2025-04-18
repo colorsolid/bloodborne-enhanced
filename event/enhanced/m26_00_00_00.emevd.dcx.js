@@ -12,18 +12,18 @@ const block_id = 0;
 
 const nightmare_lamp_offset = 30;
 const nightmare_lamp_id = 2601950;
-const nightmare_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10);
+const nightmare_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10);
 
 const base_lamp_offset = 33;
 const base_lamp_id = 2601953;
-const base_lamp_kindle = 112100000 + (area_id * 100) + (block_id * 10) + 2;
+const base_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10) + 2;
 
 const micolash_lamp_offset = 32;
 const micolash_offset = 10;
 const micolash_defeat = 12601850;
 const micolash_return = 2601889;
 const micolash_lamp_id = 2601952;
-const micolash_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 4;
+const micolash_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10) + 4;
 const micolash_region = 2602852;
 const micolash_id = 2600850;
 
@@ -32,7 +32,7 @@ const wet_nurse_offset = 11;
 const wet_nurse_defeat = 12601800;
 const wet_nurse_return = 2601899;
 const wet_nurse_lamp_id = 2601951;
-const wet_nurse_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 6;
+const wet_nurse_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10) + 6;
 const wet_nurse_region = 2602802;
 const wet_nurse_id = 2600800;
 const wet_nurse_id2 = 2600801;
@@ -68,22 +68,23 @@ $Event(0, Default, function() {
     InitializeEvent(micolash_lamp_offset, 8100, 8100+micolash_lamp_offset, micolash_lamp_kindle);
     InitializeEvent(wet_nurse_lamp_offset, 8100, 8100+wet_nurse_lamp_offset, wet_nurse_lamp_kindle);
     
-    InitializeEvent(nightmare_lamp_offset, 8300, nightmare_lamp_id+2000, nightmare_lamp_id+3000, nightmare_lamp_id+4000, area_id, block_id, -1, nightmare_lamp_id+6000, nightmare_lamp_kindle);
-    InitializeEvent(base_lamp_offset, 8300, base_lamp_id+2000, base_lamp_id+3000, base_lamp_id+4000, area_id, block_id, -1, base_lamp_id+6000, base_lamp_kindle);
+    InitializeEvent(nightmare_lamp_offset, 8300, nightmare_lamp_id+2000, -1, nightmare_lamp_kindle, nightmare_lamp_id+6000, nightmare_lamp_id+3000);
+    InitializeEvent(base_lamp_offset, 8300, base_lamp_id+2000, -1, base_lamp_kindle, base_lamp_id+6000, base_lamp_id+3000);
     
     if(EventFlag(micolash_defeat+13) && !EventFlag(micolash_defeat-1)) {
         if (EventFlag(micolash_defeat-2)) {
             SetEventFlag(micolash_defeat-2, OFF);
-            MoveBloodstainAndDroppedItems(micolash_region, micolash_lamp_id+4000);
+            InitializeEvent(micolash_offset, 7500, micolash_region, micolash_lamp_id+4000);
         }
         SetEventFlag(micolash_defeat+13, OFF);
         SetEventFlag(micolash_defeat, ON);
-        InitializeEvent(micolash_lamp_offset, 8300, micolash_lamp_id+2000, micolash_lamp_id+3000, micolash_lamp_id+4000, area_id, block_id, 999, micolash_lamp_id+6000, micolash_lamp_kindle);
+        InitializeEvent(micolash_lamp_offset, 8300, micolash_lamp_id+2000, 999, micolash_lamp_kindle, micolash_lamp_id+6000, micolash_lamp_id+3000);
+        DummyPlayCutsceneAndWarpPlayer(micolash_lamp_id+4000, area_id, block_id);
     }
     else if (EventFlag(micolash_defeat+12) || EventFlag(micolash_defeat-1)) {
         if (EventFlag(micolash_defeat-2)) {
             SetEventFlag(micolash_defeat-2, OFF);
-            MoveBloodstainAndDroppedItems(micolash_region, micolash_lamp_id+5000);
+            InitializeEvent(micolash_offset, 7500, micolash_region, micolash_lamp_id+5000);
         }
         SetEventFlag(1082, OFF);
         SetEventFlag(micolash_defeat, OFF);
@@ -92,25 +93,26 @@ $Event(0, Default, function() {
         SetEventFlag(micolash_defeat+13, ON);
         SetEventFlag(micolash_defeat-1, OFF);
         SetEventFlag(8900+micolash_offset, ON);
-        InitializeEvent(micolash_lamp_offset, 8300, micolash_lamp_id+2000, micolash_lamp_id+3000, micolash_lamp_id+5000, area_id, block_id, -1, micolash_lamp_id+6000, micolash_lamp_kindle);
+        InitializeEvent(micolash_lamp_offset, 8300, micolash_lamp_id+2000, -1, micolash_lamp_kindle, micolash_lamp_id+6000, micolash_lamp_id+3000);
     }
     else {
-        InitializeEvent(micolash_lamp_offset, 8300, micolash_lamp_id+2000, micolash_lamp_id+3000, micolash_lamp_id+4000, area_id, block_id, -1, micolash_lamp_id+6000, micolash_lamp_kindle);
+        InitializeEvent(micolash_lamp_offset, 8300, micolash_lamp_id+2000, -1, micolash_lamp_kindle, micolash_lamp_id+6000, micolash_lamp_id+3000);
     }
     
     if(EventFlag(wet_nurse_defeat+13) && !EventFlag(wet_nurse_defeat-1)) {
         if (EventFlag(wet_nurse_defeat-2)) {
             SetEventFlag(wet_nurse_defeat-2, OFF);
-            MoveBloodstainAndDroppedItems(wet_nurse_region, wet_nurse_lamp_id+4000);
+            InitializeEvent(wet_nurse_offset, 7500, wet_nurse_region, micolash_lamp_id+4000);
         }
         SetEventFlag(wet_nurse_defeat+13, OFF);
         SetEventFlag(wet_nurse_defeat, ON);
-        InitializeEvent(wet_nurse_lamp_offset, 8300, wet_nurse_lamp_id+2000, wet_nurse_lamp_id+3000, wet_nurse_lamp_id+4000, area_id, block_id, 999, wet_nurse_lamp_id+6000, wet_nurse_lamp_kindle);
+        InitializeEvent(wet_nurse_lamp_offset, 8300, wet_nurse_lamp_id+2000, 999, wet_nurse_lamp_kindle, wet_nurse_lamp_id+6000, wet_nurse_lamp_id+3000);
+        DummyPlayCutsceneAndWarpPlayer(wet_nurse_lamp_id+4000, area_id, block_id);
     }
     else if (EventFlag(wet_nurse_defeat+12) || EventFlag(wet_nurse_defeat-1)) {
         if (EventFlag(wet_nurse_defeat-2)) {
             SetEventFlag(wet_nurse_defeat-2, OFF);
-            MoveBloodstainAndDroppedItems(wet_nurse_region, wet_nurse_lamp_id+5000);
+            InitializeEvent(wet_nurse_offset, 7500, wet_nurse_region, micolash_lamp_id+5000);
         }
         SetEventFlag(wet_nurse_defeat, OFF);
         SetEventFlag(wet_nurse_defeat+2, OFF);
@@ -120,17 +122,17 @@ $Event(0, Default, function() {
         SetEventFlag(wet_nurse_defeat+13, ON);
         SetEventFlag(wet_nurse_defeat-1, OFF);
         SetEventFlag(8900+wet_nurse_offset, ON);
-        InitializeEvent(wet_nurse_lamp_offset, 8300, wet_nurse_lamp_id+2000, wet_nurse_lamp_id+3000, wet_nurse_lamp_id+5000, area_id, block_id, -1, wet_nurse_lamp_id+6000, wet_nurse_lamp_kindle);
+        InitializeEvent(wet_nurse_lamp_offset, 8300, wet_nurse_lamp_id+2000, -1, wet_nurse_lamp_kindle, wet_nurse_lamp_id+6000, wet_nurse_lamp_id+3000);
     }
     else {
-        InitializeEvent(wet_nurse_lamp_offset, 8300, wet_nurse_lamp_id+2000, wet_nurse_lamp_id+3000, wet_nurse_lamp_id+4000, area_id, block_id, -1, wet_nurse_lamp_id+6000, wet_nurse_lamp_kindle);
+        InitializeEvent(wet_nurse_lamp_offset, 8300, wet_nurse_lamp_id+2000, -1, wet_nurse_lamp_kindle, wet_nurse_lamp_id+6000, wet_nurse_lamp_id+3000);
     }
     
     InitializeEvent(micolash_offset, 12102070, micolash_defeat+13, 0, 7460, micolash_id);
     InitializeEvent(wet_nurse_offset, 12102070, wet_nurse_defeat+13, 0, 7461, wet_nurse_id, wet_nurse_id2);
     
-    InitializeEvent(micolash_offset, 8900, micolash_defeat-1, micolash_lamp_id+1000, micolash_defeat-2);
-    InitializeEvent(wet_nurse_offset, 8900, wet_nurse_defeat-1, wet_nurse_lamp_id+1000, wet_nurse_defeat-2, wet_nurse_defeat+15, wet_nurse_defeat+14);
+    InitializeEvent(micolash_offset, 8900, micolash_defeat-1, micolash_lamp_id+1000, micolash_defeat-2, 0, 0, micolash_lamp_id+5000, area_id, block_id);
+    InitializeEvent(wet_nurse_offset, 8900, wet_nurse_defeat-1, wet_nurse_lamp_id+1000, wet_nurse_defeat-2, wet_nurse_defeat+15, wet_nurse_defeat+14, wet_nurse_lamp_id+5000, area_id, block_id);
     
     InitializeEvent(micolash_offset, 7700, micolash_defeat+11, micolash_defeat+12, micolash_lamp_id+1000, 826000);
     InitializeEvent(wet_nurse_offset, 7700, wet_nurse_defeat+11, wet_nurse_defeat+12, wet_nurse_lamp_id+1000, 826002);
@@ -1214,6 +1216,14 @@ L0:
         if (!EventFlag(wet_nurse_defeat+13)) {
             AwardItemLot(55100000);
         }
+        else {
+            if (EventFlag(wet_nurse_defeat+15)) {
+                AwardItemLot(17030);
+            }
+            else if (EventFlag(wet_nurse_defeat+13)) {
+                AwardItemLot(17020);
+            }
+        }
         SetEventFlag(2601, ON);
         SetEventFlag(9462, ON);
         EndTimeMeasurement(2600000);
@@ -1405,6 +1415,9 @@ L3:
     AdaptHpchangingSpEffectToNPCPartOfTarget(2600802);
     Goto(L4);
 L4:
+    if (EventFlag(wet_nurse_defeat+13)) {
+        WaitFixedTimeSeconds(2);
+    }
     SetCharacterAIState(2600800, Enabled);
     SetCharacterAIState(2600801, Enabled);
     DisplayBossHealthBar(Enabled, 2600802, 0, 551000);
@@ -1483,7 +1496,7 @@ $Event(12604810, Default, function() {
     WaitFor(CharacterHasSpEffect(10000, 5630) || EventFlag(wet_nurse_defeat+15));
     if (EventFlag(wet_nurse_defeat+15)) {
         SetSpEffect(10000, 5680, false);
-        SetSpEffect(2600800, 5681, false);
+        SetSpEffect(2600800, 5682, false);
     }
     else {
         SetSpEffect(2600800, 5631, false);
@@ -1566,9 +1579,6 @@ L4:
     RequestCharacterAIReplan(2600801);
     RequestCharacterAICommand(2600801, 100, 0);
     SetSpEffect(2600801, 5631, false);
-    if (EventFlag(wet_nurse_defeat+15)) {
-        EndEvent();
-    }
     WaitFor(CharacterHasEventMessage(2600801, 20) || HasDamageType(2600801, 10000, DamageType.Unspecified));
     SpawnOneshotSFX(TargetEntityType.Character, 2600801, 220, 655105);
     WaitFixedTimeFrames(10);
@@ -1629,6 +1639,7 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.Weapon, 190, PlayLogMultiplayerType.HostOnly);
         ParameterOutput(PlayerPlayLogParameter.Armor, 190, PlayLogMultiplayerType.HostOnly);
         if (EventFlag(micolash_defeat+13)) {
+            AwardItemLot(17020);
             InitializeEvent(micolash_offset, 7800, micolash_lamp_id+1000, 826000);
         }
         EndEvent();

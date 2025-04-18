@@ -12,14 +12,14 @@ const block_id = 0;
 
 const cathedral_ward_lamp_offset = 10;
 const cathedral_ward_lamp_id = 2401950;
-const cathedral_ward_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10);
+const cathedral_ward_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10);
 
 const amelia_offset = 2;
 const amelia_lamp_offset = 11;
 const amelia_defeat = 12401800;
 const amelia_return = 2401899;
 const amelia_lamp_id = 2401951;
-const amelia_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 2;
+const amelia_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10) + 2;
 const amelia_region = 2402802;
 const amelia_id = 2400800;
 
@@ -32,26 +32,27 @@ $Event(0, Default, function() {
     InitializeEvent(amelia_lamp_offset, 8500, 8500+amelia_lamp_offset, amelia_lamp_id, 72110505);
     
     InitializeEvent(cathedral_ward_lamp_offset, 8100, 8100+cathedral_ward_lamp_offset, cathedral_ward_lamp_kindle);
-    InitializeEvent(amelia_lamp_offset, 8100, 8100+amelia_lamp_offset, 12100000 + (area_id * 100) + (block_id * 10) + 2);
+    InitializeEvent(amelia_lamp_offset, 8100, 8100+amelia_lamp_offset, amelia_lamp_kindle);
     
     InitializeEvent(3, 7900, 10000000+amelia_return, amelia_return, area_id, block_id, 8500+cathedral_ward_lamp_offset);
     
     SetEventFlag(8900+amelia_offset, OFF);
-    InitializeEvent(cathedral_ward_lamp_offset, 8300, cathedral_ward_lamp_id+2000, cathedral_ward_lamp_id+3000, cathedral_ward_lamp_id+4000, area_id, block_id, -1, cathedral_ward_lamp_id+6000, cathedral_ward_lamp_kindle);
+    InitializeEvent(cathedral_ward_lamp_offset, 8300, cathedral_ward_lamp_id+2000, -1, cathedral_ward_lamp_kindle, cathedral_ward_lamp_id+6000, cathedral_ward_lamp_id+3000);
     
     if(EventFlag(amelia_defeat+13) && !EventFlag(amelia_defeat-1)) {
         if (EventFlag(amelia_defeat-2)) {
             SetEventFlag(amelia_defeat-2, OFF);
-            MoveBloodstainAndDroppedItems(amelia_region, amelia_lamp_id+4000);
+            InitializeEvent(amelia_offset, 7500, amelia_region, amelia_lamp_id+4000);
         }
         SetEventFlag(amelia_defeat+13, OFF);
         SetEventFlag(amelia_defeat, ON);
-        InitializeEvent(amelia_lamp_offset, 8300, amelia_lamp_id+2000, amelia_lamp_id+3000, amelia_lamp_id+4000, area_id, block_id, 999, amelia_lamp_id+6000, amelia_lamp_kindle);
+        InitializeEvent(amelia_lamp_offset, 8300, amelia_lamp_id+2000, 999, amelia_lamp_kindle, amelia_lamp_id+6000, amelia_lamp_id+3000);
+        DummyPlayCutsceneAndWarpPlayer(amelia_lamp_id+4000, area_id, block_id);
     }
     else if (EventFlag(amelia_defeat+12) || EventFlag(amelia_defeat-1)) {
         if (EventFlag(amelia_defeat-2)) {
             SetEventFlag(amelia_defeat-2, OFF);
-            MoveBloodstainAndDroppedItems(amelia_region, amelia_lamp_id+5000);
+            InitializeEvent(amelia_offset, 7500, amelia_region, amelia_lamp_id+5000);
         }
         SetEventFlag(amelia_defeat, OFF);
         SetEventFlag(amelia_defeat+2, OFF);
@@ -59,15 +60,15 @@ $Event(0, Default, function() {
         SetEventFlag(amelia_defeat+13, ON);
         SetEventFlag(amelia_defeat-1, OFF);
         SetEventFlag(8900+amelia_offset, ON);
-        InitializeEvent(amelia_lamp_offset, 8300, amelia_lamp_id+2000, amelia_lamp_id+3000, amelia_lamp_id+5000, area_id, block_id, -1, amelia_lamp_id+6000, amelia_lamp_kindle);
+        InitializeEvent(amelia_lamp_offset, 8300, amelia_lamp_id+2000, -1, amelia_lamp_kindle, amelia_lamp_id+6000, amelia_lamp_id+3000);
     }
     else {
-        InitializeEvent(amelia_lamp_offset, 8300, amelia_lamp_id+2000, amelia_lamp_id+3000, amelia_lamp_id+4000, area_id, block_id, -1, amelia_lamp_id+6000, amelia_lamp_kindle);
+        InitializeEvent(amelia_lamp_offset, 8300, amelia_lamp_id+2000, -1, amelia_lamp_kindle, amelia_lamp_id+6000, amelia_lamp_id+3000);
     }
     
     InitializeEvent(amelia_offset, 12102070, amelia_defeat+13, 0, 7417, amelia_id);
     
-    InitializeEvent(amelia_offset, 8900, amelia_defeat-1, amelia_lamp_id+1000, amelia_defeat-2);
+    InitializeEvent(amelia_offset, 8900, amelia_defeat-1, amelia_lamp_id+1000, amelia_defeat-2, 0, 0, amelia_lamp_id+5000, area_id, block_id);
     InitializeEvent(amelia_offset, 7700, amelia_defeat+11, amelia_defeat+12, amelia_lamp_id+1000, 824000);
     
     InitializeEvent(400, 12107000, 72110400, 2401950, 2412950);
@@ -722,6 +723,7 @@ S2:
     InitializeEvent(4, 12400840, 70000072, 6030, 2400863);
     InitializeEvent(5, 12400840, 70000073, 6030, 2400864);
     InitializeEvent(6, 12400840, 72400513, 6030, 2400749);
+    InitializeEvent(0, 12400849, 70000599, 6030, 2400869);
     InitializeEvent(0, 12400630, 2400765);
     InitializeEvent(1, 12400630, 2400730);
     InitializeEvent(2, 12400630, 2400754);
@@ -956,6 +958,7 @@ $Event(12400080, Default, function(X0_4, X4_4, X8_4, X12_4) {
 // completely closed message_XX
 $Event(12400095, Default, function(X0_4) {
     SetNetworkSyncState(Disabled);
+    EndIf(EventFlag(12100849));
     WaitFor(ActionButtonInArea(2400040, X0_4));
     DisplayGenericDialog(10010171, PromptType.OKCANCEL, NumberofOptions.OneButton, 10000, 3);
     RestartEvent();
@@ -4530,6 +4533,25 @@ $Event(12400840, Default, function(X0_4, X4_4, X8_4) {
     RestartEvent();
 });
 
+// bridge door
+$Event(12400849, Default, function(X0_4, X4_4, X8_4) {
+    DeactivateObject(X8_4, Disabled);
+    EndIf(EventFlag(12100949));
+    WaitFor(EventFlag(12411700));
+    DeactivateObject(X8_4, Enabled);
+    EndIf(!CharacterType(10000, TargetType.Alive));
+    SetEventFlag(X0_4, OFF);
+    WaitFor(!EventFlag(X0_4) && ActionButtonInArea(X4_4, X8_4));
+    IssueShortWarpRequest(10000, TargetEntityType.Object, X8_4, 210);
+    ForceAnimationPlayback(10000, 101320, false, false, false);
+    WaitFixedTimeFrames(25);
+    DisplayBanner(TextBannerType.StadiumLoss);
+    WaitFixedTimeFrames(20);
+    SetPlayerRespawnPoint(2418089);
+    WaitFixedTimeFrames(20);
+    SetSpEffect(10000, 2101, false);
+});
+
 // survivor escapes
 $Event(12405700, Restart, function() {
     chr = CharacterDead(2400393) && CharacterDead(2400410);
@@ -4641,6 +4663,7 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.Weapon, 126, PlayLogMultiplayerType.HostOnly);
         ParameterOutput(PlayerPlayLogParameter.Armor, 126, PlayLogMultiplayerType.HostOnly);
         if (EventFlag(amelia_defeat+13)) {
+            AwardItemLot(17020);
             InitializeEvent(amelia_offset, 7800, amelia_lamp_id+1000, 824000);
         }
         EndEvent();
@@ -4824,6 +4847,9 @@ L3:
     AdaptHpchangingSpEffectToNPCPartOfTarget(2400800);
     Goto(L4);
 L4:
+    if (EventFlag(amelia_defeat+13)) {
+        WaitFixedTimeSeconds(2);
+    }
     SetCharacterAIState(2400800, Enabled);
     DisplayBossHealthBar(Enabled, 2400800, 0, 502000);
     ForceAnimationPlayback(2400800, 7002, false, false, false);

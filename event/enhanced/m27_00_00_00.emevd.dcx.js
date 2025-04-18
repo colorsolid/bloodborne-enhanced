@@ -12,14 +12,14 @@ const block_id = 0;
 
 const woods_lamp_offset = 35;
 const woods_lamp_id = 2701950;
-const woods_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10);
+const woods_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10);
 
 const shadows_lamp_offset = 36;
 const shadows_offset = 5;
 const shadows_defeat = 12701800;
 const shadows_return = 2701899;
 const shadows_lamp_id = 2701951;
-const shadows_lamp_kindle = 112100000 + (area_id * 100) + (block_id * 10) + 2;
+const shadows_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10) + 2;
 const shadows_region = 2702802;
 const shadows_id = 2700800;
 const shadows_id2 = 2700801;
@@ -44,21 +44,22 @@ $Event(0, Default, function() {
     InitializeEvent(woods_lamp_offset, 8100, 8100+woods_lamp_offset, woods_lamp_kindle);
     InitializeEvent(shadows_lamp_offset, 8100, 8100+shadows_lamp_offset, shadows_lamp_kindle);
     
-    InitializeEvent(woods_lamp_offset, 8300, woods_lamp_id+2000, woods_lamp_id+3000, woods_lamp_id+4000, area_id, block_id, -1, woods_lamp_id+6000, woods_lamp_kindle);
+    InitializeEvent(woods_lamp_offset, 8300, woods_lamp_id+2000, -1, woods_lamp_kindle, woods_lamp_id+6000, woods_lamp_id+3000);
     
     if(EventFlag(shadows_defeat+13) && !EventFlag(shadows_defeat-1)) {
         if (EventFlag(shadows_defeat-2)) {
             SetEventFlag(shadows_defeat-2, OFF);
-            MoveBloodstainAndDroppedItems(shadows_region, shadows_lamp_id+4000);
+            InitializeEvent(shadows_offset, 7500, shadows_region, shadows_lamp_id+4000);
         }
         SetEventFlag(shadows_defeat+13, OFF);
         SetEventFlag(shadows_defeat, ON);
-        InitializeEvent(shadows_lamp_offset, 8300, shadows_lamp_id+2000, shadows_lamp_id+3000, shadows_lamp_id+4000, area_id, block_id, 999, shadows_lamp_id+6000, shadows_lamp_kindle);
+        InitializeEvent(shadows_lamp_offset, 8300, shadows_lamp_id+2000, 999, shadows_lamp_kindle, shadows_lamp_id+6000, shadows_lamp_id+3000);
+        DummyPlayCutsceneAndWarpPlayer(shadows_lamp_id+4000, area_id, block_id);
     }
     else if (EventFlag(shadows_defeat+12) || EventFlag(shadows_defeat-1)) {
         if (EventFlag(shadows_defeat-2)) {
             SetEventFlag(shadows_defeat-2, OFF);
-            MoveBloodstainAndDroppedItems(shadows_region, shadows_lamp_id+5000);
+            InitializeEvent(shadows_offset, 7500, shadows_region, shadows_lamp_id+5000);
         }
         SetEventFlag(shadows_defeat, OFF);
         SetEventFlag(shadows_defeat+2, OFF);
@@ -66,15 +67,15 @@ $Event(0, Default, function() {
         SetEventFlag(shadows_defeat+13, ON);
         SetEventFlag(shadows_defeat-1, OFF);
         SetEventFlag(8900+shadows_offset, ON);
-        InitializeEvent(shadows_lamp_offset, 8300, shadows_lamp_id+2000, shadows_lamp_id+3000, shadows_lamp_id+5000, area_id, block_id, -1, shadows_lamp_id+6000, shadows_lamp_kindle);
+        InitializeEvent(shadows_lamp_offset, 8300, shadows_lamp_id+2000, -1, shadows_lamp_kindle, shadows_lamp_id+6000, shadows_lamp_id+3000);
     }
     else {
-        InitializeEvent(shadows_lamp_offset, 8300, shadows_lamp_id+2000, shadows_lamp_id+3000, shadows_lamp_id+4000, area_id, block_id, -1, shadows_lamp_id+6000, shadows_lamp_kindle);
+        InitializeEvent(shadows_lamp_offset, 8300, shadows_lamp_id+2000, -1, shadows_lamp_kindle, shadows_lamp_id+6000, shadows_lamp_id+3000);
     }
     
     InitializeEvent(shadows_offset, 12102070, shadows_defeat+13, 0, 7419, shadows_id, shadows_id2, shadows_id3);
     
-    InitializeEvent(shadows_offset, 8900, shadows_defeat-1, shadows_lamp_id+1000, shadows_defeat-2);
+    InitializeEvent(shadows_offset, 8900, shadows_defeat-1, shadows_lamp_id+1000, shadows_defeat-2, 0, 0, shadows_lamp_id+5000, area_id, block_id);
     InitializeEvent(shadows_offset, 7700, shadows_defeat+11, shadows_defeat+12, shadows_lamp_id+1000, 827000);
         
     InitializeEvent(1400, 12107000, 72111400, 2701950, 2412950);
@@ -753,8 +754,9 @@ L0:
         } else {
             AwardItemLot(2700995);
         }
-        if (!PlayerHasItem(ItemType.Goods, 4002)) {
+        if (EventFlag(12100851) && !PlayerHasItem(ItemType.Goods, 4002)) {
             AwardItemLot(2700970);
+            SetEventFlag(70009211, ON);
         }
         SetEventFlag(2700, ON);
         SetEventFlag(2701, ON);
@@ -768,6 +770,7 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.Weapon, 52, PlayLogMultiplayerType.HostOnly);
         ParameterOutput(PlayerPlayLogParameter.Armor, 52, PlayLogMultiplayerType.HostOnly);
         if (EventFlag(shadows_defeat+13)) {
+            AwardItemLot(17020);
             InitializeEvent(shadows_offset, 7800, shadows_lamp_id+1000, 827000);
         }
         EndEvent();
@@ -947,6 +950,9 @@ L3:
     AdaptHpchangingSpEffectToNPCPartOfTarget(2700802);
     Goto(L4);
 L4:
+    if (EventFlag(shadows_defeat+13)) {
+        WaitFixedTimeSeconds(2);
+    }
     SetCharacterAIState(2700800, Enabled);
     SetCharacterAIState(2700801, Enabled);
     SetCharacterAIState(2700802, Enabled);

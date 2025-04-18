@@ -12,22 +12,22 @@ const block_id = 0;
 
 const yahargul_lamp_offset = 40;
 const yahargul_lamp_id = 2801950;
-const yahargul_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10);
+const yahargul_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10);
 
 const chapel_lamp_offset = 43;
 const chapel_lamp_id = 2801953;
-const chapel_lamp_kindle = 112100000 + (area_id * 100) + (block_id * 10) + 2;
+const chapel_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10) + 2;
 
 const gaol_lamp_offset = 42;
 const gaol_lamp_id = 2801952;
-const gaol_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 4;
+const gaol_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10) + 4;
 
 const one_reborn_lamp_offset = 41;
 const one_reborn_offset = 8;
 const one_reborn_defeat = 12801800;
 const one_reborn_return = 2801899;
 const one_reborn_lamp_id = 2801951;
-const one_reborn_lamp_kindle = 12100000 + (area_id * 100) + (block_id * 10) + 6;
+const one_reborn_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10) + 6;
 const one_reborn_region = 2802802;
 const one_reborn_id = 2800800;
 
@@ -59,25 +59,26 @@ $Event(0, Default, function() {
     InitializeEvent(yahargul_lamp_offset, 8100, 8100+yahargul_lamp_offset, yahargul_lamp_kindle);
     InitializeEvent(chapel_lamp_offset, 8100, 8100+chapel_lamp_offset, chapel_lamp_kindle);
     InitializeEvent(gaol_lamp_offset, 8100, 8100+gaol_lamp_offset, gaol_lamp_kindle);
-    InitializeEvent(one_reborn_lamp_offset, 8100, 8100+one_reborn_lamp_offset, 12100000 + (area_id * 100) + (block_id * 10) + 6);
+    InitializeEvent(one_reborn_lamp_offset, 8100, 8100+one_reborn_lamp_offset, one_reborn_lamp_kindle);
     
-    InitializeEvent(yahargul_lamp_offset, 8300, yahargul_lamp_id+2000, yahargul_lamp_id+3000, yahargul_lamp_id+4000, area_id, block_id, -1, yahargul_lamp_id+6000, yahargul_lamp_kindle);
-    InitializeEvent(chapel_lamp_offset, 8300, chapel_lamp_id+2000, chapel_lamp_id+3000, chapel_lamp_id+4000, area_id, block_id, -1, chapel_lamp_id+6000, chapel_lamp_kindle);
-    InitializeEvent(gaol_lamp_offset, 8300, gaol_lamp_id+2000, gaol_lamp_id+3000, gaol_lamp_id+4000, area_id, block_id, -1, gaol_lamp_id+6000, gaol_lamp_kindle);
+    InitializeEvent(yahargul_lamp_offset, 8300, yahargul_lamp_id+2000, -1, yahargul_lamp_kindle, yahargul_lamp_id+6000, yahargul_lamp_id+3000);
+    InitializeEvent(chapel_lamp_offset, 8300, chapel_lamp_id+2000, -1, chapel_lamp_kindle, chapel_lamp_id+6000, chapel_lamp_id+3000);
+    InitializeEvent(gaol_lamp_offset, 8300, gaol_lamp_id+2000, -1, gaol_lamp_kindle, gaol_lamp_id+6000, gaol_lamp_id+3000);
     
     if(EventFlag(one_reborn_defeat+13) && !EventFlag(one_reborn_defeat-1)) {
         if (EventFlag(one_reborn_defeat-2)) {
             SetEventFlag(one_reborn_defeat-2, OFF);
-            MoveBloodstainAndDroppedItems(one_reborn_region, one_reborn_lamp_id+4000);
+            InitializeEvent(one_reborn_offset, 7500, one_reborn_region, one_reborn_lamp_id+4000);
         }
         SetEventFlag(one_reborn_defeat+13, OFF);
         SetEventFlag(one_reborn_defeat, ON);
-        InitializeEvent(one_reborn_lamp_offset, 8300, one_reborn_lamp_id+2000, one_reborn_lamp_id+3000, one_reborn_lamp_id+4000, area_id, block_id, 999, one_reborn_lamp_id+6000, one_reborn_lamp_kindle);
+        InitializeEvent(one_reborn_lamp_offset, 8300, one_reborn_lamp_id+2000, 999, one_reborn_lamp_kindle, one_reborn_lamp_id+6000, one_reborn_lamp_id+3000);
+        DummyPlayCutsceneAndWarpPlayer(one_reborn_lamp_id+4000, area_id, block_id);
     }
     else if (EventFlag(one_reborn_defeat+12) || EventFlag(one_reborn_defeat-1)) {
         if (EventFlag(one_reborn_defeat-2)) {
             SetEventFlag(one_reborn_defeat-2, OFF);
-            MoveBloodstainAndDroppedItems(one_reborn_region, one_reborn_lamp_id+5000);
+            InitializeEvent(one_reborn_offset, 7500, one_reborn_region, one_reborn_lamp_id+5000);
         }
         SetEventFlag(one_reborn_defeat, OFF);
         SetEventFlag(one_reborn_defeat+2, OFF);
@@ -85,15 +86,15 @@ $Event(0, Default, function() {
         SetEventFlag(one_reborn_defeat+13, ON);
         SetEventFlag(one_reborn_defeat-1, OFF);
         SetEventFlag(8900+one_reborn_offset, ON);
-        InitializeEvent(one_reborn_lamp_offset, 8300, one_reborn_lamp_id+2000, one_reborn_lamp_id+3000, one_reborn_lamp_id+5000, area_id, block_id, -1, one_reborn_lamp_id+6000, one_reborn_lamp_kindle);
+        InitializeEvent(one_reborn_lamp_offset, 8300, one_reborn_lamp_id+2000, -1, one_reborn_lamp_kindle, one_reborn_lamp_id+6000, one_reborn_lamp_id+3000);
     }
     else {
-        InitializeEvent(one_reborn_lamp_offset, 8300, one_reborn_lamp_id+2000, one_reborn_lamp_id+3000, one_reborn_lamp_id+4000, area_id, block_id, -1, one_reborn_lamp_id+6000, one_reborn_lamp_kindle);
+        InitializeEvent(one_reborn_lamp_offset, 8300, one_reborn_lamp_id+2000, -1, one_reborn_lamp_kindle, one_reborn_lamp_id+6000, one_reborn_lamp_id+3000);
     }
     
     InitializeEvent(one_reborn_offset, 12102070, one_reborn_defeat+13, 0, 7458, one_reborn_id);
     
-    InitializeEvent(one_reborn_offset, 8900, one_reborn_defeat-1, one_reborn_lamp_id+1000);
+    InitializeEvent(one_reborn_offset, 8900, one_reborn_defeat-1, one_reborn_lamp_id+1000, one_reborn_defeat-2, 0, 0, one_reborn_lamp_id+5000, area_id, block_id);
     InitializeEvent(one_reborn_offset, 7700, one_reborn_defeat+11, one_reborn_defeat+12, one_reborn_lamp_id+1000, 828000);
     
     InitializeEvent(1800, 12107000, 72111800, 2801950, 2412950);
@@ -2350,6 +2351,7 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.Weapon, 198, PlayLogMultiplayerType.HostOnly);
         ParameterOutput(PlayerPlayLogParameter.Armor, 198, PlayLogMultiplayerType.HostOnly);
         if (EventFlag(one_reborn_defeat+13)) {
+            AwardItemLot(17020);
             InitializeEvent(one_reborn_offset, 7800, one_reborn_lamp_id+1000, 828000);
         }
         EndEvent();
@@ -2548,6 +2550,9 @@ L3:
     AdaptHpchangingSpEffectToNPCPartOfTarget(2800803);
     Goto(L4);
 L4:
+    if (EventFlag(one_reborn_defeat+13)) {
+        WaitFixedTimeSeconds(2);
+    }
     SetCharacterAIState(2800800, Enabled);
     SetCharacterAIState(2800801, Enabled);
     SetCharacterAIState(2800802, Enabled);
