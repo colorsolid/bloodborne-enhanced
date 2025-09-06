@@ -258,7 +258,7 @@ def t270001_x60(action1=_):
                 AddTalkListData(6, 70000000, 12100876)
                 AddTalkListData(7, 200003, 12100875)
                 AddTalkListData(8, 200004, 12100874)
-                if GetEventStatus(12110000 + 270 * 10 + 1 * 2) == 0 or GetEventStatus(12110000 + 270 * 10 + 1 * 2 + 1) == 0:
+                if (GetEventStatus(12110000 + 270 * 10 + 1 * 2) == 0 or GetEventStatus(12110000 + 270 * 10 + 1 * 2 + 1) == 0) and GetEventStatus(12100862) == 1:
                     AddTalkListData(11, 200168, 12100851)
                 else:
                     pass
@@ -1773,31 +1773,46 @@ def t270001_x91():
             DebugEvent('購入')
             if GetEventStatus(6603) == 1: # ng +
                 """State 179"""
-                OpenRegularShop(140000, 149999)
+                if GetEventStatus(12100848):
+                    OpenRegularShop(140000, 149999)
+                else:
+                    OpenRegularShop(140000, 149983)
                 def WhilePaused():
                     SetTalkTime(0.33)
                 assert not CheckSpecificPersonMenuIsOpen(11, 0)
             elif GetEventStatus(9802) == 1: # after rom
                 """State 180"""
-                OpenRegularShop(130000, 139999)
+                if GetEventStatus(12100848):
+                    OpenRegularShop(130000, 139999)
+                else:
+                    OpenRegularShop(130000, 139983)
                 def WhilePaused():
                     SetTalkTime(0.33)
                 assert not CheckSpecificPersonMenuIsOpen(11, 0)
             elif GetEventStatus(9801) == 1: # after amelia
                 """State 181"""
-                OpenRegularShop(120000, 129999)
+                if GetEventStatus(12100848):
+                    OpenRegularShop(120000, 129999)
+                else:
+                    OpenRegularShop(120000, 129983)
                 def WhilePaused():
                     SetTalkTime(0.33)
                 assert not CheckSpecificPersonMenuIsOpen(11, 0)
             elif GetEventStatus(9800) == 1: # after gascoigne
                 """State 182"""
-                OpenRegularShop(110000, 119999)
+                if GetEventStatus(12100848):
+                    OpenRegularShop(110000, 119999)
+                else:
+                    OpenRegularShop(110000, 119983)
                 def WhilePaused():
                     SetTalkTime(0.33)
                 assert not CheckSpecificPersonMenuIsOpen(11, 0)
             else:
                 """State 183"""
-                OpenRegularShop(100000, 109999)
+                if GetEventStatus(12100848):
+                    OpenRegularShop(100000, 109999)
+                else:
+                    OpenRegularShop(100000, 109983)
                 def WhilePaused():
                     SetTalkTime(0.33)
                 assert not CheckSpecificPersonMenuIsOpen(11, 0)

@@ -4,7 +4,7 @@
 // @game    Bloodborne
 // @string    "PC情報_拠点到達時\u0000ボス_撃破\u0000PC情報_ボス撃破_拠点ボス\u0000ボス_戦闘開始\u0000ボス_撃破時間\u0000PC情報_ボス撃破_拠点ボス2\u0000ボス_戦闘開始2\u0000ボス_撃破時間2\u0000N:\\SPRJ\\data\\Param\\event\\common.emevd\u0000"
 // @linked    [164]
-// @version    3.4.2
+// @version    3.6
 // ==/EMEVD==
 
 const area_id = 21;
@@ -412,6 +412,7 @@ $Event(0, Default, function() {
     InitializeEvent(9, 12107200, 72100309, 2902959, 9010);
     
     InitializeEvent(0, 12100300, 0);
+    InitializeEvent(0, 12100305, 0);
     InitializeEvent(0, 12100310, 0);
     InitializeEvent(0, 12100800, 0);
     InitializeEvent(0, 12100180, 0);
@@ -518,6 +519,12 @@ $Event(0, Default, function() {
 
 // pre-constructor
 $Event(50, Default, function() {
+    if (!AnyBatchEventFlags(12103900, 12103901)) {
+        SetEventFlag(12103900, ON);
+    }
+    if (!AnyBatchEventFlags(12103903, 12103905)) {
+        SetEventFlag(12103903, ON);
+    }
     if (EventFlag(12101020)) {
         SetCharacterBackreadState(2100215, true);
         SetCharacterBackreadState(2100220, true);
@@ -1681,15 +1688,6 @@ $Event(12100300, Default, function() {
     DeactivateObject(2101311, Disabled);
     DeactivateObject(2101300, Disabled);
     DeactivateObject(2101301, Disabled);
-    DeleteMapSFX(2103300, false);
-    DeleteMapSFX(2103500, false);
-    DeleteMapSFX(2103501, false);
-    DeleteMapSFX(2103502, false);
-    DeleteMapSFX(2103503, false);
-    DeleteMapSFX(2103504, false);
-    DeleteMapSFX(2103505, false);
-    DeleteMapSFX(2103506, false);
-    DeleteMapSFX(2103507, false);
     WaitFor(EventFlag(9401));
     if (EventFlag(12100856)) {
         BatchSetEventFlags(12105000, 12105001, OFF);
@@ -1757,15 +1755,6 @@ L4:
                 DeactivateObject(2101301, Enabled);
             }
         }
-        SpawnMapSFX(2103300);
-        SpawnMapSFX(2103500);
-        SpawnMapSFX(2103501);
-        SpawnMapSFX(2103502);
-        SpawnMapSFX(2103503);
-        SpawnMapSFX(2103504);
-        SpawnMapSFX(2103505);
-        SpawnMapSFX(2103506);
-        SpawnMapSFX(2103507);
         WaitFor(EventFlag(12102065));
         WaitFixedTimeSeconds(5);
         RestartEvent();
@@ -1796,6 +1785,73 @@ L5:
     RestartEvent();
 });
 
+// workshop fire
+$Event(12100305, Default, function() {
+    SetEventFlag(12103899, OFF);
+    DeleteMapSFX(2103300, false);
+    DeleteMapSFX(2103500, false);
+    DeleteMapSFX(2103501, false);
+    DeleteMapSFX(2103502, false);
+    DeleteMapSFX(2103503, false);
+    DeleteMapSFX(2103504, false);
+    DeleteMapSFX(2103505, false);
+    DeleteMapSFX(2103506, false);
+    DeleteMapSFX(2103507, false);
+    WaitFor(EventFlag(9401)); // first visit to dream
+    if (!EventFlag(12101852)) { // not initiated fight with moon presence
+        if (!EventFlag(9462)) {
+            if (!EventFlag(9802)) {
+                if (!EventFlag(9801)) {
+                    if (!EventFlag(9800)) {
+                        if (EventFlag(9800)) {
+                        }
+L0:
+                        NoOp();
+                    }
+L1:
+                    NoOp();
+                }
+L2:
+                NoOp();
+            }
+L3:
+            WaitFor(EventFlag(12103899));
+            WaitFixedTimeFrames(1);
+            RestartEvent();
+        }
+L4:
+        if (EventFlag(12103900)) {
+            SpawnMapSFX(2103300);
+            SpawnMapSFX(2103500);
+            SpawnMapSFX(2103501);
+            SpawnMapSFX(2103502);
+            SpawnMapSFX(2103503);
+            SpawnMapSFX(2103504);
+            SpawnMapSFX(2103505);
+            SpawnMapSFX(2103506);
+            SpawnMapSFX(2103507);
+        }
+        WaitFor(EventFlag(12103899));
+        WaitFixedTimeFrames(1);
+        RestartEvent();
+    }
+L5:
+    if (EventFlag(12103900)) {
+        SpawnMapSFX(2103300);
+        SpawnMapSFX(2103500);
+        SpawnMapSFX(2103501);
+        SpawnMapSFX(2103502);
+        SpawnMapSFX(2103503);
+        SpawnMapSFX(2103504);
+        SpawnMapSFX(2103505);
+        SpawnMapSFX(2103506);
+        SpawnMapSFX(2103507);
+    }
+    WaitFor(EventFlag(12103899));
+    WaitFixedTimeFrames(1);
+    RestartEvent();
+});
+
 // Base BGM change
 $Event(12100310, Default, function() {
     if (!EventFlag(9462)) {
@@ -1810,8 +1866,22 @@ L0:
         EndEvent();
     }
 L1:
-    SetMapSoundState(2103900, Disabled);
-    SetMapSoundState(2103901, Disabled);
+    if (EventFlag(12103903)) {
+        SetMapSoundState(2103900, Disabled);
+        SetMapSoundState(2103901, Disabled);
+    }
+    else if (EventFlag(12103904)) {
+        SetMapSoundState(2103900, Enabled);
+        SetMapSoundState(2103901, Disabled);
+    }
+    else if (EventFlag(12103905)) {
+        SetMapSoundState(2103900, Disabled);
+        SetMapSoundState(2103901, Enabled);
+    }
+    WaitFor(EventFlag(12103902));
+    SetEventFlag(12103902, OFF);
+    WaitFixedTimeFrames(1);
+    RestartEvent();
 });
 
 // Informal Ritual Pan-Holy Grail availability
@@ -2425,6 +2495,9 @@ $Event(12101852, Default, function() {
     if (!EventFlag(moon_presence_defeat+13)) {
         WaitFixedTimeSeconds(3);
     }
+    SetEventFlag(12103900, OFF);
+    SetEventFlag(12103901, ON);
+    SetEventFlag(12103899, ON);
     SetEventFlag(9180, ON);
     WaitFixedTimeFrames(1);
     DeleteMapSFX(2103510, true);

@@ -3581,6 +3581,10 @@ L0:
     SetCharacterBackreadState(2400903, true);
     Goto(L9);
 L1:
+    if (EventFlag(amelia_defeat+12)) {
+        SetCharacterBackreadState(2400902, true);
+        Goto(L9);
+    }
     SetCharacterBackreadState(2400900, true);
     SetCharacterBackreadState(2400902, false);
     SetCharacterTeamType(2400902, TeamType.HostileNPC);
@@ -3733,6 +3737,10 @@ $Event(12400654, Default, function() {
     EndEvent();
     EndIf(!CharacterType(10000, TargetType.Alive));
 L0:
+    if (EventFlag(amelia_defeat+13)) {
+        ChangeCharacterEnableState(2400901, Disabled);
+        EndEvent();
+    }
     WaitFor(CharacterDead(2400901));
     EndIf(!EventFlag(1370));
     BatchSetEventFlags(1360, 1379, OFF);
@@ -3743,6 +3751,7 @@ L0:
 $Event(12400655, Default, function() {
     EndIf(ThisEvent());
     SetCharacterBackreadState(2400901, true);
+    EndIf(EventFlag(amelia_defeat+13));
     WaitFor(EventFlag(1370));
     SetCharacterBackreadState(2400901, false);
 });

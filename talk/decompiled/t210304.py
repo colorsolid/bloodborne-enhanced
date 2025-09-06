@@ -549,6 +549,7 @@ def t210304_x17():
         AddTalkListData(2, 200086, -1) # broken lamp
         AddTalkListData(3, 200174, -1) # balancing
         AddTalkListData(4, 200200, -1) # respec
+        AddTalkListData(5, 200228, 9462) # dream states
         AddTalkListData(10, 200032, -1) # misc settings
         ShowShopMessage(0, 0, 0)
         def WhilePaused():
@@ -575,6 +576,12 @@ def t210304_x17():
                 pass
         elif GetTalkListEntryResult() == 4: # respec
             call = t210304_x60()
+            if call.Get() == 1:
+                ForceCloseMenu()
+            elif call.Done():
+                pass
+        elif GetTalkListEntryResult() == 5: # dream states
+            call = t210304_x21()
             if call.Get() == 1:
                 ForceCloseMenu()
             elif call.Done():
@@ -844,6 +851,47 @@ def t210304_x20():
             elif call.Done():
                 pass
 
+# dream states
+def t210304_x21():
+    while True:
+        ClearTalkListData()
+
+        AddTalkListData(1, 200223, 12103900) # fire enabled - switch to no fire
+        AddTalkListData(2, 200224, 12103901) # no fire enabled - switch to fire
+
+        AddTalkListData(3, 200225, 12103903) # default enabled -  switch to version 1
+        AddTalkListData(4, 200226, 12103904) # version 1 enabled - switch to version 2
+        AddTalkListData(5, 200227, 12103905) # version 2 enabled - switch to default
+
+        ShowShopMessage(0, 0, 0)
+        def WhilePaused():
+            SetTalkTime(0.33)
+        if not GetTalkListEntryResult() or not IsTalkExclusiveMenuOpen():
+            return 1
+        elif GetTalkListEntryResult() == 1: # fire enabled -  switch to no fire
+            SetEventState(12103899, 1)
+            SetEventState(12103900, 0)
+            SetEventState(12103901, 1)
+        elif GetTalkListEntryResult() == 2: # no fire enabled - switch to fire
+            SetEventState(12103899, 1)
+            SetEventState(12103900, 1)
+            SetEventState(12103901, 0)
+        elif GetTalkListEntryResult() == 3: # no music enabled - switch to version 1
+            SetEventState(12103902, 1)
+            SetEventState(12103903, 0)
+            SetEventState(12103904, 1)
+            SetEventState(12103905, 0)
+        elif GetTalkListEntryResult() == 4: # version 1 enabled - switch to version 2
+            SetEventState(12103902, 1)
+            SetEventState(12103903, 0)
+            SetEventState(12103904, 0)
+            SetEventState(12103905, 1)
+        elif GetTalkListEntryResult() == 5: # version 2 enabled - switch to no music
+            SetEventState(12103902, 1)
+            SetEventState(12103903, 1)
+            SetEventState(12103904, 0)
+            SetEventState(12103905, 0)
+
 # misc settings
 def t210304_x30():
     while True:
@@ -856,32 +904,35 @@ def t210304_x30():
         AddTalkListData(3, 200033, 12100971)
         AddTalkListData(4, 200034, 12100871)
 
+        AddTalkListData(5, 200229, 12100948)
+        AddTalkListData(6, 200230, 12100848)
+
         if GetEventStatus(12100865) == 1 or GetEventStatus(12100867) == 1:
             # auto rematch
-            AddTalkListData(5, 200072, 12100964)
-            AddTalkListData(6, 200073, 12100864)
+            AddTalkListData(7, 200072, 12100964)
+            AddTalkListData(8, 200073, 12100864)
 
             # rematch cutscenes
-            AddTalkListData(7, 200068, 12100866)
-            AddTalkListData(8, 200067, 12100966)
+            AddTalkListData(9, 200067, 12100966)
+            AddTalkListData(10, 200068, 12100866)
         else:
             pass
 
         # unlocked chalice dungeons
-        AddTalkListData(9, 200080, 12100960)
-        AddTalkListData(10, 200081, 12100860)
+        AddTalkListData(11, 200080, 12100960)
+        AddTalkListData(12, 200081, 12100860)
 
         # random time of day
-        AddTalkListData(11, 200129, 12100956)
-        AddTalkListData(12, 200130, 12100856)
+        AddTalkListData(13, 200129, 12100956)
+        AddTalkListData(14, 200130, 12100856)
 
         # doll gesture
-        AddTalkListData(13, 200138, 12100954)
-        AddTalkListData(14, 200139, 12100854)
+        AddTalkListData(15, 200138, 12100954)
+        AddTalkListData(16, 200139, 12100854)
 
         # bridge door
-        AddTalkListData(15, 200220, 12100949)
-        AddTalkListData(16, 200221, 12100849)
+        AddTalkListData(17, 200220, 12100949)
+        AddTalkListData(18, 200221, 12100849)
 
         AddTalkListData(21, 200161, 12102033) # random spawn enabled - switch to random time
         AddTalkListData(24, 200166, 12102036) # random time enabled - switch to none
@@ -908,40 +959,46 @@ def t210304_x30():
         elif GetTalkListEntryResult() == 4: # disable - stocked shop
             SetEventState(12100971, 1)
             SetEventState(12100871, 0)
-        elif GetTalkListEntryResult() == 5: # enable - restart fight on death
+        elif GetTalkListEntryResult() == 5: # enable - coldblood in shop
+            SetEventState(12100948, 0)
+            SetEventState(12100848, 1)
+        elif GetTalkListEntryResult() == 6: # disable - coldblood in shop
+            SetEventState(12100948, 1)
+            SetEventState(12100848, 0)
+        elif GetTalkListEntryResult() == 7: # enable - restart fight on death
             SetEventState(12100964, 0)
             SetEventState(12100864, 1)
-        elif GetTalkListEntryResult() == 6: # disable - restart fight on death
+        elif GetTalkListEntryResult() == 8: # disable - restart fight on death
             SetEventState(12100964, 1)
             SetEventState(12100864, 0)
-        elif GetTalkListEntryResult() == 7: # disable - rematch cutscenes
-            SetEventState(12100966, 1)
-            SetEventState(12100866, 0)
-        elif GetTalkListEntryResult() == 8: # enable - rematch cutscenes
+        elif GetTalkListEntryResult() == 9: # enable - rematch cutscenes
             SetEventState(12100966, 0)
             SetEventState(12100866, 1)
-        elif GetTalkListEntryResult() == 9: # enable - unlocked chalice dungeons
+        elif GetTalkListEntryResult() == 10: # disable - rematch cutscenes
+            SetEventState(12100966, 1)
+            SetEventState(12100866, 0)
+        elif GetTalkListEntryResult() == 11: # enable - unlocked chalice dungeons
             SetEventState(12100960, 0)
             SetEventState(12100860, 1)
-        elif GetTalkListEntryResult() == 10: # disable - unlocked chalice dungeons
+        elif GetTalkListEntryResult() == 12: # disable - unlocked chalice dungeons
             SetEventState(12100960, 1)
             SetEventState(12100860, 0)
-        elif GetTalkListEntryResult() == 11: # enable - random time of day
+        elif GetTalkListEntryResult() == 13: # enable - random time of day
             SetEventState(12100956, 0)
             SetEventState(12100856, 1)
-        elif GetTalkListEntryResult() == 12: # disable - random time of day
+        elif GetTalkListEntryResult() == 14: # disable - random time of day
             SetEventState(12100956, 1)
             SetEventState(12100856, 0)
-        elif GetTalkListEntryResult() == 13: # enable - doll gesture
+        elif GetTalkListEntryResult() == 15: # enable - doll gesture
             SetEventState(12100954, 0)
             SetEventState(12100854, 1)
-        elif GetTalkListEntryResult() == 14: # disable - doll gesture
+        elif GetTalkListEntryResult() == 16: # disable - doll gesture
             SetEventState(12100954, 1)
             SetEventState(12100854, 0)
-        elif GetTalkListEntryResult() == 15: # enable - bridge door
+        elif GetTalkListEntryResult() == 17: # enable - bridge door
             SetEventState(12100949, 0)
             SetEventState(12100849, 1)
-        elif GetTalkListEntryResult() == 16: # disable - bridge door
+        elif GetTalkListEntryResult() == 18: # disable - bridge door
             SetEventState(12100949, 1)
             SetEventState(12100849, 0)
         elif GetTalkListEntryResult() == 21: # switch from random spawn to random time

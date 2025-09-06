@@ -4,7 +4,7 @@
 // @game    Bloodborne
 // @string    "ダンジョン_トラップ発動_錆びた宝箱\u0000ダンジョン_ギミック起動_魔法壁消失\u0000ダンジョン_トラップ発動_錆びた扉\u0000ダンジョン_トラップ発動_テレポーター\u0000ダンジョン_トラップ発動_落とし穴\u0000ダンジョン_トラップ発動_火矢作動\u0000ダンジョン_ギミック起動_跳ね橋降下\u0000ボス_撃破\u0000PC情報_ボス撃破_上層\u0000PC情報_ボス撃破_中層\u0000PC情報_ボス撃破_下層\u0000PC情報_ボス撃破_最下層\u0000クリア時間_通し\u0000PC情報_ダンジョン到達時\u0000ダンジョン_上層_クリア時間_通し\u0000ダンジョン_上層_クリア時間_1プレイ\u0000ダンジョン_中層_クリア時間_通し\u0000ダンジョン_中層_クリア時間_1プレイ\u0000ダンジョン_下層_クリア時間_通し\u0000ダンジョン_下層_クリア時間_1プレイ\u0000ダンジョン_最下層_クリア時間_通し\u0000ダンジョン_最下層_クリア時間_1プレイ\u0000ダンジョン_トラップ発動_落下敵\u0000ダンジョン_ギミック起動_血舐め発生\u0000ダンジョン_トラップ発動_悪霊女出現\u0000ダンジョン_トラップ発動_ギロチン\u0000ダンジョン_トラップ発動_クモ天井待機\u0000ダンジョン_トラップ発動_クモ天井待機_領域使用\u0000ダンジョン_トラップ発動_飛び出す敵\u0000ダンジョン_トラップ発動_領域で飛び出す敵\u0000ダンジョン_トラップ発動_モンスタールーム\u0000ダンジョン_ギミック起動_強化憑依\u0000ダンジョン_トラップ発動_鐘を鳴らす\u0000ダンジョン_トラップ発動_モンスタールーム_巣に帰る\u0000ダンジョン_トラップ発動_伏兵落下\u0000ボス_戦闘開始\u0000ダンジョン_ボスラッシュ前座_撃破時間\u0000ダンジョン_上層_ボス戦_撃破時間\u0000ダンジョン_中層_ボス戦_撃破時間\u0000ダンジョン_下層_ボス戦_撃破時間\u0000ダンジョン_最下層_ボス戦_撃破時間\u0000ダンジョン_トラップ発動_火薬タル爆発\u0000\u0000"
 // @linked    []
-// @version    3.4.2
+// @version    3.6
 // ==/EMEVD==
 
 var area_id = 29;
@@ -117,10 +117,10 @@ $Event(0, Default, function() {
     InitializeEvent(boss_4_lamp_offset, 8100, 8100+boss_4_lamp_offset, boss_4_lamp_kindle);
     
     InitializeEvent(lamp_1_offset, 8300, lamp_1_id+2000, -1, lamp_1_kindle, lamp_1_id+6000, lamp_1_id+3000)
-    InitializeEvent(lamp_1_offset, 8300, lamp_2_id+2000, -1, lamp_2_kindle, lamp_2_id+6000, lamp_2_id+3000)
-    InitializeEvent(lamp_1_offset, 8300, lamp_4_id+2000, -1, lamp_4_kindle, lamp_4_id+6000, lamp_4_id+3000)
-    InitializeEvent(lamp_1_offset, 8300, lamp_6_id+2000, -1, lamp_6_kindle, lamp_6_id+6000, lamp_6_id+3000)
-    InitializeEvent(lamp_1_offset, 8300, lamp_8_id+2000, -1, lamp_8_kindle, lamp_8_id+6000, lamp_8_id+3000)
+    InitializeEvent(lamp_2_offset, 8300, lamp_2_id+2000, -1, lamp_2_kindle, lamp_2_id+6000, lamp_2_id+3000)
+    InitializeEvent(lamp_4_offset, 8300, lamp_4_id+2000, -1, lamp_4_kindle, lamp_4_id+6000, lamp_4_id+3000)
+    InitializeEvent(lamp_6_offset, 8300, lamp_6_id+2000, -1, lamp_6_kindle, lamp_6_id+6000, lamp_6_id+3000)
+    InitializeEvent(lamp_8_offset, 8300, lamp_8_id+2000, -1, lamp_8_kindle, lamp_8_id+6000, lamp_8_id+3000)
     
     if(EventFlag(boss_1_defeat+1013) && !EventFlag(boss_1_defeat+1019)) {
         SetEventFlag(boss_1_defeat+1013, OFF);

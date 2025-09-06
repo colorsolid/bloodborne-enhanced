@@ -4210,6 +4210,7 @@ $Event(12410808, Restart, function() {
 // Revenge_Henrik Appears
 $Event(12410809, Default, function() {
     SetCharacterBackreadState(2410901, true);
+    EndIf(EventFlag(gascoigne_defeat+13) || EventFlag(gascoigne_defeat+15));
     EndIf(EventFlag(12410810));
     EndIf(EventFlag(1366));
     EndIf(EventFlag(1367));
@@ -4246,7 +4247,7 @@ L0:
 
 // Avenger_Co-op
 $Event(12410811, Restart, function() {
-    EndIf(ThisEvent());
+    EndIf(ThisEvent() || EventFlag(gascoigne_defeat+13) || EventFlag(gascoigne_defeat+15));
     WaitFor((EventFlag(1363) || EventFlag(1364)) && CharacterAIState(2410901, AIStateType.Combat));
     SetCharacterBackreadState(2410900, false);
     WarpCharacterAndCopyFloor(2410900, TargetEntityType.Area, 2412333, -1, 2414123);

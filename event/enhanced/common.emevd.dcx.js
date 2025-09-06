@@ -4,7 +4,7 @@
 // @game    Bloodborne
 // @string    ""
 // @linked    []
-// @version    3.4.2
+// @version    3.6
 // ==/EMEVD==
 
 // constructor
@@ -108,7 +108,8 @@ $Event(0, Default, function() {
         SetEventFlag(12100650, OFF);
         SetEventFlag(12100750, ON);
         if (EventFlag(12100963)) { // victory respawn location is set to dream
-            SetPlayerRespawnPoint(2102969); // return to broken lamp
+            // DisplayBanner(TextBannerType.Dead);
+            // SetPlayerRespawnPoint(2102969); // return to broken lamp
         }
     }
     
@@ -733,7 +734,7 @@ $Event(8406, Default, function() {
     
     // rematch death - end rematch or restart
     if (!EventFlag(12100964) && !EventFlag(12100864)) {
-        SetEventFlag(12100864, ON); // end
+        SetEventFlag(12100964, ON); // end
     }
     
     // rematch cutscenes
@@ -789,6 +790,11 @@ $Event(8406, Default, function() {
         SetEventFlag(12102026, OFF);
         SetEventFlag(12102027, OFF);
         SetEventFlag(12102028, OFF);
+    }
+    
+    // coldblood in shop
+    if (!EventFlag(12100948) && !EventFlag(12100848)) {
+        SetEventFlag(12100948, ON);
     }
 });
 
@@ -3354,7 +3360,7 @@ $Event(8800, Default, function(X0_4, X4_4, X8_4, X12_4) {
     CharacterWarpRequest(X4_4, TargetEntityType.Area, X12_4, -1);
 });
 
-// EventFlag(12100964) // rematch on death is on
+// EventFlag(12100964) // rematch on death is off
 // InitializeEvent(cleric_beast_offset, 8900, cleric_beast_defeat-1, cleric_beast_lamp_id+1000, cleric_beast_defeat-2, 0, 0, cleric_beast_lamp_id+5000, area_id, block_id);
 // Auto restart rematch if dead + move player to rematch point
 $Event(8900, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4, X20_4, X24_1, X28_1) {
@@ -3382,7 +3388,7 @@ $Event(8900, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4, X20_4, X24_1, X28
         SetEventFlag(8950, ON);
     } // auto rematch disabled
     else {
-        EndIf(!EventFlag(12100650));
+        // EndIf(!EventFlag(12100650));
         if (EventFlag(12100859)) { // death respawn location is boss lamp
             SetPlayerRespawnPoint(lamp_spawn_point);
         }
