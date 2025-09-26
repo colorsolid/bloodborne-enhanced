@@ -92,12 +92,12 @@ def t210304_x4():
         DebugEvent('挨拶_初回')
         """State 15"""
         assert t210304_x1(text3=1400100, text4=1400150, z9=72100110)
-    elif GetEventStatus(72100111) == 1:
+    elif GetEventStatus(72100111) == 1 and not GetEventStatus(12101800):
         """State 5"""
         DebugEvent('挨拶_ラスト')
         """State 19"""
         assert t210304_x2(text1=1401200, text2=1401250)
-    elif GetEventStatus(1002) == 1:
+    elif GetEventStatus(1002) == 1 and not GetEventStatus(12101800):
         """State 4"""
         DebugEvent('挨拶_ラスト')
         """State 18"""
@@ -149,6 +149,7 @@ def t210304_x5(z3=1002, z2=1001, z8=1002, z4=1003):
     """State 2"""
     return 0
 
+# top level menu
 def t210304_x6():
     """State 0"""
     while True:
@@ -607,12 +608,8 @@ def t210304_x18():
         AddTalkListData(4, 200077, 12100862)
 
         if GetEventStatus(12100862) == 1:
-            # item drop hunt
-            # AddTalkListData(5, 200127, 12100955)
-            # AddTalkListData(6, 200128, 12100855)
-
-            AddTalkListData(35, 200172, 12100951) # enable - lamp kindling
-            AddTalkListData(36, 200173, 12100851) # disable - lamp kindling
+            AddTalkListData(35, 200172, 12100951) # disabled - enable lamp kindling
+            AddTalkListData(36, 200173, 12100851) # enabled - disable lamp kindling
         else:
             pass
 
@@ -667,10 +664,6 @@ def t210304_x18():
             # quick warp to boss
             AddTalkListData(31, 200133, 12100857)
             AddTalkListData(32, 200132, 12100957)
-
-            # spawn clinic lamp at start
-            AddTalkListData(33, 200144, 12100853)
-            AddTalkListData(34, 200143, 12100953)
         else:
             pass
 
@@ -769,12 +762,6 @@ def t210304_x18():
         elif GetTalkListEntryResult() == 32: # enable - quick warp to boss
             SetEventState(12100957, 0)
             SetEventState(12100857, 1)
-        elif GetTalkListEntryResult() == 33: # disable - iosefka lamp spawn at start
-            SetEventState(12100953, 1)
-            SetEventState(12100853, 0)
-        elif GetTalkListEntryResult() == 34: # enable - iosefka lamp spawn at start
-            SetEventState(12100953, 0)
-            SetEventState(12100853, 1)
         elif GetTalkListEntryResult() == 35: # enable - lamp kindling
             SetEventState(12100951, 0)
             SetEventState(8413, 1)
@@ -942,6 +929,9 @@ def t210304_x30():
         AddTalkListData(30, 200153, 12102202) # activate all lamps
         AddTalkListData(31, 200155, 12102212) # activate all shortcuts
 
+        AddTalkListData(32, 200231, 12100955)
+        AddTalkListData(33, 200232, 12100855)
+
         ShowShopMessage(0, 0, 0)
         def WhilePaused():
             SetTalkTime(0.33)
@@ -1037,6 +1027,12 @@ def t210304_x30():
                 ForceCloseMenu()
             elif call.Done():
                 pass
+        elif GetTalkListEntryResult() == 32: # enable - infinite durability
+            SetEventState(12100955, 0)
+            SetEventState(12100855, 1)
+        elif GetTalkListEntryResult() == 33: # disable - infinite durability
+            SetEventState(12100955, 1)
+            SetEventState(12100855, 0)
 
 # increase cycle
 def t210304_x50(flag=999):

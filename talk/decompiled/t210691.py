@@ -74,7 +74,7 @@ def t210691_x1():
                 if GetEventStatus(12100848):
                     OpenRegularShop(140000, 149999)
                 else:
-                    OpenRegularShop(140000, 149983)
+                    OpenRegularShop(140000, 149900)
                 def WhilePaused():
                     SetTalkTime(0.33)
                 assert not CheckSpecificPersonMenuIsOpen(11, 0)
@@ -83,7 +83,7 @@ def t210691_x1():
                 if GetEventStatus(12100848):
                     OpenRegularShop(130000, 139999)
                 else:
-                    OpenRegularShop(130000, 139983)
+                    OpenRegularShop(130000, 139900)
                 def WhilePaused():
                     SetTalkTime(0.33)
                 assert not CheckSpecificPersonMenuIsOpen(11, 0)
@@ -92,7 +92,7 @@ def t210691_x1():
                 if GetEventStatus(12100848):
                     OpenRegularShop(120000, 129999)
                 else:
-                    OpenRegularShop(120000, 129983)
+                    OpenRegularShop(120000, 129900)
                 def WhilePaused():
                     SetTalkTime(0.33)
                 assert not CheckSpecificPersonMenuIsOpen(11, 0)
@@ -101,7 +101,7 @@ def t210691_x1():
                 if GetEventStatus(12100848):
                     OpenRegularShop(110000, 119999)
                 else:
-                    OpenRegularShop(110000, 119983)
+                    OpenRegularShop(110000, 119900)
                 def WhilePaused():
                     SetTalkTime(0.33)
                 assert not CheckSpecificPersonMenuIsOpen(11, 0)
@@ -110,7 +110,7 @@ def t210691_x1():
                 if GetEventStatus(12100848):
                     OpenRegularShop(100000, 109999)
                 else:
-                    OpenRegularShop(100000, 109983)
+                    OpenRegularShop(100000, 109900)
                 def WhilePaused():
                     SetTalkTime(0.33)
                 assert not CheckSpecificPersonMenuIsOpen(11, 0)

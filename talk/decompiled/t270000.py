@@ -67,6 +67,7 @@ def t270000_x3(actionbutton1=6100, actionbutton2=6101, actionbutton3=6103, flag3
         """State 2"""
         Label('L0')
         DebugEvent('Operation status Not multi')
+        # lamp not activated
         if not GetEventStatus(10007810 + flag3 * 10000 + flag4 * 20):
             break
         elif (not GetOneLineHelpStatus() and not IsTalkingToSomeoneElse() and not IsClientPlayer() and
@@ -74,12 +75,12 @@ def t270000_x3(actionbutton1=6100, actionbutton2=6101, actionbutton3=6103, flag3
             """State 3"""
             ClearPlayerDamageInfo()
             SetTalkTime(0.33)
+            # is gaol lamp, after rom, and lamp deactivation is off
             if flag3 * 10 + flag4 == 2802 and GetEventStatus(9802) == 1 and GetEventStatus(12100968) == 1:
                 return 0
             else:
                 """State 6"""
-                if GetEventStatus(12100972) == 1:
-                    # lamp mods disabled
+                if GetEventStatus(12100972) == 1: # lamp mods disabled
                     assert CheckActionButtonArea(actionbutton2)
                     ClearPlayerDamageInfo()
                     SetTalkTime(0.33)
@@ -89,8 +90,7 @@ def t270000_x3(actionbutton1=6100, actionbutton2=6101, actionbutton3=6103, flag3
                     elif GetDistanceToPlayer() > 3 or HasPlayerBeenAttacked() == 1:
                         """State 5"""
                         assert t270000_x0()
-                else:
-                    # lamp mods enabled
+                else: # lamp mods enabled
                     assert CheckActionButtonArea(actionbutton3)
                     ClearPlayerDamageInfo()
                     SetTalkTime(0.33)
@@ -258,7 +258,14 @@ def t270000_x60(action1=_):
                 AddTalkListData(6, 70000000, 12100876)
                 AddTalkListData(7, 200003, 12100875)
                 AddTalkListData(8, 200004, 12100874)
-                if (GetEventStatus(12110000 + 270 * 10 + 0 * 2) == 0 or GetEventStatus(12110000 + 270 * 10 + 0 * 2 + 1) == 0) and GetEventStatus(12100862) == 1:
+                # restock enabled, kindling enabled, and lamp kindling values are not maxed
+                if (
+                    GetEventStatus(12100862) == 1
+                    and (
+                        GetEventStatus(12110000 + 270 * 10 + 0 * 2) == 0 
+                        or GetEventStatus(12110000 + 270 * 10 + 0 * 2 + 1) == 0
+                    )
+                ):
                     AddTalkListData(11, 200168, 12100851)
                 else:
                     pass
@@ -376,7 +383,7 @@ def t270000_x60(action1=_):
                 call = t270000_x110()
                 if call.Done():
                     pass
-            # offer insight
+            # offer insight / kindle
             elif GetTalkListEntryResult() == 11:
                 SetEventState(8100+35, 1)
                 def WhilePaused():
@@ -1722,7 +1729,10 @@ def t270000_x90():
                 """State 216"""
                 DebugEvent('購入')
                 """State 187"""
-                c1_86(200000, 200099)
+                if GetEventStatus(12100848) == 1:
+                    c1_86(200000, 200199)
+                else:
+                    c1_86(200000, 200099)
                 def WhilePaused():
                     SetTalkTime(0.33)
                 assert not CheckSpecificPersonMenuIsOpen(370, 0)
@@ -1778,7 +1788,7 @@ def t270000_x91():
                 if GetEventStatus(12100848):
                     OpenRegularShop(140000, 149999)
                 else:
-                    OpenRegularShop(140000, 149983)
+                    OpenRegularShop(140000, 149900)
                 def WhilePaused():
                     SetTalkTime(0.33)
                 assert not CheckSpecificPersonMenuIsOpen(11, 0)
@@ -1787,7 +1797,7 @@ def t270000_x91():
                 if GetEventStatus(12100848):
                     OpenRegularShop(130000, 139999)
                 else:
-                    OpenRegularShop(130000, 139983)
+                    OpenRegularShop(130000, 139900)
                 def WhilePaused():
                     SetTalkTime(0.33)
                 assert not CheckSpecificPersonMenuIsOpen(11, 0)
@@ -1796,7 +1806,7 @@ def t270000_x91():
                 if GetEventStatus(12100848):
                     OpenRegularShop(120000, 129999)
                 else:
-                    OpenRegularShop(120000, 129983)
+                    OpenRegularShop(120000, 129900)
                 def WhilePaused():
                     SetTalkTime(0.33)
                 assert not CheckSpecificPersonMenuIsOpen(11, 0)
@@ -1805,7 +1815,7 @@ def t270000_x91():
                 if GetEventStatus(12100848):
                     OpenRegularShop(110000, 119999)
                 else:
-                    OpenRegularShop(110000, 119983)
+                    OpenRegularShop(110000, 119900)
                 def WhilePaused():
                     SetTalkTime(0.33)
                 assert not CheckSpecificPersonMenuIsOpen(11, 0)
@@ -1814,7 +1824,7 @@ def t270000_x91():
                 if GetEventStatus(12100848):
                     OpenRegularShop(100000, 109999)
                 else:
-                    OpenRegularShop(100000, 109983)
+                    OpenRegularShop(100000, 109900)
                 def WhilePaused():
                     SetTalkTime(0.33)
                 assert not CheckSpecificPersonMenuIsOpen(11, 0)

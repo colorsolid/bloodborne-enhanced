@@ -7,96 +7,108 @@
 // @version    3.6
 // ==/EMEVD==
 
+// boss_defeat-2:  rematch death occured
+// boss_defeat-1:  auto restart rematch
+// boss_defeat+2:  player has encountered boss
+// boss_defeat+11: trigger rematch and reload
+// boss_defeat+12: activate rematch on load
+// boss_defeat+13: rematch active / cleanup next load
+// boss_defeat+14: trigger distorted rematch and reload
+// boss_defeat+15: activate distorted rematch on load
+
 // constructor
 $Event(0, Default, function() {
     //BatchSetEventFlags(15000000, 40000000, ON);
     //SetEventFlag(21, ON);
     SetEventFlag(12102065, OFF);
-    InitializeEvent(0, 12102037, 0);
+    $InitializeEvent(0, 12102037);
     
-    // SetSpEffect(10000, 1330, false);
+    $InitializeEvent(0, 12102069);
     
     //RemoveItemFromPlayer(ItemType.Goods, 4002, 1);
     
-    InitializeEvent(0, 8410, 0); // rite of kindling failsafe
-    InitializeEvent(0, 8411, 0); // remove right on deactivate
+    $InitializeEvent(0, 8410); // rite of kindling failsafe
+    $InitializeEvent(0, 8411); // remove right on deactivate
     //InitializeEvent(0, 8412, 0); // test
+    
+    // unlock phantasm paper
+    $InitializeEvent(0, 12108450);
     
     SetEventFlag(1509, OFF);
     SetEventFlag(1510, OFF);
     SetEventFlag(12100761, OFF); // re-enable rest in the menu
     
-    InitializeEvent(0, 12101000, 4110, 2100211, 2561);
-    InitializeEvent(1, 12101000, 4111, 2100211, 3330);
-    InitializeEvent(2, 12101000, 4112, 2100211, 3843);
-    InitializeEvent(3, 12101000, 4113, 2100212, 3840);
-    InitializeEvent(4, 12101000, 4114, 2100212, 3073);
-    InitializeEvent(5, 12101000, 4115, 2100212, 2818);
-    InitializeEvent(6, 12101000, 4116, 2100212, 3843);
-    InitializeEvent(7, 12101000, 4117, 2100213, 3840);
-    InitializeEvent(8, 12101000, 4118, 2100213, 3841);
-    InitializeEvent(9, 12101000, 4119, 2100213, 3842);
+    $InitializeEvent(0, 12101000, 4110, 2100211, 1, 10);
+    $InitializeEvent(1, 12101000, 4111, 2100211, 2, 13);
+    $InitializeEvent(2, 12101000, 4112, 2100211, 3, 15);
+    $InitializeEvent(3, 12101000, 4113, 2100212, 0, 15);
+    $InitializeEvent(4, 12101000, 4114, 2100212, 1, 12);
+    $InitializeEvent(5, 12101000, 4115, 2100212, 2, 11);
+    $InitializeEvent(6, 12101000, 4116, 2100212, 3, 15);
+    $InitializeEvent(7, 12101000, 4117, 2100213, 0, 15);
+    $InitializeEvent(8, 12101000, 4118, 2100213, 1, 15);
+    $InitializeEvent(9, 12101000, 4119, 2100213, 2, 15);
     
     // boss defeated broken lamp menu flags
-    InitializeEvent(0, 12102040, 0);
-    InitializeEvent(0, 12102041, 0);
-    InitializeEvent(0, 12102043, 0);
+    $InitializeEvent(0, 12102040);
+    $InitializeEvent(0, 12102041);
+    $InitializeEvent(0, 12102043);
     
     // increase cycle
-    InitializeEvent(0, 12102020, 0);
-    InitializeEvent(0, 12102021, 0);
-
+    $InitializeEvent(0, 12102020);
+    $InitializeEvent(0, 12102021);
+    
     // dark fog
     //SetEventFlag(12102031, ON);
-    InitializeEvent(0, 12102032, 0);
+    $InitializeEvent(0, 12102032);
     
     // unlock all lamps
-    InitializeEvent(0, 12102200, 0);
+    $InitializeEvent(0, 12102200);
     
     // unlock all shortcuts
-    InitializeEvent(0, 12102210, 0);
+    $InitializeEvent(0, 12102210);
     
     // spEffect test
     //InitializeEvent(0, 13100000, 0);
     
     // check if in Hunter's Dream for shop to update with badges
-    InitializeEvent(0, 12100001, 0);
-    InitializeEvent(0, 12100003, 0);
+    $InitializeEvent(0, 12100001);
+    $InitializeEvent(0, 12100003);
     
-    InitializeEvent(0, 12100005, 0);
+    $InitializeEvent(0, 12100005);
     
     // bulk acquisitions
-    InitializeEvent(0, 12101300, 0);
-    InitializeEvent(0, 12101301, 0);
-    InitializeEvent(0, 12101302, 0);
-    InitializeEvent(0, 12101303, 0);
-    InitializeEvent(0, 12101310, 0);
-    InitializeEvent(0, 12101320, 0);
-    InitializeEvent(0, 12101330, 0);
-    InitializeEvent(0, 12101331, 0);
-    InitializeEvent(0, 12101332, 0);
-    InitializeEvent(0, 12101333, 0);
-    InitializeEvent(0, 12101334, 0);
-    InitializeEvent(0, 12101340, 0);
-    InitializeEvent(0, 12101360, 0);
-    InitializeEvent(0, 12101361, 0);
+    $InitializeEvent(0, 12101300);
+    $InitializeEvent(0, 12101301);
+    $InitializeEvent(0, 12101302);
+    $InitializeEvent(0, 12101303);
+    $InitializeEvent(0, 12101310);
+    $InitializeEvent(0, 12101320);
+    $InitializeEvent(0, 12101330);
+    $InitializeEvent(0, 12101331);
+    $InitializeEvent(0, 12101332);
+    $InitializeEvent(0, 12101333);
+    $InitializeEvent(0, 12101334);
+    $InitializeEvent(0, 12101340);
+    $InitializeEvent(0, 12101360);
+    $InitializeEvent(0, 12101361);
     
     // beast and broccoli runes
-    InitializeEvent(0, 12100770, 0);
-    InitializeEvent(0, 12100769, 0);
+    $InitializeEvent(0, 12100770);
+    $InitializeEvent(0, 12100769);
     
     // lesser hunter's mark
-    InitializeEvent(0, 12100768, 0);
+    $InitializeEvent(0, 12100768);
     
-    InitializeEvent(0, 12101010, 0);
+    $InitializeEvent(0, 12101010);
     
-    InitializeEvent(0, 8700, 0); // disable item refill after time limit
+    $InitializeEvent(0, 8700); // disable item refill after time limit
     
     // Settings initializers
-    InitializeEvent(0, 8400, 0); // lamp
-    InitializeEvent(0, 8401, 0); // lamp 2
-    InitializeEvent(0, 8405, 0); // broken lamp
-    InitializeEvent(0, 8406, 0); // misc
+    $InitializeEvent(0, 8400); // lamp
+    $InitializeEvent(0, 8401); // lamp 2
+    $InitializeEvent(0, 8405); // broken lamp
+    $InitializeEvent(0, 8406); // misc
     
     if (EventFlag(12100850)) { // auto rematch enabled, rematch initiated from dream, and death respawn location is dream
         SetEventFlag(12100850, OFF);
@@ -107,43 +119,43 @@ $Event(0, Default, function() {
     if (EventFlag(12100650)) { // initiated from the dream
         SetEventFlag(12100650, OFF);
         SetEventFlag(12100750, ON);
-        if (EventFlag(12100963)) { // victory respawn location is set to dream
-            // DisplayBanner(TextBannerType.Dead);
-            // SetPlayerRespawnPoint(2102969); // return to broken lamp
-        }
+        GotoIf(S0, !EventFlag(12100963)); // victory respawn location is set to dream
     }
+    // DisplayBanner(TextBannerType.Dead);
+    // SetPlayerRespawnPoint(2102969); // return to broken lamp
     
     // remove insight on auto rematch
-    if (EventFlag(8950)) {
-        SetEventFlag(8950, OFF);
-        SetSpEffect(10000, 4682, false);
-    }
+S0:
+    GotoIf(S1, !EventFlag(8950));
+    SetEventFlag(8950, OFF);
+    SetSpEffect(10000, 4682, false);
     
-    InitializeEvent(0, 12105060, 0);
-    InitializeEvent(0, 12105064, 0);
-    InitializeEvent(0, 12105070, 72100141, 6011, 20);
-    InitializeEvent(1, 12105070, 72100142, 6012, 21);
-    InitializeEvent(2, 12105070, 72100143, 6013, 22);
-    InitializeEvent(3, 12105070, 72100144, 6014, 23);
-    InitializeEvent(4, 12105070, 72100145, 6015, 24);
-    InitializeEvent(5, 12105070, 72100146, 6016, 25);
-    InitializeEvent(6, 12105070, 72100147, 6017, 26);
-    InitializeEvent(7, 12105070, 72100148, 6018, 27);
-    InitializeEvent(8, 12105070, 72100149, 6019, 28);
-    InitializeEvent(9, 12105070, 72100150, 6020, 0);
-    InitializeEvent(10, 12105070, 72100151, 6021, 0);
-    InitializeEvent(11, 12105070, 72100152, 6022, 0);
-    InitializeEvent(12, 12105070, 72100153, 6023, 0);
-    InitializeEvent(13, 12105070, 72100154, 6024, 0);
-    InitializeEvent(14, 12105070, 72100155, 6025, 0);
+S1:
+    $InitializeEvent(0, 12105060);
+    $InitializeEvent(0, 12105064);
+    $InitializeEvent(0, 12105070, 72100141, 6011, 20);
+    $InitializeEvent(1, 12105070, 72100142, 6012, 21);
+    $InitializeEvent(2, 12105070, 72100143, 6013, 22);
+    $InitializeEvent(3, 12105070, 72100144, 6014, 23);
+    $InitializeEvent(4, 12105070, 72100145, 6015, 24);
+    $InitializeEvent(5, 12105070, 72100146, 6016, 25);
+    $InitializeEvent(6, 12105070, 72100147, 6017, 26);
+    $InitializeEvent(7, 12105070, 72100148, 6018, 27);
+    $InitializeEvent(8, 12105070, 72100149, 6019, 28);
+    $InitializeEvent(9, 12105070, 72100150, 6020, 0);
+    $InitializeEvent(10, 12105070, 72100151, 6021, 0);
+    $InitializeEvent(11, 12105070, 72100152, 6022, 0);
+    $InitializeEvent(12, 12105070, 72100153, 6023, 0);
+    $InitializeEvent(13, 12105070, 72100154, 6024, 0);
+    $InitializeEvent(14, 12105070, 72100155, 6025, 0);
     
-    InitializeEvent(0, 12105062, 0);
+    $InitializeEvent(0, 12105062);
     
-    InitializeEvent(0, 12105020, 0);
-    InitializeEvent(0, 12105021, 0);
-    InitializeEvent(0, 12105022, 0);
-    InitializeEvent(0, 12105023, 0);
-    InitializeEvent(0, 12105024, 0);
+    $InitializeEvent(0, 12105020);
+    $InitializeEvent(0, 12105021);
+    $InitializeEvent(0, 12105022);
+    $InitializeEvent(0, 12105023);
+    $InitializeEvent(0, 12105024);
     
     SetEventFlag(72100420, OFF);
     SetEventFlag(72100421, OFF);
@@ -153,184 +165,184 @@ $Event(0, Default, function() {
     SetEventFlag(72100425, OFF);
     SetEventFlag(72100426, OFF);
     
-    InitializeEvent(0, 12100020, 4900, 6071, 1);
-    InitializeEvent(1, 12100020, 4901, 6072, 1);
-    InitializeEvent(2, 12100020, 4902, 6073, 1);
-    InitializeEvent(3, 12100020, 4903, 6074, 0);
-    InitializeEvent(4, 12100020, 4904, 6075, 0);
-    InitializeEvent(5, 12100020, 4905, 6076, 0);
-    InitializeEvent(6, 12100020, 4906, 6077, 0);
-    InitializeEvent(7, 12100020, 4907, 6078, 0);
-    InitializeEvent(8, 12100020, 4908, 6079, 0);
-    InitializeEvent(9, 12100020, 4909, 6080, 0);
-    InitializeEvent(10, 12100020, 4910, 6081, 0);
-    InitializeEvent(11, 12100020, 4911, 6082, 0);
-    InitializeEvent(12, 12100020, 4912, 6083, 0);
-    InitializeEvent(13, 12100020, 4913, 6084, 0);
-    InitializeEvent(14, 12100020, 4914, 6085, 0);
+    $InitializeEvent(0, 12100020, 4900, 6071, 1);
+    $InitializeEvent(1, 12100020, 4901, 6072, 1);
+    $InitializeEvent(2, 12100020, 4902, 6073, 1);
+    $InitializeEvent(3, 12100020, 4903, 6074, 0);
+    $InitializeEvent(4, 12100020, 4904, 6075, 0);
+    $InitializeEvent(5, 12100020, 4905, 6076, 0);
+    $InitializeEvent(6, 12100020, 4906, 6077, 0);
+    $InitializeEvent(7, 12100020, 4907, 6078, 0);
+    $InitializeEvent(8, 12100020, 4908, 6079, 0);
+    $InitializeEvent(9, 12100020, 4909, 6080, 0);
+    $InitializeEvent(10, 12100020, 4910, 6081, 0);
+    $InitializeEvent(11, 12100020, 4911, 6082, 0);
+    $InitializeEvent(12, 12100020, 4912, 6083, 0);
+    $InitializeEvent(13, 12100020, 4913, 6084, 0);
+    $InitializeEvent(14, 12100020, 4914, 6085, 0);
     
     SetEventFlag(7501, OFF);
-    InitializeEvent(0, 9190, 0);
-    InitializeEvent(0, 9191, 0);
-    InitializeEvent(0, 9192, 0);
-    InitializeEvent(0, 9193, 0);
-    InitializeEvent(0, 9198, 0);
-    InitializeEvent(0, 6788, 0);
-    InitializeEvent(0, 6789, 0);
-    InitializeEvent(0, 6809, 0);
-    InitializeEvent(0, 6815, 0);
-    InitializeEvent(0, 6816, 0);
-    InitializeEvent(0, 9181, 0);
-    InitializeEvent(0, 9182, 0);
-    InitializeEvent(0, 9183, 0);
-    InitializeEvent(0, 9186, 0);
-    InitializeEvent(0, 6680, 0);
-    InitializeEvent(0, 6681, 0);
-    InitializeEvent(0, 6682, 0);
-    InitializeEvent(0, 6683, 0);
-    InitializeEvent(0, 6684, 0);
-    InitializeEvent(0, 6685, 0);
-    InitializeEvent(0, 6686, 0);
-    InitializeEvent(0, 6687, 0);
-    InitializeEvent(0, 6688, 0);
-    InitializeEvent(0, 6689, 0);
-    InitializeEvent(0, 6690, 0);
-    InitializeEvent(0, 6691, 0);
-    InitializeEvent(0, 6692, 0);
-    InitializeEvent(0, 6693, 0);
-    InitializeEvent(0, 6694, 0);
-    InitializeEvent(0, 6695, 0);
-    InitializeEvent(0, 6696, 0);
-    InitializeEvent(0, 6697, 0);
-    InitializeEvent(0, 5500, 23010000);
-    InitializeEvent(1, 5500, 23020000);
-    InitializeEvent(2, 5500, 24010000);
-    InitializeEvent(3, 5500, 24020000);
-    InitializeEvent(4, 5500, 30010000);
-    InitializeEvent(5, 5500, 30020000);
-    InitializeEvent(6, 5500, 32010000);
-    InitializeEvent(7, 5500, 32020000);
-    InitializeEvent(8, 5500, 26010000);
-    InitializeEvent(9, 5500, 26020000);
-    InitializeEvent(10, 5500, 27010000);
-    InitializeEvent(11, 5500, 27020000);
-    InitializeEvent(12, 5500, 31010000);
-    InitializeEvent(13, 5500, 31020000);
-    InitializeEvent(14, 5500, 28010000);
-    InitializeEvent(15, 5500, 28020000);
-    InitializeEvent(16, 5500, 29010000);
-    InitializeEvent(17, 5500, 29020000);
-    InitializeEvent(18, 5500, 25010000);
-    InitializeEvent(19, 5500, 25020000);
-    InitializeEvent(20, 5500, 38010000);
-    InitializeEvent(21, 5500, 38020000);
-    InitializeEvent(0, 9500, 3400, 100000);
-    InitializeEvent(1, 9500, 3401, 100010);
-    InitializeEvent(2, 9500, 3402, 100020);
-    InitializeEvent(3, 9500, 3403, 100030);
-    InitializeEvent(4, 9500, 3404, 100040);
-    InitializeEvent(5, 9500, 3405, 100050);
-    InitializeEvent(6, 9500, 3406, 100060);
-    InitializeEvent(7, 9500, 3407, 100070);
-    InitializeEvent(8, 9500, 3408, 100080);
-    InitializeEvent(9, 9500, 3409, 100090);
-    InitializeEvent(10, 9500, 3410, 100100);
-    InitializeEvent(11, 9500, 3411, 100110);
-    InitializeEvent(12, 9500, 3412, 100120);
-    InitializeEvent(13, 9500, 3390, 100500);
-    InitializeEvent(14, 9500, 3391, 100510);
-    InitializeEvent(15, 9500, 3392, 100520);
-    InitializeEvent(16, 9500, 3450, 101000);
-    InitializeEvent(17, 9500, 3451, 101010);
-    InitializeEvent(18, 9500, 3452, 101020);
-    InitializeEvent(19, 9500, 3453, 101030);
-    InitializeEvent(20, 9500, 3454, 101040);
-    InitializeEvent(21, 9500, 3455, 101050);
-    InitializeEvent(22, 9500, 3456, 101060);
-    InitializeEvent(23, 9500, 3457, 101070);
-    InitializeEvent(24, 9500, 3458, 101080);
-    InitializeEvent(25, 9500, 3459, 101090);
-    InitializeEvent(26, 9500, 3460, 101100);
-    InitializeEvent(27, 9500, 3461, 101110);
-    InitializeEvent(28, 9500, 3462, 101120);
-    InitializeEvent(29, 9500, 3463, 101130);
-    InitializeEvent(30, 9500, 3464, 101140);
-    InitializeEvent(31, 9500, 3465, 101150);
-    InitializeEvent(32, 9500, 3466, 101160);
-    InitializeEvent(33, 9500, 3467, 101170);
-    InitializeEvent(34, 9500, 3468, 101180);
-    InitializeEvent(35, 9500, 3469, 101190);
-    InitializeEvent(36, 9500, 3470, 101200);
-    InitializeEvent(37, 9500, 3471, 101210);
-    InitializeEvent(38, 9500, 3472, 101220);
-    InitializeEvent(39, 9500, 3473, 101230);
-    InitializeEvent(40, 9500, 3474, 101240);
-    InitializeEvent(41, 9500, 3475, 101250);
-    InitializeEvent(42, 9500, 3476, 101260);
-    InitializeEvent(43, 9500, 3477, 101270);
-    InitializeEvent(44, 9500, 3478, 101280);
-    InitializeEvent(45, 9500, 3479, 101290);
-    InitializeEvent(46, 9500, 3480, 101300);
-    InitializeEvent(47, 9500, 3481, 101310);
-    InitializeEvent(48, 9500, 3482, 101320);
-    InitializeEvent(49, 9500, 3483, 101330);
-    InitializeEvent(50, 9500, 3484, 101340);
-    InitializeEvent(0, 9440, 9440, 10500);
-    InitializeEvent(1, 9440, 9441, 11500);
-    InitializeEvent(2, 9440, 9442, 12500);
-    InitializeEvent(0, 9215, 0);
-    InitializeEvent(0, 9421, 0);
-    InitializeEvent(0, 9422, 0);
-    InitializeEvent(0, 9400, 0);
-    InitializeEvent(0, 9404, 0);
-    InitializeEvent(2, 9040, 9042, 17000);
-    InitializeEvent(5, 9040, 9045, 22000);
-    InitializeEvent(6, 9040, 9046, 23000);
-    InitializeEvent(7, 9040, 9047, 24000);
-    InitializeEvent(8, 9040, 9048, 24010);
-    InitializeEvent(9, 9040, 9049, 24020);
-    InitializeEvent(10, 9040, 9050, 24030);
-    InitializeEvent(11, 9040, 9051, 24040);
-    InitializeEvent(12, 9040, 9052, 24050);
-    InitializeEvent(14, 9040, 9054, 26000);
-    InitializeEvent(15, 9040, 9055, 26010);
-    InitializeEvent(16, 9040, 9056, 26020);
-    InitializeEvent(17, 9040, 9057, 26030);
-    InitializeEvent(18, 9040, 9058, 27000);
-    InitializeEvent(19, 9040, 9059, 27010);
-    InitializeEvent(20, 9040, 9060, 27020);
-    InitializeEvent(21, 9040, 9061, 27030);
-    InitializeEvent(22, 9040, 9062, 27040);
-    InitializeEvent(23, 9040, 9063, 27050);
-    InitializeEvent(24, 9040, 9064, 27060);
-    InitializeEvent(26, 9040, 9066, 29000);
-    InitializeEvent(27, 9040, 9067, 30000);
-    InitializeEvent(29, 9040, 9069, 32000);
-    InitializeEvent(31, 9040, 9071, 33000);
-    InitializeEvent(32, 9040, 9072, 34000);
-    InitializeEvent(33, 9040, 9073, 34010);
-    InitializeEvent(34, 9040, 9074, 35000);
-    InitializeEvent(35, 9040, 9075, 35010);
-    InitializeEvent(36, 9040, 9076, 39000);
-    InitializeEvent(37, 9040, 9077, 39010);
-    InitializeEvent(0, 9100, 72410359, 24060);
-    InitializeEvent(1, 9100, 72410310, 23000);
-    InitializeEvent(2, 9100, 72400398, 32020);
-    InitializeEvent(3, 9100, 72400489, 28000);
-    InitializeEvent(4, 9100, 9043, 17010);
-    InitializeEvent(0, 9910, 0);
-    InitializeEvent(0, 9909, 0);
-    InitializeEvent(0, 9905, 4685);
-    InitializeEvent(1, 9905, 4686);
-    InitializeEvent(2, 9905, 4687);
-    InitializeEvent(3, 9905, 4688);
+    $InitializeEvent(0, 9190);
+    $InitializeEvent(0, 9191);
+    $InitializeEvent(0, 9192);
+    $InitializeEvent(0, 9193);
+    $InitializeEvent(0, 9198);
+    $InitializeEvent(0, 6788);
+    $InitializeEvent(0, 6789);
+    $InitializeEvent(0, 6809);
+    $InitializeEvent(0, 6815);
+    $InitializeEvent(0, 6816);
+    $InitializeEvent(0, 9181);
+    $InitializeEvent(0, 9182);
+    $InitializeEvent(0, 9183);
+    $InitializeEvent(0, 9186);
+    $InitializeEvent(0, 6680);
+    $InitializeEvent(0, 6681);
+    $InitializeEvent(0, 6682);
+    $InitializeEvent(0, 6683);
+    $InitializeEvent(0, 6684);
+    $InitializeEvent(0, 6685);
+    $InitializeEvent(0, 6686);
+    $InitializeEvent(0, 6687);
+    $InitializeEvent(0, 6688);
+    $InitializeEvent(0, 6689);
+    $InitializeEvent(0, 6690);
+    $InitializeEvent(0, 6691);
+    $InitializeEvent(0, 6692);
+    $InitializeEvent(0, 6693);
+    $InitializeEvent(0, 6694);
+    $InitializeEvent(0, 6695);
+    $InitializeEvent(0, 6696);
+    $InitializeEvent(0, 6697);
+    $InitializeEvent(0, 5500, 23010000);
+    $InitializeEvent(1, 5500, 23020000);
+    $InitializeEvent(2, 5500, 24010000);
+    $InitializeEvent(3, 5500, 24020000);
+    $InitializeEvent(4, 5500, 30010000);
+    $InitializeEvent(5, 5500, 30020000);
+    $InitializeEvent(6, 5500, 32010000);
+    $InitializeEvent(7, 5500, 32020000);
+    $InitializeEvent(8, 5500, 26010000);
+    $InitializeEvent(9, 5500, 26020000);
+    $InitializeEvent(10, 5500, 27010000);
+    $InitializeEvent(11, 5500, 27020000);
+    $InitializeEvent(12, 5500, 31010000);
+    $InitializeEvent(13, 5500, 31020000);
+    $InitializeEvent(14, 5500, 28010000);
+    $InitializeEvent(15, 5500, 28020000);
+    $InitializeEvent(16, 5500, 29010000);
+    $InitializeEvent(17, 5500, 29020000);
+    $InitializeEvent(18, 5500, 25010000);
+    $InitializeEvent(19, 5500, 25020000);
+    $InitializeEvent(20, 5500, 38010000);
+    $InitializeEvent(21, 5500, 38020000);
+    $InitializeEvent(0, 9500, 3400, 100000);
+    $InitializeEvent(1, 9500, 3401, 100010);
+    $InitializeEvent(2, 9500, 3402, 100020);
+    $InitializeEvent(3, 9500, 3403, 100030);
+    $InitializeEvent(4, 9500, 3404, 100040);
+    $InitializeEvent(5, 9500, 3405, 100050);
+    $InitializeEvent(6, 9500, 3406, 100060);
+    $InitializeEvent(7, 9500, 3407, 100070);
+    $InitializeEvent(8, 9500, 3408, 100080);
+    $InitializeEvent(9, 9500, 3409, 100090);
+    $InitializeEvent(10, 9500, 3410, 100100);
+    $InitializeEvent(11, 9500, 3411, 100110);
+    $InitializeEvent(12, 9500, 3412, 100120);
+    $InitializeEvent(13, 9500, 3390, 100500);
+    $InitializeEvent(14, 9500, 3391, 100510);
+    $InitializeEvent(15, 9500, 3392, 100520);
+    $InitializeEvent(16, 9500, 3450, 101000);
+    $InitializeEvent(17, 9500, 3451, 101010);
+    $InitializeEvent(18, 9500, 3452, 101020);
+    $InitializeEvent(19, 9500, 3453, 101030);
+    $InitializeEvent(20, 9500, 3454, 101040);
+    $InitializeEvent(21, 9500, 3455, 101050);
+    $InitializeEvent(22, 9500, 3456, 101060);
+    $InitializeEvent(23, 9500, 3457, 101070);
+    $InitializeEvent(24, 9500, 3458, 101080);
+    $InitializeEvent(25, 9500, 3459, 101090);
+    $InitializeEvent(26, 9500, 3460, 101100);
+    $InitializeEvent(27, 9500, 3461, 101110);
+    $InitializeEvent(28, 9500, 3462, 101120);
+    $InitializeEvent(29, 9500, 3463, 101130);
+    $InitializeEvent(30, 9500, 3464, 101140);
+    $InitializeEvent(31, 9500, 3465, 101150);
+    $InitializeEvent(32, 9500, 3466, 101160);
+    $InitializeEvent(33, 9500, 3467, 101170);
+    $InitializeEvent(34, 9500, 3468, 101180);
+    $InitializeEvent(35, 9500, 3469, 101190);
+    $InitializeEvent(36, 9500, 3470, 101200);
+    $InitializeEvent(37, 9500, 3471, 101210);
+    $InitializeEvent(38, 9500, 3472, 101220);
+    $InitializeEvent(39, 9500, 3473, 101230);
+    $InitializeEvent(40, 9500, 3474, 101240);
+    $InitializeEvent(41, 9500, 3475, 101250);
+    $InitializeEvent(42, 9500, 3476, 101260);
+    $InitializeEvent(43, 9500, 3477, 101270);
+    $InitializeEvent(44, 9500, 3478, 101280);
+    $InitializeEvent(45, 9500, 3479, 101290);
+    $InitializeEvent(46, 9500, 3480, 101300);
+    $InitializeEvent(47, 9500, 3481, 101310);
+    $InitializeEvent(48, 9500, 3482, 101320);
+    $InitializeEvent(49, 9500, 3483, 101330);
+    $InitializeEvent(50, 9500, 3484, 101340);
+    $InitializeEvent(0, 9440, 9440, 10500);
+    $InitializeEvent(1, 9440, 9441, 11500);
+    $InitializeEvent(2, 9440, 9442, 12500);
+    $InitializeEvent(0, 9215);
+    $InitializeEvent(0, 9421);
+    $InitializeEvent(0, 9422);
+    $InitializeEvent(0, 9400);
+    $InitializeEvent(0, 9404);
+    $InitializeEvent(2, 9040, 9042, 17000);
+    $InitializeEvent(5, 9040, 9045, 22000);
+    $InitializeEvent(6, 9040, 9046, 23000);
+    $InitializeEvent(7, 9040, 9047, 24000);
+    $InitializeEvent(8, 9040, 9048, 24010);
+    $InitializeEvent(9, 9040, 9049, 24020);
+    $InitializeEvent(10, 9040, 9050, 24030);
+    $InitializeEvent(11, 9040, 9051, 24040);
+    $InitializeEvent(12, 9040, 9052, 24050);
+    $InitializeEvent(14, 9040, 9054, 26000);
+    $InitializeEvent(15, 9040, 9055, 26010);
+    $InitializeEvent(16, 9040, 9056, 26020);
+    $InitializeEvent(17, 9040, 9057, 26030);
+    $InitializeEvent(18, 9040, 9058, 27000);
+    $InitializeEvent(19, 9040, 9059, 27010);
+    $InitializeEvent(20, 9040, 9060, 27020);
+    $InitializeEvent(21, 9040, 9061, 27030);
+    $InitializeEvent(22, 9040, 9062, 27040);
+    $InitializeEvent(23, 9040, 9063, 27050);
+    $InitializeEvent(24, 9040, 9064, 27060);
+    $InitializeEvent(26, 9040, 9066, 29000);
+    $InitializeEvent(27, 9040, 9067, 30000);
+    $InitializeEvent(29, 9040, 9069, 32000);
+    $InitializeEvent(31, 9040, 9071, 33000);
+    $InitializeEvent(32, 9040, 9072, 34000);
+    $InitializeEvent(33, 9040, 9073, 34010);
+    $InitializeEvent(34, 9040, 9074, 35000);
+    $InitializeEvent(35, 9040, 9075, 35010);
+    $InitializeEvent(36, 9040, 9076, 39000);
+    $InitializeEvent(37, 9040, 9077, 39010);
+    $InitializeEvent(0, 9100, 72410359, 24060);
+    $InitializeEvent(1, 9100, 72410310, 23000);
+    $InitializeEvent(2, 9100, 72400398, 32020);
+    $InitializeEvent(3, 9100, 72400489, 28000);
+    $InitializeEvent(4, 9100, 9043, 17010);
+    $InitializeEvent(0, 9910);
+    $InitializeEvent(0, 9909);
+    $InitializeEvent(0, 9905, 4685);
+    $InitializeEvent(1, 9905, 4686);
+    $InitializeEvent(2, 9905, 4687);
+    $InitializeEvent(3, 9905, 4688);
     if (!HasMultiplayerState(MultiplayerState.Host)) {
         SetSpEffect(10000, 9110, false);
     }
-    InitializeEvent(0, 9030, 6100, 180010);
-    InitializeEvent(1, 9030, 6110, 180000);
-    InitializeEvent(2, 9030, 6120, 180020);
-    InitializeEvent(0, 9035, 6142, 180040);
+    $InitializeEvent(0, 9030, 6100, 180010);
+    $InitializeEvent(1, 9030, 6110, 180000);
+    $InitializeEvent(2, 9030, 6120, 180020);
+    $InitializeEvent(0, 9035, 6142, 180040);
     if (PlayerHasItem(ItemType.Goods, 6302)) {
         SetEventFlag(70009200, ON);
     }
@@ -350,7 +362,7 @@ $Event(0, Default, function() {
 
 // pre-constructor
 $Event(50, Default, function() {
-    InitializeEvent(0, 6002, 0);
+    $InitializeEvent(0, 6002);
     if (!HasMultiplayerState(MultiplayerState.Client)) {
         if (EventFlag(12101800)) {
             SetEventFlag(9450, ON);
@@ -443,32 +455,32 @@ $Event(50, Default, function() {
     }
 L2:
     SetEventFlag(9180, OFF);
-    InitializeEvent(19, 9360, 1324, 1324, 1324, 6001);
-    InitializeEvent(20, 9360, 1342, 1346, 1350, 6001);
-    InitializeEvent(22, 9360, 1368, 1368, 1368, 1376);
-    InitializeEvent(25, 9360, 12300210, 12300210, 12300210, 6001);
-    InitializeEvent(26, 9360, 12800700, 12800700, 12800700, 6001);
-    InitializeEvent(27, 9360, 12800701, 12800701, 12800701, 6001);
-    InitializeEvent(28, 9360, 12800702, 12800702, 12800702, 6001);
-    InitializeEvent(30, 9360, 12410810, 12410810, 12410810, 6001);
-    InitializeEvent(31, 9360, 12400654, 12400654, 12400654, 6001);
-    InitializeEvent(32, 9360, 13300220, 13300220, 13300220, 6001);
-    InitializeEvent(33, 9360, 13300221, 13300221, 13300221, 6001);
-    InitializeEvent(34, 9360, 12400865, 12400865, 12400865, 6001);
-    InitializeEvent(35, 9360, 12400866, 12400866, 12400866, 6001);
-    InitializeEvent(36, 9360, 12600500, 12600500, 12600500, 6001);
-    InitializeEvent(37, 9360, 13200500, 13200500, 13200500, 6001);
-    InitializeEvent(0, 9480, 1710, 1711, 1712, 1713, 73600521);
-    InitializeEvent(1, 9480, 1730, 1730, 1730, 1730, 6001);
-    InitializeEvent(2, 9480, 1790, 1790, 1790, 1790, 6001);
-    InitializeEvent(3, 9480, 13501900, 13501900, 13501900, 13501900, 6001);
-    InitializeEvent(4, 9480, 12700909, 12700909, 12700909, 12700909, 6001);
-    InitializeEvent(5, 9480, 13400970, 13400970, 13400970, 13400970, 6001);
-    InitializeEvent(6, 9480, 13400971, 13400971, 13400971, 13400971, 6001);
-    InitializeEvent(7, 9480, 13501901, 13501901, 13501901, 13501901, 6001);
-    InitializeEvent(8, 9480, 13501902, 13501902, 13501902, 13501902, 6001);
-    InitializeEvent(9, 9480, 13501903, 13501903, 13501903, 13501903, 6001);
-    InitializeEvent(10, 9480, 13501904, 13501904, 13501904, 13501904, 6001);
+    $InitializeEvent(19, 9360, 1324, 1324, 1324, 6001);
+    $InitializeEvent(20, 9360, 1342, 1346, 1350, 6001);
+    $InitializeEvent(22, 9360, 1368, 1368, 1368, 1376);
+    $InitializeEvent(25, 9360, 12300210, 12300210, 12300210, 6001);
+    $InitializeEvent(26, 9360, 12800700, 12800700, 12800700, 6001);
+    $InitializeEvent(27, 9360, 12800701, 12800701, 12800701, 6001);
+    $InitializeEvent(28, 9360, 12800702, 12800702, 12800702, 6001);
+    $InitializeEvent(30, 9360, 12410810, 12410810, 12410810, 6001);
+    $InitializeEvent(31, 9360, 12400654, 12400654, 12400654, 6001);
+    $InitializeEvent(32, 9360, 13300220, 13300220, 13300220, 6001);
+    $InitializeEvent(33, 9360, 13300221, 13300221, 13300221, 6001);
+    $InitializeEvent(34, 9360, 12400865, 12400865, 12400865, 6001);
+    $InitializeEvent(35, 9360, 12400866, 12400866, 12400866, 6001);
+    $InitializeEvent(36, 9360, 12600500, 12600500, 12600500, 6001);
+    $InitializeEvent(37, 9360, 13200500, 13200500, 13200500, 6001);
+    $InitializeEvent(0, 9480, 1710, 1711, 1712, 1713, 73600521);
+    $InitializeEvent(1, 9480, 1730, 1730, 1730, 1730, 6001);
+    $InitializeEvent(2, 9480, 1790, 1790, 1790, 1790, 6001);
+    $InitializeEvent(3, 9480, 13501900, 13501900, 13501900, 13501900, 6001);
+    $InitializeEvent(4, 9480, 12700909, 12700909, 12700909, 12700909, 6001);
+    $InitializeEvent(5, 9480, 13400970, 13400970, 13400970, 13400970, 6001);
+    $InitializeEvent(6, 9480, 13400971, 13400971, 13400971, 13400971, 6001);
+    $InitializeEvent(7, 9480, 13501901, 13501901, 13501901, 13501901, 6001);
+    $InitializeEvent(8, 9480, 13501902, 13501902, 13501902, 13501902, 6001);
+    $InitializeEvent(9, 9480, 13501903, 13501903, 13501903, 13501903, 6001);
+    $InitializeEvent(10, 9480, 13501904, 13501904, 13501904, 13501904, 6001);
     if (!EventFlag(999)) {
         if (!AnyBatchEventFlags(1000, 1019)) {
             SetEventFlag(1000, ON);
@@ -545,26 +557,26 @@ L2:
         SetEventFlag(999, ON);
     }
 L0:
-    InitializeEvent(0, 9700, 1020, 1039);
-    InitializeEvent(0, 9701, 1020, 1039);
-    InitializeEvent(0, 9702, 1020, 1039);
-    InitializeEvent(0, 9703, 1020, 1039);
-    InitializeEvent(0, 9710, 1000, 1019);
-    InitializeEvent(0, 9720, 0);
-    InitializeEvent(0, 9721, 0);
-    InitializeEvent(0, 9722, 0);
-    InitializeEvent(0, 9723, 0);
-    InitializeEvent(0, 9755, 0);
-    InitializeEvent(0, 9756, 0);
-    InitializeEvent(0, 9770, 0);
-    InitializeEvent(0, 9780, 0);
-    InitializeEvent(0, 9781, 0);
-    InitializeEvent(0, 9782, 0);
-    InitializeEvent(0, 3500, 4900, 6900, 6071, 6011);
-    InitializeEvent(1, 3500, 4901, 6901, 6072, 6012);
-    InitializeEvent(2, 3500, 4902, 6902, 6073, 6013);
+    $InitializeEvent(0, 9700, 1020, 1039);
+    $InitializeEvent(0, 9701, 1020, 1039);
+    $InitializeEvent(0, 9702, 1020, 1039);
+    $InitializeEvent(0, 9703, 1020, 1039);
+    $InitializeEvent(0, 9710, 1000, 1019);
+    $InitializeEvent(0, 9720);
+    $InitializeEvent(0, 9721);
+    $InitializeEvent(0, 9722);
+    $InitializeEvent(0, 9723);
+    $InitializeEvent(0, 9755);
+    $InitializeEvent(0, 9756);
+    $InitializeEvent(0, 9770);
+    $InitializeEvent(0, 9780);
+    $InitializeEvent(0, 9781);
+    $InitializeEvent(0, 9782);
+    $InitializeEvent(0, 3500, 4900, 6900, 6071, 6011);
+    $InitializeEvent(1, 3500, 4901, 6901, 6072, 6012);
+    $InitializeEvent(2, 3500, 4902, 6902, 6073, 6013);
     
-    InitializeEvent(0, 3503, 0);
+    $InitializeEvent(0, 3503);
     if (EventFlag(6604)) {
         RemoveItemFromPlayer(ItemType.Goods, 4000, 1);
         RemoveItemFromPlayer(ItemType.Goods, 4001, 1);
@@ -614,157 +626,186 @@ L1:
 // initialize lamp settings
 $Event(8400, Default, function() {
     // prevent lamp deactivation
+    // on: 12100868, off: 12100968
     if (!EventFlag(12100968) && !EventFlag(12100868)) {
-        SetEventFlag(12100968, ON); // off
+        SetEventFlag(12100968, ON);
     }
     
     // auto refill vials & bullets
+    // on: 12100862, off: 12100962
     if (!EventFlag(12100962) && !EventFlag(12100862)) {
-        SetEventFlag(12100862, ON); // on
+        SetEventFlag(12100862, ON);
     }
     
-    // item drop hunt
+    // infinite durability
+    // on: 12100855, off: 12100955
     if (!EventFlag(12100955) && !EventFlag(12100855)) {
-        SetEventFlag(12100855, ON); // on
+        SetEventFlag(12100855, ON);
     }
     
     // rest
+    // on: 12100861, off: 12100961
     if (!EventFlag(12100961) && !EventFlag(12100861)) {
-        SetEventFlag(12100961, ON); // off
+        SetEventFlag(12100961, ON);
     }
     
     // auto rest
+    // on: 12100858, off: 12100958
     if (!EventFlag(12100958) && !EventFlag(12100858)) {
-        SetEventFlag(12100958, ON); // off
+        SetEventFlag(12100958, ON);
     }
     
     // quick warp to boss
+    // on: 12100857, off: 12100957
     if (!EventFlag(12100957) && !EventFlag(12100857)) {
-        SetEventFlag(12100857, ON); // on
+        SetEventFlag(12100857, ON);
     }
     
     // lamp menu
+    // on: 12100872, off: 12100972
     if (!EventFlag(12100972) && !EventFlag(12100872)) {
-        SetEventFlag(12100872, ON); // on
+        SetEventFlag(12100872, ON);
     }
     
     // warp
+    // on: 12100880, off: 12100980
     if (!EventFlag(12100980) && !EventFlag(12100880)) {
-        SetEventFlag(12100880, ON); // on
+        SetEventFlag(12100880, ON);
     }
     
     // level up
+    // on: 12100879, off: 12100979
     if (!EventFlag(12100979) && !EventFlag(12100879)) {
-        SetEventFlag(12100879, ON); // on
+        SetEventFlag(12100879, ON);
     }
     
     // workshop
+    // on: 12100878, off: 12100978
     if (!EventFlag(12100978) && !EventFlag(12100878)) {
-        SetEventFlag(12100878, ON); // on
+        SetEventFlag(12100878, ON);
     }
     
     // memory alter
+    // on: 12100877, off: 12100977
     if (!EventFlag(12100977) && !EventFlag(12100877)) {
-        SetEventFlag(12100877, ON); // on
+        SetEventFlag(12100877, ON);
     }
     
     // storage
+    // on: 12100876, off: 12100976
     if (!EventFlag(12100976) && !EventFlag(12100876)) {
-        SetEventFlag(12100876, ON); // on
+        SetEventFlag(12100876, ON);
     }
     
     // messengers
+    // on: 12100875, off: 12100975
     if (!EventFlag(12100975) && !EventFlag(12100875)) {
-        SetEventFlag(12100875, ON); // on
+        SetEventFlag(12100875, ON);
     }
     
     // change appearance
+    // on: 12100874, off: 12100974
     if (!EventFlag(12100974) && !EventFlag(12100874)) {
-        SetEventFlag(12100874, ON); // on
+        SetEventFlag(12100874, ON);
     }
     
     // boss rematches
+    // on: 12100867, off: 12100967
     if (!EventFlag(12100967) && !EventFlag(12100867)) {
-        SetEventFlag(12100867, ON); // on
+        SetEventFlag(12100867, ON);
     }
 });
 
 // initialize lamp settings 2
 $Event(8401, Default, function() {
     // enable Iosefka lamp from start
+    // on: 12100853, off: 12100953
     if (!EventFlag(12100953) && !EventFlag(12100853)) {
-        SetEventFlag(12100853, ON); // on
+        SetEventFlag(12100853, ON);
     }
     
     // kindling
+    // on: 12100851, off: 12100951
     if (!EventFlag(12100951) && !EventFlag(12100851)) {
-        SetEventFlag(12100851, ON); // on
+        SetEventFlag(12100851, ON);
     }
 });
 
 // initialize broken lamp settings
 $Event(8405, Default, function() {
     // broken lamp
+    // on: 12100865, off: 12100965
     if (!EventFlag(12100965) && !EventFlag(12100865)) {
-        SetEventFlag(12100865, ON); // on
+        SetEventFlag(12100865, ON);
     }
     
-    // broken lamp respawn location on victory and hunter's mark - dream or lamp
+    // broken lamp respawn location on victory and hunter's mark - dream or lamp, 
+    // boss lamp: 12100863, dream: 12100963
     if (!EventFlag(12100963) && !EventFlag(12100863)) {
-        SetEventFlag(12100963, ON); // dream
+        SetEventFlag(12100963, ON);
     }
     
     // broken lamp respawn location on death - dream or lamp
+    // boss lamp: 12100859, dream: 12100959
     if (!EventFlag(12100959) && !EventFlag(12100859)) {
-        SetEventFlag(12100959, ON); // dream
+        SetEventFlag(12100959, ON);
     }
 });
 
 // initialize other settings
 $Event(8406, Default, function() {
     // prevent auto ng+
+    // on: 12100873, off: 12100973
     if (!EventFlag(12100973) && !EventFlag(12100873)) {
-        SetEventFlag(12100873, ON); // on
+        SetEventFlag(12100873, ON);
     }
     
     // stocked shop
+    // on: 12100871, off: 12100971
     if (!EventFlag(12100971) && !EventFlag(12100871)) {
-        SetEventFlag(12100871, ON); // on
+        SetEventFlag(12100871, ON);
     }
     
     // rematch death - end rematch or restart
+    // restart: 12100864, end: 12100964
     if (!EventFlag(12100964) && !EventFlag(12100864)) {
-        SetEventFlag(12100964, ON); // end
+        SetEventFlag(12100864, ON);
     }
     
     // rematch cutscenes
+    // on: 12100866, off: 12100966
     if (!EventFlag(12100966) && !EventFlag(12100866)) {
-        SetEventFlag(12100966, ON); // off
+        SetEventFlag(12100966, ON);
     }
     
     // auto unlock chalice doors
+    // on: 12100860, off: 12100960
     if (!EventFlag(12100960) && !EventFlag(12100860)) {
-        SetEventFlag(12100860, ON); // on
+        SetEventFlag(12100860, ON);
     }
     
     // random time
+    // on: 12100856, off: 12100956
     if (!EventFlag(12100956) && !EventFlag(12100856)) {
-        SetEventFlag(12100856, ON); // on
+        SetEventFlag(12100856, ON);
     }
     
     // doll gesture
+    // on: 12100854, off: 12100954
     if (!EventFlag(12100954) && !EventFlag(12100854)) {
-        SetEventFlag(12100954, ON); // off
+        SetEventFlag(12100954, ON);
     }
     
     // rematch scaling
+    // on: 12100852, off: 12100952
     if (!EventFlag(12100952) && !EventFlag(12100852)) {
-        SetEventFlag(12100952, ON); // off
+        SetEventFlag(12100952, ON);
     }
     
     // bridge door
+    // on: 12100849, off: 12100949
     if (!EventFlag(12100949) && !EventFlag(12100849)) {
-        SetEventFlag(12100949, ON); // off
+        SetEventFlag(12100949, ON);
     }
     
     // unlock lamps
@@ -775,39 +816,48 @@ $Event(8406, Default, function() {
     
     // game effect / dark fog
     if (!AnyBatchEventFlags(12102033, 12102036)) {
-        SetEventFlag(12102033, OFF);
-        SetEventFlag(12102034, ON);
-        SetEventFlag(12102035, OFF);
-        SetEventFlag(12102036, OFF);
+        SetEventFlag(12102033, OFF); // random spawn
+        SetEventFlag(12102034, ON); // disabled
+        SetEventFlag(12102035, OFF); // always on
+        SetEventFlag(12102036, OFF); // random time
     }
     
     // increase cycle
     if (!AnyBatchEventFlags(12102022, 12102028)) {
-        SetEventFlag(12102022, ON);
-        SetEventFlag(12102023, OFF);
-        SetEventFlag(12102024, OFF);
-        SetEventFlag(12102025, OFF);
-        SetEventFlag(12102026, OFF);
-        SetEventFlag(12102027, OFF);
-        SetEventFlag(12102028, OFF);
+        SetEventFlag(12102022, ON); // ng
+        SetEventFlag(12102023, OFF); // ng+1
+        SetEventFlag(12102024, OFF); // ng+2
+        SetEventFlag(12102025, OFF); // ng+3
+        SetEventFlag(12102026, OFF); // ng+4
+        SetEventFlag(12102027, OFF); // ng+5
+        SetEventFlag(12102028, OFF); // ng+6
     }
     
-    // coldblood in shop
+    // shops+
+    // on 12100848, off: 12100948
     if (!EventFlag(12100948) && !EventFlag(12100848)) {
-        SetEventFlag(12100948, ON);
+        SetEventFlag(12100948, ON); // off
     }
+    
+    
+});
+
+// unlock phantasm paper
+$Event(12108450, Default, function() {
+    EndIf(ThisEvent());
+    WaitFor(PlayerHasItem(ItemType.Goods, 1310));
 });
 
 // Lantern lights up when passing area_XX
-$Event(12101602, Default, function(X0_4, X4_4) {
-    CreateObjectfollowingSFX(X4_4, 200, 8020);
-    ForceAnimationPlayback(X4_4, 200, true, true, false);
+$Event(12101602, Default, function(areaEntityId, objEntityId) {
+    CreateObjectfollowingSFX(objEntityId, 200, 8020);
+    ForceAnimationPlayback(objEntityId, 200, true, true, false);
     if (!ThisEventSlot()) {
-        WaitFor(InArea(10000, X0_4));
+        WaitFor(InArea(10000, areaEntityId));
     }
-    ForceAnimationPlayback(X4_4, 1000000, false, true, false);
-    CreateObjectfollowingSFX(X4_4, 100, 8023);
-    ForceAnimationPlayback(X4_4, 1000100, true, true, false);
+    ForceAnimationPlayback(objEntityId, 1000000, false, true, false);
+    CreateObjectfollowingSFX(objEntityId, 100, 8023);
+    ForceAnimationPlayback(objEntityId, 1000100, true, true, false);
 });
 
 // activate all lamps
@@ -818,15 +868,18 @@ $Event(12102200, Default, function() {
     if (!EventFlag(12102301)) {
         DisplayBanner(TextBannerType.StadiumWin); // unlocked
     }
-    
-    // abandoned workshop
-    //SetEventFlag(72110200, ON);
-    SetEventFlag(12117810, ON);
-    
-    SetEventFlag(12117810, ON);
-    SetEventFlag(72110200, ON);
+    SetEventFlag(12117810, ON); // show lamp in menus
+    SetEventFlag(72110200, ON); // light lamp - somehow triggers warp when activated at start
+    SetEventFlag(12207810, ON);
+    SetEventFlag(72200200, ON);
+    SetEventFlag(12207830, ON);
+    SetEventFlag(72200201, ON);
     SetEventFlag(12307810, ON);
     SetEventFlag(72300200, ON);
+    SetEventFlag(12307830, ON);
+    SetEventFlag(72300201, ON);
+    SetEventFlag(12307850, ON);
+    SetEventFlag(72300202, ON);
     SetEventFlag(12407810, ON);
     SetEventFlag(72400200, ON);
     SetEventFlag(12407830, ON);
@@ -845,26 +898,6 @@ $Event(12102200, Default, function() {
     SetEventFlag(72420201, ON);
     SetEventFlag(12427850, ON);
     SetEventFlag(72420202, ON);
-    SetEventFlag(12307830, ON);
-    SetEventFlag(72300201, ON);
-    SetEventFlag(12307850, ON);
-    SetEventFlag(72300202, ON);
-    SetEventFlag(12207810, ON);
-    SetEventFlag(72200200, ON);
-    SetEventFlag(12207830, ON);
-    SetEventFlag(72200201, ON);
-    SetEventFlag(12707810, ON);
-    SetEventFlag(72700200, ON);
-    SetEventFlag(12707830, ON);
-    SetEventFlag(72700201, ON);
-    SetEventFlag(12807810, ON);
-    SetEventFlag(72800200, ON);
-    SetEventFlag(12807830, ON);
-    SetEventFlag(72800201, ON);
-    SetEventFlag(12807850, ON);
-    SetEventFlag(72800202, ON);
-    SetEventFlag(12807870, ON);
-    SetEventFlag(72800203, ON);
     SetEventFlag(12507810, ON);
     SetEventFlag(72500200, ON);
     SetEventFlag(12507830, ON);
@@ -879,6 +912,18 @@ $Event(12102200, Default, function() {
     SetEventFlag(72600202, ON);
     SetEventFlag(12607870, ON);
     SetEventFlag(72600203, ON);
+    SetEventFlag(12707810, ON);
+    SetEventFlag(72700200, ON);
+    SetEventFlag(12707830, ON);
+    SetEventFlag(72700201, ON);
+    SetEventFlag(12807810, ON);
+    SetEventFlag(72800200, ON);
+    SetEventFlag(12807830, ON);
+    SetEventFlag(72800201, ON);
+    SetEventFlag(12807850, ON);
+    SetEventFlag(72800202, ON);
+    SetEventFlag(12807870, ON);
+    SetEventFlag(72800203, ON);
     SetEventFlag(13207810, ON);
     SetEventFlag(73200200, ON);
     SetEventFlag(13207830, ON);
@@ -1002,7 +1047,6 @@ $Event(12102210, Default, function() {
     SetEventFlag(12800483, ON);
     SetEventFlag(12800484, ON);
     
-    
     SetEventFlag(13200040, ON);
     SetEventFlag(13200041, ON);
     SetEventFlag(13200043, ON);
@@ -1043,41 +1087,44 @@ $Event(12102210, Default, function() {
     //RestartEvent();
 });
 
-$Event(12102220, Default, function(X0_4, X4_4) {
-    EndEvent();
-    EndIf(!EventFlag(12102200) || ThisEventSlot());
-    WaitFor(CharacterBackreadStatus(X4_4));
-    WaitFixedTimeSeconds(1);
-    InitializeWarpObject(X0_4);
+// infinite durability
+$Event(12102069, Default, function() {
+    WaitFor(EventFlag(12100855));
+    SetSpEffect(10000, 1330, false);
+    WaitFixedTimeSeconds(10);
+    RestartEvent();
 });
 
-// increase ng cycle
+// something to do with lamp activation? unused currently
+$Event(12102220, Default, function(objEntityId, chrEntityId) {
+    EndEvent();
+    EndIf(!EventFlag(12102200) || ThisEventSlot());
+    WaitFor(CharacterBackreadStatus(chrEntityId));
+    WaitFixedTimeSeconds(1);
+    InitializeWarpObject(objEntityId);
+});
+
+// increase ng cycle - doll
 $Event(12102020, Default, function() {
     SetEventFlag(12102010, ON);
     if (GameCycle() == 0) {
         SetEventFlag(12102003, ON);
-    }
-    else if (GameCycle() == 1) {
+    } else if (GameCycle() == 1) {
         SetEventFlag(12102003, OFF);
         SetEventFlag(12102004, ON);
-    }
-    else if (GameCycle() == 2) {
+    } else if (GameCycle() == 2) {
         SetEventFlag(12102004, OFF);
         SetEventFlag(12102005, ON);
-    }
-    else if (GameCycle() == 3) {
+    } else if (GameCycle() == 3) {
         SetEventFlag(12102005, OFF);
         SetEventFlag(12102006, ON);
-    }
-    else if (GameCycle() == 4) {
+    } else if (GameCycle() == 4) {
         SetEventFlag(12102006, OFF);
         SetEventFlag(12102007, ON);
-    }
-    else if (GameCycle() == 5) {
+    } else if (GameCycle() == 5) {
         SetEventFlag(12102007, OFF);
         SetEventFlag(12102008, ON);
-    }
-    else if (GameCycle() >= 6) {
+    } else if (GameCycle() >= 6) {
         SetEventFlag(12102008, OFF);
         SetEventFlag(12102009, ON);
         SetEventFlag(12102010, OFF);
@@ -1088,30 +1135,23 @@ $Event(12102020, Default, function() {
     RestartEvent();
 });
 
-// increase ng cycle settings tool
+// increase ng cycle - settings tool
 $Event(12102021, Default, function() {
     EndIf(EventFlag(12102021));
     WaitFor(EventFlag(8406));
-    if (EventFlag(12102022)) {
-    
-    }
-    else if (EventFlag(12102023)) {
+    if (EventFlag(12102023)) {
         IncrementGameCycle(0);
-    }
-    else if (EventFlag(12102024)) {
+    } else if (EventFlag(12102024)) {
         IncrementGameCycle(0);
         WaitFixedTimeFrames(1);
         IncrementGameCycle(0);
-    }
-    else if (EventFlag(12102025)) {
+    } else if (EventFlag(12102025)) {
         IncrementGameCycle(0);
         WaitFixedTimeFrames(1);
         IncrementGameCycle(0);
         WaitFixedTimeFrames(1);
         IncrementGameCycle(0);
-    
-    }
-    else if (EventFlag(12102026)) {
+    } else if (EventFlag(12102026)) {
         IncrementGameCycle(0);
         WaitFixedTimeFrames(1);
         IncrementGameCycle(0);
@@ -1119,9 +1159,7 @@ $Event(12102021, Default, function() {
         IncrementGameCycle(0);
         WaitFixedTimeFrames(1);
         IncrementGameCycle(0);
-    
-    }
-    else if (EventFlag(12102027)) {
+    } else if (EventFlag(12102027)) {
         IncrementGameCycle(0);
         WaitFixedTimeFrames(1);
         IncrementGameCycle(0);
@@ -1131,9 +1169,7 @@ $Event(12102021, Default, function() {
         IncrementGameCycle(0);
         WaitFixedTimeFrames(1);
         IncrementGameCycle(0);
-    
-    }
-    else if (EventFlag(12102028)) {
+    } else if (EventFlag(12102028)) {
         IncrementGameCycle(0);
         WaitFixedTimeFrames(1);
         IncrementGameCycle(0);
@@ -1145,31 +1181,56 @@ $Event(12102021, Default, function() {
         IncrementGameCycle(0);
         WaitFixedTimeFrames(1);
         IncrementGameCycle(0);
-    
     }
 });
 
-// any boss defeated 1
+// any boss defeated 1 - for broken lamp activation
 $Event(12102040, Default, function() {
     EndIf(EventFlag(12102042));
-    WaitFor(EventFlag(12201800) || EventFlag(12301800) || EventFlag(12301700) || EventFlag(12401800) || EventFlag(12411700) 
-    || EventFlag(12411800) || EventFlag(12421700) || EventFlag(12421800) || EventFlag(12501800) || EventFlag(12601850) 
-    || EventFlag(12601800) || EventFlag(12701800) || EventFlag(12801800) || EventFlag(13201800) || EventFlag(13301800));
+    WaitFor(
+        EventFlag(12102042)
+            || EventFlag(12201800)
+            || EventFlag(12301800)
+            || EventFlag(12301700)
+            || EventFlag(12401800)
+            || EventFlag(12411700)
+            || EventFlag(12411800)
+            || EventFlag(12421700)
+            || EventFlag(12421800)
+            || EventFlag(12501800)
+            || EventFlag(12601850)
+            || EventFlag(12601800)
+            || EventFlag(12701800)
+            || EventFlag(12801800)
+            || EventFlag(13201800));
     SetEventFlag(12102042, ON);
 });
 
 // any boss defeated 2
 $Event(12102041, Default, function() {
     EndIf(EventFlag(12102042));
-    WaitFor(EventFlag(13401800) || EventFlag(13401850) || EventFlag(13501850) || EventFlag(13501800) || EventFlag(13601800) 
-    || EventFlag(12101800) || EventFlag(12101850));
+    WaitFor(
+        EventFlag(12102042)
+            || EventFlag(13301800)
+            || EventFlag(13401800)
+            || EventFlag(13401850)
+            || EventFlag(13501850)
+            || EventFlag(13501800)
+            || EventFlag(13601800)
+            || EventFlag(12101800)
+            || EventFlag(12101850));
     SetEventFlag(12102042, ON);
 });
 
 // distorted bosses defeated
 $Event(12102043, Default, function() {
     EndIf(ThisEvent());
-    WaitFor(EventFlag(12411800) || EventFlag(13401800) || EventFlag(13601800) || EventFlag(12101850) || EventFlag(12601800));
+    WaitFor(
+        EventFlag(12411800)
+            || EventFlag(13401800)
+            || EventFlag(13601800)
+            || EventFlag(12101850)
+            || EventFlag(12601800));
     SetEventFlag(12102043, ON);
 });
 
@@ -1197,95 +1258,55 @@ $Event(12102043, Default, function() {
 // moon presence = 7413
 
 // rematch scaling
-// boss_rematch_flag, boss_rematch_flag2, speffect_id, boss_id, boss_id2, boss_id3
-$Event(12102070, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4, X20_4) {
-    const boss_rematch_flag = X0_4;
-    const boss_distorted_rematch_flag = X4_4;
-    const sp_effect_id = X8_4;
-    const boss1_id = X12_4;
-    const boss2_id = X16_4;
-    const boss3_id = X20_4;
+// boss_rematch_flag, boss_rematch_flag2, speffect_id, boss_id
+$Event(12102070, Default, function(bossRematchFlag, distortedRematchFlag, spEffectId, bossId1, bossId2, bossId3, bossId4, bossId5) {
     EndIf(EventFlag(12100952));
-    WaitFor(EventFlag(boss_rematch_flag) || (boss_distorted_rematch_flag > 0 && EventFlag(boss_distorted_rematch_flag)));
-    WaitFor(CharacterBackreadStatus(boss1_id));
+    WaitFor(
+        EventFlag(bossRematchFlag) || (distortedRematchFlag > 0 && EventFlag(distortedRematchFlag)));
+    WaitFor(CharacterBackreadStatus(bossId1));
     if (GameCycle() == 0) {
-        SetSpEffect(boss1_id, sp_effect_id, false);
-        if (boss2_id != 0) {
-            WaitFor(CharacterBackreadStatus(boss2_id));
-            SetSpEffect(boss2_id, sp_effect_id, false);
-        }
-        if (boss3_id != 0) {
-            WaitFor(CharacterBackreadStatus(boss3_id));
-            SetSpEffect(boss3_id, sp_effect_id, false);
-        }
+        SetSpEffect(bossId1, spEffectId, false);
+        SetSpEffect(bossId2, spEffectId, false);
+        SetSpEffect(bossId3, spEffectId, false);
+        SetSpEffect(bossId4, spEffectId, false);
+        SetSpEffect(bossId5, spEffectId, false);
+    } else if (GameCycle() == 1) {
+        SetSpEffect(bossId1, 7465, false);
+        SetSpEffect(bossId2, 7465, false);
+        SetSpEffect(bossId3, 7465, false);
+        SetSpEffect(bossId4, 7465, false);
+        SetSpEffect(bossId5, 7465, false);
+    } else if (GameCycle() == 2) {
+        SetSpEffect(bossId1, 7466, false);
+        SetSpEffect(bossId2, 7466, false);
+        SetSpEffect(bossId3, 7466, false);
+        SetSpEffect(bossId4, 7466, false);
+        SetSpEffect(bossId5, 7466, false);
+    } else if (GameCycle() == 3) {
+        SetSpEffect(bossId1, 7467, false);
+        SetSpEffect(bossId2, 7467, false);
+        SetSpEffect(bossId3, 7467, false);
+        SetSpEffect(bossId4, 7467, false);
+        SetSpEffect(bossId5, 7467, false);
+    } else if (GameCycle() == 4) {
+        SetSpEffect(bossId1, 7468, false);
+        SetSpEffect(bossId2, 7468, false);
+        SetSpEffect(bossId3, 7468, false);
+        SetSpEffect(bossId4, 7468, false);
+        SetSpEffect(bossId5, 7468, false);
+    } else if (GameCycle() == 5) {
+        SetSpEffect(bossId1, 7469, false);
+        SetSpEffect(bossId2, 7469, false);
+        SetSpEffect(bossId3, 7469, false);
+        SetSpEffect(bossId4, 7469, false);
+        SetSpEffect(bossId5, 7469, false);
+    } else if (GameCycle() >= 6) {
+        SetSpEffect(bossId1, 7470, false);
+        SetSpEffect(bossId2, 7470, false);
+        SetSpEffect(bossId3, 7470, false);
+        SetSpEffect(bossId4, 7470, false);
+        SetSpEffect(bossId5, 7470, false);
     }
-    else if (GameCycle() == 1) {
-        SetSpEffect(boss1_id, 7465, false);
-        if (boss2_id != 0) {
-            WaitFor(CharacterBackreadStatus(boss2_id));
-            SetSpEffect(boss2_id, 7465, false);
-        }
-        if (boss3_id != 0) {
-            WaitFor(CharacterBackreadStatus(boss3_id));
-            SetSpEffect(boss3_id, 7465, false);
-        }
-    }
-    else if (GameCycle() == 2) {
-        SetSpEffect(boss1_id, 7466, false);
-        if (boss2_id != 0) {
-            WaitFor(CharacterBackreadStatus(boss2_id));
-            SetSpEffect(boss2_id, 7466, false);
-        }
-        if (boss3_id != 0) {
-            WaitFor(CharacterBackreadStatus(boss3_id));
-            SetSpEffect(boss3_id, 7466, false);
-        }
-    }
-    else if (GameCycle() == 3) {
-        SetSpEffect(boss1_id, 7467, false);
-        if (boss2_id != 0) {
-            WaitFor(CharacterBackreadStatus(boss2_id));
-            SetSpEffect(boss2_id, 7467, false);
-        }
-        if (boss3_id != 0) {
-            WaitFor(CharacterBackreadStatus(boss3_id));
-            SetSpEffect(boss3_id, 7467, false);
-        }
-    }
-    else if (GameCycle() == 4) {
-        SetSpEffect(boss1_id, 7468, false);
-        if (boss2_id != 0) {
-            WaitFor(CharacterBackreadStatus(boss2_id));
-            SetSpEffect(boss2_id, 7468, false);
-        }
-        if (boss3_id != 0) {
-            WaitFor(CharacterBackreadStatus(boss3_id));
-            SetSpEffect(boss3_id, 7468, false);
-        }
-    }
-    else if (GameCycle() == 5) {
-        SetSpEffect(boss1_id, 7469, false);
-        if (boss2_id != 0) {
-            WaitFor(CharacterBackreadStatus(boss2_id));
-            SetSpEffect(boss2_id, 7469, false);
-        }
-        if (boss3_id != 0) {
-            WaitFor(CharacterBackreadStatus(boss3_id));
-            SetSpEffect(boss3_id, 7469, false);
-        }
-    }
-    else if (GameCycle() >= 6) {
-        SetSpEffect(boss1_id, 7470, false);
-        if (boss2_id != 0) {
-            WaitFor(CharacterBackreadStatus(boss2_id));
-            SetSpEffect(boss2_id, 7470, false);
-        }
-        if (boss3_id != 0) {
-            WaitFor(CharacterBackreadStatus(boss3_id));
-            SetSpEffect(boss3_id, 7470, false);
-        }
-    }
-    //RestartEvent();
 });
 
 $Event(13100000, Default, function() {
@@ -1302,18 +1323,18 @@ $Event(13100000, Default, function() {
 });
 
 // Trading messenger_Lineup expansion_XX
-$Event(12101000, Default, function(X0_4, X4_4, X8_1, X9_1) {
+$Event(12101000, Default, function(itemId, chrEntityId, bitNumber, bitNumber2) {
     EndIf(ThisEventSlot());
     WaitFixedTimeSeconds(0.1);
-    WaitFor(CharacterBackreadStatus(X4_4) || EventFlag(12100004));
+    WaitFor(CharacterBackreadStatus(chrEntityId) || EventFlag(12100004));
     if (!EventFlag(12100004)) {
-        ChangeCharacterDispmask(X4_4, X8_1, OFF);
-        ChangeCharacterDispmask(X4_4, X9_1, OFF);
+        ChangeCharacterDispmask(chrEntityId, bitNumber, OFF);
+        ChangeCharacterDispmask(chrEntityId, bitNumber2, OFF);
     }
-    WaitFor(PlayerHasItem(ItemType.Goods, X0_4));
+    WaitFor(PlayerHasItem(ItemType.Goods, itemId));
     if (!EventFlag(12100004)) {
-        ChangeCharacterDispmask(X4_4, X8_1, ON);
-        ChangeCharacterDispmask(X4_4, X9_1, ON);
+        ChangeCharacterDispmask(chrEntityId, bitNumber, ON);
+        ChangeCharacterDispmask(chrEntityId, bitNumber2, ON);
     }
 });
 
@@ -1557,7 +1578,11 @@ $Event(12105024, Restart, function() {
 // rite of kindling failsafe
 $Event(8410, Default, function() {
     SetEventFlag(8413, OFF);
-    WaitFor(EventFlag(12100851) && EventFlag(12701800) && EventFlag(8413) && !PlayerHasItemIncludingBBox(ItemType.Goods, 4002));
+    WaitFor(
+        EventFlag(12100851)
+            && EventFlag(12701800)
+            && EventFlag(8413)
+            && !PlayerHasItemIncludingBBox(ItemType.Goods, 4002));
     AwardItemLot(2700970);
     RestartEvent();
 });
@@ -1602,14 +1627,17 @@ $Event(12102032, Default, function() {
         if (EventFlag(12102050)) {
             SetSpEffect(10000, 5680, false);
         }
-    }
-    else if (EventFlag(12102034)) {
+    } else {
+        GotoIf(S0, !EventFlag(12102034));
+        Goto(S1);
         // default
+S0:
+        if (EventFlag(12102035)) {
+            // dark fog
+            SetSpEffect(10000, 5680, false);
+        }
     }
-    else if (EventFlag(12102035)) {
-        // dark fog
-        SetSpEffect(10000, 5680, false);
-    }
+S1:
     WaitFor(EventFlag(12102031));
     SetEventFlag(12102031, OFF);
     RestartEvent();
@@ -2232,14 +2260,14 @@ $Event(12101010, Default, function() {
 });
 
 // Item Possession Judgment_XX
-$Event(12100020, Default, function(X0_4, X4_4, X8_4) {
+$Event(12100020, Default, function(itemId, eventFlagId, value) {
     SetNetworkSyncState(Disabled);
     EndIf(!CharacterType(10000, TargetType.Alive));
-    if (X8_4 != 0) {
-        SetEventFlag(X4_4, OFF);
+    if (value != 0) {
+        SetEventFlag(eventFlagId, OFF);
     }
-    WaitFor(PlayerHasItem(ItemType.Goods, X0_4));
-    SetEventFlag(X4_4, ON);
+    WaitFor(PlayerHasItem(ItemType.Goods, itemId));
+    SetEventFlag(eventFlagId, ON);
 });
 
 // dress-up messenger_flag control_naked only
@@ -2362,21 +2390,24 @@ $Event(12105064, Default, function() {
     WaitFixedTimeFrames(79);
     ForceAnimationPlayback(2100232, 7051, true, false, false);
     WaitFor(CharacterType(10000, TargetType.Alive) && ActionButtonInArea(6025, 2100232));
-    GotoIf(S0, EventFlag(6071));
-    GotoIf(S0, !EventFlag(6900));
-    AwardItemLot(2100900);
-    SetEventFlag(6071, ON);
-S0:
-    GotoIf(S1, EventFlag(6072));
-    GotoIf(S1, !EventFlag(6901));
-    AwardItemLot(2100910);
-    SetEventFlag(6072, ON);
-S1:
-    GotoIf(S2, EventFlag(6073));
-    GotoIf(S2, !EventFlag(6902));
-    AwardItemLot(2100920);
-    SetEventFlag(6073, ON);
-S2:
+    if (!EventFlag(6071)) {
+        if (EventFlag(6900)) {
+            AwardItemLot(2100900);
+            SetEventFlag(6071, ON);
+        }
+    }
+    if (!EventFlag(6072)) {
+        if (EventFlag(6901)) {
+            AwardItemLot(2100910);
+            SetEventFlag(6072, ON);
+        }
+    }
+    if (!EventFlag(6073)) {
+        if (EventFlag(6902)) {
+            AwardItemLot(2100920);
+            SetEventFlag(6073, ON);
+        }
+    }
     ForceAnimationPlayback(2100232, 7052, false, false, false);
     WaitFixedTimeFrames(74);
 L0:
@@ -2384,19 +2415,19 @@ L0:
 });
 
 // dress-up messenger_flag control_other than naked
-$Event(12105070, Restart, function(X0_4, X4_4, X8_1) {
+$Event(12105070, Restart, function(eventFlagId, eventFlagId2, bitNumber) {
     SetNetworkSyncState(Disabled);
     EndIf(!CharacterType(10000, TargetType.Alive));
     SetEventFlag(12105061, OFF);
-    WaitFor(EventFlag(X0_4));
+    WaitFor(EventFlag(eventFlagId));
     SetEventFlag(12105061, ON);
-    SetEventFlag(X0_4, OFF);
+    SetEventFlag(eventFlagId, OFF);
     BatchSetEventFlags(6011, 6025, OFF);
     RotateCharacter(10000, 2100218, 101310, false);
     WaitFixedTimeSeconds(1);
     ForceAnimationPlayback(2100218, 7003, false, false, false);
     WaitFixedTimeFrames(39);
-    SetEventFlag(X4_4, ON);
+    SetEventFlag(eventFlagId2, ON);
     ChangeCharacterDispmask(2100218, 20, OFF);
     ChangeCharacterDispmask(2100218, 21, OFF);
     ChangeCharacterDispmask(2100218, 22, OFF);
@@ -2406,7 +2437,7 @@ $Event(12105070, Restart, function(X0_4, X4_4, X8_1) {
     ChangeCharacterDispmask(2100218, 26, OFF);
     ChangeCharacterDispmask(2100218, 27, OFF);
     ChangeCharacterDispmask(2100218, 28, OFF);
-    ChangeCharacterDispmask(2100218, X8_1, ON);
+    ChangeCharacterDispmask(2100218, bitNumber, ON);
     ForceAnimationPlayback(2100218, 7004, false, false, false);
     WaitFixedTimeFrames(49);
     ForceAnimationPlayback(2100218, 7001, true, false, false);
@@ -2414,32 +2445,30 @@ $Event(12105070, Restart, function(X0_4, X4_4, X8_1) {
 });
 
 // Headstone warp function (warp to a lamp)
-$Event(12107000, Default, function(X0_4, X4_4, X8_4) {
+$Event(12107000, Default, function(lampWarpFlag, lampObjectId, lampSpawnPoint) {
     EndIf(HasMultiplayerState(MultiplayerState.Client));
-    WaitFor(EventFlag(X0_4));
+    WaitFor(EventFlag(lampWarpFlag));
     if (EventFlag(12100761)) {
         SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, 140);
         WaitFixedTimeSeconds(2);
-    }
-    else {
-        RotateCharacter(10000, X4_4, 101164, false);
+    } else {
+        RotateCharacter(10000, lampObjectId, 101164, false);
         WaitFixedTimeSeconds(4);
     }
     // WarpPlayerToRespawnPoint(X8_4);
-    SetPlayerRespawnPoint(X8_4);
+    SetPlayerRespawnPoint(lampSpawnPoint);
     SetSpEffect(10000, 2101, false);
 });
 
 // Warp OBJ_Warp to Dungeon_First Half_XX
-$Event(12107100, Default, function(X0_4, X4_4, X8_4) {
+$Event(12107100, Default, function(eventFlagId, entityId, eventFlagId2) {
     EndIf(HasMultiplayerState(MultiplayerState.Client));
-    WaitFor(EventFlag(X0_4));
+    WaitFor(EventFlag(eventFlagId));
     if (EventFlag(12100761)) {
         SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, 140);
         WaitFixedTimeSeconds(2);
-    }
-    else {
-        RotateCharacter(10000, X4_4, 101164, false);
+    } else {
+        RotateCharacter(10000, entityId, 101164, false);
         WaitFixedTimeSeconds(4);
     }
     SetEventFlag(9020, OFF);
@@ -2449,33 +2478,33 @@ $Event(12107100, Default, function(X0_4, X4_4, X8_4) {
     SetEventFlag(9024, OFF);
     SetEventFlag(9025, OFF);
     SetEventFlag(9026, OFF);
-    SetEventFlag(X8_4, ON);
-    SetEventFlag(X0_4, OFF);
+    SetEventFlag(eventFlagId2, ON);
+    SetEventFlag(eventFlagId, OFF);
     EndEvent();
 });
 
 // Warp OBJ_Warp to Dungeon_Late_XX
-$Event(12107200, Default, function(X0_4, X4_4, X8_4) {
-    WaitFor(EventFlag(X0_4));
-    SetEventFlag(X0_4, OFF);
-    WarpPlayerToRespawnPoint(X4_4);
-    SetEventFlag(X8_4, ON);
+$Event(12107200, Default, function(eventFlagId, entityId, eventFlagId2) {
+    WaitFor(EventFlag(eventFlagId));
+    SetEventFlag(eventFlagId, OFF);
+    WarpPlayerToRespawnPoint(entityId);
+    SetEventFlag(eventFlagId2, ON);
 });
 
 // Remove DLC_XX
-$Event(3500, Default, function(X0_4, X4_4, X8_4, X12_4) {
+$Event(3500, Default, function(itemId, eventFlagId, eventFlagId2, eventFlagId3) {
     SetNetworkSyncState(Disabled);
     EndIf(!CharacterType(10000, TargetType.Alive));
-    WaitFor(!EventFlag(X4_4));
-    RemoveItemFromPlayer(ItemType.Goods, X0_4, 99);
-    SetEventFlag(X8_4, OFF);
-    SetEventFlag(X12_4, OFF);
+    WaitFor(!EventFlag(eventFlagId));
+    RemoveItemFromPlayer(ItemType.Goods, itemId, 99);
+    SetEventFlag(eventFlagId2, OFF);
+    SetEventFlag(eventFlagId3, OFF);
 });
 
 // Remove DLC_03
 $Event(3503, Default, function() {
     SetNetworkSyncState(Disabled);
-    EndIf(!CharacterType(10000, TargetType.Alive));
+    EndIf(!CharacterType(10000, TargetType.Alive) || EventFlag(12102200));
     WaitFor(!EventFlag(6899));
     RemoveItemFromPlayer(ItemType.Goods, 4311, 99);
     SetEventFlag(50000100, OFF);
@@ -2511,11 +2540,11 @@ $Event(6002, Restart, function() {
 });
 
 // Trading messenger_reflect dungeon shop purchases in base shop sales_XX
-$Event(5500, Restart, function(X0_4) {
+$Event(5500, Restart, function(itemId) {
     SetNetworkSyncState(Disabled);
     EndIf(!CharacterType(10000, TargetType.Alive));
     EndIf(ThisEventSlot());
-    WaitFor(PlayerHasItem(ItemType.Weapon, X0_4));
+    WaitFor(PlayerHasItem(ItemType.Weapon, itemId));
     WaitFixedTimeSeconds(0);
 });
 
@@ -3025,37 +3054,36 @@ $Event(6816, Default, function() {
 
 // Warp OBJ_Registration_XX
 // InitializeEvent(5, 7000, 2300950, 2301950, 999, 12307800, -1);
-$Event(7000, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4) {
+$Event(7000, Default, function(chrEntityId, objEntityId, eventFlagId, eventFlagId2, eventFlagId3) {
     SetNetworkSyncState(Disabled);
-    ChangeCharacterEnableState(X0_4, Disabled);
-    DeactivateObject(X4_4, Disabled);
-    WaitFor(CharacterBackreadStatus(X0_4));
-    if (!EventFlag(X8_4)) {
-        ChangeCharacterEnableState(X0_4, Disabled);
-        DeactivateObject(X4_4, Disabled);
-        WaitFor(EventFlag(X8_4) && !EventFlag(X16_4));
-        DeactivateObject(X4_4, Enabled);
-        ChangeCharacterEnableState(X0_4, Enabled);
-        SpawnOneshotSFX(TargetEntityType.Object, X4_4, 100, 100330);
+    ChangeCharacterEnableState(chrEntityId, Disabled);
+    DeactivateObject(objEntityId, Disabled);
+    WaitFor(CharacterBackreadStatus(chrEntityId));
+    if (!EventFlag(eventFlagId)) {
+        ChangeCharacterEnableState(chrEntityId, Disabled);
+        DeactivateObject(objEntityId, Disabled);
+        WaitFor(EventFlag(eventFlagId) && !EventFlag(eventFlagId3));
+        DeactivateObject(objEntityId, Enabled);
+        ChangeCharacterEnableState(chrEntityId, Enabled);
+        SpawnOneshotSFX(TargetEntityType.Object, objEntityId, 100, 100330);
     }
-L0: 
-    DeactivateObject(X4_4, Enabled);
-    ChangeCharacterEnableState(X0_4, Enabled);
-    if (!EventFlag(12102200)) {
-        RegisterHealingFountain(X12_4, X4_4, 0, 0, 0, 0);
-    }
-    else {
-        RegisterHealingFountain(999, X4_4, 0, 0, 0, 0);
+L0:
+    DeactivateObject(objEntityId, Enabled);
+    ChangeCharacterEnableState(chrEntityId, Enabled);
+    if (EventFlag(12102200)) { // activate all lamps
+        RegisterHealingFountain(999, objEntityId, 0, 0, 0, 0); // force activate
+    } else {
+        RegisterHealingFountain(eventFlagId2, objEntityId, 0, 0, 0, 0); // activate normally
     }
 });
 
 // Warp OBJ_Start_XX
-$Event(7100, Default, function(X0_4, X4_4) {
-    EndIf(EventFlag(X0_4));
-    WaitFor(EventFlag(X0_4));
-    RotateCharacter(10000, X4_4, 101170, false);
+$Event(7100, Default, function(eventFlagId, objEntityId) {
+    EndIf(EventFlag(eventFlagId));
+    WaitFor(EventFlag(eventFlagId));
+    RotateCharacter(10000, objEntityId, 101170, false);
     WaitFixedTimeFrames(32);
-    InitializeWarpObject(X4_4);
+    InitializeWarpObject(objEntityId);
     EndIf(EventFlag(6715));
     WaitFixedTimeFrames(58);
     SetEventFlag(70000030, ON);
@@ -3064,25 +3092,24 @@ $Event(7100, Default, function(X0_4, X4_4) {
 });
 
 // Warp OBJ_Warp to Base_XX
-$Event(7200, Default, function(X0_4, X4_4, X8_4) {
+$Event(7200, Default, function(eventFlagId, entityId, entityId2) {
     EndIf(HasMultiplayerState(MultiplayerState.Client));
-    WaitFor(EventFlag(X0_4));
-    SetEventFlag(X0_4, OFF);
+    WaitFor(EventFlag(eventFlagId));
+    SetEventFlag(eventFlagId, OFF);
     if (!EventFlag(12100761)) {
-        RotateCharacter(10000, X4_4, 101160, false);
+        RotateCharacter(10000, entityId, 101160, false);
         WaitFixedTimeSeconds(1);
-        SpawnOneshotSFX(TargetEntityType.Object, X4_4, 100, 100320);
+        SpawnOneshotSFX(TargetEntityType.Object, entityId, 100, 100320);
         SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, 140);
         WaitFixedTimeSeconds(3);
-    }
-    else {
-        SpawnOneshotSFX(TargetEntityType.Object, X4_4, 100, 100320);
+    } else {
+        SpawnOneshotSFX(TargetEntityType.Object, entityId, 100, 100320);
         SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, 140);
         WaitFixedTimeSeconds(2);
     }
     if (EventFlag(9401)) {
         // WarpPlayerToRespawnPoint(X8_4);
-        SetPlayerRespawnPoint(X8_4);
+        SetPlayerRespawnPoint(entityId2);
         SetSpEffect(10000, 2101, false);
         EndEvent();
     }
@@ -3090,57 +3117,54 @@ $Event(7200, Default, function(X0_4, X4_4, X8_4) {
 });
 
 // Warp OBJ_Warp from Base_XX
-$Event(7300, Default, function(X0_4, X4_4) {
+$Event(7300, Default, function(eventFlagId, objEntityId) {
     EndIf(HasMultiplayerState(MultiplayerState.Client));
-    WaitFor(EventFlag(X0_4));
+    WaitFor(EventFlag(eventFlagId));
     WaitFixedTimeFrames(1);
-    SpawnOneshotSFX(TargetEntityType.Object, X4_4, 100, 100321);
-    InitializeWarpObject(X4_4);
-    SetEventFlag(X0_4, OFF);
+    SpawnOneshotSFX(TargetEntityType.Object, objEntityId, 100, 100321);
+    InitializeWarpObject(objEntityId);
+    SetEventFlag(eventFlagId, OFF);
 });
 
 // move bloodstain for rematches
-$Event(7500, Default, function(X0_4, X4_4) {
+$Event(7500, Default, function(lampSpawnPoint, rematchSpawnPoint) {
     WaitFixedTimeSeconds(1);
-    MoveBloodstainAndDroppedItems(X0_4, X4_4);
+    MoveBloodstainAndDroppedItems(lampSpawnPoint, rematchSpawnPoint);
 });
 
 // Multi Confinement Wall_XX
-$Event(7600, Default, function(X0_4, X4_4) {
+$Event(7600, Default, function(objEntityId, entityId) {
     SetNetworkSyncState(Disabled);
-    DeactivateObject(X0_4, Disabled);
-    DeleteMapSFX(X4_4, true);
+    DeactivateObject(objEntityId, Disabled);
+    DeleteMapSFX(entityId, true);
     WaitFor(
         HasMultiplayerState(MultiplayerState.ConnectingtoMultiplayer)
             || HasMultiplayerState(MultiplayerState.Multiplayer));
-    DeactivateObject(X0_4, Enabled);
-    SpawnMapSFX(X4_4);
+    DeactivateObject(objEntityId, Enabled);
+    SpawnMapSFX(entityId);
     WaitFor(
         !(HasMultiplayerState(MultiplayerState.ConnectingtoMultiplayer)
             || HasMultiplayerState(MultiplayerState.Multiplayer)));
     RestartEvent();
 });
 
-const effect_id = 1000030;
-
 // rematch boss triggered
-$Event(7700, Default, function(X0_4, X4_4, X8_4, X12_4) { // event_flag_11, event_flag_12, spawn_point, fog_effect
-    WaitFor(EventFlag(X0_4));
-    SetEventFlag(X0_4, OFF);
-    SetEventFlag(X4_4, ON);
+$Event(7700, Default, function(rematchTrigger, rematchActive, rematchSpawnPoint, fogSfx) {
+    WaitFor(EventFlag(rematchTrigger));
+    SetEventFlag(rematchTrigger, OFF);
+    SetEventFlag(rematchActive, ON);
     SetSpEffect(10000, 4681, false);
     RequestCharacterAnimationReset(10000, Interpolation.Interpolated);
     ForceAnimationPlayback(10000, 101161, false, false, false);
-    SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, X12_4);
-    SpawnOneshotSFX(TargetEntityType.Character, 10000, 240, X12_4);
+    SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, fogSfx);
+    SpawnOneshotSFX(TargetEntityType.Character, 10000, 240, fogSfx);
     WaitFixedTimeFrames(59);
-    // WarpPlayerToRespawnPoint(X8_4);
-    SetPlayerRespawnPoint(X8_4);
+    SetPlayerRespawnPoint(rematchSpawnPoint);
     SetSpEffect(10000, 2101, false);
 });
 
 // rematch victory
-$Event(7800, Default, function(X0_4, X4_4) {
+$Event(7800, Default, function(postRematchSpawnPoint, fogSfxId) {
     RequestCharacterAnimationReset(10000, Interpolation.Interpolated);
     ForceAnimationPlayback(10000, 101161, false, false, false);
     
@@ -3148,39 +3172,35 @@ $Event(7800, Default, function(X0_4, X4_4) {
     // 240: centered, subtle
     // 236 or 243?: ground
     // PlaySE(10000, SoundType.sSFX, 7012);
-    SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, X4_4);
-    SpawnOneshotSFX(TargetEntityType.Character, 10000, 240, X4_4);
-    // SpawnOneshotSFX(TargetEntityType.Character, 10000, 240, 928028);
-    // SpawnOneshotSFX(TargetEntityType.Character, 10000, 15, effect_id);
+    SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, fogSfxId);
+    SpawnOneshotSFX(TargetEntityType.Character, 10000, 240, fogSfxId);
     
     WaitFixedTimeFrames(59);
     
     if (EventFlag(12100750) && EventFlag(12100963)) { // rematch started from broken lamp and return to dream enabled
         WarpPlayerToRespawnPoint(2102969);
-    }
-    else {
+    } else {
         // WarpPlayerToRespawnPoint(X0_4);
-        SetPlayerRespawnPoint(X0_4);
+        SetPlayerRespawnPoint(postRematchSpawnPoint);
         SetSpEffect(10000, 2101, false);
     }
 });
 
 // return/quick warp to boss
-$Event(7900, Default, function(X0_4, X4_4, X8_1, X12_1, X16_4) {
-    WaitFor(EventFlag(X0_4)); // 12801899
-    SetEventFlag(X0_4, OFF);
+$Event(7900, Default, function(warpTrigger, bossEntrancePoint, areaId, blockId, restFlag) {
+    WaitFor(EventFlag(warpTrigger)); // 12801899
+    SetEventFlag(warpTrigger, OFF);
     SetEventFlag(7999, ON);
     WaitFixedTimeFrames(1);
-    SetEventFlag(X16_4, OFF); // 8540
+    SetEventFlag(restFlag, OFF); // 8540
     
-    if (!AnyBatchEventFlags(8500, 8599)) {
+    if (!AnyBatchEventFlags(8500, 8599)) { // not resting
         ForceAnimationPlayback(10000, 101170, false, false, false);
         WaitFixedTimeSeconds(2);
-    }
-    else {
+    } else {
         WaitFixedTimeSeconds(0.5);
     }
-    DummyPlayCutsceneAndWarpPlayer(X4_4, X8_1, X12_1);
+    DummyPlayCutsceneAndWarpPlayer(bossEntrancePoint, areaId, blockId);
     SetCharacterAnimationState(10000, Enabled);
     SetCharacterTeamType(10000, TeamType.Host);
     ActivateHit(10000, Enabled);
@@ -3190,56 +3210,36 @@ $Event(7900, Default, function(X0_4, X4_4, X8_1, X12_1, X16_4) {
 
 // kindle
 // this_event_slot, lamp_kindle_flag (12121100)
-$Event(8100, Default, function(X0_4, X4_4) {
-    const this_event_slot = X0_4;
-    const lamp_kindle_flag = X4_4;
-    SetEventFlag(this_event_slot, OFF);
+$Event(8100, Default, function(thisEventSlot, lampKindleFlag) {
+    SetEventFlag(thisEventSlot, OFF);
     WaitFor(ThisEventSlot());
-    if (PlayerInsightAmount() == 0) {
-        // no insight
+    if (PlayerInsightAmount() == 0) { // no insight
         DisplayGenericDialog(200175, PromptType.OKCANCEL, NumberofOptions.OneButton, 10000, 3);
         RestartEvent();
     }
-    if (EventValue(lamp_kindle_flag, 2) == 3) {
-        // already maxed
+    if (EventValue(lampKindleFlag, 2) == 3) { // already maxed
         DisplayGenericDialog(200171, PromptType.OKCANCEL, NumberofOptions.OneButton, 10000, 3);
-    }
-    else {
-        if (EventValue(lamp_kindle_flag, 2) == 1 && !PlayerHasItemIncludingBBox(ItemType.Goods, 4002)) {
-            // need rite of kindling
-            DisplayGenericDialog(200169, PromptType.OKCANCEL, NumberofOptions.OneButton, 10000, 3);
-        }
-        else {
-            SetSpEffect(10000, 4681, false); // take insight
-            IncrementEventValue(lamp_kindle_flag, 2, 3);
-            if (EventValue(lamp_kindle_flag, 2) == 3) {
-                // max kindling reached
-                DisplayGenericDialog(200171, PromptType.OKCANCEL, NumberofOptions.OneButton, 10000, 3);
-            }
-            else {
-                // increased
-                DisplayGenericDialog(200170, PromptType.OKCANCEL, NumberofOptions.OneButton, 10000, 3);
-            }
+    } else if (EventValue(lampKindleFlag, 2) == 1 && !PlayerHasItemIncludingBBox(ItemType.Goods, 4002)) { // need rite of kindling
+        DisplayGenericDialog(200169, PromptType.OKCANCEL, NumberofOptions.OneButton, 10000, 3);
+    } else {
+        SetSpEffect(10000, 4681, false); // take insight
+        IncrementEventValue(lampKindleFlag, 2, 3);
+        if (EventValue(lampKindleFlag, 2) == 3) { // max kindling reached
+            DisplayGenericDialog(200171, PromptType.OKCANCEL, NumberofOptions.OneButton, 10000, 3);
+        } else { // increased
+            DisplayGenericDialog(200170, PromptType.OKCANCEL, NumberofOptions.OneButton, 10000, 3);
         }
     }
     RestartEvent();
 });
 
 // reset statuses (poison, etc.) and restock bullets and vials
-$Event(8300, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4) {
-    const spawn_checker_region = X0_4;
-    const bypass_spawn_checker = X4_4;
-    const lamp_kindle_flag = X8_4;
-    const hidden_region = X12_4;
-    const hunt_region = X16_4;
+$Event(8300, Default, function(spawnCheckerRegion, bypassChecker, lampKindleFlag, hiddenRegion, tempRegion) {
     const kindling_enabled_flag = 12100851;
-    const hunt_enabled_flag = 12100855;
     const restock_enabled_flag = 12100862;
-    kindling_enabled = EventFlag(kindling_enabled_flag);
-    hunt_enabled = EventFlag(hunt_enabled_flag);
     restock_enabled = EventFlag(restock_enabled_flag);
     
-    WaitFor(InArea(10000, spawn_checker_region) || EventFlag(1509) || EventFlag(bypass_spawn_checker));
+    WaitFor(InArea(10000, spawnCheckerRegion) || EventFlag(1509) || EventFlag(bypassChecker)); // spawn checker timeout expired
     if (EventFlag(1509)) {
         EndEvent();
     }
@@ -3258,50 +3258,51 @@ $Event(8300, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4) {
         // baseEventFlagIdOperand or operand is applied to baseEventFlagId, e.g.
         //     EventValueOperation(<10>, 8, 0, <2>, 8, CalculationType.Sub) == 8;
         
-        if (!EventFlag(kindling_enabled_flag) || EventValue(lamp_kindle_flag, 2) == 3) { // kindling disabled or full kindle
-            MoveBloodstainAndDroppedItems(spawn_checker_region, hunt_region);
+        if (!EventFlag(kindling_enabled_flag) || EventValue(lampKindleFlag, 2) == 3) { // kindling disabled or full kindle
+            // move bloodstain out of the way
+            MoveBloodstainAndDroppedItems(spawnCheckerRegion, tempRegion);
+            // clear vials and bullets
             RemoveItemFromPlayer(ItemType.Goods, 900, 255);
             RemoveItemFromPlayer(ItemType.Goods, 1000, 255);
+            // overfill vials and bullets
             EventValueOperation(12104050, 8, 1, 0, 0, CalculationType.Assign);
             DirectlyGivePlayerItem(ItemType.Goods, 900, 12104050, 8);
             DirectlyGivePlayerItem(ItemType.Goods, 1000, 12104050, 8);
             EventValueOperation(12104050, 8, 255, 0, 0, CalculationType.Assign);
             DirectlyGivePlayerItem(ItemType.Goods, 900, 12104050, 8);
             DirectlyGivePlayerItem(ItemType.Goods, 1000, 12104050, 8);
-            MoveBloodstainAndDroppedItems(spawn_checker_region, hidden_region);
-            MoveBloodstainAndDroppedItems(hunt_region, spawn_checker_region);
-        }
-        else { // kindling enabled and not full kindle
+            // move overflow to hidden area
+            MoveBloodstainAndDroppedItems(spawnCheckerRegion, hiddenRegion);
+            // move bloodstain back to spawn
+            MoveBloodstainAndDroppedItems(tempRegion, spawnCheckerRegion);
+        } else {
+            // kindling enabled and not full kindle
             StoreItemAmountHeldInEventValue(ItemType.Goods, 900, 12104030, 8);
             StoreItemAmountHeldInEventValue(ItemType.Goods, 1000, 12104040, 8);
             
-            if (EventValue(lamp_kindle_flag, 2) == 0 && EventValue(12104030, 8) < 5) {
+            if (EventValue(lampKindleFlag, 2) == 0 && EventValue(12104030, 8) < 5) {
                 EventValueOperation(12104050, 8, 5, 0, 0, CalculationType.Assign);
                 EventValueOperation(12104050, 8, 0, 12104030, 8, CalculationType.Sub);
                 DirectlyGivePlayerItem(ItemType.Goods, 900, 12104050, 8);
-            }
-            else if (EventValue(lamp_kindle_flag, 2) == 1 && EventValue(12104030, 8) < 10) {
+            } else if (EventValue(lampKindleFlag, 2) == 1 && EventValue(12104030, 8) < 10) {
                 EventValueOperation(12104050, 8, 10, 0, 0, CalculationType.Assign);
                 EventValueOperation(12104050, 8, 0, 12104030, 8, CalculationType.Sub);
                 DirectlyGivePlayerItem(ItemType.Goods, 900, 12104050, 8);
-            }
-            else if (EventValue(lamp_kindle_flag, 2) == 2 && EventValue(12104030, 8) < 15) {
+            } else if (EventValue(lampKindleFlag, 2) == 2 && EventValue(12104030, 8) < 15) {
                 EventValueOperation(12104050, 8, 15, 0, 0, CalculationType.Assign);
                 EventValueOperation(12104050, 8, 0, 12104030, 8, CalculationType.Sub);
                 DirectlyGivePlayerItem(ItemType.Goods, 900, 12104050, 8);
             }
             
-            if (EventValue(lamp_kindle_flag, 2) == 0 && EventValue(12104040, 8) < 5) {
+            if (EventValue(lampKindleFlag, 2) == 0 && EventValue(12104040, 8) < 5) {
                 EventValueOperation(12104050, 8, 5, 0, 0, CalculationType.Assign);
                 EventValueOperation(12104050, 8, 0, 12104040, 8, CalculationType.Sub);
                 DirectlyGivePlayerItem(ItemType.Goods, 1000, 12104050, 8);
-            }
-            else if (EventValue(lamp_kindle_flag, 2) == 1 && EventValue(12104040, 8) < 10) {
+            } else if (EventValue(lampKindleFlag, 2) == 1 && EventValue(12104040, 8) < 10) {
                 EventValueOperation(12104050, 8, 10, 0, 0, CalculationType.Assign);
                 EventValueOperation(12104050, 8, 0, 12104040, 8, CalculationType.Sub);
                 DirectlyGivePlayerItem(ItemType.Goods, 1000, 12104050, 8);
-            }
-            else if (EventValue(lamp_kindle_flag, 2) == 2 && EventValue(12104040, 8) < 15) {
+            } else if (EventValue(lampKindleFlag, 2) == 2 && EventValue(12104040, 8) < 15) {
                 EventValueOperation(12104050, 8, 15, 0, 0, CalculationType.Assign);
                 EventValueOperation(12104050, 8, 0, 12104040, 8, CalculationType.Sub);
                 DirectlyGivePlayerItem(ItemType.Goods, 1000, 12104050, 8);
@@ -3311,36 +3312,36 @@ $Event(8300, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4) {
 });
 
 // rest
-$Event(8500, Default, function(X0_4, X4_4, X8_4) {
-    SetEventFlag(X0_4, OFF); // this event slot
+$Event(8500, Default, function(thisEventSlot, lampId, lampWarpFlag) {
+    SetEventFlag(thisEventSlot, OFF); // this event slot
     WaitFixedTimeFrames(1);
     if (EventFlag(1510)) { // a chalice menu has been opened
         WaitFixedTimeSeconds(0.5);
         SetEventFlag(1510, OFF);
-        SetEventFlag(X0_4, ON);
+        SetEventFlag(thisEventSlot, ON);
     }
     WaitFor(ThisEventSlot()); // menu opened, trigger animation
-    RotateCharacter(10000, X4_4, 101280, false);
+    RotateCharacter(10000, lampId, 101280, false);
     PlaySE(10000, SoundType.sSFX, 777777774);
     SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, 140);
     SetCharacterAnimationState(10000, Disabled);
     SetCharacterTeamType(10000, TeamType.Baby);
     ActivateHit(10000, Disabled);
-    WaitFor(!ThisEventSlot()); // wait for menu closed (8540)
+    WaitFor(!ThisEventSlot()); // wait for menu closed
     if (EventFlag(7999)) {
         SetEventFlag(7999, OFF);
         RestartEvent();
     }
-    if (EventFlag(1510) ) {
+    if (EventFlag(1510)) {
         RestartEvent();
     }
-    InitializeEvent(0, 8600, 0);
-    SetEventFlag(X8_4, ON);
+    $InitializeEvent(0, 8600);
+    SetEventFlag(lampWarpFlag, ON);
     RestartEvent();
 });
 
 // fade
-$Event(8600, Default, function(){
+$Event(8600, Default, function() {
     WaitFixedTimeSeconds(1);
     DisplayBanner(TextBannerType.StadiumLoss);
 });
@@ -3352,98 +3353,87 @@ $Event(8700, Default, function() {
 });
 
 // hide lamp during rematch
-$Event(8800, Default, function(X0_4, X4_4, X8_4, X12_4) {
-    WaitFor(EventFlag(X0_4));
-    ChangeCharacterEnableState(X4_4, Disabled);
-    DeactivateObject(X8_4, Disabled);
+$Event(8800, Default, function(rematchActive, lampNpc, lampObject, tempLocation) {
+    WaitFor(EventFlag(rematchActive));
+    ChangeCharacterEnableState(lampNpc, Disabled);
+    DeactivateObject(lampObject, Disabled);
     WaitFixedTimeFrames(1);
-    CharacterWarpRequest(X4_4, TargetEntityType.Area, X12_4, -1);
+    CharacterWarpRequest(lampNpc, TargetEntityType.Area, tempLocation, -1);
 });
 
-// EventFlag(12100964) // rematch on death is off
-// InitializeEvent(cleric_beast_offset, 8900, cleric_beast_defeat-1, cleric_beast_lamp_id+1000, cleric_beast_defeat-2, 0, 0, cleric_beast_lamp_id+5000, area_id, block_id);
 // Auto restart rematch if dead + move player to rematch point
-$Event(8900, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4, X20_4, X24_1, X28_1) {
-    const auto_rematch_flag = X0_4;
-    const lamp_spawn_point = X4_4;
-    const rematch_death_occurred = X8_4;
-    const distorted_in_progress = X12_4;
-    const distorted_trigger = X16_4;
-    const rematch_start_region = X20_4;
-    const area_id = X24_1;
-    const block_id = X28_1;
+$Event(8900, Default, function(autoRematchFlag, lampSpawnPoint, rematchDeathOccurred, distortedActive, distortedTrigger, rematchStartRegion, areaId, blockId) {
     EndIf(!ThisEventSlot()); // game's state is not in rematch mode
-    DummyPlayCutsceneAndWarpPlayer(rematch_start_region, area_id, block_id);
+    DummyPlayCutsceneAndWarpPlayer(rematchStartRegion, areaId, blockId);
     WaitFor(HPRatio(10000) <= 0);
-    SetEventFlag(rematch_death_occurred, ON); // used for moving bloodstain
+    SetEventFlag(rematchDeathOccurred, ON); // used for moving bloodstain
     if (EventFlag(12100864)) { // auto rematch enabled
-        if (distorted_in_progress != 0 && EventFlag(distorted_in_progress)) { // if distorted memory
-            SetEventFlag(distorted_trigger, ON);
+        if (distortedActive != 0 && EventFlag(distortedActive)) { // if distorted memory
+            SetEventFlag(distortedTrigger, ON);
         }
-        SetEventFlag(auto_rematch_flag, ON);
+        SetEventFlag(autoRematchFlag, ON);
         if (EventFlag(12100750) && EventFlag(12100963)) { // initiated from dream and death respawn location is dream
             SetEventFlag(12100850, ON); // flag to set respawn location back to dream
         }
-        SetPlayerRespawnPoint(lamp_spawn_point);
+        SetPlayerRespawnPoint(lampSpawnPoint);
         SetEventFlag(8950, ON);
-    } // auto rematch disabled
-    else {
-        // EndIf(!EventFlag(12100650));
-        if (EventFlag(12100859)) { // death respawn location is boss lamp
-            SetPlayerRespawnPoint(lamp_spawn_point);
-        }
-        else {
-            SetPlayerRespawnPoint(2102969); // respawn at broken lamp
-        }
+    // auto rematch disabled
+    // EndIf(!EventFlag(12100650));
+    } else if (EventFlag(12100859)) { // death respawn location is boss lamp
+        SetPlayerRespawnPoint(lampSpawnPoint);
+    } else if (EventFlag(12100750)) {
+        SetPlayerRespawnPoint(2102969); // respawn at broken lamp
     }
 });
 
 // Covenant BJ Unique Effect_XX
-$Event(9030, Default, function(X0_4, X4_4) {
+$Event(9030, Default, function(spEffectId, spEffectId2) {
     SetNetworkSyncState(Disabled);
-    WaitFor(CharacterHasSpEffect(10000, X0_4));
-    SetSpEffect(10000, X4_4, false);
-    WaitFor(!CharacterHasSpEffect(10000, X0_4));
-    ClearSpEffect(10000, X4_4);
+    WaitFor(CharacterHasSpEffect(10000, spEffectId));
+    SetSpEffect(10000, spEffectId2, false);
+    WaitFor(!CharacterHasSpEffect(10000, spEffectId));
+    ClearSpEffect(10000, spEffectId2);
     RestartEvent();
 });
 
 // Pledge BJ Unique Effect_Cooperative Guests Only_XX
-$Event(9035, Default, function(X0_4, X4_4) {
+$Event(9035, Default, function(spEffectId, spEffectId2) {
     SetNetworkSyncState(Disabled);
-    WaitFor(CharacterHasSpEffect(10000, X0_4) && CharacterType(10000, TargetType.WhitePhantom));
-    SetSpEffect(10000, X4_4, false);
-    WaitFor(!(CharacterHasSpEffect(10000, X0_4) && CharacterType(10000, TargetType.WhitePhantom)));
-    ClearSpEffect(10000, X4_4);
+    WaitFor(
+        CharacterHasSpEffect(10000, spEffectId) && CharacterType(10000, TargetType.WhitePhantom));
+    SetSpEffect(10000, spEffectId2, false);
+    WaitFor(
+        !(CharacterHasSpEffect(10000, spEffectId) && CharacterType(10000, TargetType.WhitePhantom)));
+    ClearSpEffect(10000, spEffectId2);
     RestartEvent();
 });
 
 // Get NPC item_XX
-$Event(9040, Default, function(X0_4, X4_4) {
-    EndIf(EventFlag(X0_4));
+$Event(9040, Default, function(eventFlagId, itemLotId) {
+    EndIf(EventFlag(eventFlagId));
     EndIf(!CharacterType(10000, TargetType.Alive));
-    WaitFor(EventFlag(X0_4));
-    AwardItemLot(X4_4);
+    WaitFor(EventFlag(eventFlagId));
+    AwardItemLot(itemLotId);
 });
 
 // Obtain NPC item_any number of times_XX
-$Event(9100, Default, function(X0_4, X4_4) {
+$Event(9100, Default, function(eventFlagId, itemLotId) {
     EndIf(!CharacterType(10000, TargetType.Alive));
-    WaitFor(EventFlag(X0_4));
-    SetEventFlag(X0_4, OFF);
-    AwardItemLot(X4_4);
+    WaitFor(EventFlag(eventFlagId));
+    SetEventFlag(eventFlagId, OFF);
+    AwardItemLot(itemLotId);
     RestartEvent();
 });
 
 // Get NPC item_Circulation change_XX
-$Event(9110, Default, function(X0_4, X4_4, X8_4, X12_4) {
-    EndIf(EventFlag(X0_4));
+$Event(9110, Default, function(eventFlagId, itemLotId, itemLotId2, eventFlagId2) {
+    EndIf(EventFlag(eventFlagId));
     EndIf(HasMultiplayerState(MultiplayerState.Client));
-    WaitFor(EventFlag(X0_4));
-    if (!EventFlag(X12_4)) {
-        AwardItemLot(X4_4);
+    WaitFor(EventFlag(eventFlagId));
+    if (!EventFlag(eventFlagId2)) {
+        AwardItemLot(itemLotId);
     } else {
-        AwardItemLot(X8_4);
+        AwardItemLot(itemLotId2);
     }
 });
 
@@ -3497,9 +3487,13 @@ $Event(9186, Default, function() {
 // Special effects during host play
 $Event(9190, Default, function() {
     SetNetworkSyncState(Disabled);
-    WaitFor(HasMultiplayerState(MultiplayerState.Multiplayer) && HasMultiplayerState(MultiplayerState.Host));
+    WaitFor(
+        HasMultiplayerState(MultiplayerState.Multiplayer)
+            && HasMultiplayerState(MultiplayerState.Host));
     SetSpEffect(10000, 9001, false);
-    WaitFor(!(HasMultiplayerState(MultiplayerState.Multiplayer) && HasMultiplayerState(MultiplayerState.Host)));
+    WaitFor(
+        !(HasMultiplayerState(MultiplayerState.Multiplayer)
+            && HasMultiplayerState(MultiplayerState.Host)));
     ClearSpEffect(10000, 9001);
     RestartEvent();
 });
@@ -3560,12 +3554,15 @@ L0:
 });
 
 // Auditory hallucinations with SAN values ​​_XX
-$Event(9200, Default, function(X0_4) {
+$Event(9200, Default, function(entityId) {
     SetNetworkSyncState(Disabled);
-    SetMapSoundState(X0_4, Disabled);
+    SetMapSoundState(entityId, Disabled);
     WaitFor(
-        (PlayerInsightAmount() >= 60 || EventFlag(9802)) && !EventFlag(9180) && !EventFlag(9462) && !PlayerInMap(26, 0));
-    SetMapSoundState(X0_4, Enabled);
+        (PlayerInsightAmount() >= 60 || EventFlag(9802))
+            && !EventFlag(9180)
+            && !EventFlag(9462)
+            && !PlayerInMap(26, 0));
+    SetMapSoundState(entityId, Enabled);
     WaitFor(
         !((PlayerInsightAmount() >= 60 || EventFlag(9802))
             && !EventFlag(9180)
@@ -3586,98 +3583,100 @@ $Event(9215, Default, function() {
 });
 
 // Appearance Widow_Appearance_XX
-$Event(9220, Restart, function(X0_4, X4_4, X8_4, X12_4, X16_1, X17_1) {
-    if (EventFlag(X8_4)) {
-        SetCharacterAIState(X0_4, Disabled);
-        ForceAnimationPlayback(X0_4, 7010, false, false, false);
+$Event(9220, Restart, function(chrEntityId, eventFlagId, eventFlagId2, eventFlagId3, areaId, blockId) {
+    if (EventFlag(eventFlagId2)) {
+        SetCharacterAIState(chrEntityId, Disabled);
+        ForceAnimationPlayback(chrEntityId, 7010, false, false, false);
         EndEvent();
     }
 L0:
-    EndIf(EventFlag(X4_4));
-    SetCharacterAIState(X0_4, Disabled);
-    ForceAnimationPlayback(X0_4, 7010, true, false, false);
+    EndIf(EventFlag(eventFlagId));
+    SetCharacterAIState(chrEntityId, Disabled);
+    ForceAnimationPlayback(chrEntityId, 7010, true, false, false);
     WaitFor(
         IsOnline()
-            && !EventFlag(X8_4)
-            && !CharacterDead(X0_4)
-            && !EventFlag(X12_4)
-            && PlayerInMap(X16_1, X17_1)
+            && !EventFlag(eventFlagId2)
+            && !CharacterDead(chrEntityId)
+            && !EventFlag(eventFlagId3)
+            && PlayerInMap(areaId, blockId)
             && ((CharacterType(10000, TargetType.Alive)
                 && PlayersSoulLevel() >= 30
                 && NumberOfClientsOfType(ClientType.Coop) >= 1)
                 || CharacterHasSpEffect(10000, 9025)));
     WaitFor(RandomElapsedSeconds(10, 10));
     DisplayMessage(109000, 0);
-    ForceAnimationPlayback(X0_4, 7011, false, false, false);
+    ForceAnimationPlayback(chrEntityId, 7011, false, false, false);
     WaitFixedTimeFrames(59);
-    SetCharacterAIState(X0_4, Enabled);
-    SetEventFlag(X4_4, ON);
+    SetCharacterAIState(chrEntityId, Enabled);
+    SetEventFlag(eventFlagId, ON);
 });
 
 // Appearance Widow_Ring Bell_XX
-$Event(9240, Restart, function(X0_4, X4_4, X8_4, X12_4, X16_1, X17_1) {
-    EndIf(EventFlag(X8_4));
+$Event(9240, Restart, function(chrEntityId, eventFlagId, eventFlagId2, eventFlagId3, areaId, blockId) {
+    EndIf(EventFlag(eventFlagId2));
     WaitFor(
-        EventFlag(X4_4)
-            && !EventFlag(X12_4)
-            && !EventFlag(X8_4)
-            && PlayerInMap(X16_1, X17_1)
+        EventFlag(eventFlagId)
+            && !EventFlag(eventFlagId3)
+            && !EventFlag(eventFlagId2)
+            && PlayerInMap(areaId, blockId)
             && NumberOfClientsOfType(ClientType.Invader) == 0);
     WaitFor(CharacterType(10000, TargetType.Alive) && RandomElapsedSeconds(10, 10));
     SetSpEffect(10000, 9020, false);
-    SetSpEffect(X0_4, 9100, false);
-    RequestCharacterAIReplan(X0_4);
-    SetEventFlag(X12_4, ON);
+    SetSpEffect(chrEntityId, 9100, false);
+    RequestCharacterAIReplan(chrEntityId);
+    SetEventFlag(eventFlagId3, ON);
     DisplayMessage(100002, 0);
     RestartEvent();
 });
 
 // Appearing Widow_Stop Bell_XX
-$Event(9260, Restart, function(X0_4, X4_4, X8_4, X12_4, X16_1, X17_1) {
-    EndIf(EventFlag(X8_4));
+$Event(9260, Restart, function(chrEntityId, eventFlagId, eventFlagId2, eventFlagId3, areaId, blockId) {
+    EndIf(EventFlag(eventFlagId2));
     WaitFor(
-        EventFlag(X4_4)
-            && EventFlag(X12_4)
-            && (EventFlag(X8_4) || NumberOfClientsOfType(ClientType.Invader) >= 1 || !PlayerInMap(X16_1, X17_1)));
+        EventFlag(eventFlagId)
+            && EventFlag(eventFlagId3)
+            && (EventFlag(eventFlagId2)
+                || NumberOfClientsOfType(ClientType.Invader) >= 1
+                || !PlayerInMap(areaId, blockId)));
     WaitFor(CharacterType(10000, TargetType.Alive));
     ClearSpEffect(10000, 9020);
-    ClearSpEffect(X0_4, 9100);
-    RequestCharacterAIReplan(X0_4);
-    SetEventFlag(X12_4, OFF);
+    ClearSpEffect(chrEntityId, 9100);
+    RequestCharacterAIReplan(chrEntityId);
+    SetEventFlag(eventFlagId3, OFF);
     RestartEvent();
 });
 
 // Appearing Widow_Disappearing_XX
-$Event(9280, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4, X20_1, X21_1) {
-    EndIf(EventFlag(X8_4) || EventFlag(X12_4) || EventFlag(X16_4));
-    hp = HPRatio(X0_4) == 0;
-    flag = EventFlag(X16_4);
-    WaitFor(EventFlag(X4_4) && PlayerInMap(X20_1, X21_1) && (hp || flag));
-    SetEventFlag(X8_4, ON);
+$Event(9280, Default, function(chrEntityId, eventFlagId, eventFlagId2, eventFlagId3, eventFlagId4, areaId, blockId) {
+    EndIf(EventFlag(eventFlagId2) || EventFlag(eventFlagId3) || EventFlag(eventFlagId4));
+    hp = HPRatio(chrEntityId) == 0;
+    flag = EventFlag(eventFlagId4);
+    WaitFor(EventFlag(eventFlagId) && PlayerInMap(areaId, blockId) && (hp || flag));
+    SetEventFlag(eventFlagId2, ON);
     if (!flag.Passed) {
         WaitFixedTimeSeconds(5);
         DisplayMessage(109001, 0);
         EndEvent();
     }
 L0:
-    SetCharacterAIState(X0_4, Disabled);
-    ForceAnimationPlayback(X0_4, 7012, false, false, false);
+    SetCharacterAIState(chrEntityId, Disabled);
+    ForceAnimationPlayback(chrEntityId, 7012, false, false, false);
     WaitFixedTimeFrames(88);
-    ForceAnimationPlayback(X0_4, 7010, false, false, false);
+    ForceAnimationPlayback(chrEntityId, 7010, false, false, false);
 });
 
 // get SAN value
-$Event(9350, Default, function(X0_4) {
+$Event(9350, Default, function(value) {
     EndIf(HasMultiplayerState(MultiplayerState.Client));
-    if (X0_4 != 1) {
-        if (X0_4 != 2) {
-            if (X0_4 != 3) {
-                if (X0_4 != 4) {
-                    if (X0_4 != 5) {
-                        if (X0_4 != 6) {
-                            if (X0_4 != 7) {
-                                if (X0_4 != 8) {
-                                    if (X0_4 != 9) {
+    if (value != 1) {
+        if (value != 2) {
+            if (value != 3) {
+                if (value != 4) {
+                    if (value != 5) {
+                        if (value != 6) {
+                            if (value != 7) {
+                                if (value != 8) {
+                                    if (value != 9) {
                                         EndEvent();
                                     }
 L9:
@@ -3718,13 +3717,13 @@ L1:
 });
 
 // Kill NPC with bloodline BJ_XX
-$Event(9360, Default, function(X0_4, X4_4, X8_4, X12_4) {
+$Event(9360, Default, function(eventFlagId, eventFlagId2, eventFlagId3, eventFlagId4) {
     EndIf(ThisEventSlot());
-    EndIf(EventFlag(X0_4));
-    EndIf(EventFlag(X4_4));
-    EndIf(EventFlag(X8_4));
-    flag = EventFlag(X0_4) || EventFlag(X4_4) || EventFlag(X8_4);
-    flag2 = EventFlag(X12_4);
+    EndIf(EventFlag(eventFlagId));
+    EndIf(EventFlag(eventFlagId2));
+    EndIf(EventFlag(eventFlagId3));
+    flag = EventFlag(eventFlagId) || EventFlag(eventFlagId2) || EventFlag(eventFlagId3);
+    flag2 = EventFlag(eventFlagId4);
     WaitFor(flag || flag2);
     EndIf(flag2.Passed);
     EndIf(
@@ -3757,7 +3756,8 @@ $Event(9404, Default, function() {
 // Sacrifice warp_item when clearing university
 $Event(9410, Default, function() {
     EndIf(ThisEvent());
-    WaitFor(EventFlag(13201803) && CharacterType(10000, TargetType.Alive) && InArea(10000, 2802010));
+    WaitFor(
+        EventFlag(13201803) && CharacterType(10000, TargetType.Alive) && InArea(10000, 2802010));
     WaitFixedTimeSeconds(0);
     AwardItemLot(3200800);
 });
@@ -3785,22 +3785,25 @@ $Event(9422, Default, function() {
 });
 
 // Get Covenant Body Gem_XX
-$Event(9440, Default, function(X0_4, X4_4) {
+$Event(9440, Default, function(eventFlagId, itemLotId) {
     SetNetworkSyncState(Disabled);
     EndIf(ThisEventSlot());
     EndIf(HasMultiplayerState(MultiplayerState.Client));
-    WaitFor(EventFlag(X0_4));
-    AwardItemLot(X4_4);
+    WaitFor(EventFlag(eventFlagId));
+    AwardItemLot(itemLotId);
 });
 
 // Kill NPC with bloodline BJ 2_XX
-$Event(9480, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4) {
+$Event(9480, Default, function(eventFlagId, eventFlagId2, eventFlagId3, eventFlagId4, eventFlagId5) {
     EndIf(ThisEventSlot());
-    EndIf(EventFlag(X0_4));
-    EndIf(EventFlag(X4_4));
-    EndIf(EventFlag(X8_4));
-    flag = EventFlag(X0_4) || EventFlag(X4_4) || EventFlag(X8_4) || EventFlag(X12_4);
-    flag2 = EventFlag(X16_4);
+    EndIf(EventFlag(eventFlagId));
+    EndIf(EventFlag(eventFlagId2));
+    EndIf(EventFlag(eventFlagId3));
+    flag = EventFlag(eventFlagId)
+        || EventFlag(eventFlagId2)
+        || EventFlag(eventFlagId3)
+        || EventFlag(eventFlagId4);
+    flag2 = EventFlag(eventFlagId5);
     WaitFor(flag || flag2);
     EndIf(flag2.Passed);
     EndIf(
@@ -3810,62 +3813,66 @@ $Event(9480, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4) {
 });
 
 // Magic stone used_XX
-$Event(9500, Default, function(X0_4, X4_4) {
+$Event(9500, Default, function(spEffectId, itemLotId) {
     SetNetworkSyncState(Disabled);
-    WaitFor(CharacterHasSpEffect(10000, X0_4));
-    AwardItemsIncludingClients(X4_4);
+    WaitFor(CharacterHasSpEffect(10000, spEffectId));
+    AwardItemsIncludingClients(itemLotId);
     WaitFixedTimeSeconds(0.1);
     RestartEvent();
 });
 
 // base old man_random doze 2
-$Event(9700, Default, function(X0_4, X4_4) {
+$Event(9700, Default, function(eventFlagId, eventFlagId2) {
     WaitFor(EventFlag(1021) && EventFlag(72100121) && !PlayerInMap(21, 0));
-    BatchSetEventFlags(X0_4, X4_4, OFF);
+    BatchSetEventFlags(eventFlagId, eventFlagId2, OFF);
     SetEventFlag(1022, ON);
 });
 
 // base old man_random doze 3
-$Event(9701, Default, function(X0_4, X4_4) {
+$Event(9701, Default, function(eventFlagId, eventFlagId2) {
     WaitFor(EventFlag(1023) && EventFlag(72100123) && !PlayerInMap(21, 0));
-    BatchSetEventFlags(X0_4, X4_4, OFF);
+    BatchSetEventFlags(eventFlagId, eventFlagId2, OFF);
     SetEventFlag(1024, ON);
 });
 
 // base old man_random doze 4
-$Event(9702, Default, function(X0_4, X4_4) {
+$Event(9702, Default, function(eventFlagId, eventFlagId2) {
     WaitFor(EventFlag(1025) && EventFlag(72100125) && !PlayerInMap(21, 0));
-    BatchSetEventFlags(X0_4, X4_4, OFF);
+    BatchSetEventFlags(eventFlagId, eventFlagId2, OFF);
     SetEventFlag(1026, ON);
 });
 
 // base old man_random doze 5
-$Event(9703, Default, function(X0_4, X4_4) {
+$Event(9703, Default, function(eventFlagId, eventFlagId2) {
     WaitFor(EventFlag(1026) && EventFlag(9802) && EventFlag(72100128) && !PlayerInMap(21, 0));
-    BatchSetEventFlags(X0_4, X4_4, OFF);
+    BatchSetEventFlags(eventFlagId, eventFlagId2, OFF);
     SetEventFlag(1027, ON);
 });
 
 // doll heroine_welcome home
-$Event(9710, Default, function(X0_4, X4_4) {
+$Event(9710, Default, function(eventFlagId, eventFlagId2) {
     WaitFor(EventFlag(1000) && EventFlag(72100110) && !PlayerInMap(21, 0));
-    BatchSetEventFlags(X0_4, X4_4, OFF);
+    BatchSetEventFlags(eventFlagId, eventFlagId2, OFF);
     SetEventFlag(1001, ON);
 });
 
 // Avenger_Warp OBJ usage limit_Gascoin room
 $Event(9720, Default, function() {
-    GotoIf(L0, ThisEvent());
-    GotoIf(L0, EventFlag(12410810));
-    GotoIf(L0, EventFlag(9467));
-    flagMap = EventFlag(1362) && EventFlag(72400520) && PlayerInMap(21, 0);
-    flag = EventFlag(1363);
-    flag2 = (EventFlag(1701) || EventFlag(1702)) && (EventFlag(1368) || EventFlag(1369));
-    flag3 = EventFlag(12410810) || EventFlag(9467);
-    WaitFor(flagMap || flag || flag2 || flag3);
-    GotoIf(L0, flag3.Passed);
-    SetEventFlag(70002413, ON);
-    WaitFor(EventFlag(12410810) || EventFlag(9467));
+    if (!ThisEvent()) {
+        if (!EventFlag(12410810)) {
+            if (!EventFlag(9467)) {
+                flagMap = EventFlag(1362) && EventFlag(72400520) && PlayerInMap(21, 0);
+                flag = EventFlag(1363);
+                flag2 = (EventFlag(1701) || EventFlag(1702)) && (EventFlag(1368) || EventFlag(1369));
+                flag3 = EventFlag(12410810) || EventFlag(9467);
+                WaitFor(flagMap || flag || flag2 || flag3);
+                if (!flag3.Passed) {
+                    SetEventFlag(70002413, ON);
+                    WaitFor(EventFlag(12410810) || EventFlag(9467));
+                }
+            }
+        }
+    }
 L0:
     SetEventFlag(70002413, OFF);
 });
@@ -3959,7 +3966,9 @@ $Event(9781, Default, function() {
 
 // Spider-Man_(listening to story & went to base or died) or Spider-Man died so hijacking ended
 $Event(9782, Default, function() {
-    WaitFor((PlayerHasItem(ItemType.Goods, 4310) && (PlayerInMap(21, 0) || CharacterDead(10000))) || EventFlag(1431));
+    WaitFor(
+        (PlayerHasItem(ItemType.Goods, 4310) && (PlayerInMap(21, 0) || CharacterDead(10000)))
+            || EventFlag(1431));
     SetEventFlag(1438, ON);
     SetEventFlag(1439, OFF);
 });
@@ -3972,9 +3981,9 @@ $Event(9909, Default, function() {
 });
 
 // C end branch_3rd umbilical cord usage count_XX
-$Event(9905, Default, function(X0_4) {
+$Event(9905, Default, function(spEffectId) {
     EndIf(ThisEventSlot());
-    WaitFor(CharacterHasSpEffect(10000, X0_4));
+    WaitFor(CharacterHasSpEffect(10000, spEffectId));
     IncrementEventValue(9901, 4, 4);
 });
 

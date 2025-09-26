@@ -4,7 +4,7 @@
 // @game    Bloodborne
 // @string    "PC情報_大学到達時\u0000クリア時間_通し\u0000クリア時間_1プレイ\u0000ボス戦_撃破時間\u0000ボス_撃破\u0000PC情報_ボス撃破_白痴の蜘蛛\u0000ボス_戦闘開始\u0000N:\\SPRJ\\data\\Param\\event\\common.emevd\u0000\u0000\u0000\u0000\u0000"
 // @linked    [140]
-// @version    3.4.2
+// @version    3.6
 // ==/EMEVD==
 
 const area_id = 32;
@@ -40,37 +40,36 @@ $Event(0, Default, function() {
     
     SetEventFlag(8900+rom_offset, OFF);
     
-    InitializeEvent(27, 7900, 10000000+rom_return, rom_return, area_id, block_id, 8500+byrgenwerth_lamp_offset);
+    $InitializeEvent(27, 7900, 10000000+rom_return, rom_return, area_id, block_id, 8500+byrgenwerth_lamp_offset);
     
-    InitializeEvent(byrgenwerth_lamp_offset, 8500, 8500+byrgenwerth_lamp_offset, byrgenwerth_lamp_id, 72111616);
-    InitializeEvent(lecture_hall_1_lamp_offset, 8500, 8500+lecture_hall_1_lamp_offset, lecture_hall_1_lamp_id, 72112626);
-    InitializeEvent(lecture_hall_2_lamp_offset, 8500, 8500+lecture_hall_2_lamp_offset, lecture_hall_2_lamp_id, 72112727);
-    InitializeEvent(rom_lamp_offset, 8500, 8500+rom_lamp_offset, rom_lamp_id, 72111717);
+    $InitializeEvent(byrgenwerth_lamp_offset, 8500, 8500+byrgenwerth_lamp_offset, byrgenwerth_lamp_id, 72111616);
+    $InitializeEvent(lecture_hall_1_lamp_offset, 8500, 8500+lecture_hall_1_lamp_offset, lecture_hall_1_lamp_id, 72112626);
+    $InitializeEvent(lecture_hall_2_lamp_offset, 8500, 8500+lecture_hall_2_lamp_offset, lecture_hall_2_lamp_id, 72112727);
+    $InitializeEvent(rom_lamp_offset, 8500, 8500+rom_lamp_offset, rom_lamp_id, 72111717);
     
-    InitializeEvent(byrgenwerth_lamp_offset, 8100, 8100+byrgenwerth_lamp_offset, byrgenwerth_lamp_kindle);
-    InitializeEvent(lecture_hall_1_lamp_offset, 8100, 8100+lecture_hall_1_lamp_offset, lecture_hall_1_lamp_kindle);
-    InitializeEvent(lecture_hall_2_lamp_offset, 8100, 8100+lecture_hall_2_lamp_offset, lecture_hall_2_lamp_kindle);
-    InitializeEvent(rom_lamp_offset, 8100, 8100+rom_lamp_offset, rom_lamp_kindle);
+    $InitializeEvent(byrgenwerth_lamp_offset, 8100, 8100+byrgenwerth_lamp_offset, byrgenwerth_lamp_kindle);
+    $InitializeEvent(lecture_hall_1_lamp_offset, 8100, 8100+lecture_hall_1_lamp_offset, lecture_hall_1_lamp_kindle);
+    $InitializeEvent(lecture_hall_2_lamp_offset, 8100, 8100+lecture_hall_2_lamp_offset, lecture_hall_2_lamp_kindle);
+    $InitializeEvent(rom_lamp_offset, 8100, 8100+rom_lamp_offset, rom_lamp_kindle);
     
-    InitializeEvent(byrgenwerth_lamp_offset, 8300, byrgenwerth_lamp_id+2000, -1, byrgenwerth_lamp_kindle, byrgenwerth_lamp_id+6000, byrgenwerth_lamp_id+3000);
-    InitializeEvent(lecture_hall_1_lamp_offset, 8300, lecture_hall_1_lamp_id+2000, -1, lecture_hall_1_lamp_kindle, lecture_hall_1_lamp_id+6000, lecture_hall_1_lamp_id+3000);
-    InitializeEvent(lecture_hall_2_lamp_offset, 8300, lecture_hall_2_lamp_id+2000, -1, lecture_hall_2_lamp_kindle, lecture_hall_2_lamp_id+6000, lecture_hall_2_lamp_id+3000);
+    $InitializeEvent(byrgenwerth_lamp_offset, 8300, byrgenwerth_lamp_id+2000, -1, byrgenwerth_lamp_kindle, byrgenwerth_lamp_id+6000, byrgenwerth_lamp_id+3000);
+    $InitializeEvent(lecture_hall_1_lamp_offset, 8300, lecture_hall_1_lamp_id+2000, -1, lecture_hall_1_lamp_kindle, lecture_hall_1_lamp_id+6000, lecture_hall_1_lamp_id+3000);
+    $InitializeEvent(lecture_hall_2_lamp_offset, 8300, lecture_hall_2_lamp_id+2000, -1, lecture_hall_2_lamp_kindle, lecture_hall_2_lamp_id+6000, lecture_hall_2_lamp_id+3000);
     
-    if(EventFlag(rom_defeat+13) && !EventFlag(rom_defeat-1)) {
+    if (EventFlag(rom_defeat+13) && !EventFlag(rom_defeat-1)) {
         if (EventFlag(rom_defeat-2)) {
             SetEventFlag(rom_defeat-2, OFF);
-            InitializeEvent(rom_offset, 7500, rom_region, rom_lamp_id+4000);
+            $InitializeEvent(rom_offset, 7500, rom_region, rom_lamp_id+4000);
         }
         SetEventFlag(rom_defeat+13, OFF);
         SetEventFlag(rom_defeat, ON);
         SetEventFlag(rom_defeat+3, ON);
-        InitializeEvent(rom_lamp_offset, 8300, rom_lamp_id+2000, 999, rom_lamp_kindle, rom_lamp_id+6000, rom_lamp_id+3000);
+        $InitializeEvent(rom_lamp_offset, 8300, rom_lamp_id+2000, 999, rom_lamp_kindle, rom_lamp_id+6000, rom_lamp_id+3000);
         DummyPlayCutsceneAndWarpPlayer(rom_lamp_id+4000, area_id, block_id);
-    }
-    else if (EventFlag(rom_defeat+12) || EventFlag(rom_defeat-1)) {
+    } else if (EventFlag(rom_defeat+12) || EventFlag(rom_defeat-1)) {
         if (EventFlag(rom_defeat-2)) {
             SetEventFlag(rom_defeat-2, OFF);
-            InitializeEvent(rom_offset, 7500, rom_region, rom_lamp_id+5000);
+            $InitializeEvent(rom_offset, 7500, rom_region, rom_lamp_id+5000);
         }
         SetEventFlag(rom_defeat, OFF);
         SetEventFlag(rom_defeat+2, ON);
@@ -82,237 +81,236 @@ $Event(0, Default, function() {
         SetEventFlag(rom_defeat+13, ON);
         SetEventFlag(rom_defeat-1, OFF);
         SetEventFlag(8900+rom_offset, ON);
-        InitializeEvent(rom_lamp_offset, 8300, rom_lamp_id+2000, -1, rom_lamp_kindle, rom_lamp_id+6000, rom_lamp_id+3000);
+        $InitializeEvent(rom_lamp_offset, 8300, rom_lamp_id+2000, -1, rom_lamp_kindle, rom_lamp_id+6000, rom_lamp_id+3000);
+    } else {
+        $InitializeEvent(rom_lamp_offset, 8300, rom_lamp_id+2000, -1, rom_lamp_kindle, rom_lamp_id+6000, rom_lamp_id+3000);
     }
-    else {
-        InitializeEvent(rom_lamp_offset, 8300, rom_lamp_id+2000, -1, rom_lamp_kindle, rom_lamp_id+6000, rom_lamp_id+3000);
-    }
     
-    InitializeEvent(rom_offset, 12102070, rom_defeat+13, 0, 7456, rom_id);
+    $InitializeEvent(rom_offset, 12102070, rom_defeat+13, 0, 7456, rom_id, -1, -1, -1, -1);
     
-    InitializeEvent(rom_offset, 8900, rom_defeat-1, rom_lamp_id+1000, rom_defeat-2, 0, 0, rom_lamp_id+5000, area_id, block_id);
-    InitializeEvent(rom_offset, 7700, rom_defeat+11, rom_defeat+12, rom_lamp_id+1000, 832001);
+    $InitializeEvent(rom_offset, 8900, rom_defeat-1, rom_lamp_id+1000, rom_defeat-2, 0, 0, rom_lamp_id+5000, area_id, block_id);
+    $InitializeEvent(rom_offset, 7700, rom_defeat+11, rom_defeat+12, rom_lamp_id+1000, 832001);
     
-    InitializeEvent(1600, 12107000, 72111600, 3201950, 2412950);
-    InitializeEvent(1601, 12107000, 72111601, 3201950, 2412951);
-    InitializeEvent(1602, 12107000, 72111602, 3201950, 2412952);
-    InitializeEvent(1603, 12107000, 72111603, 3201950, 2412953);
-    InitializeEvent(1604, 12107000, 72111604, 3201950, 2402950);
-    InitializeEvent(1605, 12107000, 72111605, 3201950, 2402951);
-    InitializeEvent(1606, 12107000, 72111606, 3201950, 2422950);
-    InitializeEvent(1607, 12107000, 72111607, 3201950, 2422952);
-    InitializeEvent(1608, 12107000, 72111608, 3201950, 2422951);
-    InitializeEvent(1609, 12107000, 72111609, 3201950, 2302950);
-    InitializeEvent(1610, 12107000, 72111610, 3201950, 2302951);
-    InitializeEvent(1611, 12107000, 72111611, 3201950, 2302952);
-    InitializeEvent(1612, 12107000, 72111612, 3201950, 2202950);
-    InitializeEvent(1613, 12107000, 72111613, 3201950, 2202951);
-    InitializeEvent(1614, 12107000, 72111614, 3201950, 2702950);
-    InitializeEvent(1615, 12107000, 72111615, 3201950, 2702951);
-    InitializeEvent(1616, 12107000, 72111616, 3201950, 3202950);
-    InitializeEvent(1617, 12107000, 72111617, 3201950, 3202952);
-    InitializeEvent(1618, 12107000, 72111618, 3201950, 2802950);
-    InitializeEvent(1619, 12107000, 72111619, 3201950, 2802953);
-    InitializeEvent(1620, 12107000, 72111620, 3201950, 2802951);
-    InitializeEvent(1621, 12107000, 72111621, 3201950, 2802952);
-    InitializeEvent(1622, 12107000, 72111622, 3201950, 2502950);
-    InitializeEvent(1623, 12107000, 72111623, 3201950, 2502952);
-    InitializeEvent(1624, 12107000, 72111624, 3201950, 2502951);
-    InitializeEvent(1625, 12107000, 72111625, 3201950, 2112950);
-    InitializeEvent(1626, 12107000, 72111626, 3201950, 3202951);
-    InitializeEvent(1627, 12107000, 72111627, 3201950, 3202953);
-    InitializeEvent(1628, 12107000, 72111628, 3201950, 3302950);
-    InitializeEvent(1629, 12107000, 72111629, 3201950, 3302951);
-    InitializeEvent(1630, 12107000, 72111630, 3201950, 2602950);
-    InitializeEvent(1631, 12107000, 72111631, 3201950, 2602953);
-    InitializeEvent(1632, 12107000, 72111632, 3201950, 2602952);
-    InitializeEvent(1633, 12107000, 72111633, 3201950, 2602951);
-    InitializeEvent(1634, 12107000, 72111634, 3201950, 3402950);
-    InitializeEvent(1635, 12107000, 72111635, 3201950, 3402951);
-    InitializeEvent(1636, 12107000, 72111636, 3201950, 3402953);
-    InitializeEvent(1637, 12107000, 72111637, 3201950, 3402952);
-    InitializeEvent(1638, 12107000, 72111638, 3201950, 3502950);
-    InitializeEvent(1639, 12107000, 72111639, 3201950, 3502951);
-    InitializeEvent(1640, 12107000, 72111640, 3201950, 3502952);
-    InitializeEvent(1641, 12107000, 72111641, 3201950, 3602950);
-    InitializeEvent(1642, 12107000, 72111642, 3201950, 3602951);
-    InitializeEvent(1643, 12107000, 72111643, 3201950, 3602952);
-    InitializeEvent(1644, 12107000, 72111644, 3201950, 2902950);
-    InitializeEvent(1645, 12107000, 72111645, 3201950, 2902951);
-    InitializeEvent(1646, 12107000, 72111646, 3201950, 2902952);
-    InitializeEvent(1647, 12107000, 72111647, 3201950, 2902953);
-    InitializeEvent(1648, 12107000, 72111648, 3201950, 2902954);
-    InitializeEvent(1649, 12107000, 72111649, 3201950, 2902955);
-    InitializeEvent(1650, 12107000, 72111650, 3201950, 2902956);
-    InitializeEvent(1651, 12107000, 72111651, 3201950, 2902957);
-    InitializeEvent(1652, 12107000, 72111652, 3201950, 2902958);
-    InitializeEvent(1653, 12107000, 72111653, 3201950, 2902959);
-
-    InitializeEvent(1700, 12107000, 72111700, 3201952, 2412950);
-    InitializeEvent(1701, 12107000, 72111701, 3201952, 2412951);
-    InitializeEvent(1702, 12107000, 72111702, 3201952, 2412952);
-    InitializeEvent(1703, 12107000, 72111703, 3201952, 2412953);
-    InitializeEvent(1704, 12107000, 72111704, 3201952, 2402950);
-    InitializeEvent(1705, 12107000, 72111705, 3201952, 2402951);
-    InitializeEvent(1706, 12107000, 72111706, 3201952, 2422950);
-    InitializeEvent(1707, 12107000, 72111707, 3201952, 2422952);
-    InitializeEvent(1708, 12107000, 72111708, 3201952, 2422951);
-    InitializeEvent(1709, 12107000, 72111709, 3201952, 2302950);
-    InitializeEvent(1710, 12107000, 72111710, 3201952, 2302951);
-    InitializeEvent(1711, 12107000, 72111711, 3201952, 2302952);
-    InitializeEvent(1712, 12107000, 72111712, 3201952, 2202950);
-    InitializeEvent(1713, 12107000, 72111713, 3201952, 2202951);
-    InitializeEvent(1714, 12107000, 72111714, 3201952, 2702950);
-    InitializeEvent(1715, 12107000, 72111715, 3201952, 2702951);
-    InitializeEvent(1716, 12107000, 72111716, 3201952, 3202950);
-    InitializeEvent(1717, 12107000, 72111717, 3201952, 3202952);
-    InitializeEvent(1718, 12107000, 72111718, 3201952, 2802950);
-    InitializeEvent(1719, 12107000, 72111719, 3201952, 2802953);
-    InitializeEvent(1720, 12107000, 72111720, 3201952, 2802951);
-    InitializeEvent(1721, 12107000, 72111721, 3201952, 2802952);
-    InitializeEvent(1722, 12107000, 72111722, 3201952, 2502950);
-    InitializeEvent(1723, 12107000, 72111723, 3201952, 2502952);
-    InitializeEvent(1724, 12107000, 72111724, 3201952, 2502951);
-    InitializeEvent(1725, 12107000, 72111725, 3201952, 2112950);
-    InitializeEvent(1726, 12107000, 72111726, 3201952, 3202951);
-    InitializeEvent(1727, 12107000, 72111727, 3201952, 3202953);
-    InitializeEvent(1728, 12107000, 72111728, 3201952, 3302950);
-    InitializeEvent(1729, 12107000, 72111729, 3201952, 3302951);
-    InitializeEvent(1730, 12107000, 72111730, 3201952, 2602950);
-    InitializeEvent(1731, 12107000, 72111731, 3201952, 2602953);
-    InitializeEvent(1732, 12107000, 72111732, 3201952, 2602952);
-    InitializeEvent(1733, 12107000, 72111733, 3201952, 2602951);
-    InitializeEvent(1734, 12107000, 72111734, 3201952, 3402950);
-    InitializeEvent(1735, 12107000, 72111735, 3201952, 3402951);
-    InitializeEvent(1736, 12107000, 72111736, 3201952, 3402953);
-    InitializeEvent(1737, 12107000, 72111737, 3201952, 3402952);
-    InitializeEvent(1738, 12107000, 72111738, 3201952, 3502950);
-    InitializeEvent(1739, 12107000, 72111739, 3201952, 3502951);
-    InitializeEvent(1740, 12107000, 72111740, 3201952, 3502952);
-    InitializeEvent(1741, 12107000, 72111741, 3201952, 3602950);
-    InitializeEvent(1742, 12107000, 72111742, 3201952, 3602951);
-    InitializeEvent(1743, 12107000, 72111743, 3201952, 3602952);
-    InitializeEvent(1744, 12107000, 72111744, 3201952, 2902950);
-    InitializeEvent(1745, 12107000, 72111745, 3201952, 2902951);
-    InitializeEvent(1746, 12107000, 72111746, 3201952, 2902952);
-    InitializeEvent(1747, 12107000, 72111747, 3201952, 2902953);
-    InitializeEvent(1748, 12107000, 72111748, 3201952, 2902954);
-    InitializeEvent(1749, 12107000, 72111749, 3201952, 2902955);
-    InitializeEvent(1750, 12107000, 72111750, 3201952, 2902956);
-    InitializeEvent(1751, 12107000, 72111751, 3201952, 2902957);
-    InitializeEvent(1752, 12107000, 72111752, 3201952, 2902958);
-    InitializeEvent(1753, 12107000, 72111753, 3201952, 2902959);
-
-    InitializeEvent(2600, 12107000, 72112600, 3201951, 2412950);
-    InitializeEvent(2601, 12107000, 72112601, 3201951, 2412951);
-    InitializeEvent(2602, 12107000, 72112602, 3201951, 2412952);
-    InitializeEvent(2603, 12107000, 72112603, 3201951, 2412953);
-    InitializeEvent(2604, 12107000, 72112604, 3201951, 2402950);
-    InitializeEvent(2605, 12107000, 72112605, 3201951, 2402951);
-    InitializeEvent(2606, 12107000, 72112606, 3201951, 2422950);
-    InitializeEvent(2607, 12107000, 72112607, 3201951, 2422952);
-    InitializeEvent(2608, 12107000, 72112608, 3201951, 2422951);
-    InitializeEvent(2609, 12107000, 72112609, 3201951, 2302950);
-    InitializeEvent(2610, 12107000, 72112610, 3201951, 2302951);
-    InitializeEvent(2611, 12107000, 72112611, 3201951, 2302952);
-    InitializeEvent(2612, 12107000, 72112612, 3201951, 2202950);
-    InitializeEvent(2613, 12107000, 72112613, 3201951, 2202951);
-    InitializeEvent(2614, 12107000, 72112614, 3201951, 2702950);
-    InitializeEvent(2615, 12107000, 72112615, 3201951, 2702951);
-    InitializeEvent(2616, 12107000, 72112616, 3201951, 3202950);
-    InitializeEvent(2617, 12107000, 72112617, 3201951, 3202952);
-    InitializeEvent(2618, 12107000, 72112618, 3201951, 2802950);
-    InitializeEvent(2619, 12107000, 72112619, 3201951, 2802953);
-    InitializeEvent(2620, 12107000, 72112620, 3201951, 2802951);
-    InitializeEvent(2621, 12107000, 72112621, 3201951, 2802952);
-    InitializeEvent(2622, 12107000, 72112622, 3201951, 2502950);
-    InitializeEvent(2623, 12107000, 72112623, 3201951, 2502952);
-    InitializeEvent(2624, 12107000, 72112624, 3201951, 2502951);
-    InitializeEvent(2625, 12107000, 72112625, 3201951, 2112950);
-    InitializeEvent(2626, 12107000, 72112626, 3201951, 3202951);
-    InitializeEvent(2627, 12107000, 72112627, 3201951, 3202953);
-    InitializeEvent(2628, 12107000, 72112628, 3201951, 3302950);
-    InitializeEvent(2629, 12107000, 72112629, 3201951, 3302951);
-    InitializeEvent(2630, 12107000, 72112630, 3201951, 2602950);
-    InitializeEvent(2631, 12107000, 72112631, 3201951, 2602953);
-    InitializeEvent(2632, 12107000, 72112632, 3201951, 2602952);
-    InitializeEvent(2633, 12107000, 72112633, 3201951, 2602951);
-    InitializeEvent(2634, 12107000, 72112634, 3201951, 3402950);
-    InitializeEvent(2635, 12107000, 72112635, 3201951, 3402951);
-    InitializeEvent(2636, 12107000, 72112636, 3201951, 3402953);
-    InitializeEvent(2637, 12107000, 72112637, 3201951, 3402952);
-    InitializeEvent(2638, 12107000, 72112638, 3201951, 3502950);
-    InitializeEvent(2639, 12107000, 72112639, 3201951, 3502951);
-    InitializeEvent(2640, 12107000, 72112640, 3201951, 3502952);
-    InitializeEvent(2641, 12107000, 72112641, 3201951, 3602950);
-    InitializeEvent(2642, 12107000, 72112642, 3201951, 3602951);
-    InitializeEvent(2643, 12107000, 72112643, 3201951, 3602952);
-    InitializeEvent(2644, 12107000, 72112644, 3201951, 2902950);
-    InitializeEvent(2645, 12107000, 72112645, 3201951, 2902951);
-    InitializeEvent(2646, 12107000, 72112646, 3201951, 2902952);
-    InitializeEvent(2647, 12107000, 72112647, 3201951, 2902953);
-    InitializeEvent(2648, 12107000, 72112648, 3201951, 2902954);
-    InitializeEvent(2649, 12107000, 72112649, 3201951, 2902955);
-    InitializeEvent(2650, 12107000, 72112650, 3201951, 2902956);
-    InitializeEvent(2651, 12107000, 72112651, 3201951, 2902957);
-    InitializeEvent(2652, 12107000, 72112652, 3201951, 2902958);
-    InitializeEvent(2653, 12107000, 72112653, 3201951, 2902959);
-
-    InitializeEvent(2700, 12107000, 72112700, 3201953, 2412950);
-    InitializeEvent(2701, 12107000, 72112701, 3201953, 2412951);
-    InitializeEvent(2702, 12107000, 72112702, 3201953, 2412952);
-    InitializeEvent(2703, 12107000, 72112703, 3201953, 2412953);
-    InitializeEvent(2704, 12107000, 72112704, 3201953, 2402950);
-    InitializeEvent(2705, 12107000, 72112705, 3201953, 2402951);
-    InitializeEvent(2706, 12107000, 72112706, 3201953, 2422950);
-    InitializeEvent(2707, 12107000, 72112707, 3201953, 2422952);
-    InitializeEvent(2708, 12107000, 72112708, 3201953, 2422951);
-    InitializeEvent(2709, 12107000, 72112709, 3201953, 2302950);
-    InitializeEvent(2710, 12107000, 72112710, 3201953, 2302951);
-    InitializeEvent(2711, 12107000, 72112711, 3201953, 2302952);
-    InitializeEvent(2712, 12107000, 72112712, 3201953, 2202950);
-    InitializeEvent(2713, 12107000, 72112713, 3201953, 2202951);
-    InitializeEvent(2714, 12107000, 72112714, 3201953, 2702950);
-    InitializeEvent(2715, 12107000, 72112715, 3201953, 2702951);
-    InitializeEvent(2716, 12107000, 72112716, 3201953, 3202950);
-    InitializeEvent(2717, 12107000, 72112717, 3201953, 3202952);
-    InitializeEvent(2718, 12107000, 72112718, 3201953, 2802950);
-    InitializeEvent(2719, 12107000, 72112719, 3201953, 2802953);
-    InitializeEvent(2720, 12107000, 72112720, 3201953, 2802951);
-    InitializeEvent(2721, 12107000, 72112721, 3201953, 2802952);
-    InitializeEvent(2722, 12107000, 72112722, 3201953, 2502950);
-    InitializeEvent(2723, 12107000, 72112723, 3201953, 2502952);
-    InitializeEvent(2724, 12107000, 72112724, 3201953, 2502951);
-    InitializeEvent(2725, 12107000, 72112725, 3201953, 2112950);
-    InitializeEvent(2726, 12107000, 72112726, 3201953, 3202951);
-    InitializeEvent(2727, 12107000, 72112727, 3201953, 3202953);
-    InitializeEvent(2728, 12107000, 72112728, 3201953, 3302950);
-    InitializeEvent(2729, 12107000, 72112729, 3201953, 3302951);
-    InitializeEvent(2730, 12107000, 72112730, 3201953, 2602950);
-    InitializeEvent(2731, 12107000, 72112731, 3201953, 2602953);
-    InitializeEvent(2732, 12107000, 72112732, 3201953, 2602952);
-    InitializeEvent(2733, 12107000, 72112733, 3201953, 2602951);
-    InitializeEvent(2734, 12107000, 72112734, 3201953, 3402950);
-    InitializeEvent(2735, 12107000, 72112735, 3201953, 3402951);
-    InitializeEvent(2736, 12107000, 72112736, 3201953, 3402953);
-    InitializeEvent(2737, 12107000, 72112737, 3201953, 3402952);
-    InitializeEvent(2738, 12107000, 72112738, 3201953, 3502950);
-    InitializeEvent(2739, 12107000, 72112739, 3201953, 3502951);
-    InitializeEvent(2740, 12107000, 72112740, 3201953, 3502952);
-    InitializeEvent(2741, 12107000, 72112741, 3201953, 3602950);
-    InitializeEvent(2742, 12107000, 72112742, 3201953, 3602951);
-    InitializeEvent(2743, 12107000, 72112743, 3201953, 3602952);
-    InitializeEvent(2744, 12107000, 72112744, 3201953, 2902950);
-    InitializeEvent(2745, 12107000, 72112745, 3201953, 2902951);
-    InitializeEvent(2746, 12107000, 72112746, 3201953, 2902952);
-    InitializeEvent(2747, 12107000, 72112747, 3201953, 2902953);
-    InitializeEvent(2748, 12107000, 72112748, 3201953, 2902954);
-    InitializeEvent(2749, 12107000, 72112749, 3201953, 2902955);
-    InitializeEvent(2750, 12107000, 72112750, 3201953, 2902956);
-    InitializeEvent(2751, 12107000, 72112751, 3201953, 2902957);
-    InitializeEvent(2752, 12107000, 72112752, 3201953, 2902958);
-    InitializeEvent(2753, 12107000, 72112753, 3201953, 2902959);
-
+    $InitializeEvent(1600, 12107000, 72111600, 3201950, 2412950);
+    $InitializeEvent(1601, 12107000, 72111601, 3201950, 2412951);
+    $InitializeEvent(1602, 12107000, 72111602, 3201950, 2412952);
+    $InitializeEvent(1603, 12107000, 72111603, 3201950, 2412953);
+    $InitializeEvent(1604, 12107000, 72111604, 3201950, 2402950);
+    $InitializeEvent(1605, 12107000, 72111605, 3201950, 2402951);
+    $InitializeEvent(1606, 12107000, 72111606, 3201950, 2422950);
+    $InitializeEvent(1607, 12107000, 72111607, 3201950, 2422952);
+    $InitializeEvent(1608, 12107000, 72111608, 3201950, 2422951);
+    $InitializeEvent(1609, 12107000, 72111609, 3201950, 2302950);
+    $InitializeEvent(1610, 12107000, 72111610, 3201950, 2302951);
+    $InitializeEvent(1611, 12107000, 72111611, 3201950, 2302952);
+    $InitializeEvent(1612, 12107000, 72111612, 3201950, 2202950);
+    $InitializeEvent(1613, 12107000, 72111613, 3201950, 2202951);
+    $InitializeEvent(1614, 12107000, 72111614, 3201950, 2702950);
+    $InitializeEvent(1615, 12107000, 72111615, 3201950, 2702951);
+    $InitializeEvent(1616, 12107000, 72111616, 3201950, 3202950);
+    $InitializeEvent(1617, 12107000, 72111617, 3201950, 3202952);
+    $InitializeEvent(1618, 12107000, 72111618, 3201950, 2802950);
+    $InitializeEvent(1619, 12107000, 72111619, 3201950, 2802953);
+    $InitializeEvent(1620, 12107000, 72111620, 3201950, 2802951);
+    $InitializeEvent(1621, 12107000, 72111621, 3201950, 2802952);
+    $InitializeEvent(1622, 12107000, 72111622, 3201950, 2502950);
+    $InitializeEvent(1623, 12107000, 72111623, 3201950, 2502952);
+    $InitializeEvent(1624, 12107000, 72111624, 3201950, 2502951);
+    $InitializeEvent(1625, 12107000, 72111625, 3201950, 2112950);
+    $InitializeEvent(1626, 12107000, 72111626, 3201950, 3202951);
+    $InitializeEvent(1627, 12107000, 72111627, 3201950, 3202953);
+    $InitializeEvent(1628, 12107000, 72111628, 3201950, 3302950);
+    $InitializeEvent(1629, 12107000, 72111629, 3201950, 3302951);
+    $InitializeEvent(1630, 12107000, 72111630, 3201950, 2602950);
+    $InitializeEvent(1631, 12107000, 72111631, 3201950, 2602953);
+    $InitializeEvent(1632, 12107000, 72111632, 3201950, 2602952);
+    $InitializeEvent(1633, 12107000, 72111633, 3201950, 2602951);
+    $InitializeEvent(1634, 12107000, 72111634, 3201950, 3402950);
+    $InitializeEvent(1635, 12107000, 72111635, 3201950, 3402951);
+    $InitializeEvent(1636, 12107000, 72111636, 3201950, 3402953);
+    $InitializeEvent(1637, 12107000, 72111637, 3201950, 3402952);
+    $InitializeEvent(1638, 12107000, 72111638, 3201950, 3502950);
+    $InitializeEvent(1639, 12107000, 72111639, 3201950, 3502951);
+    $InitializeEvent(1640, 12107000, 72111640, 3201950, 3502952);
+    $InitializeEvent(1641, 12107000, 72111641, 3201950, 3602950);
+    $InitializeEvent(1642, 12107000, 72111642, 3201950, 3602951);
+    $InitializeEvent(1643, 12107000, 72111643, 3201950, 3602952);
+    $InitializeEvent(1644, 12107000, 72111644, 3201950, 2902950);
+    $InitializeEvent(1645, 12107000, 72111645, 3201950, 2902951);
+    $InitializeEvent(1646, 12107000, 72111646, 3201950, 2902952);
+    $InitializeEvent(1647, 12107000, 72111647, 3201950, 2902953);
+    $InitializeEvent(1648, 12107000, 72111648, 3201950, 2902954);
+    $InitializeEvent(1649, 12107000, 72111649, 3201950, 2902955);
+    $InitializeEvent(1650, 12107000, 72111650, 3201950, 2902956);
+    $InitializeEvent(1651, 12107000, 72111651, 3201950, 2902957);
+    $InitializeEvent(1652, 12107000, 72111652, 3201950, 2902958);
+    $InitializeEvent(1653, 12107000, 72111653, 3201950, 2902959);
+    
+    $InitializeEvent(1700, 12107000, 72111700, 3201952, 2412950);
+    $InitializeEvent(1701, 12107000, 72111701, 3201952, 2412951);
+    $InitializeEvent(1702, 12107000, 72111702, 3201952, 2412952);
+    $InitializeEvent(1703, 12107000, 72111703, 3201952, 2412953);
+    $InitializeEvent(1704, 12107000, 72111704, 3201952, 2402950);
+    $InitializeEvent(1705, 12107000, 72111705, 3201952, 2402951);
+    $InitializeEvent(1706, 12107000, 72111706, 3201952, 2422950);
+    $InitializeEvent(1707, 12107000, 72111707, 3201952, 2422952);
+    $InitializeEvent(1708, 12107000, 72111708, 3201952, 2422951);
+    $InitializeEvent(1709, 12107000, 72111709, 3201952, 2302950);
+    $InitializeEvent(1710, 12107000, 72111710, 3201952, 2302951);
+    $InitializeEvent(1711, 12107000, 72111711, 3201952, 2302952);
+    $InitializeEvent(1712, 12107000, 72111712, 3201952, 2202950);
+    $InitializeEvent(1713, 12107000, 72111713, 3201952, 2202951);
+    $InitializeEvent(1714, 12107000, 72111714, 3201952, 2702950);
+    $InitializeEvent(1715, 12107000, 72111715, 3201952, 2702951);
+    $InitializeEvent(1716, 12107000, 72111716, 3201952, 3202950);
+    $InitializeEvent(1717, 12107000, 72111717, 3201952, 3202952);
+    $InitializeEvent(1718, 12107000, 72111718, 3201952, 2802950);
+    $InitializeEvent(1719, 12107000, 72111719, 3201952, 2802953);
+    $InitializeEvent(1720, 12107000, 72111720, 3201952, 2802951);
+    $InitializeEvent(1721, 12107000, 72111721, 3201952, 2802952);
+    $InitializeEvent(1722, 12107000, 72111722, 3201952, 2502950);
+    $InitializeEvent(1723, 12107000, 72111723, 3201952, 2502952);
+    $InitializeEvent(1724, 12107000, 72111724, 3201952, 2502951);
+    $InitializeEvent(1725, 12107000, 72111725, 3201952, 2112950);
+    $InitializeEvent(1726, 12107000, 72111726, 3201952, 3202951);
+    $InitializeEvent(1727, 12107000, 72111727, 3201952, 3202953);
+    $InitializeEvent(1728, 12107000, 72111728, 3201952, 3302950);
+    $InitializeEvent(1729, 12107000, 72111729, 3201952, 3302951);
+    $InitializeEvent(1730, 12107000, 72111730, 3201952, 2602950);
+    $InitializeEvent(1731, 12107000, 72111731, 3201952, 2602953);
+    $InitializeEvent(1732, 12107000, 72111732, 3201952, 2602952);
+    $InitializeEvent(1733, 12107000, 72111733, 3201952, 2602951);
+    $InitializeEvent(1734, 12107000, 72111734, 3201952, 3402950);
+    $InitializeEvent(1735, 12107000, 72111735, 3201952, 3402951);
+    $InitializeEvent(1736, 12107000, 72111736, 3201952, 3402953);
+    $InitializeEvent(1737, 12107000, 72111737, 3201952, 3402952);
+    $InitializeEvent(1738, 12107000, 72111738, 3201952, 3502950);
+    $InitializeEvent(1739, 12107000, 72111739, 3201952, 3502951);
+    $InitializeEvent(1740, 12107000, 72111740, 3201952, 3502952);
+    $InitializeEvent(1741, 12107000, 72111741, 3201952, 3602950);
+    $InitializeEvent(1742, 12107000, 72111742, 3201952, 3602951);
+    $InitializeEvent(1743, 12107000, 72111743, 3201952, 3602952);
+    $InitializeEvent(1744, 12107000, 72111744, 3201952, 2902950);
+    $InitializeEvent(1745, 12107000, 72111745, 3201952, 2902951);
+    $InitializeEvent(1746, 12107000, 72111746, 3201952, 2902952);
+    $InitializeEvent(1747, 12107000, 72111747, 3201952, 2902953);
+    $InitializeEvent(1748, 12107000, 72111748, 3201952, 2902954);
+    $InitializeEvent(1749, 12107000, 72111749, 3201952, 2902955);
+    $InitializeEvent(1750, 12107000, 72111750, 3201952, 2902956);
+    $InitializeEvent(1751, 12107000, 72111751, 3201952, 2902957);
+    $InitializeEvent(1752, 12107000, 72111752, 3201952, 2902958);
+    $InitializeEvent(1753, 12107000, 72111753, 3201952, 2902959);
+    
+    $InitializeEvent(2600, 12107000, 72112600, 3201951, 2412950);
+    $InitializeEvent(2601, 12107000, 72112601, 3201951, 2412951);
+    $InitializeEvent(2602, 12107000, 72112602, 3201951, 2412952);
+    $InitializeEvent(2603, 12107000, 72112603, 3201951, 2412953);
+    $InitializeEvent(2604, 12107000, 72112604, 3201951, 2402950);
+    $InitializeEvent(2605, 12107000, 72112605, 3201951, 2402951);
+    $InitializeEvent(2606, 12107000, 72112606, 3201951, 2422950);
+    $InitializeEvent(2607, 12107000, 72112607, 3201951, 2422952);
+    $InitializeEvent(2608, 12107000, 72112608, 3201951, 2422951);
+    $InitializeEvent(2609, 12107000, 72112609, 3201951, 2302950);
+    $InitializeEvent(2610, 12107000, 72112610, 3201951, 2302951);
+    $InitializeEvent(2611, 12107000, 72112611, 3201951, 2302952);
+    $InitializeEvent(2612, 12107000, 72112612, 3201951, 2202950);
+    $InitializeEvent(2613, 12107000, 72112613, 3201951, 2202951);
+    $InitializeEvent(2614, 12107000, 72112614, 3201951, 2702950);
+    $InitializeEvent(2615, 12107000, 72112615, 3201951, 2702951);
+    $InitializeEvent(2616, 12107000, 72112616, 3201951, 3202950);
+    $InitializeEvent(2617, 12107000, 72112617, 3201951, 3202952);
+    $InitializeEvent(2618, 12107000, 72112618, 3201951, 2802950);
+    $InitializeEvent(2619, 12107000, 72112619, 3201951, 2802953);
+    $InitializeEvent(2620, 12107000, 72112620, 3201951, 2802951);
+    $InitializeEvent(2621, 12107000, 72112621, 3201951, 2802952);
+    $InitializeEvent(2622, 12107000, 72112622, 3201951, 2502950);
+    $InitializeEvent(2623, 12107000, 72112623, 3201951, 2502952);
+    $InitializeEvent(2624, 12107000, 72112624, 3201951, 2502951);
+    $InitializeEvent(2625, 12107000, 72112625, 3201951, 2112950);
+    $InitializeEvent(2626, 12107000, 72112626, 3201951, 3202951);
+    $InitializeEvent(2627, 12107000, 72112627, 3201951, 3202953);
+    $InitializeEvent(2628, 12107000, 72112628, 3201951, 3302950);
+    $InitializeEvent(2629, 12107000, 72112629, 3201951, 3302951);
+    $InitializeEvent(2630, 12107000, 72112630, 3201951, 2602950);
+    $InitializeEvent(2631, 12107000, 72112631, 3201951, 2602953);
+    $InitializeEvent(2632, 12107000, 72112632, 3201951, 2602952);
+    $InitializeEvent(2633, 12107000, 72112633, 3201951, 2602951);
+    $InitializeEvent(2634, 12107000, 72112634, 3201951, 3402950);
+    $InitializeEvent(2635, 12107000, 72112635, 3201951, 3402951);
+    $InitializeEvent(2636, 12107000, 72112636, 3201951, 3402953);
+    $InitializeEvent(2637, 12107000, 72112637, 3201951, 3402952);
+    $InitializeEvent(2638, 12107000, 72112638, 3201951, 3502950);
+    $InitializeEvent(2639, 12107000, 72112639, 3201951, 3502951);
+    $InitializeEvent(2640, 12107000, 72112640, 3201951, 3502952);
+    $InitializeEvent(2641, 12107000, 72112641, 3201951, 3602950);
+    $InitializeEvent(2642, 12107000, 72112642, 3201951, 3602951);
+    $InitializeEvent(2643, 12107000, 72112643, 3201951, 3602952);
+    $InitializeEvent(2644, 12107000, 72112644, 3201951, 2902950);
+    $InitializeEvent(2645, 12107000, 72112645, 3201951, 2902951);
+    $InitializeEvent(2646, 12107000, 72112646, 3201951, 2902952);
+    $InitializeEvent(2647, 12107000, 72112647, 3201951, 2902953);
+    $InitializeEvent(2648, 12107000, 72112648, 3201951, 2902954);
+    $InitializeEvent(2649, 12107000, 72112649, 3201951, 2902955);
+    $InitializeEvent(2650, 12107000, 72112650, 3201951, 2902956);
+    $InitializeEvent(2651, 12107000, 72112651, 3201951, 2902957);
+    $InitializeEvent(2652, 12107000, 72112652, 3201951, 2902958);
+    $InitializeEvent(2653, 12107000, 72112653, 3201951, 2902959);
+    
+    $InitializeEvent(2700, 12107000, 72112700, 3201953, 2412950);
+    $InitializeEvent(2701, 12107000, 72112701, 3201953, 2412951);
+    $InitializeEvent(2702, 12107000, 72112702, 3201953, 2412952);
+    $InitializeEvent(2703, 12107000, 72112703, 3201953, 2412953);
+    $InitializeEvent(2704, 12107000, 72112704, 3201953, 2402950);
+    $InitializeEvent(2705, 12107000, 72112705, 3201953, 2402951);
+    $InitializeEvent(2706, 12107000, 72112706, 3201953, 2422950);
+    $InitializeEvent(2707, 12107000, 72112707, 3201953, 2422952);
+    $InitializeEvent(2708, 12107000, 72112708, 3201953, 2422951);
+    $InitializeEvent(2709, 12107000, 72112709, 3201953, 2302950);
+    $InitializeEvent(2710, 12107000, 72112710, 3201953, 2302951);
+    $InitializeEvent(2711, 12107000, 72112711, 3201953, 2302952);
+    $InitializeEvent(2712, 12107000, 72112712, 3201953, 2202950);
+    $InitializeEvent(2713, 12107000, 72112713, 3201953, 2202951);
+    $InitializeEvent(2714, 12107000, 72112714, 3201953, 2702950);
+    $InitializeEvent(2715, 12107000, 72112715, 3201953, 2702951);
+    $InitializeEvent(2716, 12107000, 72112716, 3201953, 3202950);
+    $InitializeEvent(2717, 12107000, 72112717, 3201953, 3202952);
+    $InitializeEvent(2718, 12107000, 72112718, 3201953, 2802950);
+    $InitializeEvent(2719, 12107000, 72112719, 3201953, 2802953);
+    $InitializeEvent(2720, 12107000, 72112720, 3201953, 2802951);
+    $InitializeEvent(2721, 12107000, 72112721, 3201953, 2802952);
+    $InitializeEvent(2722, 12107000, 72112722, 3201953, 2502950);
+    $InitializeEvent(2723, 12107000, 72112723, 3201953, 2502952);
+    $InitializeEvent(2724, 12107000, 72112724, 3201953, 2502951);
+    $InitializeEvent(2725, 12107000, 72112725, 3201953, 2112950);
+    $InitializeEvent(2726, 12107000, 72112726, 3201953, 3202951);
+    $InitializeEvent(2727, 12107000, 72112727, 3201953, 3202953);
+    $InitializeEvent(2728, 12107000, 72112728, 3201953, 3302950);
+    $InitializeEvent(2729, 12107000, 72112729, 3201953, 3302951);
+    $InitializeEvent(2730, 12107000, 72112730, 3201953, 2602950);
+    $InitializeEvent(2731, 12107000, 72112731, 3201953, 2602953);
+    $InitializeEvent(2732, 12107000, 72112732, 3201953, 2602952);
+    $InitializeEvent(2733, 12107000, 72112733, 3201953, 2602951);
+    $InitializeEvent(2734, 12107000, 72112734, 3201953, 3402950);
+    $InitializeEvent(2735, 12107000, 72112735, 3201953, 3402951);
+    $InitializeEvent(2736, 12107000, 72112736, 3201953, 3402953);
+    $InitializeEvent(2737, 12107000, 72112737, 3201953, 3402952);
+    $InitializeEvent(2738, 12107000, 72112738, 3201953, 3502950);
+    $InitializeEvent(2739, 12107000, 72112739, 3201953, 3502951);
+    $InitializeEvent(2740, 12107000, 72112740, 3201953, 3502952);
+    $InitializeEvent(2741, 12107000, 72112741, 3201953, 3602950);
+    $InitializeEvent(2742, 12107000, 72112742, 3201953, 3602951);
+    $InitializeEvent(2743, 12107000, 72112743, 3201953, 3602952);
+    $InitializeEvent(2744, 12107000, 72112744, 3201953, 2902950);
+    $InitializeEvent(2745, 12107000, 72112745, 3201953, 2902951);
+    $InitializeEvent(2746, 12107000, 72112746, 3201953, 2902952);
+    $InitializeEvent(2747, 12107000, 72112747, 3201953, 2902953);
+    $InitializeEvent(2748, 12107000, 72112748, 3201953, 2902954);
+    $InitializeEvent(2749, 12107000, 72112749, 3201953, 2902955);
+    $InitializeEvent(2750, 12107000, 72112750, 3201953, 2902956);
+    $InitializeEvent(2751, 12107000, 72112751, 3201953, 2902957);
+    $InitializeEvent(2752, 12107000, 72112752, 3201953, 2902958);
+    $InitializeEvent(2753, 12107000, 72112753, 3201953, 2902959);
+    
     SetEventFlag(72110016, OFF);
     SetEventFlag(72110116, OFF);
     SetEventFlag(72110216, OFF);
@@ -367,7 +365,7 @@ $Event(0, Default, function() {
     SetEventFlag(72115116, OFF);
     SetEventFlag(72115216, OFF);
     SetEventFlag(72115316, OFF);
-
+    
     SetEventFlag(72110017, OFF);
     SetEventFlag(72110117, OFF);
     SetEventFlag(72110217, OFF);
@@ -422,7 +420,7 @@ $Event(0, Default, function() {
     SetEventFlag(72115117, OFF);
     SetEventFlag(72115217, OFF);
     SetEventFlag(72115317, OFF);
-
+    
     SetEventFlag(72110026, OFF);
     SetEventFlag(72110126, OFF);
     SetEventFlag(72110226, OFF);
@@ -477,7 +475,7 @@ $Event(0, Default, function() {
     SetEventFlag(72115126, OFF);
     SetEventFlag(72115226, OFF);
     SetEventFlag(72115326, OFF);
-
+    
     SetEventFlag(72110027, OFF);
     SetEventFlag(72110127, OFF);
     SetEventFlag(72110227, OFF);
@@ -532,113 +530,113 @@ $Event(0, Default, function() {
     SetEventFlag(72115127, OFF);
     SetEventFlag(72115227, OFF);
     SetEventFlag(72115327, OFF);
-
-    InitializeEvent(0, 12107100, 72100421, 3201950, 9021);
-    InitializeEvent(1, 12107100, 72100422, 3201950, 9022);
-    InitializeEvent(2, 12107100, 72100423, 3201950, 9023);
-    InitializeEvent(3, 12107100, 72100424, 3201950, 9024);
-    InitializeEvent(4, 12107100, 72100425, 3201950, 9025);
-    InitializeEvent(5, 12107100, 72100426, 3201950, 9026);
-
-    InitializeEvent(6, 12107100, 72100427, 3201951, 9021);
-    InitializeEvent(7, 12107100, 72100428, 3201951, 9022);
-    InitializeEvent(8, 12107100, 72100429, 3201951, 9023);
-    InitializeEvent(9, 12107100, 72100430, 3201951, 9024);
-    InitializeEvent(10, 12107100, 72100431, 3201951, 9025);
-    InitializeEvent(11, 12107100, 72100432, 3201951, 9026);
-
-    InitializeEvent(12, 12107100, 72100433, 3201952, 9021);
-    InitializeEvent(13, 12107100, 72100434, 3201952, 9022);
-    InitializeEvent(14, 12107100, 72100435, 3201952, 9023);
-    InitializeEvent(15, 12107100, 72100436, 3201952, 9024);
-    InitializeEvent(16, 12107100, 72100437, 3201952, 9025);
-    InitializeEvent(17, 12107100, 72100438, 3201952, 9026);
-
-    InitializeEvent(18, 12107100, 72100439, 3201953, 9021);
-    InitializeEvent(19, 12107100, 72100440, 3201953, 9022);
-    InitializeEvent(20, 12107100, 72100441, 3201953, 9023);
-    InitializeEvent(21, 12107100, 72100442, 3201953, 9024);
-    InitializeEvent(22, 12107100, 72100443, 3201953, 9025);
-    InitializeEvent(23, 12107100, 72100444, 3201953, 9026);
-
-    InitializeEvent(0, 12107200, 72100300, 2902950, 9001, 2901950);
-    InitializeEvent(1, 12107200, 72100301, 2902951, 9002, 2901950);
-    InitializeEvent(2, 12107200, 72100302, 2902952, 9003, 2901950);
-    InitializeEvent(3, 12107200, 72100303, 2902953, 9004, 2901950);
-    InitializeEvent(4, 12107200, 72100304, 2902954, 9005, 2901950);
-    InitializeEvent(5, 12107200, 72100305, 2902955, 9006, 2901950);
-    InitializeEvent(6, 12107200, 72100306, 2902956, 9007, 2901950);
-    InitializeEvent(7, 12107200, 72100307, 2902957, 9008, 2901950);
-    InitializeEvent(8, 12107200, 72100308, 2902958, 9009, 2901950);
-    InitializeEvent(9, 12107200, 72100309, 2902959, 9010, 2901950);
-
-    InitializeEvent(10, 12107200, 72100310, 2902950, 9001, 2901951);
-    InitializeEvent(11, 12107200, 72100311, 2902951, 9002, 2901951);
-    InitializeEvent(12, 12107200, 72100312, 2902952, 9003, 2901951);
-    InitializeEvent(13, 12107200, 72100313, 2902953, 9004, 2901951);
-    InitializeEvent(14, 12107200, 72100314, 2902954, 9005, 2901951);
-    InitializeEvent(15, 12107200, 72100315, 2902955, 9006, 2901951);
-    InitializeEvent(16, 12107200, 72100316, 2902956, 9007, 2901951);
-    InitializeEvent(17, 12107200, 72100317, 2902957, 9008, 2901951);
-    InitializeEvent(18, 12107200, 72100318, 2902958, 9009, 2901951);
-    InitializeEvent(19, 12107200, 72100319, 2902959, 9010, 2901951);
-
-    InitializeEvent(20, 12107200, 72100320, 2902950, 9001, 2901952);
-    InitializeEvent(21, 12107200, 72100321, 2902951, 9002, 2901952);
-    InitializeEvent(22, 12107200, 72100322, 2902952, 9003, 2901952);
-    InitializeEvent(23, 12107200, 72100323, 2902953, 9004, 2901952);
-    InitializeEvent(24, 12107200, 72100324, 2902954, 9005, 2901952);
-    InitializeEvent(25, 12107200, 72100325, 2902955, 9006, 2901952);
-    InitializeEvent(26, 12107200, 72100326, 2902956, 9007, 2901952);
-    InitializeEvent(27, 12107200, 72100327, 2902957, 9008, 2901952);
-    InitializeEvent(28, 12107200, 72100328, 2902958, 9009, 2901952);
-    InitializeEvent(29, 12107200, 72100329, 2902959, 9010, 2901952);
-
-    InitializeEvent(30, 12107200, 72100330, 2902950, 9001, 2901953);
-    InitializeEvent(31, 12107200, 72100331, 2902951, 9002, 2901953);
-    InitializeEvent(32, 12107200, 72100332, 2902952, 9003, 2901953);
-    InitializeEvent(33, 12107200, 72100333, 2902953, 9004, 2901953);
-    InitializeEvent(34, 12107200, 72100334, 2902954, 9005, 2901953);
-    InitializeEvent(35, 12107200, 72100335, 2902955, 9006, 2901953);
-    InitializeEvent(36, 12107200, 72100336, 2902956, 9007, 2901953);
-    InitializeEvent(37, 12107200, 72100337, 2902957, 9008, 2901953);
-    InitializeEvent(38, 12107200, 72100338, 2902958, 9009, 2901953);
-    InitializeEvent(39, 12107200, 72100339, 2902959, 9010, 2901953);
     
-    InitializeEvent(45, 7000, 3200950, 3201950, 999, 13207800, -1);
-    InitializeEvent(46, 7000, 3200951, 3201951, 999, 13207820, -1);
+    $InitializeEvent(0, 12107100, 72100421, 3201950, 9021);
+    $InitializeEvent(1, 12107100, 72100422, 3201950, 9022);
+    $InitializeEvent(2, 12107100, 72100423, 3201950, 9023);
+    $InitializeEvent(3, 12107100, 72100424, 3201950, 9024);
+    $InitializeEvent(4, 12107100, 72100425, 3201950, 9025);
+    $InitializeEvent(5, 12107100, 72100426, 3201950, 9026);
     
-    InitializeEvent(47, 7000, 3200952, 3201952, 13201803, 13207840, rom_defeat+13);
-    InitializeEvent(rom_offset, 8800, rom_defeat+13, rom_lamp_id-1000, rom_lamp_id, rom_lamp_id+3000);
+    $InitializeEvent(6, 12107100, 72100427, 3201951, 9021);
+    $InitializeEvent(7, 12107100, 72100428, 3201951, 9022);
+    $InitializeEvent(8, 12107100, 72100429, 3201951, 9023);
+    $InitializeEvent(9, 12107100, 72100430, 3201951, 9024);
+    $InitializeEvent(10, 12107100, 72100431, 3201951, 9025);
+    $InitializeEvent(11, 12107100, 72100432, 3201951, 9026);
     
-    InitializeEvent(48, 7000, 3200953, 3201953, 999, 13207860, -1);
-    InitializeEvent(45, 7100, 73200200, 3201950);
-    InitializeEvent(46, 7100, 73200201, 3201951);
-    InitializeEvent(47, 7100, 73200202, 3201952);
-    InitializeEvent(48, 7100, 73200203, 3201953);
-    InitializeEvent(45, 7200, 73200100, 3201950, 2102951);
-    InitializeEvent(46, 7200, 73200101, 3201951, 2102953);
-    InitializeEvent(47, 7200, 73200102, 3201952, 2102951);
-    InitializeEvent(48, 7200, 73200103, 3201953, 2102953);
-    InitializeEvent(45, 7300, 72103200, 3201950);
-    InitializeEvent(46, 7300, 72103201, 3201951);
-    InitializeEvent(47, 7300, 72103202, 3201952);
-    InitializeEvent(48, 7300, 72103203, 3201953);
-    InitializeEvent(45, 12102220, 3201950, 3200950);
-    InitializeEvent(46, 12102220, 3201951, 3200951);
-    InitializeEvent(47, 12102220, 3201952, 3200952);
-    InitializeEvent(48, 12102220, 3201953, 3200953);
-    InitializeEvent(70, 7600, 3201999, 3203999);
-    InitializeEvent(9, 9200, 3203900);
-    InitializeEvent(8, 9220, 3200710, 13204220, 13204221, 3200, 32);
-    InitializeEvent(8, 9240, 3200710, 13204220, 13204221, 13204222, 32);
-    InitializeEvent(8, 9260, 3200710, 13204220, 13204221, 13204222, 32);
-    InitializeEvent(8, 9280, 3200710, 13204220, 13204221, 3200, 13204800, 32);
+    $InitializeEvent(12, 12107100, 72100433, 3201952, 9021);
+    $InitializeEvent(13, 12107100, 72100434, 3201952, 9022);
+    $InitializeEvent(14, 12107100, 72100435, 3201952, 9023);
+    $InitializeEvent(15, 12107100, 72100436, 3201952, 9024);
+    $InitializeEvent(16, 12107100, 72100437, 3201952, 9025);
+    $InitializeEvent(17, 12107100, 72100438, 3201952, 9026);
+    
+    $InitializeEvent(18, 12107100, 72100439, 3201953, 9021);
+    $InitializeEvent(19, 12107100, 72100440, 3201953, 9022);
+    $InitializeEvent(20, 12107100, 72100441, 3201953, 9023);
+    $InitializeEvent(21, 12107100, 72100442, 3201953, 9024);
+    $InitializeEvent(22, 12107100, 72100443, 3201953, 9025);
+    $InitializeEvent(23, 12107100, 72100444, 3201953, 9026);
+    
+    $InitializeEvent(0, 12107200, 72100300, 2902950, 9001);
+    $InitializeEvent(1, 12107200, 72100301, 2902951, 9002);
+    $InitializeEvent(2, 12107200, 72100302, 2902952, 9003);
+    $InitializeEvent(3, 12107200, 72100303, 2902953, 9004);
+    $InitializeEvent(4, 12107200, 72100304, 2902954, 9005);
+    $InitializeEvent(5, 12107200, 72100305, 2902955, 9006);
+    $InitializeEvent(6, 12107200, 72100306, 2902956, 9007);
+    $InitializeEvent(7, 12107200, 72100307, 2902957, 9008);
+    $InitializeEvent(8, 12107200, 72100308, 2902958, 9009);
+    $InitializeEvent(9, 12107200, 72100309, 2902959, 9010);
+    
+    $InitializeEvent(10, 12107200, 72100310, 2902950, 9001);
+    $InitializeEvent(11, 12107200, 72100311, 2902951, 9002);
+    $InitializeEvent(12, 12107200, 72100312, 2902952, 9003);
+    $InitializeEvent(13, 12107200, 72100313, 2902953, 9004);
+    $InitializeEvent(14, 12107200, 72100314, 2902954, 9005);
+    $InitializeEvent(15, 12107200, 72100315, 2902955, 9006);
+    $InitializeEvent(16, 12107200, 72100316, 2902956, 9007);
+    $InitializeEvent(17, 12107200, 72100317, 2902957, 9008);
+    $InitializeEvent(18, 12107200, 72100318, 2902958, 9009);
+    $InitializeEvent(19, 12107200, 72100319, 2902959, 9010);
+    
+    $InitializeEvent(20, 12107200, 72100320, 2902950, 9001);
+    $InitializeEvent(21, 12107200, 72100321, 2902951, 9002);
+    $InitializeEvent(22, 12107200, 72100322, 2902952, 9003);
+    $InitializeEvent(23, 12107200, 72100323, 2902953, 9004);
+    $InitializeEvent(24, 12107200, 72100324, 2902954, 9005);
+    $InitializeEvent(25, 12107200, 72100325, 2902955, 9006);
+    $InitializeEvent(26, 12107200, 72100326, 2902956, 9007);
+    $InitializeEvent(27, 12107200, 72100327, 2902957, 9008);
+    $InitializeEvent(28, 12107200, 72100328, 2902958, 9009);
+    $InitializeEvent(29, 12107200, 72100329, 2902959, 9010);
+    
+    $InitializeEvent(30, 12107200, 72100330, 2902950, 9001);
+    $InitializeEvent(31, 12107200, 72100331, 2902951, 9002);
+    $InitializeEvent(32, 12107200, 72100332, 2902952, 9003);
+    $InitializeEvent(33, 12107200, 72100333, 2902953, 9004);
+    $InitializeEvent(34, 12107200, 72100334, 2902954, 9005);
+    $InitializeEvent(35, 12107200, 72100335, 2902955, 9006);
+    $InitializeEvent(36, 12107200, 72100336, 2902956, 9007);
+    $InitializeEvent(37, 12107200, 72100337, 2902957, 9008);
+    $InitializeEvent(38, 12107200, 72100338, 2902958, 9009);
+    $InitializeEvent(39, 12107200, 72100339, 2902959, 9010);
+    
+    $InitializeEvent(45, 7000, 3200950, 3201950, 999, 13207800, -1);
+    $InitializeEvent(46, 7000, 3200951, 3201951, 999, 13207820, -1);
+    
+    $InitializeEvent(47, 7000, 3200952, 3201952, 13201803, 13207840, rom_defeat+13);
+    $InitializeEvent(rom_offset, 8800, rom_defeat+13, rom_lamp_id-1000, rom_lamp_id, rom_lamp_id+3000);
+    
+    $InitializeEvent(48, 7000, 3200953, 3201953, 999, 13207860, -1);
+    $InitializeEvent(45, 7100, 73200200, 3201950);
+    $InitializeEvent(46, 7100, 73200201, 3201951);
+    $InitializeEvent(47, 7100, 73200202, 3201952);
+    $InitializeEvent(48, 7100, 73200203, 3201953);
+    $InitializeEvent(45, 7200, 73200100, 3201950, 2102951);
+    $InitializeEvent(46, 7200, 73200101, 3201951, 2102953);
+    $InitializeEvent(47, 7200, 73200102, 3201952, 2102951);
+    $InitializeEvent(48, 7200, 73200103, 3201953, 2102953);
+    $InitializeEvent(45, 7300, 72103200, 3201950);
+    $InitializeEvent(46, 7300, 72103201, 3201951);
+    $InitializeEvent(47, 7300, 72103202, 3201952);
+    $InitializeEvent(48, 7300, 72103203, 3201953);
+    $InitializeEvent(45, 12102220, 3201950, 3200950);
+    $InitializeEvent(46, 12102220, 3201951, 3200951);
+    $InitializeEvent(47, 12102220, 3201952, 3200952);
+    $InitializeEvent(48, 12102220, 3201953, 3200953);
+    $InitializeEvent(70, 7600, 3201999, 3203999);
+    $InitializeEvent(9, 9200, 3203900);
+    $InitializeEvent(8, 9220, 3200710, 13204220, 13204221, 3200, 32, 0);
+    $InitializeEvent(8, 9240, 3200710, 13204220, 13204221, 13204222, 32, 0);
+    $InitializeEvent(8, 9260, 3200710, 13204220, 13204221, 13204222, 32, 0);
+    $InitializeEvent(8, 9280, 3200710, 13204220, 13204221, 3200, 13204800, 32, 0);
     RegisterLadder(13200000, 13200001, 3201130);
     RegisterLadder(13200002, 13200003, 3201131);
-    InitializeEvent(0, 13200990, 0);
-    InitializeEvent(0, 13200950, 0);
-    InitializeEvent(0, 13200960, 0);
+    $InitializeEvent(0, 13200990);
+    $InitializeEvent(0, 13200950);
+    $InitializeEvent(0, 13200960);
     CreateObjectfollowingSFX(3201000, 200, 900130);
     CreateObjectfollowingSFX(3201001, 200, 900130);
     CreateObjectfollowingSFX(3201002, 200, 900130);
@@ -648,169 +646,170 @@ $Event(0, Default, function() {
     DeleteMapSFX(3203910, false);
     DeleteMapSFX(3203911, false);
     DeleteMapSFX(3203912, false);
-    InitializeEvent(0, 13204400, 13204440, 3203910, 13204420, 13204430, 13201800, 6001);
-    InitializeEvent(0, 13204401, 13204441, 3203911, 13204421, 13204431, 13201800, 13204420);
-    InitializeEvent(0, 13204402, 13204442, 3203912, 13204422, 13204432, 13201800, 13204420);
-    InitializeEvent(0, 13204410, 0, 3200910, 3202910, 13204420, 13204430, 13204440, 13201800, 10566);
-    InitializeEvent(1, 13204410, 5, 3200911, 3202913, 13204421, 13204431, 13204441, 13201800, 10565);
-    InitializeEvent(2, 13204410, 5, 3200912, 3202914, 13204422, 13204432, 13204442, 13201800, 10561);
-    InitializeEvent(0, 13204450, 3200910, 3202911, 13204420, 13204430, 13204800);
-    InitializeEvent(1, 13204450, 3200911, 3202915, 13204421, 13204431, 13204800);
-    InitializeEvent(2, 13204450, 3200912, 3202916, 13204422, 13204432, 13204800);
-    InitializeEvent(0, 13204460, 3200910, 3202911, 3202800, 3202809, 101130, 13204450, 3202809);
-    InitializeEvent(1, 13204460, 3200911, 3202915, 3202800, 3202809, 101130, 13204451, 3202809);
-    InitializeEvent(2, 13204460, 3200912, 3202916, 3202800, 3202809, 101130, 13204452, 3202809);
-    InitializeEvent(0, 13204470, 3200910);
-    InitializeEvent(1, 13204470, 3200911);
-    InitializeEvent(2, 13204470, 3200912);
-    InitializeEvent(0, 13204832, 0);
-    InitializeEvent(0, 13204833, 0);
-    InitializeEvent(0, 13204834, 0);
-    InitializeEvent(0, 13201800, 0);
-    InitializeEvent(0, 13201801, 0);
-    InitializeEvent(0, 13201802, 0);
+    $InitializeEvent(0, 13204400, 13204440, 3203910, 13204420, 13204430, 13201800, 6001);
+    $InitializeEvent(0, 13204401, 13204441, 3203911, 13204421, 13204431, 13201800, 13204420);
+    $InitializeEvent(0, 13204402, 13204442, 3203912, 13204422, 13204432, 13201800, 13204420);
+    $InitializeEvent(0, 13204410, SingleplayerSummonSignType.NormalCoop, 3200910, 3202910, 13204420, 13204430, 13204440, 13201800, 10566);
+    $InitializeEvent(1, 13204410, 5, 3200911, 3202913, 13204421, 13204431, 13204441, 13201800, 10565);
+    $InitializeEvent(2, 13204410, 5, 3200912, 3202914, 13204422, 13204432, 13204442, 13201800, 10561);
+    $InitializeEvent(0, 13204450, 3200910, 3202911, 13204420, 13204430, 13204800);
+    $InitializeEvent(1, 13204450, 3200911, 3202915, 13204421, 13204431, 13204800);
+    $InitializeEvent(2, 13204450, 3200912, 3202916, 13204422, 13204432, 13204800);
+    $InitializeEvent(0, 13204460, 3200910, 3202911, 3202800, 3202809, 101130, 13204450, 3202809);
+    $InitializeEvent(1, 13204460, 3200911, 3202915, 3202800, 3202809, 101130, 13204451, 3202809);
+    $InitializeEvent(2, 13204460, 3200912, 3202916, 3202800, 3202809, 101130, 13204452, 3202809);
+    $InitializeEvent(0, 13204470, 3200910);
+    $InitializeEvent(1, 13204470, 3200911);
+    $InitializeEvent(2, 13204470, 3200912);
+    $InitializeEvent(0, 13204832);
+    $InitializeEvent(0, 13204833);
+    $InitializeEvent(0, 13204834);
+    $InitializeEvent(0, 13201800);
+    $InitializeEvent(0, 13201801);
+    $InitializeEvent(0, 13201802);
     if (!EventFlag(rom_defeat+13)) {
-        InitializeEvent(0, 13201803, 0);
+        $InitializeEvent(0, 13201803);
     }
-    InitializeEvent(0, 13204830, 0);
-    InitializeEvent(0, 13204831, 0);
-    InitializeEvent(0, 13204802, 0);
-    InitializeEvent(0, 13204803, 0);
-    InitializeEvent(0, 13204804, 0);
-    InitializeEvent(0, 13204805, 0);
-    InitializeEvent(0, 13204807, 0);
-    InitializeEvent(0, 13204808, 0);
-    InitializeEvent(0, 13204809, 0);
-    InitializeEvent(0, 13204810, 0);
-    InitializeEvent(0, 13204820, 0);
-    InitializeEvent(0, 13204821, 0);
-    InitializeEvent(0, 13201804, 0);
-    InitializeEvent(0, 13204000, 3200200, 13204802);
-    InitializeEvent(1, 13204000, 3200201, 13204802);
-    InitializeEvent(2, 13204000, 3200202, 13204802);
-    InitializeEvent(3, 13204000, 3200203, 13204802);
-    InitializeEvent(4, 13204000, 3200204, 13204802);
-    InitializeEvent(5, 13204000, 3200205, 13204802);
-    InitializeEvent(6, 13204000, 3200206, 13204802);
-    InitializeEvent(7, 13204000, 3200207, 13204802);
-    InitializeEvent(8, 13204000, 3200208, 13204802);
-    InitializeEvent(9, 13204000, 3200209, 13204802);
-    InitializeEvent(10, 13204000, 3200210, 13204811);
-    InitializeEvent(11, 13204000, 3200211, 13204811);
-    InitializeEvent(12, 13204000, 3200212, 13204811);
-    InitializeEvent(13, 13204000, 3200213, 13204811);
-    InitializeEvent(14, 13204000, 3200214, 13204811);
-    InitializeEvent(15, 13204000, 3200215, 13204811);
-    InitializeEvent(16, 13204000, 3200216, 13204811);
-    InitializeEvent(17, 13204000, 3200217, 13204811);
-    InitializeEvent(18, 13204000, 3200218, 13204811);
-    InitializeEvent(19, 13204000, 3200219, 13204811);
-    InitializeEvent(20, 13204000, 3200220, 13204812);
-    InitializeEvent(21, 13204000, 3200221, 13204812);
-    InitializeEvent(22, 13204000, 3200222, 13204812);
-    InitializeEvent(23, 13204000, 3200223, 13204812);
-    InitializeEvent(24, 13204000, 3200224, 13204812);
-    InitializeEvent(25, 13204000, 3200225, 13204812);
-    InitializeEvent(26, 13204000, 3200226, 13204812);
-    InitializeEvent(27, 13204000, 3200227, 13204812);
-    InitializeEvent(28, 13204000, 3200228, 13204812);
-    InitializeEvent(29, 13204000, 3200229, 13204812);
-    InitializeEvent(0, 13204050, 3200200, 13204802);
-    InitializeEvent(1, 13204050, 3200201, 13204802);
-    InitializeEvent(2, 13204050, 3200202, 13204802);
-    InitializeEvent(3, 13204050, 3200203, 13204802);
-    InitializeEvent(4, 13204050, 3200204, 13204802);
-    InitializeEvent(5, 13204050, 3200205, 13204802);
-    InitializeEvent(6, 13204050, 3200206, 13204802);
-    InitializeEvent(7, 13204050, 3200207, 13204802);
-    InitializeEvent(8, 13204050, 3200208, 13204802);
-    InitializeEvent(9, 13204050, 3200209, 13204802);
-    InitializeEvent(10, 13204050, 3200210, 13204811);
-    InitializeEvent(11, 13204050, 3200211, 13204811);
-    InitializeEvent(12, 13204050, 3200212, 13204811);
-    InitializeEvent(13, 13204050, 3200213, 13204811);
-    InitializeEvent(14, 13204050, 3200214, 13204811);
-    InitializeEvent(15, 13204050, 3200215, 13204811);
-    InitializeEvent(16, 13204050, 3200216, 13204811);
-    InitializeEvent(17, 13204050, 3200217, 13204811);
-    InitializeEvent(18, 13204050, 3200218, 13204811);
-    InitializeEvent(19, 13204050, 3200219, 13204811);
-    InitializeEvent(20, 13204050, 3200220, 13204812);
-    InitializeEvent(21, 13204050, 3200221, 13204812);
-    InitializeEvent(22, 13204050, 3200222, 13204812);
-    InitializeEvent(23, 13204050, 3200223, 13204812);
-    InitializeEvent(24, 13204050, 3200224, 13204812);
-    InitializeEvent(25, 13204050, 3200225, 13204812);
-    InitializeEvent(26, 13204050, 3200226, 13204812);
-    InitializeEvent(27, 13204050, 3200227, 13204812);
-    InitializeEvent(28, 13204050, 3200228, 13204812);
-    InitializeEvent(29, 13204050, 3200229, 13204812);
-    InitializeEvent(0, 13204730, 3200200);
-    InitializeEvent(1, 13204730, 3200201);
-    InitializeEvent(2, 13204730, 3200202);
-    InitializeEvent(3, 13204730, 3200203);
-    InitializeEvent(4, 13204730, 3200204);
-    InitializeEvent(5, 13204730, 3200205);
-    InitializeEvent(6, 13204730, 3200206);
-    InitializeEvent(7, 13204730, 3200207);
-    InitializeEvent(8, 13204730, 3200208);
-    InitializeEvent(9, 13204730, 3200209);
-    InitializeEvent(10, 13204730, 3200210);
-    InitializeEvent(11, 13204730, 3200211);
-    InitializeEvent(12, 13204730, 3200212);
-    InitializeEvent(13, 13204730, 3200213);
-    InitializeEvent(14, 13204730, 3200214);
-    InitializeEvent(15, 13204730, 3200215);
-    InitializeEvent(16, 13204730, 3200216);
-    InitializeEvent(17, 13204730, 3200217);
-    InitializeEvent(18, 13204730, 3200218);
-    InitializeEvent(19, 13204730, 3200219);
-    InitializeEvent(20, 13204730, 3200220);
-    InitializeEvent(21, 13204730, 3200221);
-    InitializeEvent(22, 13204730, 3200222);
-    InitializeEvent(23, 13204730, 3200223);
-    InitializeEvent(24, 13204730, 3200224);
-    InitializeEvent(25, 13204730, 3200225);
-    InitializeEvent(26, 13204730, 3200226);
-    InitializeEvent(27, 13204730, 3200227);
-    InitializeEvent(28, 13204730, 3200228);
-    InitializeEvent(29, 13204730, 3200229);
-    InitializeEvent(0, 13200010, 3201110, 1, 13200100, 3201100, 100);
-    InitializeEvent(0, 13200020, 7030, 7031, 3201110, 13200010);
-    InitializeEvent(0, 13200030, 3201100, 7100, 10010172, 13200010);
-    InitializeEvent(0, 13200040, 3201120, 13200120, 1, 3200040);
-    InitializeEvent(1, 13200040, 3201122, 13200122, 1, 31);
-    InitializeEvent(2, 13200040, 3201201, 13200203, 1, 31);
-    InitializeEvent(3, 13200040, 3201210, 13200211, 1, 31);
-    InitializeEvent(0, 13200050, 7030, 3201122, 13200041);
-    InitializeEvent(1, 13200050, 7030, 3201201, 13200042);
-    InitializeEvent(0, 13200055, 7030, 3201210, 13200043);
-    InitializeEvent(0, 13200060, 3201200, 13200200, 13200201, 1, 30, 31);
-    InitializeEvent(2, 13200060, 3201202, 13200204, 13200205, 1, 30, 31);
-    InitializeEvent(3, 13200060, 3201203, 13200206, 13200207, 1, 3200030, 31);
-    InitializeEvent(4, 13200060, 3201204, 13200208, 13200209, 1, 30, 31);
-    InitializeEvent(6, 13200060, 3201211, 13200212, 13200213, 1, 30, 31);
-    InitializeEvent(7, 13200060, 3201212, 13200214, 13200215, 1, 30, 31);
-    InitializeEvent(8, 13200060, 3201213, 13200216, 13200217, 1, 30, 31);
-    InitializeEvent(9, 13200060, 3201214, 13200218, 13200219, 1, 30, 31);
-    InitializeEvent(10, 13200060, 3201220, 13200220, 13200221, 1, 30, 31);
-    InitializeEvent(11, 13200060, 3201221, 13200222, 13200223, 1, 30, 31);
-    InitializeEvent(12, 13200060, 3201222, 13200224, 13200225, 1, 30, 31);
-    InitializeEvent(13, 13200060, 3201223, 13200226, 13200227, 1, 30, 31);
-    InitializeEvent(14, 13200060, 3201224, 13200228, 13200229, 1, 30, 31);
-    InitializeEvent(17, 13200060, 3201232, 13200234, 13200235, 1, 30, 31);
-    InitializeEvent(18, 13200060, 3201233, 13200236, 13200237, 1, 30, 31);
-    InitializeEvent(19, 13200060, 3201234, 13200238, 13200239, 1, 30, 31);
-    InitializeEvent(0, 13200200, 3201050, 13200050);
-    InitializeEvent(1, 13200200, 3201051, 13200051);
-    InitializeEvent(3, 13200200, 3201053, 13200053);
-    InitializeEvent(4, 13200200, 3201054, 13200054);
-    InitializeEvent(10, 13200200, 3201060, 13200060);
-    InitializeEvent(12, 13200200, 3201062, 13200062);
-    GotoIf(S0, !CharacterType(10000, TargetType.Alive));
-    GotoIf(S0, !EventFlag(6325));
-    SetEventFlag(13201999, ON);
-S0:
+    $InitializeEvent(0, 13204830);
+    $InitializeEvent(0, 13204831);
+    $InitializeEvent(0, 13204802);
+    $InitializeEvent(0, 13204803);
+    $InitializeEvent(0, 13204804);
+    $InitializeEvent(0, 13204805);
+    $InitializeEvent(0, 13204807);
+    $InitializeEvent(0, 13204808);
+    $InitializeEvent(0, 13204809);
+    $InitializeEvent(0, 13204810);
+    $InitializeEvent(0, 13204820);
+    $InitializeEvent(0, 13204821);
+    $InitializeEvent(0, 13201804);
+    $InitializeEvent(0, 13204000, 3200200, 13204802);
+    $InitializeEvent(1, 13204000, 3200201, 13204802);
+    $InitializeEvent(2, 13204000, 3200202, 13204802);
+    $InitializeEvent(3, 13204000, 3200203, 13204802);
+    $InitializeEvent(4, 13204000, 3200204, 13204802);
+    $InitializeEvent(5, 13204000, 3200205, 13204802);
+    $InitializeEvent(6, 13204000, 3200206, 13204802);
+    $InitializeEvent(7, 13204000, 3200207, 13204802);
+    $InitializeEvent(8, 13204000, 3200208, 13204802);
+    $InitializeEvent(9, 13204000, 3200209, 13204802);
+    $InitializeEvent(10, 13204000, 3200210, 13204811);
+    $InitializeEvent(11, 13204000, 3200211, 13204811);
+    $InitializeEvent(12, 13204000, 3200212, 13204811);
+    $InitializeEvent(13, 13204000, 3200213, 13204811);
+    $InitializeEvent(14, 13204000, 3200214, 13204811);
+    $InitializeEvent(15, 13204000, 3200215, 13204811);
+    $InitializeEvent(16, 13204000, 3200216, 13204811);
+    $InitializeEvent(17, 13204000, 3200217, 13204811);
+    $InitializeEvent(18, 13204000, 3200218, 13204811);
+    $InitializeEvent(19, 13204000, 3200219, 13204811);
+    $InitializeEvent(20, 13204000, 3200220, 13204812);
+    $InitializeEvent(21, 13204000, 3200221, 13204812);
+    $InitializeEvent(22, 13204000, 3200222, 13204812);
+    $InitializeEvent(23, 13204000, 3200223, 13204812);
+    $InitializeEvent(24, 13204000, 3200224, 13204812);
+    $InitializeEvent(25, 13204000, 3200225, 13204812);
+    $InitializeEvent(26, 13204000, 3200226, 13204812);
+    $InitializeEvent(27, 13204000, 3200227, 13204812);
+    $InitializeEvent(28, 13204000, 3200228, 13204812);
+    $InitializeEvent(29, 13204000, 3200229, 13204812);
+    $InitializeEvent(0, 13204050, 3200200, 13204802);
+    $InitializeEvent(1, 13204050, 3200201, 13204802);
+    $InitializeEvent(2, 13204050, 3200202, 13204802);
+    $InitializeEvent(3, 13204050, 3200203, 13204802);
+    $InitializeEvent(4, 13204050, 3200204, 13204802);
+    $InitializeEvent(5, 13204050, 3200205, 13204802);
+    $InitializeEvent(6, 13204050, 3200206, 13204802);
+    $InitializeEvent(7, 13204050, 3200207, 13204802);
+    $InitializeEvent(8, 13204050, 3200208, 13204802);
+    $InitializeEvent(9, 13204050, 3200209, 13204802);
+    $InitializeEvent(10, 13204050, 3200210, 13204811);
+    $InitializeEvent(11, 13204050, 3200211, 13204811);
+    $InitializeEvent(12, 13204050, 3200212, 13204811);
+    $InitializeEvent(13, 13204050, 3200213, 13204811);
+    $InitializeEvent(14, 13204050, 3200214, 13204811);
+    $InitializeEvent(15, 13204050, 3200215, 13204811);
+    $InitializeEvent(16, 13204050, 3200216, 13204811);
+    $InitializeEvent(17, 13204050, 3200217, 13204811);
+    $InitializeEvent(18, 13204050, 3200218, 13204811);
+    $InitializeEvent(19, 13204050, 3200219, 13204811);
+    $InitializeEvent(20, 13204050, 3200220, 13204812);
+    $InitializeEvent(21, 13204050, 3200221, 13204812);
+    $InitializeEvent(22, 13204050, 3200222, 13204812);
+    $InitializeEvent(23, 13204050, 3200223, 13204812);
+    $InitializeEvent(24, 13204050, 3200224, 13204812);
+    $InitializeEvent(25, 13204050, 3200225, 13204812);
+    $InitializeEvent(26, 13204050, 3200226, 13204812);
+    $InitializeEvent(27, 13204050, 3200227, 13204812);
+    $InitializeEvent(28, 13204050, 3200228, 13204812);
+    $InitializeEvent(29, 13204050, 3200229, 13204812);
+    $InitializeEvent(0, 13204730, 3200200);
+    $InitializeEvent(1, 13204730, 3200201);
+    $InitializeEvent(2, 13204730, 3200202);
+    $InitializeEvent(3, 13204730, 3200203);
+    $InitializeEvent(4, 13204730, 3200204);
+    $InitializeEvent(5, 13204730, 3200205);
+    $InitializeEvent(6, 13204730, 3200206);
+    $InitializeEvent(7, 13204730, 3200207);
+    $InitializeEvent(8, 13204730, 3200208);
+    $InitializeEvent(9, 13204730, 3200209);
+    $InitializeEvent(10, 13204730, 3200210);
+    $InitializeEvent(11, 13204730, 3200211);
+    $InitializeEvent(12, 13204730, 3200212);
+    $InitializeEvent(13, 13204730, 3200213);
+    $InitializeEvent(14, 13204730, 3200214);
+    $InitializeEvent(15, 13204730, 3200215);
+    $InitializeEvent(16, 13204730, 3200216);
+    $InitializeEvent(17, 13204730, 3200217);
+    $InitializeEvent(18, 13204730, 3200218);
+    $InitializeEvent(19, 13204730, 3200219);
+    $InitializeEvent(20, 13204730, 3200220);
+    $InitializeEvent(21, 13204730, 3200221);
+    $InitializeEvent(22, 13204730, 3200222);
+    $InitializeEvent(23, 13204730, 3200223);
+    $InitializeEvent(24, 13204730, 3200224);
+    $InitializeEvent(25, 13204730, 3200225);
+    $InitializeEvent(26, 13204730, 3200226);
+    $InitializeEvent(27, 13204730, 3200227);
+    $InitializeEvent(28, 13204730, 3200228);
+    $InitializeEvent(29, 13204730, 3200229);
+    $InitializeEvent(0, 13200010, 3201110, 1, 13200100, 3201100, 100);
+    $InitializeEvent(0, 13200020, 7030, 7031, 3201110, 13200010);
+    $InitializeEvent(0, 13200030, 3201100, 7100, 10010172, 13200010);
+    $InitializeEvent(0, 13200040, 3201120, 13200120, 1, 3200040);
+    $InitializeEvent(1, 13200040, 3201122, 13200122, 1, 31);
+    $InitializeEvent(2, 13200040, 3201201, 13200203, 1, 31);
+    $InitializeEvent(3, 13200040, 3201210, 13200211, 1, 31);
+    $InitializeEvent(0, 13200050, 7030, 3201122, 13200041);
+    $InitializeEvent(1, 13200050, 7030, 3201201, 13200042);
+    $InitializeEvent(0, 13200055, 7030, 3201210, 13200043);
+    $InitializeEvent(0, 13200060, 3201200, 13200200, 13200201, 1, 30, 31);
+    $InitializeEvent(2, 13200060, 3201202, 13200204, 13200205, 1, 30, 31);
+    $InitializeEvent(3, 13200060, 3201203, 13200206, 13200207, 1, 3200030, 31);
+    $InitializeEvent(4, 13200060, 3201204, 13200208, 13200209, 1, 30, 31);
+    $InitializeEvent(6, 13200060, 3201211, 13200212, 13200213, 1, 30, 31);
+    $InitializeEvent(7, 13200060, 3201212, 13200214, 13200215, 1, 30, 31);
+    $InitializeEvent(8, 13200060, 3201213, 13200216, 13200217, 1, 30, 31);
+    $InitializeEvent(9, 13200060, 3201214, 13200218, 13200219, 1, 30, 31);
+    $InitializeEvent(10, 13200060, 3201220, 13200220, 13200221, 1, 30, 31);
+    $InitializeEvent(11, 13200060, 3201221, 13200222, 13200223, 1, 30, 31);
+    $InitializeEvent(12, 13200060, 3201222, 13200224, 13200225, 1, 30, 31);
+    $InitializeEvent(13, 13200060, 3201223, 13200226, 13200227, 1, 30, 31);
+    $InitializeEvent(14, 13200060, 3201224, 13200228, 13200229, 1, 30, 31);
+    $InitializeEvent(17, 13200060, 3201232, 13200234, 13200235, 1, 30, 31);
+    $InitializeEvent(18, 13200060, 3201233, 13200236, 13200237, 1, 30, 31);
+    $InitializeEvent(19, 13200060, 3201234, 13200238, 13200239, 1, 30, 31);
+    $InitializeEvent(0, 13200200, 3201050, 13200050);
+    $InitializeEvent(1, 13200200, 3201051, 13200051);
+    $InitializeEvent(3, 13200200, 3201053, 13200053);
+    $InitializeEvent(4, 13200200, 3201054, 13200054);
+    $InitializeEvent(10, 13200200, 3201060, 13200060);
+    $InitializeEvent(12, 13200200, 3201062, 13200062);
+    if (CharacterType(10000, TargetType.Alive)) {
+        if (EventFlag(6325)) {
+            SetEventFlag(13201999, ON);
+        }
+    }
     if (!EventFlag(13201999)) {
         DeactivateObject(3201500, Enabled);
         DeactivateObject(3201501, Disabled);
@@ -822,144 +821,145 @@ S0:
         SetObjectTreasureState(3201500, Disabled);
         SetObjectTreasureState(3201501, Enabled);
     }
-    GotoIf(S1, !CharacterType(10000, TargetType.Alive));
-    GotoIf(S1, !EventFlag(6326));
-    SetEventFlag(13201998, ON);
-S1:
+    if (CharacterType(10000, TargetType.Alive)) {
+        if (EventFlag(6326)) {
+            SetEventFlag(13201998, ON);
+        }
+    }
     if (!EventFlag(13201998)) {
         DeactivateObject(3201064, Enabled);
         DeactivateObject(3201065, Disabled);
         SetObjactState(3201064, 9942, Enabled);
         SetObjactState(3201065, 9942, Disabled);
-        InitializeEvent(14, 13200200, 3201064, 13200064);
+        $InitializeEvent(14, 13200200, 3201064, 13200064);
     } else {
         DeactivateObject(3201064, Disabled);
         DeactivateObject(3201065, Enabled);
         SetObjactState(3201064, 9942, Disabled);
         SetObjactState(3201065, 9942, Enabled);
-        InitializeEvent(15, 13200200, 3201065, 13200065);
+        $InitializeEvent(15, 13200200, 3201065, 13200065);
     }
-    InitializeEvent(0, 13204100, 3201000, 7407, 10012007);
-    InitializeEvent(1, 13204100, 3201001, 7408, 10012008);
-    InitializeEvent(2, 13204100, 3201002, 7409, 10012009);
-    InitializeEvent(3, 13204100, 3201003, 7410, 10012010);
-    InitializeEvent(4, 13204100, 3201004, 7411, 10012011);
-    InitializeEvent(5, 13204100, 3201005, 7412, 10012012);
-    InitializeEvent(0, 13200400, 0);
-    InitializeEvent(0, 13200500, 3200110);
-    InitializeEvent(0, 13205000, 3200500, 3202500, 0, 1073741824, 3203500);
-    InitializeEvent(1, 13205000, 3200501, 3202501, 0, 1073741824, 3203501);
-    InitializeEvent(11, 13205000, 3200315, 3202315, 0, 1073741824, 3203315);
-    InitializeEvent(12, 13205000, 3200337, 3202337, 0, 1073741824, 3203337);
-    InitializeEvent(13, 13205000, 3200340, 3202337, 0, 1073741824, 3203340);
-    InitializeEvent(14, 13205000, 3200341, 3202337, 0, 1073741824, 3203341);
-    InitializeEvent(15, 13205000, 3200345, 3202337, 0, 1073741824, 3203345);
-    InitializeEvent(16, 13205000, 3200343, 3202342, 0, 1073741824, 3203343);
-    InitializeEvent(17, 13205000, 3200110, 3202110, 0, 1073741824, 3203110);
-    InitializeEvent(18, 13205000, 3200620, 3202620, 0, 1073741824, 3203620);
-    InitializeEvent(0, 13205200, 0);
-    InitializeEvent(0, 13205040, 3200505, 3202505, 1073741824, 0, 3202506);
-    InitializeEvent(1, 13205040, 3200508, 3202505, 1073741824, 1065353216, 3202507);
-    InitializeEvent(0, 13205080, 3200333, 3202334, 7000, 7001, 0, 0);
-    InitializeEvent(1, 13205080, 3200336, 3202336, 7002, 7003, 1, 53200110);
-    InitializeEvent(2, 13205080, 3200342, 3202342, 7000, 7001, 0, 0);
-    InitializeEvent(3, 13205080, 3200346, 3202315, 7000, 7001, 0, 0);
-    InitializeEvent(0, 13205100, 3200300, 0);
-    InitializeEvent(1, 13205100, 3200301, 0);
-    InitializeEvent(2, 13205100, 3200302, 0);
-    InitializeEvent(3, 13205100, 3200303, 0);
-    InitializeEvent(4, 13205100, 3200304, 0);
-    InitializeEvent(5, 13205100, 3200305, 0);
-    InitializeEvent(6, 13205100, 3200306, 0);
-    InitializeEvent(7, 13205100, 3200307, 0);
-    InitializeEvent(8, 13205100, 3200308, 0);
-    InitializeEvent(9, 13205100, 3200309, 0);
-    InitializeEvent(10, 13205100, 3200310, 0);
-    InitializeEvent(11, 13205100, 3200311, 0);
-    InitializeEvent(12, 13205100, 3200312, 0);
-    InitializeEvent(13, 13205100, 3200313, 0);
-    InitializeEvent(14, 13205100, 3200314, 0);
-    InitializeEvent(16, 13205100, 3200316, 0);
-    InitializeEvent(17, 13205100, 3200317, 0);
-    InitializeEvent(18, 13205100, 3200318, 0);
-    InitializeEvent(19, 13205100, 3200319, 0);
-    InitializeEvent(20, 13205100, 3200320, 0);
-    InitializeEvent(21, 13205100, 3200321, 0);
-    InitializeEvent(22, 13205100, 3200322, 0);
-    InitializeEvent(23, 13205100, 3200323, 0);
-    InitializeEvent(24, 13205100, 3200324, 0);
-    InitializeEvent(25, 13205100, 3200325, 0);
-    InitializeEvent(26, 13205100, 3200326, 0);
-    InitializeEvent(27, 13205100, 3200327, 0);
-    InitializeEvent(28, 13205100, 3200328, 0);
-    InitializeEvent(29, 13205100, 3200329, 0);
-    InitializeEvent(30, 13205100, 3200330, 0);
-    InitializeEvent(31, 13205100, 3200331, 0);
-    InitializeEvent(0, 13205140, 3200347, 3202347);
-    InitializeEvent(0, 13205600, 3290, 3290, 8, 7000, 5907, 13205700, 13205760, 3200420);
-    InitializeEvent(1, 13205600, 3291, 3291, 9, 7022, 5907, 13205700, 13205760, 3200420);
-    InitializeEvent(2, 13205600, 3292, 3292, 10, 7023, 5907, 13205700, 13205760, 3200420);
-    InitializeEvent(3, 13205600, 3290, 3290, 8, 7000, 5907, 13205701, 13205761, 3200421);
-    InitializeEvent(4, 13205600, 3291, 3291, 9, 7022, 5907, 13205701, 13205761, 3200421);
-    InitializeEvent(5, 13205600, 3292, 3292, 10, 7023, 5907, 13205701, 13205761, 3200421);
-    InitializeEvent(0, 13205630, 3290, 3290, 8, 40, 13205700, 3200420);
-    InitializeEvent(1, 13205630, 3291, 3291, 9, 40, 13205700, 3200420);
-    InitializeEvent(2, 13205630, 3292, 3292, 10, 40, 13205700, 3200420);
-    InitializeEvent(3, 13205630, 3290, 3290, 8, 40, 13205701, 3200421);
-    InitializeEvent(4, 13205630, 3291, 3291, 9, 40, 13205701, 3200421);
-    InitializeEvent(5, 13205630, 3292, 3292, 10, 40, 13205701, 3200421);
-    InitializeEvent(0, 13205660, 30, 40, 13205760, 3200420, 2817);
-    InitializeEvent(1, 13205660, 50, 40, 13205760, 3200420, 3074);
-    InitializeEvent(2, 13205660, 60, 40, 13205760, 3200420, 3331);
-    InitializeEvent(3, 13205660, 30, 40, 13205761, 3200421, 2817);
-    InitializeEvent(4, 13205660, 50, 40, 13205761, 3200421, 3074);
-    InitializeEvent(5, 13205660, 60, 40, 13205761, 3200421, 3331);
-    InitializeEvent(0, 13200310, 0);
-    InitializeEvent(0, 13200311, 0);
+    $InitializeEvent(0, 13204100, 3201000, 7407, 10012007);
+    $InitializeEvent(1, 13204100, 3201001, 7408, 10012008);
+    $InitializeEvent(2, 13204100, 3201002, 7409, 10012009);
+    $InitializeEvent(3, 13204100, 3201003, 7410, 10012010);
+    $InitializeEvent(4, 13204100, 3201004, 7411, 10012011);
+    $InitializeEvent(5, 13204100, 3201005, 7412, 10012012);
+    $InitializeEvent(0, 13200400);
+    $InitializeEvent(0, 13200500, 3200110);
+    $InitializeEvent(0, 13205000, 3200500, 3202500, 0, 2, 3203500);
+    $InitializeEvent(1, 13205000, 3200501, 3202501, 0, 2, 3203501);
+    $InitializeEvent(11, 13205000, 3200315, 3202315, 0, 2, 3203315);
+    $InitializeEvent(12, 13205000, 3200337, 3202337, 0, 2, 3203337);
+    $InitializeEvent(13, 13205000, 3200340, 3202337, 0, 2, 3203340);
+    $InitializeEvent(14, 13205000, 3200341, 3202337, 0, 2, 3203341);
+    $InitializeEvent(15, 13205000, 3200345, 3202337, 0, 2, 3203345);
+    $InitializeEvent(16, 13205000, 3200343, 3202342, 0, 2, 3203343);
+    $InitializeEvent(17, 13205000, 3200110, 3202110, 0, 2, 3203110);
+    $InitializeEvent(18, 13205000, 3200620, 3202620, 0, 2, 3203620);
+    $InitializeEvent(0, 13205200);
+    $InitializeEvent(0, 13205040, 3200505, 3202505, 2, 0, 3202506);
+    $InitializeEvent(1, 13205040, 3200508, 3202505, 2, 1, 3202507);
+    $InitializeEvent(0, 13205080, 3200333, 3202334, 7000, 7001, 0, 0);
+    $InitializeEvent(1, 13205080, 3200336, 3202336, 7002, 7003, 1, 53200110);
+    $InitializeEvent(2, 13205080, 3200342, 3202342, 7000, 7001, 0, 0);
+    $InitializeEvent(3, 13205080, 3200346, 3202315, 7000, 7001, 0, 0);
+    $InitializeEvent(0, 13205100, 3200300, 0);
+    $InitializeEvent(1, 13205100, 3200301, 0);
+    $InitializeEvent(2, 13205100, 3200302, 0);
+    $InitializeEvent(3, 13205100, 3200303, 0);
+    $InitializeEvent(4, 13205100, 3200304, 0);
+    $InitializeEvent(5, 13205100, 3200305, 0);
+    $InitializeEvent(6, 13205100, 3200306, 0);
+    $InitializeEvent(7, 13205100, 3200307, 0);
+    $InitializeEvent(8, 13205100, 3200308, 0);
+    $InitializeEvent(9, 13205100, 3200309, 0);
+    $InitializeEvent(10, 13205100, 3200310, 0);
+    $InitializeEvent(11, 13205100, 3200311, 0);
+    $InitializeEvent(12, 13205100, 3200312, 0);
+    $InitializeEvent(13, 13205100, 3200313, 0);
+    $InitializeEvent(14, 13205100, 3200314, 0);
+    $InitializeEvent(16, 13205100, 3200316, 0);
+    $InitializeEvent(17, 13205100, 3200317, 0);
+    $InitializeEvent(18, 13205100, 3200318, 0);
+    $InitializeEvent(19, 13205100, 3200319, 0);
+    $InitializeEvent(20, 13205100, 3200320, 0);
+    $InitializeEvent(21, 13205100, 3200321, 0);
+    $InitializeEvent(22, 13205100, 3200322, 0);
+    $InitializeEvent(23, 13205100, 3200323, 0);
+    $InitializeEvent(24, 13205100, 3200324, 0);
+    $InitializeEvent(25, 13205100, 3200325, 0);
+    $InitializeEvent(26, 13205100, 3200326, 0);
+    $InitializeEvent(27, 13205100, 3200327, 0);
+    $InitializeEvent(28, 13205100, 3200328, 0);
+    $InitializeEvent(29, 13205100, 3200329, 0);
+    $InitializeEvent(30, 13205100, 3200330, 0);
+    $InitializeEvent(31, 13205100, 3200331, 0);
+    $InitializeEvent(0, 13205140, 3200347, 3202347);
+    $InitializeEvent(0, 13205600, 3290, 3290, NPCPartType.Part8, 7000, 5907, 13205700, 13205760, 3200420);
+    $InitializeEvent(1, 13205600, 3291, 3291, NPCPartType.Part9, 7022, 5907, 13205700, 13205760, 3200420);
+    $InitializeEvent(2, 13205600, 3292, 3292, NPCPartType.Part10, 7023, 5907, 13205700, 13205760, 3200420);
+    $InitializeEvent(3, 13205600, 3290, 3290, NPCPartType.Part8, 7000, 5907, 13205701, 13205761, 3200421);
+    $InitializeEvent(4, 13205600, 3291, 3291, NPCPartType.Part9, 7022, 5907, 13205701, 13205761, 3200421);
+    $InitializeEvent(5, 13205600, 3292, 3292, NPCPartType.Part10, 7023, 5907, 13205701, 13205761, 3200421);
+    $InitializeEvent(0, 13205630, 3290, 3290, NPCPartType.Part8, 40, 13205700, 3200420);
+    $InitializeEvent(1, 13205630, 3291, 3291, NPCPartType.Part9, 40, 13205700, 3200420);
+    $InitializeEvent(2, 13205630, 3292, 3292, NPCPartType.Part10, 40, 13205700, 3200420);
+    $InitializeEvent(3, 13205630, 3290, 3290, NPCPartType.Part8, 40, 13205701, 3200421);
+    $InitializeEvent(4, 13205630, 3291, 3291, NPCPartType.Part9, 40, 13205701, 3200421);
+    $InitializeEvent(5, 13205630, 3292, 3292, NPCPartType.Part10, 40, 13205701, 3200421);
+    $InitializeEvent(0, 13205660, 30, 40, 13205760, 3200420, 1, 11);
+    $InitializeEvent(1, 13205660, 50, 40, 13205760, 3200420, 2, 12);
+    $InitializeEvent(2, 13205660, 60, 40, 13205760, 3200420, 3, 13);
+    $InitializeEvent(3, 13205660, 30, 40, 13205761, 3200421, 1, 11);
+    $InitializeEvent(4, 13205660, 50, 40, 13205761, 3200421, 2, 12);
+    $InitializeEvent(5, 13205660, 60, 40, 13205761, 3200421, 3, 13);
+    $InitializeEvent(0, 13200310);
+    $InitializeEvent(0, 13200311);
 });
 
 // pre-constructor
 $Event(50, Default, function() {
-    InitializeEvent(0, 13200100, 0);
-    InitializeEvent(0, 13200102, 0);
-    InitializeEvent(0, 13200103, 0);
-    InitializeEvent(0, 13200105, 0);
-    InitializeEvent(0, 13200106, 0);
-    InitializeEvent(0, 13200107, 0);
-    InitializeEvent(0, 13200108, 0);
-    InitializeEvent(0, 13200109, 0);
-    InitializeEvent(0, 13200110, 0);
-    InitializeEvent(0, 13200120, 0);
-    InitializeEvent(0, 13200121, 0);
+    $InitializeEvent(0, 13200100);
+    $InitializeEvent(0, 13200102);
+    $InitializeEvent(0, 13200103);
+    $InitializeEvent(0, 13200105);
+    $InitializeEvent(0, 13200106);
+    $InitializeEvent(0, 13200107);
+    $InitializeEvent(0, 13200108);
+    $InitializeEvent(0, 13200109);
+    $InitializeEvent(0, 13200110);
+    $InitializeEvent(0, 13200120);
+    $InitializeEvent(0, 13200121);
     if (EventFlag(1420)) {
         SetCharacterGravity(3200101, Disabled);
         SetCharacterMaphits(3200101, true);
-        InitializeEvent(0, 13200102, 0);
+        $InitializeEvent(0, 13200102);
     }
 });
 
 // Open the lever door_XX
-$Event(13200010, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4) {
+$Event(13200010, Default, function(objEntityId, animationId, objactEventFlag, objEntityId2, objParameterId) {
     if (ThisEventSlot()) {
-        ReproduceObjectAnimation(X0_4, X4_4);
-        SetObjactState(X12_4, X16_4, Disabled);
-        NotifySoundDampeningOfDoorEvent(X0_4, DoorState.DoorOpening);
+        ReproduceObjectAnimation(objEntityId, animationId);
+        SetObjactState(objEntityId2, objParameterId, Disabled);
+        NotifySoundDampeningOfDoorEvent(objEntityId, DoorState.DoorOpening);
         EndEvent();
     }
 L0:
-    WaitFor(ObjActEventFlag(X8_4));
-    SetObjactState(X12_4, X16_4, Disabled);
-    ForceAnimationPlayback(X0_4, X4_4, false, true, false);
+    WaitFor(ObjActEventFlag(objactEventFlag));
+    SetObjactState(objEntityId2, objParameterId, Disabled);
+    ForceAnimationPlayback(objEntityId, animationId, false, true, false);
     WaitFixedTimeSeconds(0);
 });
 
 // Msg_XX when inspecting the lever door
-$Event(13200020, Default, function(X0_4, X4_4, X8_4, X12_4) {
+$Event(13200020, Default, function(actionButtonParameterId, actionButtonParameterId2, areaEntityId, eventFlagId) {
     SetNetworkSyncState(Disabled);
-    EndIf(EventFlag(X12_4));
-    act = ActionButtonInArea(X0_4, X8_4);
-    act2 = ActionButtonInArea(X4_4, X8_4);
-    flag = EventFlag(X12_4);
+    EndIf(EventFlag(eventFlagId));
+    act = ActionButtonInArea(actionButtonParameterId, areaEntityId);
+    act2 = ActionButtonInArea(actionButtonParameterId2, areaEntityId);
+    flag = EventFlag(eventFlagId);
     WaitFor(act || act2 || flag);
     EndIf(flag.Passed);
     DisplayGenericDialog(10010160, PromptType.OKCANCEL, NumberofOptions.OneButton, -1, 3);
@@ -967,32 +967,32 @@ $Event(13200020, Default, function(X0_4, X4_4, X8_4, X12_4) {
 });
 
 // Lever_XX after opening the lever door
-$Event(13200030, Default, function(X0_4, X4_4, X8_4, X12_4) {
+$Event(13200030, Default, function(areaEntityId, actionButtonParameterId, messageId, eventFlagId) {
     SetNetworkSyncState(Disabled);
-    WaitFor(EventFlag(X12_4) && ActionButtonInArea(X4_4, X0_4));
-    DisplayGenericDialog(X8_4, PromptType.OKCANCEL, NumberofOptions.OneButton, -1, 3);
+    WaitFor(EventFlag(eventFlagId) && ActionButtonInArea(actionButtonParameterId, areaEntityId));
+    DisplayGenericDialog(messageId, PromptType.OKCANCEL, NumberofOptions.OneButton, -1, 3);
     RestartEvent();
 });
 
 // open the door_XX
-$Event(13200040, Default, function(X0_4, X4_4, X8_4, X12_4) {
+$Event(13200040, Default, function(objEntityId, objactEventFlag, animationId, objParameterId) {
     if (ThisEventSlot()) {
-        ReproduceObjectAnimation(X0_4, X8_4);
-        SetObjactState(X0_4, X12_4, Disabled);
-        NotifySoundDampeningOfDoorEvent(X0_4, DoorState.DoorOpening);
+        ReproduceObjectAnimation(objEntityId, animationId);
+        SetObjactState(objEntityId, objParameterId, Disabled);
+        NotifySoundDampeningOfDoorEvent(objEntityId, DoorState.DoorOpening);
         EndEvent();
     }
 L0:
-    WaitFor(ObjActEventFlag(X4_4));
+    WaitFor(ObjActEventFlag(objactEventFlag));
     WaitFixedTimeSeconds(0);
 });
 
 // Msg_XX when inspecting the door
-$Event(13200050, Default, function(X0_4, X4_4, X8_4) {
+$Event(13200050, Default, function(actionButtonParameterId, areaEntityId, eventFlagId) {
     SetNetworkSyncState(Disabled);
-    EndIf(EventFlag(X8_4));
-    act = ActionButtonInArea(X0_4, X4_4);
-    flag = EventFlag(X8_4);
+    EndIf(EventFlag(eventFlagId));
+    act = ActionButtonInArea(actionButtonParameterId, areaEntityId);
+    flag = EventFlag(eventFlagId);
     WaitFor(act || flag);
     if (!flag.Passed) {
         DisplayGenericDialog(10010161, PromptType.OKCANCEL, NumberofOptions.OneButton, -1, 3);
@@ -1003,11 +1003,11 @@ L0:
 });
 
 // Msg_ patch room when examining the door
-$Event(13200055, Default, function(X0_4, X4_4, X8_4) {
+$Event(13200055, Default, function(actionButtonParameterId, areaEntityId, eventFlagId) {
     SetNetworkSyncState(Disabled);
-    EndIf(EventFlag(X8_4));
-    flagAct = !EventFlag(1420) && cond && ActionButtonInArea(X0_4, X4_4);
-    flag = EventFlag(X8_4);
+    EndIf(EventFlag(eventFlagId));
+    flagAct = !EventFlag(1420) && cond && ActionButtonInArea(actionButtonParameterId, areaEntityId);
+    flag = EventFlag(eventFlagId);
     WaitFor(flagAct || flag);
     if (!flag.Passed) {
         DisplayGenericDialog(10010161, PromptType.OKCANCEL, NumberofOptions.OneButton, -1, 3);
@@ -1020,20 +1020,20 @@ L0:
 });
 
 // Open the door_school building_XX
-$Event(13200060, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4, X20_4) {
+$Event(13200060, Default, function(objEntityId, objactEventFlag, objactEventFlag2, animationId, objParameterId, objParameterId2) {
     if (ThisEventSlot()) {
-        ReproduceObjectAnimation(X0_4, X12_4);
-        SetObjactState(X0_4, X16_4, Disabled);
-        SetObjactState(X0_4, X20_4, Disabled);
-        NotifySoundDampeningOfDoorEvent(X0_4, DoorState.DoorOpening);
+        ReproduceObjectAnimation(objEntityId, animationId);
+        SetObjactState(objEntityId, objParameterId, Disabled);
+        SetObjactState(objEntityId, objParameterId2, Disabled);
+        NotifySoundDampeningOfDoorEvent(objEntityId, DoorState.DoorOpening);
     }
 L0:
-    obj = ObjActEventFlag(X4_4);
-    WaitFor(obj || ObjActEventFlag(X8_4));
+    obj = ObjActEventFlag(objactEventFlag);
+    WaitFor(obj || ObjActEventFlag(objactEventFlag2));
     if (!obj.Passed) {
-        SetObjactState(X0_4, X16_4, Disabled);
+        SetObjactState(objEntityId, objParameterId, Disabled);
     } else {
-        SetObjactState(X0_4, X20_4, Disabled);
+        SetObjactState(objEntityId, objParameterId2, Disabled);
     }
 });
 
@@ -1118,7 +1118,8 @@ $Event(13200103, Default, function() {
 
 // Spider man patch_face to face
 $Event(13200105, Default, function() {
-    WaitFor(EventFlag(1420) && (EventFlag(73200321) || (EventFlag(13200104) && EventFlag(73200321))));
+    WaitFor(
+        EventFlag(1420) && (EventFlag(73200321) || (EventFlag(13200104) && EventFlag(73200321))));
     BatchSetEventFlags(1420, 1437, OFF);
     SetEventFlag(1421, ON);
     SaveRequest(0);
@@ -1129,7 +1130,7 @@ $Event(13200106, Default, function() {
     EndIf(ThisEvent());
     EndIf(!CharacterType(10000, TargetType.Alive));
     WaitFor(EventFlag(13200101) && EntityInRadiusOfEntity(10000, 3200101, 5));
-    InitializeEvent(0, 9350, 2);
+    $InitializeEvent(0, 9350, 2);
 });
 
 // Spider man patch_just before departure
@@ -1143,7 +1144,10 @@ $Event(13200107, Default, function() {
 $Event(13200108, Default, function() {
     EndIf(EventFlag(1430));
     EndIf(EventFlag(1431));
-    WaitFor((EventFlag(1421) || EventFlag(1422)) && HPRatio(3200101) < 0.5 && CharacterDamagedBy(3200101, 10000));
+    WaitFor(
+        (EventFlag(1421) || EventFlag(1422))
+            && HPRatio(3200101) < 0.5
+            && CharacterDamagedBy(3200101, 10000));
     ForceAnimationPlayback(3200101, 3000, false, false, false);
     BatchSetEventFlags(1420, 1437, OFF);
     SetEventFlag(1430, ON);
@@ -1191,22 +1195,22 @@ $Event(13200121, Default, function() {
     SetEventFlag(73200300, OFF);
     ForceAnimationPlayback(3200100, 7010, false, false, false);
     if (!ThisEvent()) {
-        InitializeEvent(0, 9350, 2);
+        $InitializeEvent(0, 9350, 2);
     }
     RestartEvent();
 });
 
 // treasure chest_XX
-$Event(13200200, Default, function(X0_4, X4_4) {
+$Event(13200200, Default, function(objEntityId, objactEventFlag) {
     if (ThisEventSlot()) {
-        ReproduceObjectAnimation(X0_4, 0);
-        SetObjactState(X0_4, -1, Disabled);
-        SetObjectTreasureState(X0_4, Enabled);
+        ReproduceObjectAnimation(objEntityId, 0);
+        SetObjactState(objEntityId, -1, Disabled);
+        SetObjectTreasureState(objEntityId, Enabled);
         EndEvent();
     }
-    WaitFor(ObjActEventFlag(X4_4));
+    WaitFor(ObjActEventFlag(objactEventFlag));
     WaitFixedTimeFrames(10);
-    SetObjectTreasureState(X0_4, Enabled);
+    SetObjectTreasureState(objEntityId, Enabled);
 });
 
 // Warp to TR when opening the door
@@ -1237,15 +1241,15 @@ $Event(13200400, Default, function() {
 });
 
 // NPC Death Reenactment_University_XX
-$Event(13200500, Default, function(X0_4) {
+$Event(13200500, Default, function(chrEntityId) {
     if (ThisEventSlot()) {
-        SetCharacterBackreadState(X0_4, true);
-        ChangeCharacterEnableState(X0_4, Disabled);
-        ForceCharacterTreasure(X0_4);
+        SetCharacterBackreadState(chrEntityId, true);
+        ChangeCharacterEnableState(chrEntityId, Disabled);
+        ForceCharacterTreasure(chrEntityId);
         EndEvent();
     }
 L0:
-    WaitFor(CharacterDead(X0_4));
+    WaitFor(CharacterDead(chrEntityId));
     WaitFixedTimeSeconds(0);
 });
 
@@ -1283,7 +1287,7 @@ L0:
     SetNetworkSyncState(Disabled);
     if (!HasMultiplayerState(MultiplayerState.Client)) {
         WaitFor(CharacterType(10000, TargetType.Alive));
-        InitializeEvent(0, 9350, 2);
+        $InitializeEvent(0, 9350, 2);
         AwardAchievement(17);
         AwardItemLot(51001900);
         SetEventFlag(3200, ON);
@@ -1298,7 +1302,7 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.Armor, 92, PlayLogMultiplayerType.HostOnly);
         if (EventFlag(rom_defeat+13)) {
             AwardItemLot(17020);
-            InitializeEvent(rom_offset, 7800, rom_lamp_id+1000, 832001);
+            $InitializeEvent(rom_offset, 7800, rom_lamp_id+1000, 832001);
         }
         EndEvent();
     }
@@ -1321,10 +1325,11 @@ $Event(13201801, Default, function() {
 $Event(13201802, Default, function() {
     EndIf(EventFlag(13201800));
     EndIf(ThisEvent());
-    WaitFor(!EventFlag(13201800) && !ThisEvent() && HasDamageType(3200800, -1, DamageType.Unspecified));
+    WaitFor(
+        !EventFlag(13201800) && !ThisEvent() && HasDamageType(3200800, -1, DamageType.Unspecified));
     SetEventFlag(13204800, ON);
     EndIf(EventFlag(9303));
-    InitializeEvent(0, 9350, 2);
+    $InitializeEvent(0, 9350, 2);
     SetEventFlag(9303, ON);
 });
 
@@ -1345,7 +1350,11 @@ L0:
     chrArea = CharacterType(10000, TargetType.Alive) && InArea(10000, 3202811);
     chrArea2 = CharacterType(10000, TargetType.Alive) && InArea(10000, 3202812);
     chrArea3 = CharacterType(10000, TargetType.Alive) && InArea(10000, 3202813);
-    WaitFor(chrArea || chrArea2 || chrArea3 || (CharacterType(10000, TargetType.Alive) && InArea(10000, 3202814)));
+    WaitFor(
+        chrArea
+            || chrArea2
+            || chrArea3
+            || (CharacterType(10000, TargetType.Alive) && InArea(10000, 3202814)));
     GotoIf(S2, chrArea.Passed);
     GotoIf(S1, chrArea2.Passed);
     GotoIf(S0, chrArea3.Passed);
@@ -1384,44 +1393,45 @@ $Event(13201804, Default, function() {
 });
 
 // Idiot spider (child)_Emergence_XX
-$Event(13204000, Default, function(X0_4, X4_4) {
+$Event(13204000, Default, function(chrEntityId, eventFlagId) {
     EndIf(ThisEventSlot());
-    SetCharacterAIState(X0_4, Disabled);
-    SetCharacterGravity(X0_4, Disabled);
+    SetCharacterAIState(chrEntityId, Disabled);
+    SetCharacterGravity(chrEntityId, Disabled);
     WaitFor(
-        EventFlag(X4_4)
-            && (RandomElapsedSeconds(2, 3) || (CharacterType(10000, TargetType.WhitePhantom) && ElapsedSeconds(3))));
-    SetCharacterAIState(X0_4, Enabled);
-    RotateCharacter(X0_4, 10000, 7000, true);
-    SetCharacterGravity(X0_4, Enabled);
+        EventFlag(eventFlagId)
+            && (RandomElapsedSeconds(2, 3)
+                || (CharacterType(10000, TargetType.WhitePhantom) && ElapsedSeconds(3))));
+    SetCharacterAIState(chrEntityId, Enabled);
+    RotateCharacter(chrEntityId, 10000, 7000, true);
+    SetCharacterGravity(chrEntityId, Enabled);
 });
 
 // Idiot spider (child)_forced death_XX
-$Event(13204050, Default, function(X0_4, X4_4) {
+$Event(13204050, Default, function(chrEntityId, eventFlagId) {
     if (EventFlag(13201800)) {
-        ChangeCharacterEnableState(X0_4, Disabled);
-        ForceCharacterDeath(X0_4, false);
+        ChangeCharacterEnableState(chrEntityId, Disabled);
+        ForceCharacterDeath(chrEntityId, false);
         EndEvent();
     }
 L0:
-    WaitFor(EventFlag(X4_4) && CharacterDead(3200800));
+    WaitFor(EventFlag(eventFlagId) && CharacterDead(3200800));
     WaitFor(RandomElapsedSeconds(0, 1));
-    ForceCharacterDeath(X0_4, false);
+    ForceCharacterDeath(chrEntityId, false);
 });
 
 // piece of paper_XX
-$Event(13204100, Default, function(X0_4, X4_4, X8_4) {
+$Event(13204100, Default, function(areaEntityId, actionButtonParameterId, messageId) {
     SetNetworkSyncState(Disabled);
-    WaitFor(ActionButtonInArea(X4_4, X0_4));
-    DisplayGenericDialog(X8_4, PromptType.OKCANCEL, NumberofOptions.OneButton, -1, 3);
+    WaitFor(ActionButtonInArea(actionButtonParameterId, areaEntityId));
+    DisplayGenericDialog(messageId, PromptType.OKCANCEL, NumberofOptions.OneButton, -1, 3);
     RestartEvent();
 });
 
 // event target specification_XX
-$Event(13204730, Default, function(X0_4) {
+$Event(13204730, Default, function(chrEntityId) {
     EndIf(EventFlag(13201800));
     WaitFor(EventFlag(13204802));
-    SetCharacterEventTarget(X0_4, 3200800);
+    SetCharacterEventTarget(chrEntityId, 3200800);
 });
 
 // Host enters boss room_Rematch_Idiot spider
@@ -1439,7 +1449,9 @@ $Event(13204830, Default, function() {
         ActivateHit(3204010, Enabled);
     }
 L0:
-    flagChrAct = !EventFlag(13201800) && CharacterType(10000, TargetType.Alive) && ActionButtonInArea(3200800, 3201800);
+    flagChrAct = !EventFlag(13201800)
+        && CharacterType(10000, TargetType.Alive)
+        && ActionButtonInArea(3200800, 3201800);
     flag = EventFlag(13201800);
     WaitFor(flagChrAct || flag);
     EndIf(flag.Passed);
@@ -1497,20 +1509,18 @@ $Event(13204834, Default, function() {
 
 // Boss starts moving_Idiot spider
 $Event(13204802, Default, function() {
-    if (EventFlag(rom_defeat+13)) {
-        Goto(L0);
-    }
+    GotoIf(S0, !EventFlag(rom_defeat+13));
+    Goto(L0);
+S0:
     EndIf(EventFlag(13201800));
     SetCharacterAIState(3200800, Disabled);
     SetCharacterHPBarDisplay(3200800, Disabled);
     SetCharacterImmortality(3200800, Enabled);
-    if (!ThisEvent()) {
-        WaitFor(EventFlag(13201802) && EventFlag(13204800) || EventFlag(rom_defeat+13));
-        if (!HasMultiplayerState(MultiplayerState.Client)) {
-            IssueBossRoomEntryNotification(0);
-            SetNetworkUpdateAuthority(3200800, AuthorityLevel.Forced);
-        }
-    }
+    GotoIf(L0, ThisEvent());
+    WaitFor((EventFlag(13201802) && EventFlag(13204800)) || EventFlag(rom_defeat+13));
+    GotoIf(L0, HasMultiplayerState(MultiplayerState.Client));
+    IssueBossRoomEntryNotification(0);
+    SetNetworkUpdateAuthority(3200800, AuthorityLevel.Forced);
 L0:
     SetEventFlag(13204800, ON);
     GotoIf(L1, NumberOfCoopClients() == 0);
@@ -1747,107 +1757,114 @@ $Event(13204821, Default, function() {
 });
 
 // Enemies start patrolling upon entering the area_XX
-$Event(13205000, Restart, function(X0_4, X4_4, X8_4, X12_4, X16_4) {
+$Event(13205000, Restart, function(chrEntityId, areaEntityId, areaEntityId2, targetDistance, patrolInformationEntityId) {
     if (!ThisEventSlot()) {
-        ChangeCharacterPatrolBehavior(X0_4, -1);
+        ChangeCharacterPatrolBehavior(chrEntityId, -1);
         WaitFor(
-            ((CharacterType(10000, TargetType.Alive) || CharacterType(10000, TargetType.WhitePhantom))
-                && (InArea(10000, X4_4) || InArea(10000, X8_4) || EntityInRadiusOfEntity(10000, X0_4, X12_4)))
-                || HasDamageType(X0_4, -1, DamageType.Unspecified));
+            ((CharacterType(10000, TargetType.Alive)
+                || CharacterType(10000, TargetType.WhitePhantom))
+                && (InArea(10000, areaEntityId)
+                    || InArea(10000, areaEntityId2)
+                    || EntityInRadiusOfEntity(10000, chrEntityId, targetDistance)))
+                || HasDamageType(chrEntityId, -1, DamageType.Unspecified));
     }
 L0:
-    ChangeCharacterPatrolBehavior(X0_4, X16_4);
-    RequestCharacterAIReplan(X0_4);
+    ChangeCharacterPatrolBehavior(chrEntityId, patrolInformationEntityId);
+    RequestCharacterAIReplan(chrEntityId);
 });
 
 // Spider Rukh jumps down upon entering the realm _XX
-$Event(13205040, Restart, function(X0_4, X4_4, X8_4, X12_4, X16_4) {
+$Event(13205040, Restart, function(chrEntityId, areaEntityId, targetDistance, timeSeconds, areaEntityId2) {
     EndIf(ThisEventSlot());
-    SetCharacterAIState(X0_4, Disabled);
+    SetCharacterAIState(chrEntityId, Disabled);
     chrArea = (CharacterType(10000, TargetType.Alive) || CharacterType(10000, TargetType.WhitePhantom))
-        && (InArea(10000, X4_4) || EntityInRadiusOfEntity(10000, X0_4, X8_4));
-    dmg = HasDamageType(X0_4, -1, DamageType.Unspecified);
+        && (InArea(10000, areaEntityId) || EntityInRadiusOfEntity(10000, chrEntityId, targetDistance));
+    dmg = HasDamageType(chrEntityId, -1, DamageType.Unspecified);
     WaitFor(chrArea || dmg);
     if (dmg.Passed) {
-        SetCharacterAIState(X0_4, Enabled);
+        SetCharacterAIState(chrEntityId, Enabled);
         EndEvent();
     }
 L0:
-    WaitFixedTimeSeconds(X12_4);
-    SetCharacterAIState(X0_4, Enabled);
-    SetCharacterHome(X0_4, X16_4);
-    RequestCharacterAICommand(X0_4, 10, 0);
-    RequestCharacterAIReplan(X0_4);
-    WaitFor(InArea(X0_4, X16_4));
-    ForceAnimationPlayback(X0_4, 3013, false, false, false);
+    WaitFixedTimeSeconds(timeSeconds);
+    SetCharacterAIState(chrEntityId, Enabled);
+    SetCharacterHome(chrEntityId, areaEntityId2);
+    RequestCharacterAICommand(chrEntityId, 10, 0);
+    RequestCharacterAIReplan(chrEntityId);
+    WaitFor(InArea(chrEntityId, areaEntityId2));
+    ForceAnimationPlayback(chrEntityId, 3013, false, false, false);
     WaitFixedTimeFrames(34);
-    RequestCharacterAICommand(X0_4, -1, 0);
-    RequestCharacterAIReplan(X0_4);
+    RequestCharacterAICommand(chrEntityId, -1, 0);
+    RequestCharacterAIReplan(chrEntityId);
 });
 
 // Enemy changes patrol upon reaching destination_XX
-$Event(13205050, Restart, function(X0_4, X4_4, X8_4) {
+$Event(13205050, Restart, function(chrEntityId, areaEntityId, patrolInformationEntityId) {
     if (!ThisEventSlot()) {
-        ChangeCharacterPatrolBehavior(X0_4, -1);
-        WaitFor(InArea(X0_4, X4_4));
+        ChangeCharacterPatrolBehavior(chrEntityId, -1);
+        WaitFor(InArea(chrEntityId, areaEntityId));
     }
 L0:
-    ChangeCharacterPatrolBehavior(X0_4, X8_4);
-    RequestCharacterAIReplan(X0_4);
+    ChangeCharacterPatrolBehavior(chrEntityId, patrolInformationEntityId);
+    RequestCharacterAIReplan(chrEntityId);
 });
 
 // free roaming after moving _XX
-$Event(13205060, Restart, function(X0_4, X4_4, X8_4) {
+$Event(13205060, Restart, function(chrEntityId, areaEntityId, patrolInformationEntityId) {
     WaitFor(
-        InArea(X0_4, X4_4)
-            || CharacterAIState(X0_4, AIStateType.Combat)
-            || HasDamageType(X0_4, 10000, DamageType.Unspecified));
-    ChangeCharacterPatrolBehavior(X0_4, X8_4);
+        InArea(chrEntityId, areaEntityId)
+            || CharacterAIState(chrEntityId, AIStateType.Combat)
+            || HasDamageType(chrEntityId, 10000, DamageType.Unspecified));
+    ChangeCharacterPatrolBehavior(chrEntityId, patrolInformationEntityId);
 });
 
 // Fall Throw of Student_XX
-$Event(13205080, Restart, function(X0_4, X4_4, X8_4, X12_4, X16_4, X20_4) {
+$Event(13205080, Restart, function(chrEntityId, areaEntityId, animationId, animationId2, value, eventFlagId) {
     EndIf(ThisEventSlot());
-    SetCharacterGravity(X0_4, Disabled);
-    SetCharacterMaphits(X0_4, true);
-    SetCharacterAIState(X0_4, Disabled);
-    ForceAnimationPlayback(X0_4, X8_4, true, false, false);
-    chrAreaFlag &= (CharacterType(10000, TargetType.Alive) || CharacterType(10000, TargetType.WhitePhantom)) && InArea(10000, X4_4);
-    if (X16_4 != 0) {
-        chrAreaFlag &= EventFlag(X20_4);
+    SetCharacterGravity(chrEntityId, Disabled);
+    SetCharacterMaphits(chrEntityId, true);
+    SetCharacterAIState(chrEntityId, Disabled);
+    ForceAnimationPlayback(chrEntityId, animationId, true, false, false);
+    chrAreaFlag &= (CharacterType(10000, TargetType.Alive) || CharacterType(10000, TargetType.WhitePhantom))
+        && InArea(10000, areaEntityId);
+    if (value != 0) {
+        chrAreaFlag &= EventFlag(eventFlagId);
     }
-    WaitFor(chrAreaFlag || HasDamageType(X0_4, -1, DamageType.Unspecified));
-    SetCharacterGravity(X0_4, Enabled);
-    SetCharacterAIState(X0_4, Enabled);
-    ForceAnimationPlayback(X0_4, X12_4, false, true, false);
-    SetCharacterMaphits(X0_4, false);
+    WaitFor(chrAreaFlag || HasDamageType(chrEntityId, -1, DamageType.Unspecified));
+    SetCharacterGravity(chrEntityId, Enabled);
+    SetCharacterAIState(chrEntityId, Enabled);
+    ForceAnimationPlayback(chrEntityId, animationId2, false, true, false);
+    SetCharacterMaphits(chrEntityId, false);
 });
 
 // Students stand up_XX
-$Event(13205100, Restart, function(X0_4, X4_4) {
+$Event(13205100, Restart, function(chrEntityId, areaEntityId) {
     EndIf(ThisEventSlot());
-    WaitFor(CharacterBackreadStatus(X0_4));
-    ForceAnimationPlayback(X0_4, 7004, true, false, false);
+    WaitFor(CharacterBackreadStatus(chrEntityId));
+    ForceAnimationPlayback(chrEntityId, 7004, true, false, false);
     WaitFor(
-        CharacterAIState(X0_4, AIStateType.Recognition)
-            || CharacterAIState(X0_4, AIStateType.Combat)
-            || ((CharacterType(10000, TargetType.Alive) || CharacterType(10000, TargetType.WhitePhantom))
-                && InArea(10000, X4_4)));
-    ForceAnimationPlayback(X0_4, 7005, false, false, false);
+        CharacterAIState(chrEntityId, AIStateType.Recognition)
+            || CharacterAIState(chrEntityId, AIStateType.Combat)
+            || ((CharacterType(10000, TargetType.Alive)
+                || CharacterType(10000, TargetType.WhitePhantom))
+                && InArea(10000, areaEntityId)));
+    ForceAnimationPlayback(chrEntityId, 7005, false, false, false);
     WaitFixedTimeFrames(59);
-    RotateCharacter(X0_4, 10000, 3011, false);
+    RotateCharacter(chrEntityId, 10000, 3011, false);
 });
 
 // Student surprise_XX
-$Event(13205140, Restart, function(X0_4, X4_4) {
+$Event(13205140, Restart, function(chrEntityId, areaEntityId) {
     EndIf(ThisEventSlot());
-    chr = CharacterAIState(X0_4, AIStateType.Recognition) || CharacterAIState(X0_4, AIStateType.Combat);
-    chrArea = (CharacterType(10000, TargetType.Alive) || CharacterType(10000, TargetType.WhitePhantom)) && InArea(10000, X4_4);
-    dmg = HasDamageType(X0_4, -1, DamageType.Unspecified);
+    chr = CharacterAIState(chrEntityId, AIStateType.Recognition)
+        || CharacterAIState(chrEntityId, AIStateType.Combat);
+    chrArea = (CharacterType(10000, TargetType.Alive) || CharacterType(10000, TargetType.WhitePhantom))
+        && InArea(10000, areaEntityId);
+    dmg = HasDamageType(chrEntityId, -1, DamageType.Unspecified);
     WaitFor(chr || chrArea || dmg);
     EndIf(chr.Passed);
     EndIf(dmg.Passed);
-    RotateCharacter(X0_4, 10000, 3002, false);
+    RotateCharacter(chrEntityId, 10000, 3002, false);
 });
 
 // Star flower_death effect
@@ -1863,63 +1880,65 @@ L0:
 });
 
 // Idiot Spider (baby)_head damage_XX
-$Event(13205300, Restart, function(X0_4, X4_2, X8_4) {
-    WaitFor(CharacterBackreadStatus(X0_4));
-    CreateNPCPart(X0_4, X4_2, NPCPartType.Part1, 30, 1, 1, false, false);
-    SetNPCPartSEAndSFX(X0_4, X8_4, 61, 61);
-    WaitFor(NPCPartHP(X0_4, X8_4) <= 0);
-    RequestCharacterAnimationReset(X0_4, Interpolation.Uninterpolated);
-    ForceAnimationPlayback(X0_4, 9930, false, false, false);
-    SetNPCPartHP(X0_4, X8_4, -1, false);
+$Event(13205300, Restart, function(chrEntityId, npcPartId, npcPartId2) {
+    WaitFor(CharacterBackreadStatus(chrEntityId));
+    CreateNPCPart(chrEntityId, npcPartId, NPCPartType.Part1, 30, 1, 1, false, false);
+    SetNPCPartSEAndSFX(chrEntityId, npcPartId2, 61, 61);
+    WaitFor(NPCPartHP(chrEntityId, npcPartId2) <= 0);
+    RequestCharacterAnimationReset(chrEntityId, Interpolation.Uninterpolated);
+    ForceAnimationPlayback(chrEntityId, 9930, false, false, false);
+    SetNPCPartHP(chrEntityId, npcPartId2, -1, false);
     RestartEvent();
 });
 
 // Medical Association's Franken site injury_XX
-$Event(13205600, Default, function(X0_2, X4_4, X8_2, X12_4, X16_4, X20_4, X24_4, X28_4) {
-    WaitFor(EventFlag(X20_4));
-    hpDmgFlag = NPCPartHP(X28_4, X4_4) <= 0 && CharacterDamagedBy(X28_4, 10000) && EventFlag(X24_4);
-    hpFlag = HPRatio(X28_4) <= 0 && EventFlag(X20_4);
+$Event(13205600, Default, function(npcPartId, npcPartId2, npcPartGroupIdx, animationId, spEffectId, eventFlagId, eventFlagId2, chrEntityId) {
+    WaitFor(EventFlag(eventFlagId));
+    hpDmgFlag = NPCPartHP(chrEntityId, npcPartId2) <= 0
+        && CharacterDamagedBy(chrEntityId, 10000)
+        && EventFlag(eventFlagId2);
+    hpFlag = HPRatio(chrEntityId) <= 0 && EventFlag(eventFlagId);
     WaitFor(hpDmgFlag || hpFlag);
     EndIf(hpFlag.Passed);
-    if (!EventFlag(X20_4)) {
-        SetNPCPartHP(X28_4, X4_4, 1, false);
+    if (!EventFlag(eventFlagId)) {
+        SetNPCPartHP(chrEntityId, npcPartId2, 1, false);
         RestartEvent();
     }
-    CreateNPCPart(X28_4, X0_2, X8_2, 999999, 1, 1, false, false);
-    SetNPCPartSEAndSFX(X28_4, X4_4, 65, 65);
-    RequestCharacterAnimationReset(X28_4, Interpolation.Interpolated);
-    ForceAnimationPlayback(X28_4, X12_4, false, false, false);
-    WaitFor(CharacterHasEventMessage(X28_4, 400));
-    SetSpEffect(X28_4, X16_4, false);
-    SetEventFlag(X24_4, OFF);
-    WaitFor(CharacterHasEventMessage(X28_4, 300));
-    SetNPCPartHP(X28_4, X4_4, 80, true);
-    SetNPCPartSEAndSFX(X28_4, X4_4, 64, 64);
-    ClearSpEffect(X28_4, X16_4);
-    RequestCharacterAICommand(X28_4, -1, 0);
-    RequestCharacterAIReplan(X28_4);
+    CreateNPCPart(chrEntityId, npcPartId, npcPartGroupIdx, 999999, 1, 1, false, false);
+    SetNPCPartSEAndSFX(chrEntityId, npcPartId2, 65, 65);
+    RequestCharacterAnimationReset(chrEntityId, Interpolation.Interpolated);
+    ForceAnimationPlayback(chrEntityId, animationId, false, false, false);
+    WaitFor(CharacterHasEventMessage(chrEntityId, 400));
+    SetSpEffect(chrEntityId, spEffectId, false);
+    SetEventFlag(eventFlagId2, OFF);
+    WaitFor(CharacterHasEventMessage(chrEntityId, 300));
+    SetNPCPartHP(chrEntityId, npcPartId2, 80, true);
+    SetNPCPartSEAndSFX(chrEntityId, npcPartId2, 64, 64);
+    ClearSpEffect(chrEntityId, spEffectId);
+    RequestCharacterAICommand(chrEntityId, -1, 0);
+    RequestCharacterAIReplan(chrEntityId);
     WaitFixedTimeFrames(10);
     RestartEvent();
 });
 
 // Medical Association Franken site registration_XX
-$Event(13205630, Default, function(X0_2, X4_4, X8_2, X12_4, X16_4, X20_4) {
-    WaitFor(EntityInRadiusOfEntity(X20_4, 10000, 10));
-    CreateNPCPart(X20_4, X0_2, X8_2, X12_4, 1, 1, false, false);
-    SetNPCPartSEAndSFX(X20_4, X4_4, 64, 64);
-    SetEventFlag(X16_4, ON);
+$Event(13205630, Default, function(npcPartId, npcPartId2, npcPartGroupIdx, npcPartHP, eventFlagId, chrEntityId) {
+    WaitFor(EntityInRadiusOfEntity(chrEntityId, 10000, 10));
+    CreateNPCPart(chrEntityId, npcPartId, npcPartGroupIdx, npcPartHP, 1, 1, false, false);
+    SetNPCPartSEAndSFX(chrEntityId, npcPartId2, 64, 64);
+    SetEventFlag(eventFlagId, ON);
 });
 
 // Medical Association's Franken Part Destruction Timing Limit_XX
-$Event(13205660, Default, function(X0_4, X4_4, X8_4, X12_4, X16_1, X17_1) {
-    ChangeCharacterHitmask(X12_4, X16_1, OFF);
-    ChangeCharacterHitmask(X12_4, X17_1, ON);
-    WaitFor(CharacterHasEventMessage(X12_4, X0_4));
-    SetEventFlag(X8_4, ON);
-    ChangeCharacterHitmask(X12_4, X16_1, ON);
-    ChangeCharacterHitmask(X12_4, X17_1, OFF);
-    WaitFor(CharacterHasEventMessage(X12_4, X4_4));
-    SetEventFlag(X8_4, OFF);
+$Event(13205660, Default, function(eventMessageId, eventMessageId2, eventFlagId, chrEntityId, bitNumber, bitNumber2) {
+    ChangeCharacterHitmask(chrEntityId, bitNumber, OFF);
+    ChangeCharacterHitmask(chrEntityId, bitNumber2, ON);
+    WaitFor(CharacterHasEventMessage(chrEntityId, eventMessageId));
+    SetEventFlag(eventFlagId, ON);
+    ChangeCharacterHitmask(chrEntityId, bitNumber, ON);
+    ChangeCharacterHitmask(chrEntityId, bitNumber2, OFF);
+    WaitFor(CharacterHasEventMessage(chrEntityId, eventMessageId2));
+    SetEventFlag(eventFlagId, OFF);
     RestartEvent();
 });
 
@@ -1936,7 +1955,7 @@ $Event(13200950, Default, function() {
         SetSpEffect(10000, 115, false);
         SetSpEffect(10000, 116, false);
         EndIf(ThisEvent());
-        InitializeEvent(0, 9350, 2);
+        $InitializeEvent(0, 9350, 2);
         EndEvent();
     }
 L0:
@@ -1958,152 +1977,152 @@ L0:
 });
 
 // ★University_New NPC summons_Aiming for the boss room_XX
-$Event(13204450, Restart, function(X0_4, X4_4, X8_4, X12_4, X16_4) {
+$Event(13204450, Restart, function(chrEntityId, entityId, eventFlagId, eventFlagId2, eventFlagId3) {
     EndIf(ThisEventSlot());
     EndIf(HasMultiplayerState(MultiplayerState.Client));
-    SetEventPoint(X0_4, X4_4, 1);
-    WaitFor(EventFlag(X8_4) && !EventFlag(X12_4) && EventFlag(X16_4));
-    RequestCharacterAICommand(X0_4, 990, 0);
-    RequestCharacterAIReplan(X0_4);
+    SetEventPoint(chrEntityId, entityId, 1);
+    WaitFor(EventFlag(eventFlagId) && !EventFlag(eventFlagId2) && EventFlag(eventFlagId3));
+    RequestCharacterAICommand(chrEntityId, 990, 0);
+    RequestCharacterAIReplan(chrEntityId);
 });
 
 // University_New NPC Summon_Landing_XX
-$Event(13204470, Default, function(X0_4) {
-    WaitFor(InArea(X0_4, 3202800));
-    SetCharacterInvincibility(X0_4, Enabled);
+$Event(13204470, Default, function(chrEntityId) {
+    WaitFor(InArea(chrEntityId, 3202800));
+    SetCharacterInvincibility(chrEntityId, Enabled);
 L0:
     WaitFixedTimeSeconds(5);
-    SetCharacterInvincibility(X0_4, Disabled);
+    SetCharacterInvincibility(chrEntityId, Disabled);
 });
 
 // ★University_New NPC Summoning_Summoning Judgment_High Rank Hunting
-$Event(13204400, Restart, function(X0_4, X4_4, X8_4, X12_4, X16_4, X20_4) {
-    if (!EventFlag(X0_4)) {
-        SetEventFlag(X0_4, OFF);
-        DeleteMapSFX(X4_4, true);
+$Event(13204400, Restart, function(eventFlagId, entityId, eventFlagId2, eventFlagId3, eventFlagId4, eventFlagId5) {
+    if (!EventFlag(eventFlagId)) {
+        SetEventFlag(eventFlagId, OFF);
+        DeleteMapSFX(entityId, true);
         WaitFor(
             PlayerHasItem(ItemType.Goods, 4312)
-                && !EventFlag(X8_4)
-                && !EventFlag(X12_4)
-                && !EventFlag(X16_4)
+                && !EventFlag(eventFlagId2)
+                && !EventFlag(eventFlagId3)
+                && !EventFlag(eventFlagId4)
                 && NumberOfClientsOfType(ClientType.Coop) < 2
                 && !EventFlag(13204421)
                 && !EventFlag(13204422)
-                && !EventFlag(X20_4)
+                && !EventFlag(eventFlagId5)
                 && HasMultiplayerState(MultiplayerState.Host));
     }
 L0:
-    SetEventFlag(X0_4, ON);
-    SpawnMapSFX(X4_4);
+    SetEventFlag(eventFlagId, ON);
+    SpawnMapSFX(entityId);
     WaitFor(
         HasMultiplayerState(MultiplayerState.Host)
             && !(PlayerHasItem(ItemType.Goods, 4312)
-                && !EventFlag(X8_4)
-                && !EventFlag(X12_4)
-                && !EventFlag(X16_4)
+                && !EventFlag(eventFlagId2)
+                && !EventFlag(eventFlagId3)
+                && !EventFlag(eventFlagId4)
                 && NumberOfClientsOfType(ClientType.Coop) < 2
                 && !EventFlag(13204421)
                 && !EventFlag(13204422)
-                && !EventFlag(X20_4)));
-    SetEventFlag(X0_4, OFF);
-    DeleteMapSFX(X4_4, true);
+                && !EventFlag(eventFlagId5)));
+    SetEventFlag(eventFlagId, OFF);
+    DeleteMapSFX(entityId, true);
     RestartEvent();
 });
 
 // ★University_New NPC Summoning_Summoning Judgment_Alliance: Executioner
-$Event(13204401, Restart, function(X0_4, X4_4, X8_4, X12_4, X16_4, X20_4) {
-    if (!EventFlag(X0_4)) {
-        SetEventFlag(X0_4, OFF);
-        DeleteMapSFX(X4_4, true);
+$Event(13204401, Restart, function(eventFlagId, entityId, eventFlagId2, eventFlagId3, eventFlagId4, eventFlagId5) {
+    if (!EventFlag(eventFlagId)) {
+        SetEventFlag(eventFlagId, OFF);
+        DeleteMapSFX(entityId, true);
         WaitFor(
             PlayerHasItem(ItemType.Goods, 4312)
-                && !EventFlag(X8_4)
-                && !EventFlag(X12_4)
-                && !EventFlag(X16_4)
+                && !EventFlag(eventFlagId2)
+                && !EventFlag(eventFlagId3)
+                && !EventFlag(eventFlagId4)
                 && NumberOfClientsOfType(ClientType.Coop) < 2
                 && CharacterHasSpEffect(10000, 6142)
                 && !EventFlag(6813)
-                && !EventFlag(X20_4)
+                && !EventFlag(eventFlagId5)
                 && HasMultiplayerState(MultiplayerState.Host));
     }
 L0:
-    SetEventFlag(X0_4, ON);
-    SpawnMapSFX(X4_4);
+    SetEventFlag(eventFlagId, ON);
+    SpawnMapSFX(entityId);
     WaitFor(
         HasMultiplayerState(MultiplayerState.Host)
             && !(PlayerHasItem(ItemType.Goods, 4312)
-                && !EventFlag(X8_4)
-                && !EventFlag(X12_4)
-                && !EventFlag(X16_4)
+                && !EventFlag(eventFlagId2)
+                && !EventFlag(eventFlagId3)
+                && !EventFlag(eventFlagId4)
                 && NumberOfClientsOfType(ClientType.Coop) < 2
                 && CharacterHasSpEffect(10000, 6142)
                 && !EventFlag(6813)
-                && !EventFlag(X20_4)));
-    SetEventFlag(X0_4, OFF);
-    DeleteMapSFX(X4_4, true);
+                && !EventFlag(eventFlagId5)));
+    SetEventFlag(eventFlagId, OFF);
+    DeleteMapSFX(entityId, true);
     RestartEvent();
 });
 
 // ★University_New NPC Summoning_Summoning Judgment_Alliance: Henrik
-$Event(13204402, Restart, function(X0_4, X4_4, X8_4, X12_4, X16_4, X20_4) {
-    if (!EventFlag(X0_4)) {
-        SetEventFlag(X0_4, OFF);
-        DeleteMapSFX(X4_4, true);
+$Event(13204402, Restart, function(eventFlagId, entityId, eventFlagId2, eventFlagId3, eventFlagId4, eventFlagId5) {
+    if (!EventFlag(eventFlagId)) {
+        SetEventFlag(eventFlagId, OFF);
+        DeleteMapSFX(entityId, true);
         WaitFor(
             PlayerHasItem(ItemType.Goods, 4312)
-                && !EventFlag(X8_4)
-                && !EventFlag(X12_4)
-                && !EventFlag(X16_4)
+                && !EventFlag(eventFlagId2)
+                && !EventFlag(eventFlagId3)
+                && !EventFlag(eventFlagId4)
                 && NumberOfClientsOfType(ClientType.Coop) < 2
                 && CharacterHasSpEffect(10000, 6142)
                 && (EventFlag(12410803) || EventFlag(12410804))
-                && !EventFlag(X20_4)
+                && !EventFlag(eventFlagId5)
                 && HasMultiplayerState(MultiplayerState.Host));
     }
 L0:
-    SetEventFlag(X0_4, ON);
-    SpawnMapSFX(X4_4);
+    SetEventFlag(eventFlagId, ON);
+    SpawnMapSFX(entityId);
     WaitFor(
         HasMultiplayerState(MultiplayerState.Host)
             && !(PlayerHasItem(ItemType.Goods, 4312)
-                && !EventFlag(X8_4)
-                && !EventFlag(X12_4)
-                && !EventFlag(X16_4)
+                && !EventFlag(eventFlagId2)
+                && !EventFlag(eventFlagId3)
+                && !EventFlag(eventFlagId4)
                 && NumberOfClientsOfType(ClientType.Coop) < 2
                 && CharacterHasSpEffect(10000, 6142)
                 && (EventFlag(12410803) || EventFlag(12410804))
-                && !EventFlag(X20_4)));
-    SetEventFlag(X0_4, OFF);
-    DeleteMapSFX(X4_4, true);
+                && !EventFlag(eventFlagId5)));
+    SetEventFlag(eventFlagId, OFF);
+    DeleteMapSFX(entityId, true);
     RestartEvent();
 });
 
 // University_New NPC Summon_Participation_XX
-$Event(13204410, Restart, function(X0_4, X4_4, X8_4, X12_4, X16_4, X20_4, X24_4, X28_4) {
-    SetCharacterDefaultBackreadState(X4_4, Enabled);
-    SetNetworkUpdateRate(X4_4, true, CharacterUpdateFrequency.AlwaysUpdate);
-    if (!EventFlag(X12_4)) {
-        ChangeCharacterEnableState(X4_4, Disabled);
+$Event(13204410, Restart, function(signType, areaEntityId, entityId, eventFlagId, eventFlagId2, eventFlagId3, eventFlagId4, actionButtonParameterId) {
+    SetCharacterDefaultBackreadState(areaEntityId, Enabled);
+    SetNetworkUpdateRate(areaEntityId, true, CharacterUpdateFrequency.AlwaysUpdate);
+    if (!EventFlag(eventFlagId)) {
+        ChangeCharacterEnableState(areaEntityId, Disabled);
     }
-    GotoIf(S0, EventFlag(X16_4));
-    GotoIf(S1, HasMultiplayerState(MultiplayerState.Client) && EventFlag(X12_4));
+    GotoIf(S0, EventFlag(eventFlagId2));
+    GotoIf(S1, HasMultiplayerState(MultiplayerState.Client) && EventFlag(eventFlagId));
 S0:
-    ChangeCharacterEnableState(X4_4, Disabled);
+    ChangeCharacterEnableState(areaEntityId, Disabled);
 S1:
-    EndIf(EventFlag(X24_4));
+    EndIf(EventFlag(eventFlagId4));
     if (!HasMultiplayerState(MultiplayerState.Client)) {
-        SetNetworkUpdateAuthority(X4_4, AuthorityLevel.Forced);
+        SetNetworkUpdateAuthority(areaEntityId, AuthorityLevel.Forced);
     }
     WaitFor(
         PlayerHasItem(ItemType.Goods, 4312)
-            && !EventFlag(X12_4)
-            && !EventFlag(X16_4)
-            && EventFlag(X20_4)
-            && !EventFlag(X24_4)
-            && ActionButtonInArea(X28_4, X4_4));
+            && !EventFlag(eventFlagId)
+            && !EventFlag(eventFlagId2)
+            && EventFlag(eventFlagId3)
+            && !EventFlag(eventFlagId4)
+            && ActionButtonInArea(actionButtonParameterId, areaEntityId));
     ForceAnimationPlayback(10000, 100111, false, false, false);
     SetSpEffect(10000, 4682, false);
-    SummonNPC(X0_4, X4_4, X8_4, X12_4, X16_4);
+    SummonNPC(signType, areaEntityId, entityId, eventFlagId, eventFlagId2);
     ClearSpEffect(10000, 9005);
     ClearSpEffect(10000, 9025);
     WaitFixedTimeSeconds(5);
@@ -2111,20 +2130,21 @@ S1:
 });
 
 // ★University_Summon New NPC_Enter Boss Room_XX
-$Event(13204460, Restart, function(X0_4, X4_4, X8_4, X12_4, X16_4, X20_4, X24_4) {
+$Event(13204460, Restart, function(chrEntityId, areaEntityId, entityId, areaEntityId2, playAnimationId, eventFlagId, areaEntityId3) {
     EndIf(HasMultiplayerState(MultiplayerState.Client));
-    WaitFor(EventFlag(X20_4) && InArea(X0_4, X4_4));
-    RequestCharacterAnimationReset(X0_4, Interpolation.Interpolated);
-    RotateCharacter(X0_4, X8_4, X16_4, true);
-    RestartIf(!InArea(X0_4, X12_4));
-    SetEventPoint(X0_4, X8_4, 1);
-    RequestCharacterAICommand(X0_4, 990, 0);
-    RequestCharacterAIReplan(X0_4);
-    SetCharacterGravity(X0_4, Disabled);
-    SetCharacterMaphits(X0_4, true);
-    WaitFor(InArea(X0_4, X24_4));
-    SetCharacterGravity(X0_4, Enabled);
-    SetCharacterMaphits(X0_4, false);
-    RequestCharacterAICommand(X0_4, -1, 0);
-    RequestCharacterAIReplan(X0_4);
+    WaitFor(EventFlag(eventFlagId) && InArea(chrEntityId, areaEntityId));
+    RequestCharacterAnimationReset(chrEntityId, Interpolation.Interpolated);
+    RotateCharacter(chrEntityId, entityId, playAnimationId, true);
+    RestartIf(!InArea(chrEntityId, areaEntityId2));
+    SetEventPoint(chrEntityId, entityId, 1);
+    RequestCharacterAICommand(chrEntityId, 990, 0);
+    RequestCharacterAIReplan(chrEntityId);
+    SetCharacterGravity(chrEntityId, Disabled);
+    SetCharacterMaphits(chrEntityId, true);
+    WaitFor(InArea(chrEntityId, areaEntityId3));
+    SetCharacterGravity(chrEntityId, Enabled);
+    SetCharacterMaphits(chrEntityId, false);
+    RequestCharacterAICommand(chrEntityId, -1, 0);
+    RequestCharacterAIReplan(chrEntityId);
 });
+

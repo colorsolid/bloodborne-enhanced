@@ -193,13 +193,20 @@ def t290118_x60():
                 AddTalkListData(6, 70000000, 12100876)
                 AddTalkListData(7, 200003, 12100875)
                 AddTalkListData(8, 200004, 12100874)
-                if (GetEventStatus(12110000 + 290 * 10 + 8 * 2) == 0 or GetEventStatus(12110000 + 290 * 10 + 8 * 2 + 1) == 0) and GetEventStatus(12100862) == 1:
+                # restock enabled, kindling enabled, and lamp kindling values are not maxed
+                if (
+                    GetEventStatus(12100862) == 1
+                    and (
+                        GetEventStatus(12110000 + 290 * 10 + 8 * 2) == 0 
+                        or GetEventStatus(12110000 + 290 * 10 + 8 * 2 + 1) == 0
+                    )
+                ):
                     AddTalkListData(11, 200168, 12100851)
                 else:
                     pass
             else:
                 pass
-            AddTalkListData(9, 200041, 12100867)
+            AddTalkListData(9, 200041, 12100867) # boss rematch
             """State 2"""
             ShowShopMessage(0, 0, 0)
             def WhilePaused():
@@ -310,7 +317,7 @@ def t290118_x60():
                 call = t290118_x110()
                 if call.Done():
                     pass
-            # offer insight
+            # offer insight / kindle
             elif GetTalkListEntryResult() == 11:
                 SetEventState(8100+78, 1)
                 def WhilePaused():
@@ -1314,7 +1321,10 @@ def t290118_x90():
                 """State 216"""
                 DebugEvent('購入')
                 """State 187"""
-                c1_86(200000, 200099)
+                if GetEventStatus(12100848) == 1:
+                    c1_86(200000, 200199)
+                else:
+                    c1_86(200000, 200099)
                 def WhilePaused():
                     SetTalkTime(0.33)
                 assert not CheckSpecificPersonMenuIsOpen(370, 0)
@@ -1369,7 +1379,7 @@ def t290118_x91():
                 if GetEventStatus(12100848):
                     OpenRegularShop(140000, 149999)
                 else:
-                    OpenRegularShop(140000, 149983)
+                    OpenRegularShop(140000, 149900)
                 def WhilePaused():
                     SetTalkTime(0.33)
                 assert not CheckSpecificPersonMenuIsOpen(11, 0)
@@ -1378,7 +1388,7 @@ def t290118_x91():
                 if GetEventStatus(12100848):
                     OpenRegularShop(130000, 139999)
                 else:
-                    OpenRegularShop(130000, 139983)
+                    OpenRegularShop(130000, 139900)
                 def WhilePaused():
                     SetTalkTime(0.33)
                 assert not CheckSpecificPersonMenuIsOpen(11, 0)
@@ -1387,7 +1397,7 @@ def t290118_x91():
                 if GetEventStatus(12100848):
                     OpenRegularShop(120000, 129999)
                 else:
-                    OpenRegularShop(120000, 129983)
+                    OpenRegularShop(120000, 129900)
                 def WhilePaused():
                     SetTalkTime(0.33)
                 assert not CheckSpecificPersonMenuIsOpen(11, 0)
@@ -1396,7 +1406,7 @@ def t290118_x91():
                 if GetEventStatus(12100848):
                     OpenRegularShop(110000, 119999)
                 else:
-                    OpenRegularShop(110000, 119983)
+                    OpenRegularShop(110000, 119900)
                 def WhilePaused():
                     SetTalkTime(0.33)
                 assert not CheckSpecificPersonMenuIsOpen(11, 0)
@@ -1405,7 +1415,7 @@ def t290118_x91():
                 if GetEventStatus(12100848):
                     OpenRegularShop(100000, 109999)
                 else:
-                    OpenRegularShop(100000, 109983)
+                    OpenRegularShop(100000, 109900)
                 def WhilePaused():
                     SetTalkTime(0.33)
                 assert not CheckSpecificPersonMenuIsOpen(11, 0)
