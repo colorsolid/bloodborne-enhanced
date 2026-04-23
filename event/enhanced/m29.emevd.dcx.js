@@ -4,11 +4,11 @@
 // @game    Bloodborne
 // @string    "ダンジョン_トラップ発動_錆びた宝箱\u0000ダンジョン_ギミック起動_魔法壁消失\u0000ダンジョン_トラップ発動_錆びた扉\u0000ダンジョン_トラップ発動_テレポーター\u0000ダンジョン_トラップ発動_落とし穴\u0000ダンジョン_トラップ発動_火矢作動\u0000ダンジョン_ギミック起動_跳ね橋降下\u0000ボス_撃破\u0000PC情報_ボス撃破_上層\u0000PC情報_ボス撃破_中層\u0000PC情報_ボス撃破_下層\u0000PC情報_ボス撃破_最下層\u0000クリア時間_通し\u0000PC情報_ダンジョン到達時\u0000ダンジョン_上層_クリア時間_通し\u0000ダンジョン_上層_クリア時間_1プレイ\u0000ダンジョン_中層_クリア時間_通し\u0000ダンジョン_中層_クリア時間_1プレイ\u0000ダンジョン_下層_クリア時間_通し\u0000ダンジョン_下層_クリア時間_1プレイ\u0000ダンジョン_最下層_クリア時間_通し\u0000ダンジョン_最下層_クリア時間_1プレイ\u0000ダンジョン_トラップ発動_落下敵\u0000ダンジョン_ギミック起動_血舐め発生\u0000ダンジョン_トラップ発動_悪霊女出現\u0000ダンジョン_トラップ発動_ギロチン\u0000ダンジョン_トラップ発動_クモ天井待機\u0000ダンジョン_トラップ発動_クモ天井待機_領域使用\u0000ダンジョン_トラップ発動_飛び出す敵\u0000ダンジョン_トラップ発動_領域で飛び出す敵\u0000ダンジョン_トラップ発動_モンスタールーム\u0000ダンジョン_ギミック起動_強化憑依\u0000ダンジョン_トラップ発動_鐘を鳴らす\u0000ダンジョン_トラップ発動_モンスタールーム_巣に帰る\u0000ダンジョン_トラップ発動_伏兵落下\u0000ボス_戦闘開始\u0000ダンジョン_ボスラッシュ前座_撃破時間\u0000ダンジョン_上層_ボス戦_撃破時間\u0000ダンジョン_中層_ボス戦_撃破時間\u0000ダンジョン_下層_ボス戦_撃破時間\u0000ダンジョン_最下層_ボス戦_撃破時間\u0000ダンジョン_トラップ発動_火薬タル爆発\u0000\u0000"
 // @linked    []
-// @version    3.6
+// @version    3.6.3
 // ==/EMEVD==
 
-var area_id = 29;
-var block_id = 0;
+const area_id = 29;
+const block_id = 0;
 
 const lamp_1_offset = 70;
 const lamp_1_id = 2901950;
@@ -101,10 +101,10 @@ $Event(0, Default, function() {
         SetSpEffect(10000, 4682, false);
     }
     
-    $InitializeEvent(boss_1_offset, 7700, boss_1_defeat+1011, boss_1_defeat+1012, boss_1_lamp_id+1000);
-    $InitializeEvent(boss_2_offset, 7700, boss_2_defeat+1021, boss_2_defeat+1022, boss_2_lamp_id+1000);
-    $InitializeEvent(boss_3_offset, 7700, boss_3_defeat+1031, boss_3_defeat+1032, boss_3_lamp_id+1000);
-    $InitializeEvent(boss_4_offset, 7700, boss_4_defeat+1041, boss_4_defeat+1042, boss_4_lamp_id+1000);
+    $InitializeEvent(boss_1_offset, 7700, boss_1_defeat+2011, boss_1_defeat+2012, boss_1_lamp_id+1000);
+    $InitializeEvent(boss_2_offset, 7700, boss_2_defeat+2021, boss_2_defeat+2022, boss_2_lamp_id+1000);
+    $InitializeEvent(boss_3_offset, 7700, boss_3_defeat+2031, boss_3_defeat+2032, boss_3_lamp_id+1000);
+    $InitializeEvent(boss_4_offset, 7700, boss_4_defeat+2041, boss_4_defeat+2042, boss_4_lamp_id+1000);
     
     $InitializeEvent(lamp_1_offset, 8100, 8100+lamp_1_offset, lamp_1_kindle);
     $InitializeEvent(lamp_2_offset, 8100, 8100+lamp_2_offset, lamp_2_kindle);
@@ -122,64 +122,64 @@ $Event(0, Default, function() {
     $InitializeEvent(lamp_6_offset, 8300, lamp_6_id+2000, -1, lamp_6_kindle, lamp_6_id+6000, lamp_6_id+3000);
     $InitializeEvent(lamp_8_offset, 8300, lamp_8_id+2000, -1, lamp_8_kindle, lamp_8_id+6000, lamp_8_id+3000);
     
-    if (EventFlag(boss_1_defeat+1013) && !EventFlag(boss_1_defeat+1019)) {
+    if (EventFlag(boss_1_defeat+1013) && !EventFlag(boss_1_defeat+1099)) {
         SetEventFlag(boss_1_defeat+1013, OFF);
         SetEventFlag(boss_1_defeat, ON);
         $InitializeEvent(boss_1_lamp_offset, 8300, boss_1_lamp_id+2000, 999, boss_1_lamp_kindle, boss_1_lamp_id+6000, boss_1_lamp_id+3000);
         DummyPlayCutsceneAndWarpPlayer(boss_1_lamp_id+4000, area_id, block_id);
-    } else if (EventFlag(boss_1_defeat+1012) || EventFlag(boss_1_defeat+1019)) {
+    } else if (EventFlag(boss_1_defeat+2012) || EventFlag(boss_1_defeat+1099)) {
         SetEventFlag(boss_1_defeat, OFF);
-        SetEventFlag(boss_1_defeat+1012, OFF);
+        SetEventFlag(boss_1_defeat+2012, OFF);
         SetEventFlag(boss_1_defeat+1013, ON);
-        SetEventFlag(boss_1_defeat+1019, OFF);
+        SetEventFlag(boss_1_defeat+1099, OFF);
         SetEventFlag(8900+boss_1_offset, ON);
         $InitializeEvent(boss_1_lamp_offset, 8300, boss_1_lamp_id+2000, -1, boss_1_lamp_kindle, boss_1_lamp_id+6000, boss_1_lamp_id+3000);
     } else {
         $InitializeEvent(boss_1_lamp_offset, 8300, boss_1_lamp_id+2000, -1, boss_1_lamp_kindle, boss_1_lamp_id+6000, boss_1_lamp_id+3000);
     }
     
-    if (EventFlag(boss_2_defeat+1023) && !EventFlag(boss_2_defeat+1029)) {
+    if (EventFlag(boss_2_defeat+1023) && !EventFlag(boss_2_defeat+1089)) {
         SetEventFlag(boss_2_defeat+1023, OFF);
         SetEventFlag(boss_2_defeat, ON);
         $InitializeEvent(boss_2_lamp_offset, 8300, boss_2_lamp_id+2000, 999, boss_2_lamp_kindle, boss_2_lamp_id+6000, boss_2_lamp_id+3000);
         DummyPlayCutsceneAndWarpPlayer(boss_2_lamp_id+4000, area_id, block_id);
-    } else if (EventFlag(boss_2_defeat+1022) || EventFlag(boss_2_defeat+1029)) {
+    } else if (EventFlag(boss_2_defeat+2022) || EventFlag(boss_2_defeat+1089)) {
         SetEventFlag(boss_2_defeat, OFF);
-        SetEventFlag(boss_2_defeat+1022, OFF);
+        SetEventFlag(boss_2_defeat+2022, OFF);
         SetEventFlag(boss_2_defeat+1023, ON);
-        SetEventFlag(boss_2_defeat+1029, OFF);
+        SetEventFlag(boss_2_defeat+1089, OFF);
         SetEventFlag(8900+boss_2_offset, ON);
         $InitializeEvent(boss_2_lamp_offset, 8300, boss_2_lamp_id+2000, -1, boss_2_lamp_kindle, boss_2_lamp_id+6000, boss_2_lamp_id+3000);
     } else {
         $InitializeEvent(boss_2_lamp_offset, 8300, boss_2_lamp_id+2000, -1, boss_2_lamp_kindle, boss_2_lamp_id+6000, boss_2_lamp_id+3000);
     }
     
-    if (EventFlag(boss_3_defeat+1033) && !EventFlag(boss_3_defeat+1039)) {
+    if (EventFlag(boss_3_defeat+1033) && !EventFlag(boss_3_defeat+1079)) {
         SetEventFlag(boss_3_defeat+1033, OFF);
         SetEventFlag(boss_3_defeat, ON);
         $InitializeEvent(boss_3_lamp_offset, 8300, boss_3_lamp_id+2000, 999, boss_3_lamp_kindle, boss_3_lamp_id+6000, boss_3_lamp_id+3000);
         DummyPlayCutsceneAndWarpPlayer(boss_3_lamp_id+4000, area_id, block_id);
-    } else if (EventFlag(boss_3_defeat+1032) || EventFlag(boss_3_defeat+1039)) {
+    } else if (EventFlag(boss_3_defeat+2032) || EventFlag(boss_3_defeat+1079)) {
         SetEventFlag(boss_3_defeat, OFF);
-        SetEventFlag(boss_3_defeat+1032, OFF);
+        SetEventFlag(boss_3_defeat+2032, OFF);
         SetEventFlag(boss_3_defeat+1033, ON);
-        SetEventFlag(boss_3_defeat+1039, OFF);
+        SetEventFlag(boss_3_defeat+1079, OFF);
         SetEventFlag(8900+boss_3_offset, ON);
         $InitializeEvent(boss_3_lamp_offset, 8300, boss_3_lamp_id+2000, -1, boss_3_lamp_kindle, boss_3_lamp_id+6000, boss_3_lamp_id+3000);
     } else {
         $InitializeEvent(boss_3_lamp_offset, 8300, boss_3_lamp_id+2000, -1, boss_3_lamp_kindle, boss_3_lamp_id+6000, boss_3_lamp_id+3000);
     }
     
-    if (EventFlag(boss_4_defeat+1043) && !EventFlag(boss_4_defeat+1049)) {
+    if (EventFlag(boss_4_defeat+1043) && !EventFlag(boss_4_defeat+1069)) {
         SetEventFlag(boss_4_defeat+1043, OFF);
         SetEventFlag(boss_4_defeat, ON);
         $InitializeEvent(boss_4_lamp_offset, 8300, boss_4_lamp_id+2000, 999, boss_4_lamp_kindle, boss_4_lamp_id+6000, boss_4_lamp_id+3000);
         DummyPlayCutsceneAndWarpPlayer(boss_4_lamp_id+4000, area_id, block_id);
-    } else if (EventFlag(boss_4_defeat+1042) || EventFlag(boss_4_defeat+1049)) {
+    } else if (EventFlag(boss_4_defeat+2042) || EventFlag(boss_4_defeat+1069)) {
         SetEventFlag(boss_4_defeat, OFF);
-        SetEventFlag(boss_4_defeat+1042, OFF);
+        SetEventFlag(boss_4_defeat+2042, OFF);
         SetEventFlag(boss_4_defeat+1043, ON);
-        SetEventFlag(boss_4_defeat+1049, OFF);
+        SetEventFlag(boss_4_defeat+1069, OFF);
         SetEventFlag(8900+boss_4_offset, ON);
         $InitializeEvent(boss_4_lamp_offset, 8300, boss_4_lamp_id+2000, -1, boss_4_lamp_kindle, boss_4_lamp_id+6000, boss_4_lamp_id+3000);
     } else {
@@ -198,10 +198,10 @@ $Event(0, Default, function() {
     
     $InitializeEvent(0, 8700); // disable item refill after time limit
     
-    $InitializeEvent(boss_1_offset, 8900, boss_1_defeat+1019, boss_1_lamp_id+1000, boss_1_lamp_id+5000);
-    $InitializeEvent(boss_2_offset, 8900, boss_2_defeat+1029, boss_2_lamp_id+1000, boss_2_lamp_id+5000);
-    $InitializeEvent(boss_3_offset, 8900, boss_3_defeat+1039, boss_3_lamp_id+1000, boss_3_lamp_id+5000);
-    $InitializeEvent(boss_4_offset, 8900, boss_4_defeat+1049, boss_4_lamp_id+1000, boss_4_lamp_id+5000);
+    $InitializeEvent(boss_1_offset, 8900, boss_1_defeat+1099, boss_1_lamp_id+1000, boss_1_lamp_id+5000);
+    $InitializeEvent(boss_2_offset, 8900, boss_2_defeat+1089, boss_2_lamp_id+1000, boss_2_lamp_id+5000);
+    $InitializeEvent(boss_3_offset, 8900, boss_3_defeat+1079, boss_3_lamp_id+1000, boss_3_lamp_id+5000);
+    $InitializeEvent(boss_4_offset, 8900, boss_4_defeat+1069, boss_4_lamp_id+1000, boss_4_lamp_id+5000);
     
     $InitializeEvent(0, 12101000, 4110, 2100211, 1, 10);
     $InitializeEvent(1, 12101000, 4111, 2100211, 2, 13);
@@ -1629,7 +1629,7 @@ $Event(7900, Default, function(warpTrigger, bossEntrancePoint, areaId, blockId, 
     SetEventFlag(restFlag, OFF);
     
     if (!AnyBatchEventFlags(8500, 8599)) {
-        ForceAnimationPlayback(10000, 101170, false, false, false);
+        ForceAnimationPlayback(10000, 101171, false, false, false);
         WaitFixedTimeSeconds(2);
     } else {
         WaitFixedTimeSeconds(0.5);
@@ -1641,7 +1641,6 @@ $Event(7900, Default, function(warpTrigger, bossEntrancePoint, areaId, blockId, 
     ForceAnimationPlayback(10000, 101282, false, false, false);
     RestartEvent();
 });
-
 
 // kindle
 // this_event_slot, lamp_kindle_flag (12121100)
@@ -1757,7 +1756,7 @@ $Event(8300, Default, function(spawnCheckerRegion, bypassChecker, lampKindleFlag
     }
 });
 
-// rest
+// resting
 $Event(8500, Default, function(thisEventSlot, lampId, lampWarpFlag) {
     SetEventFlag(thisEventSlot, OFF); // this event slot
     WaitFixedTimeFrames(1);
@@ -1789,7 +1788,7 @@ $Event(8500, Default, function(thisEventSlot, lampId, lampWarpFlag) {
 // fade
 $Event(8600, Default, function() {
     WaitFixedTimeSeconds(1);
-    DisplayBanner(TextBannerType.StadiumLoss);
+    DisplayBanner(TextBannerType.StadiumLoss); // fade out
 });
 
 // Disable restock after spawn
@@ -1808,15 +1807,16 @@ $Event(8800, Default, function(rematchActive, lampNpc, lampObject, tempLocation)
 });
 
 // Auto restart rematch if dead + move player to rematch point
-$Event(8900, Default, function(autoRematchFlag, lampSpawnPoint, rematchStartRegion) {
+$Event(8900, Default, function(unusedautoRematchFlag, lampSpawnPoint, rematchStartRegion) {
     EndIf(!ThisEventSlot()); // game's state is not in rematch mode
+    SetSpEffect(10000, 1934, false);
     DummyPlayCutsceneAndWarpPlayer(rematchStartRegion, area_id, block_id);
     WaitFor(HPRatio(10000) <= 0);
     //SetEventFlag(rematchDeathOccurred, ON); // used for moving bloodstain
     if (EventFlag(12100864)) { // auto rematch enabled
-        SetEventFlag(autoRematchFlag, ON);
+        SetEventFlag(boss_1_defeat+1099, ON);
         SetPlayerRespawnPoint(lampSpawnPoint);
-        SetEventFlag(8950, ON);
+        //SetEventFlag(8950, ON);
     } else {
         // auto rematch disabled
         // EndIf(!EventFlag(12100650));
@@ -2740,14 +2740,14 @@ L0:
 });
 
 // Headstone warp function
-$Event(12107000, Default, function(eventFlagId, entityId, entityId2) {
+$Event(12107000, Default, function(eventFlagId, unusedentityId, entityId2) {
     EndIf(HasMultiplayerState(MultiplayerState.Client));
     WaitFor(EventFlag(eventFlagId));
     if (EventFlag(12100761)) {
         SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, 140);
         WaitFixedTimeSeconds(2);
     } else {
-        RotateCharacter(10000, entityId, 101164, false);
+        //RotateCharacter(10000, entityId, 101164, false);
         WaitFixedTimeSeconds(4);
     }
     SetPlayerRespawnPoint(entityId2);
@@ -2755,14 +2755,14 @@ $Event(12107000, Default, function(eventFlagId, entityId, entityId2) {
 });
 
 // Warp OBJ_Warp to Dungeon_First Half_XX
-$Event(12107100, Default, function(eventFlagId, entityId, eventFlagId2) {
+$Event(12107100, Default, function(eventFlagId, unusedentityId, eventFlagId2) {
     EndIf(HasMultiplayerState(MultiplayerState.Client));
     WaitFor(EventFlag(eventFlagId));
     if (EventFlag(12100761)) {
         SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, 140);
         WaitFixedTimeSeconds(2);
     } else {
-        RotateCharacter(10000, entityId, 101164, false);
+        //RotateCharacter(10000, entityId, 101164, false);
         WaitFixedTimeSeconds(4);
     }
     SetEventFlag(9020, OFF);
@@ -2779,14 +2779,18 @@ $Event(12107100, Default, function(eventFlagId, entityId, eventFlagId2) {
 
 
 // Warp OBJ_Warp to Dungeon_Late_XX
-$Event(12107200, Default, function(eventFlagId, entityId, eventFlagId2, entityId2) {
+$Event(12107200, Default, function(eventFlagId, entityId, eventFlagId2, unusedentityId2) {
+    SetEventFlag(8630, OFF);
     WaitFor(EventFlag(eventFlagId));
     SetEventFlag(eventFlagId, OFF);
-    if (EventFlag(12100761)) {
+    if (EventFlag(8630)) { // portable lamp - bypass extra animations
+        WaitFor(ElapsedFrames(0));
+    }
+    else if (EventFlag(12100761)) {
         SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, 140);
         WaitFixedTimeSeconds(2);
     } else {
-        RotateCharacter(10000, entityId2, 101164, false);
+        //RotateCharacter(10000, entityId2, 101164, false);
         WaitFixedTimeSeconds(4);
     }
     if (EventFlag(12106000)) {
@@ -3013,7 +3017,7 @@ $Event(12900192, Default, function(objactEventFlag, eventFlagId, objEntityId) {
     SetEventFlag(eventFlagId, ON);
     DeleteObjectfollowingSFX(objEntityId, true);
     CreateObjectfollowingSFX(objEntityId, 703, 929136);
-    DisplayBanner(TextBannerType.StadiumWin);
+    DisplayBanner(TextBannerType.StadiumWin); // lever door unlocked
     PlaySE(10000, SoundType.vVoice, 888880000);
     WaitFixedTimeFrames(44);
     WaitFixedTimeSeconds(1);
@@ -4035,7 +4039,7 @@ $Event(12901588, Default, function(chrEntityId, objEntityId, entityId, eventFlag
         EndEvent();
     }
     WaitFor(CharacterDead(chrEntityId));
-    DisplayBanner(TextBannerType.DemonKilled);
+    DisplayBanner(TextBannerType.DemonKilled); // boss defeated
     DeactivateObject(objEntityId, Disabled);
     DeactivateObject(objEntityId2, Disabled);
     DeleteMapSFX(entityId, true);
@@ -4093,7 +4097,7 @@ $Event(12901589, Default, function(chrEntityId, objEntityId, entityId, eventFlag
         EndEvent();
     }
     WaitFor(CharacterDead(chrEntityId) && CharacterDead(chrEntityId2));
-    DisplayBanner(TextBannerType.DemonKilled);
+    DisplayBanner(TextBannerType.DemonKilled); // boss defeated
     DeactivateObject(objEntityId, Disabled);
     DeactivateObject(objEntityId2, Disabled);
     DeleteMapSFX(entityId, true);
@@ -4174,7 +4178,7 @@ $Event(12901591, Default, function(chrEntityId, objEntityId, entityId, eventFlag
     }
     WaitFor(
         CharacterDead(chrEntityId) && CharacterDead(chrEntityId2) && CharacterDead(chrEntityId3));
-    DisplayBanner(TextBannerType.DemonKilled);
+    DisplayBanner(TextBannerType.DemonKilled); // boss defeated
     DeactivateObject(objEntityId, Disabled);
     DeactivateObject(objEntityId2, Disabled);
     DeleteMapSFX(entityId, true);
@@ -4458,7 +4462,7 @@ $Event(12901686, Default, function(chrEntityId, objEntityId, objEntityId2, entit
 L0:
     WaitFor(CharacterDead(chrEntityId) || HPRatio(chrEntityId) == 0);
     WaitFor(CharacterDead(chrEntityId) || ElapsedSeconds(15));
-    DisplayBanner(TextBannerType.DemonKilled);
+    DisplayBanner(TextBannerType.DemonKilled); // boss defeated
     DeactivateObject(objEntityId, Disabled);
     DeactivateObject(objEntityId2, Disabled);
     DeleteMapSFX(entityId, true);
@@ -4533,7 +4537,7 @@ $Event(12901690, Default, function(chrEntityId, objEntityId, entityId, eventFlag
 L0:
     WaitFor(CharacterDead(chrEntityId) || HPRatio(chrEntityId) == 0);
     WaitFor(CharacterDead(chrEntityId) || ElapsedSeconds(15));
-    DisplayBanner(TextBannerType.DemonKilled);
+    DisplayBanner(TextBannerType.DemonKilled); // boss defeated
     DeactivateObject(objEntityId, Disabled);
     DeleteMapSFX(entityId, true);
     WaitFixedTimeSeconds(3);
@@ -4609,7 +4613,7 @@ $Event(12901692, Default, function(chrEntityId, objEntityId, objEntityId2, entit
 L0:
     WaitFor(CharacterDead(chrEntityId) || HPRatio(chrEntityId) == 0);
     WaitFor(CharacterDead(chrEntityId) || ElapsedSeconds(15));
-    DisplayBanner(TextBannerType.DemonKilled);
+    DisplayBanner(TextBannerType.DemonKilled); // boss defeated
     DeactivateObject(objEntityId, Disabled);
     DeactivateObject(objEntityId2, Disabled);
     DeleteMapSFX(entityId, true);
@@ -5153,7 +5157,7 @@ L0:
         (CharacterDead(chrEntityId) || HPRatio(chrEntityId) == 0)
             && (CharacterDead(chrEntityId2) || HPRatio(chrEntityId2) == 0));
     WaitFor((CharacterDead(chrEntityId) && CharacterDead(chrEntityId2)) || ElapsedSeconds(15));
-    DisplayBanner(TextBannerType.DemonKilled);
+    DisplayBanner(TextBannerType.DemonKilled); // boss defeated
     DeactivateObject(objEntityId, Disabled);
     DeactivateObject(objEntityId2, Disabled);
     DeleteMapSFX(entityId, true);
@@ -5238,7 +5242,7 @@ L0:
     WaitFor(
         (CharacterDead(chrEntityId) && CharacterDead(chrEntityId2) && CharacterDead(chrEntityId3))
             || ElapsedSeconds(15));
-    DisplayBanner(TextBannerType.DemonKilled);
+    DisplayBanner(TextBannerType.DemonKilled); // boss defeated
     DeactivateObject(objEntityId, Disabled);
     DeactivateObject(objEntityId2, Disabled);
     DeleteMapSFX(entityId, true);
@@ -13044,4 +13048,3 @@ $Event(12907630, Restart, function(eventFlagId, eventFlagId2, chrEntityId, chrEn
     WaitFixedTimeFrames(15);
     ChangeCharacterEnableState(chrEntityId3, Enabled);
 });
-

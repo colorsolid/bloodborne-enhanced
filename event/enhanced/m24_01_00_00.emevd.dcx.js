@@ -4,7 +4,7 @@
 // @game    Bloodborne
 // @string    "クリア時間_通し\u0000クリア時間_1プレイ\u0000ボス_撃破\u0000PC情報_ボス撃破_教区長\u0000ボス_戦闘開始\u0000ボス戦_撃破時間\u0000PC情報_ボス撃破_ガスコイン\u0000\u0000PC情報_聖堂街B到達時\u0000N:\\SPRJ\\data\\Param\\event\\common.emevd\u0000\u0000\u0000\u0000"
 // @linked    [174]
-// @version    3.6
+// @version    3.6.3
 // ==/EMEVD==
 
 const area_id = 24;
@@ -52,12 +52,8 @@ $Event(0, Default, function() {
     SetEventFlag(8900+cleric_beast_offset, OFF);
     SetEventFlag(8900+gascoigne_offset, OFF);
     
-    $InitializeEvent(4, 7900, 10000000+cleric_beast_return, cleric_beast_return, area_id, block_id, 8500+iosefka_lamp_offset);
-    $InitializeEvent(5, 7900, 10000000+cleric_beast_return-1, cleric_beast_return, area_id, block_id, 8500+central_lamp_offset);
-    $InitializeEvent(6, 7900, 10000000+cleric_beast_return-3, cleric_beast_return, area_id, block_id, 8500+gascoigne_lamp_offset);
-    $InitializeEvent(7, 7900, 10000000+gascoigne_return, gascoigne_return, area_id, block_id, 8500+iosefka_lamp_offset);
-    $InitializeEvent(8, 7900, 10000000+gascoigne_return-1, gascoigne_return, area_id, block_id, 8500+central_lamp_offset);
-    $InitializeEvent(9, 7900, 10000000+gascoigne_return-2, gascoigne_return, area_id, block_id, 8500+cleric_beast_lamp_offset);
+    $InitializeEvent(1, 7900, 10000000+cleric_beast_return, cleric_beast_return, area_id, block_id);
+    $InitializeEvent(2, 7900, 10000000+gascoigne_return, gascoigne_return, area_id, block_id);
     
     $InitializeEvent(iosefka_lamp_offset, 8500, 8500+iosefka_lamp_offset, iosefka_lamp_id, 72110000);
     $InitializeEvent(central_lamp_offset, 8500, 8500+central_lamp_offset, central_lamp_id, 72110101);
@@ -86,8 +82,14 @@ $Event(0, Default, function() {
         }
         SetEventFlag(cleric_beast_defeat+13, OFF);
         SetEventFlag(cleric_beast_defeat, ON);
-        $InitializeEvent(cleric_beast_lamp_offset, 8300, cleric_beast_lamp_id+2000, 999, cleric_beast_kindle, cleric_beast_lamp_id+6000, cleric_beast_lamp_id+3000);
-        DummyPlayCutsceneAndWarpPlayer(cleric_beast_lamp_id+4000, area_id, block_id);
+        if (EventFlag(12111120)) {
+            SetEventFlag(12111120, OFF);
+            $InitializeEvent(cleric_beast_lamp_offset, 8300, cleric_beast_lamp_id+2000, -1, cleric_beast_kindle, cleric_beast_lamp_id+6000, cleric_beast_lamp_id+3000);
+        }
+        else {
+            $InitializeEvent(cleric_beast_lamp_offset, 8300, cleric_beast_lamp_id+2000, 999, cleric_beast_kindle, cleric_beast_lamp_id+6000, cleric_beast_lamp_id+3000);
+            DummyPlayCutsceneAndWarpPlayer(cleric_beast_lamp_id+4000, area_id, block_id);
+        }
     // rematch has started
     } else if (EventFlag(cleric_beast_defeat+12) || EventFlag(cleric_beast_defeat-1)) {
         if (EventFlag(cleric_beast_defeat-2)) {
@@ -112,8 +114,15 @@ $Event(0, Default, function() {
         }
         SetEventFlag(gascoigne_defeat+13, OFF);
         SetEventFlag(gascoigne_defeat, ON);
-        $InitializeEvent(gascoigne_lamp_offset, 8300, gascoigne_lamp_id+2000, 999, gascoigne_lamp_kindle, gascoigne_lamp_id+6000, gascoigne_lamp_id+3000);
-        DummyPlayCutsceneAndWarpPlayer(gascoigne_lamp_id+4000, area_id, block_id);
+        
+        if (EventFlag(12111120)) {
+            SetEventFlag(12111120, OFF);
+            $InitializeEvent(gascoigne_lamp_offset, 8300, gascoigne_lamp_id+2000, -1, gascoigne_lamp_kindle, gascoigne_lamp_id+6000, gascoigne_lamp_id+3000);
+        }
+        else {
+            $InitializeEvent(gascoigne_lamp_offset, 8300, gascoigne_lamp_id+2000, 999, gascoigne_lamp_kindle, gascoigne_lamp_id+6000, gascoigne_lamp_id+3000);
+            DummyPlayCutsceneAndWarpPlayer(gascoigne_lamp_id+4000, area_id, block_id);
+        }
         
         // Oedon Tomb Key
         if (!PlayerHasItem(ItemType.Goods, 4000)) {
@@ -147,7 +156,6 @@ $Event(0, Default, function() {
     $InitializeEvent(gascoigne_offset, 7700, gascoigne_defeat+11, gascoigne_defeat+12, gascoigne_lamp_id+1000, 824102);
     
     $InitializeEvent(0, 12410818);
-    $InitializeEvent(0, 12410819);
     
     $InitializeEvent(0, 12107000, 72110000, 2411950, 2412950);
     $InitializeEvent(1, 12107000, 72110001, 2411950, 2412951);
@@ -684,10 +692,6 @@ $Event(0, Default, function() {
     $InitializeEvent(16, 7300, 72102411, 2411951);
     $InitializeEvent(17, 7300, 72102412, 2411952);
     $InitializeEvent(18, 7300, 72102413, 2411953);
-    $InitializeEvent(15, 12102220, 2411950, 2400950);
-    $InitializeEvent(16, 12102220, 2411951, 2400951);
-    $InitializeEvent(17, 12102220, 2411952, 2400952);
-    $InitializeEvent(18, 12102220, 2411953, 2400953);
     $InitializeEvent(3, 9200, 2413900);
     $InitializeEvent(3, 9220, 2410750, 12414220, 12414221, 2410, 24, 1);
     $InitializeEvent(3, 9240, 2410750, 12414220, 12414221, 12414222, 24, 1);
@@ -700,14 +704,33 @@ $Event(0, Default, function() {
     CreateObjectfollowingSFX(2411004, 200, 900130);
     DeleteMapSFX(2413230, false);
     DeleteMapSFX(2413233, false);
+    
+    // summon stuff
+    
+    // gather summons
+    $InitializeEvent(1, 8617, 2410158, 12414420, 7012, 7010, 233);
+    $InitializeEvent(1, 8630, 8631, 8641, 2410158, 12414420, 2413230, 2410, -1, 200246, 7010, 200256, 200266); // gascoigne
+    
+    $InitializeEvent(2, 8617, 2410740, 12414421, 101161, 101162, 163); // alfred
+    $InitializeEvent(2, 8630, 8632, 8642, 2410740, 12414421, 2413233, 2410, -1, 200245, 101207, 200255, 200265);
+    
+    // summon signs
     $InitializeEvent(0, 12414400, 12414440, 2413230, 12414420, 12414430, 12411700, 6001);
     $InitializeEvent(0, 12414401, 12414441, 2413233, 12414421, 12414431, 12411700, 6001);
+    
     $InitializeEvent(0, 12414410, 7, 2410158, 2412920, 12414420, 12414430, 12414440, 12411700, 10575);
     $InitializeEvent(1, 12414410, SingleplayerSummonSignType.NormalCoop, 2410740, 2412921, 12414421, 12414431, 12414441, 12411700, 10576);
+    
     $InitializeEvent(0, 12414450, 2410158, 2412710, 12414420, 12414430, 12414700);
     $InitializeEvent(1, 12414450, 2410740, 2412711, 12414421, 12414431, 12414700);
+    $InitializeEvent(2, 12414450, 2410158, 2412818, 12414420, 12414430, 12414800);
+    $InitializeEvent(3, 12414450, 2410740, 2412819, 12414421, 12414431, 12414800);
+    
     $InitializeEvent(0, 12414460, 2410158, 2412710, 2412800, 2412801, 7014, 12414450, 2412801);
     $InitializeEvent(1, 12414460, 2410740, 2412711, 2412800, 2412801, 101130, 12414451, 2412801);
+    $InitializeEvent(2, 12414460, 2410158, 2412818, 2412332, 2412811, 7014, 12414452, 2412811);
+    $InitializeEvent(3, 12414460, 2410740, 2412819, 2412332, 2412811, 101130, 12414453, 2412811);
+    
     $InitializeEvent(0, 12414470);
     $InitializeEvent(0, 12414480);
     $InitializeEvent(0, 12414490);
@@ -1171,7 +1194,7 @@ $Event(50, Default, function() {
 
 $Event(12411500, Default, function() {
     WaitFor(EventFlag(62411319));
-    DisplayBanner(TextBannerType.BlackPhantomDeath);
+    DisplayBanner(TextBannerType.BlackPhantomDeath); // test
 });
 
 $Event(12410720, Default, function() {
@@ -1185,21 +1208,16 @@ $Event(12410720, Default, function() {
 
 // super pistol
 $Event(12410818, Default, function() {
+    SetEventFlag(12410819, OFF);
     WaitFor(InArea(10000, 2410948));
     WaitFixedTimeSeconds(5);
     if (InArea(10000, 2410948)) {
-        SetEventFlag(12410819, ON);
-    }
-});
-
-$Event(12410819, Default, function() {
-    BatchSetEventFlags(12410819, 12410820, OFF);
-    WaitFor(ThisEvent());
-    WaitFor(InArea(10000, 2410949));
-    WaitFixedTimeSeconds(5);
-    if (InArea(10000, 2410949)) {
-        DisplayBanner(TextBannerType.StadiumWin);
-        SetEventFlag(12410820, ON);
+        WaitFor(InArea(10000, 2410949));
+        WaitFixedTimeSeconds(5);
+        if (InArea(10000, 2410949)) {
+            DisplayMessage(10010152, 0);
+            SetEventFlag(12410819, ON);
+        }
     }
 });
 
@@ -1207,7 +1225,7 @@ $Event(12410819, Default, function() {
 $Event(12410816, Default, function() {
     SetCharacterAIState(2410975, Disabled);
     EndIf(GameCycle() == 0);
-    DisplayBanner(TextBannerType.BlackPhantomDeath);
+    DisplayBanner(TextBannerType.BlackPhantomDeath); // test
     SetCharacterAIState(2410975, Enabled);
 });
 
@@ -1223,7 +1241,6 @@ $Event(12410000, Default, function() {
     WaitFixedTimeFrames(1);
     SetEventFlag(9180, OFF);
     SetPlayerRespawnPoint(2412959);
-    $InitializeEvent(0, 9350, 1);
     SetEventFlag(12417810, ON);
 });
 
@@ -1773,7 +1790,7 @@ $Event(12411700, Default, function() {
     }
 L0:
     WaitFor(CharacterDead(2410800));
-    DisplayBanner(TextBannerType.DemonKilled);
+    DisplayBanner(TextBannerType.DemonKilled); // cleric beast defetaed
     DeactivateObject(2411800, Disabled);
     DeleteMapSFX(2413800, true);
     SetLockcamSlotNumber(24, 1, 0);
@@ -1939,7 +1956,9 @@ $Event(12414702, Default, function() {
     }
 L0:
     SetEventFlag(12414700, ON);
-    GotoIf(L3, EventFlag(cleric_beast_defeat+13));
+    GotoIf(L1, CountEventFlags(TargetEventFlagType.EventFlag, 8630, 8639) == 0);
+    GotoIf(L2, CountEventFlags(TargetEventFlagType.EventFlag, 8630, 8639) == 1);
+    GotoIf(L3, CountEventFlags(TargetEventFlagType.EventFlag, 8630, 8639) > 1);
     GotoIf(L1, NumberOfCoopClients() == 0);
     GotoIf(L2, NumberOfCoopClients() == 1);
     GotoIf(L3, NumberOfCoopClients() == 2);
@@ -2100,7 +2119,7 @@ L0:
         WaitFor(chr || chr2);
     }
     if (!EventFlag(12411814)) {
-        DisplayBanner(TextBannerType.DemonKilled);
+        DisplayBanner(TextBannerType.DemonKilled); // gascoigne defeated
     }
     DeactivateObject(2411810, Disabled);
     DeleteMapSFX(2413810, true);
@@ -2289,6 +2308,9 @@ $Event(12414802, Default, function() {
 L0:
     SetEventFlag(12414223, ON);
     SetEventFlag(12414800, ON);
+    GotoIf(L1, CountEventFlags(TargetEventFlagType.EventFlag, 8630, 8639) == 0);
+    GotoIf(L2, CountEventFlags(TargetEventFlagType.EventFlag, 8630, 8639) == 1);
+    GotoIf(L3, CountEventFlags(TargetEventFlagType.EventFlag, 8630, 8639) > 1);
     GotoIf(L1, NumberOfCoopClients() == 0);
     GotoIf(L2, NumberOfCoopClients() == 1);
     GotoIf(L3, NumberOfCoopClients() == 2);
@@ -4531,7 +4553,7 @@ $Event(12410859, Default, function() {
     IssueShortWarpRequest(10000, TargetEntityType.Object, 2410874, 210);
     ForceAnimationPlayback(10000, 101320, false, false, false);
     WaitFixedTimeFrames(25);
-    DisplayBanner(TextBannerType.StadiumLoss);
+    DisplayBanner(TextBannerType.StadiumLoss); // bridge door fade out
     WaitFixedTimeFrames(20);
     SetPlayerRespawnPoint(2408088);
     WaitFixedTimeFrames(20);
@@ -4777,16 +4799,6 @@ $Event(12410460, Default, function(chrEntityId, animationId, animationId2, aiId,
     SetCharacterAIId(chrEntityId, aiId2);
 });
 
-// Holy Street B_New NPC summons_Aiming for the boss room_XX
-$Event(12414450, Restart, function(chrEntityId, entityId, eventFlagId, eventFlagId2, eventFlagId3) {
-    EndIf(ThisEventSlot());
-    EndIf(HasMultiplayerState(MultiplayerState.Client));
-    SetEventPoint(chrEntityId, entityId, 1);
-    WaitFor(EventFlag(eventFlagId) && !EventFlag(eventFlagId2) && EventFlag(eventFlagId3));
-    RequestCharacterAICommand(chrEntityId, 990, 0);
-    RequestCharacterAIReplan(chrEntityId);
-});
-
 // Holy City B_New NPC summons_Forced return_Father Gascoigne
 $Event(12414470, Restart, function() {
     if (!ThisEvent()) {
@@ -4827,8 +4839,18 @@ $Event(12414490, Restart, function() {
     RestartEvent();
 });
 
+// summon stuff
+
 // Cathedral District B_New NPC Summoning_Summoning Judgment_Father Gascoigne
 $Event(12414400, Restart, function(eventFlagId, entityId, eventFlagId2, eventFlagId3, eventFlagId4, eventFlagId5) {
+    if (EventFlag(12100889)) {
+        SetEventFlag(eventFlagId2, OFF);
+        SetEventFlag(eventFlagId3, OFF);
+        SpawnMapSFX(entityId);
+        WaitFor(EventFlag(eventFlagId2));
+        DeleteMapSFX(entityId, true);
+        EndEvent();
+    }
     if (!EventFlag(eventFlagId)) {
         SetEventFlag(eventFlagId, OFF);
         DeleteMapSFX(entityId, true);
@@ -4861,6 +4883,14 @@ L0:
 
 // Holy Street B_New NPC Summoning_Summoning Judgment_Alfred
 $Event(12414401, Restart, function(eventFlagId, entityId, eventFlagId2, eventFlagId3, eventFlagId4, eventFlagId5) {
+    if (EventFlag(12100889)) {
+        SetEventFlag(eventFlagId2, OFF);
+        SetEventFlag(eventFlagId3, OFF);
+        SpawnMapSFX(entityId);
+        WaitFor(EventFlag(eventFlagId2));
+        DeleteMapSFX(entityId, true);
+        EndEvent();
+    }
     if (!EventFlag(eventFlagId)) {
         SetEventFlag(eventFlagId, OFF);
         DeleteMapSFX(entityId, true);
@@ -4894,18 +4924,35 @@ L0:
 });
 
 // Shrine District B_New NPC Summon_Participate_XX
-$Event(12414410, Restart, function(signType, areaEntityId, entityId, eventFlagId, eventFlagId2, eventFlagId3, eventFlagId4, actionButtonParameterId) {
+$Event(12414410, Restart, function(signType, entityId, areaEntityId, eventFlagId, eventFlagId2, eventFlagId3, eventFlagId4, actionButtonParameterId) {
+    if (EventFlag(12100889)) {
+        ChangeCharacterEnableState(entityId, Disabled);
+        WaitFor(!EventFlag(eventFlagId) && ActionButtonInArea(actionButtonParameterId, entityId));
+        WarpCharacterAndCopyFloor(entityId, TargetEntityType.Character, 10000, 236, 10000);
+        SetEventFlag(2410, OFF);
+        WaitFixedTimeFrames(1);
+        ForceAnimationPlayback(10000, 100111, false, false, false);
+        SetSpEffect(10000, 4682, false);
+        SummonNPC(signType, entityId, areaEntityId, eventFlagId, eventFlagId2);
+        ClearSpEffect(10000, 9005);
+        ClearSpEffect(10000, 9025);
+        WaitFixedTimeSeconds(5);
+        DisplayMessage(100051, 0);
+        WaitFixedTimeSeconds(5);
+        WarpCharacterAndCopyFloor(entityId, TargetEntityType.Area, areaEntityId, -1, areaEntityId);
+        EndEvent();
+    }
     if (!EventFlag(eventFlagId)) {
-        ChangeCharacterEnableState(areaEntityId, Disabled);
+        ChangeCharacterEnableState(entityId, Disabled);
     }
     GotoIf(S0, EventFlag(eventFlagId2));
     GotoIf(S1, HasMultiplayerState(MultiplayerState.Client) && EventFlag(eventFlagId));
 S0:
-    ChangeCharacterEnableState(areaEntityId, Disabled);
+    ChangeCharacterEnableState(entityId, Disabled);
 S1:
     EndIf(EventFlag(eventFlagId4));
     if (!HasMultiplayerState(MultiplayerState.Client)) {
-        SetNetworkUpdateAuthority(areaEntityId, AuthorityLevel.Forced);
+        SetNetworkUpdateAuthority(entityId, AuthorityLevel.Forced);
     }
     WaitFor(
         PlayerHasItem(ItemType.Goods, 4312)
@@ -4913,14 +4960,24 @@ S1:
             && !EventFlag(eventFlagId2)
             && EventFlag(eventFlagId3)
             && !EventFlag(eventFlagId4)
-            && ActionButtonInArea(actionButtonParameterId, areaEntityId));
+            && ActionButtonInArea(actionButtonParameterId, entityId));
     ForceAnimationPlayback(10000, 100111, false, false, false);
     SetSpEffect(10000, 4682, false);
-    SummonNPC(signType, areaEntityId, entityId, eventFlagId, eventFlagId2);
+    SummonNPC(signType, entityId, areaEntityId, eventFlagId, eventFlagId2);
     ClearSpEffect(10000, 9005);
     ClearSpEffect(10000, 9025);
     WaitFixedTimeSeconds(5);
     DisplayMessage(100051, 0);
+});
+
+// Holy Street B_New NPC summons_Aiming for the boss room_XX
+$Event(12414450, Restart, function(chrEntityId, entityId, eventFlagId, eventFlagId2, eventFlagId3) {
+    EndIf(ThisEventSlot());
+    EndIf(HasMultiplayerState(MultiplayerState.Client));
+    WaitFor(EventFlag(eventFlagId) && !EventFlag(eventFlagId2) && EventFlag(eventFlagId3));
+    SetEventPoint(chrEntityId, entityId, 1);
+    RequestCharacterAICommand(chrEntityId, 990, 0);
+    RequestCharacterAIReplan(chrEntityId);
 });
 
 // Holy Street B_New NPC summons_Enter boss room_XX
@@ -4942,7 +4999,7 @@ $Event(12414460, Restart, function(chrEntityId, areaEntityId, entityId, areaEnti
     RequestCharacterAIReplan(chrEntityId);
 });
 
-// Co-Blood Hunting _Fake NPC Summoning_Cooperation_Participation
+// Co-Blood Hunting _Fake NPC Summoning_Cooperation_Participation - UNUSED
 $Event(12414500, Restart, function() {
     if (ThisEvent()) {
         SetCharacterDefaultBackreadState(2410740, Enabled);
@@ -4985,7 +5042,7 @@ L2:
     ActivateHit(2414200, Disabled);
 });
 
-// Co-Blood Hunting_Fake NPC Summoning_Cooperation_Returning
+// Co-Blood Hunting_Fake NPC Summoning_Cooperation_Returning - UNUSED
 $Event(12414501, Restart, function() {
     EndIf(!CharacterType(10000, TargetType.Alive));
     EndIf(EventFlag(12411700));
@@ -4996,7 +5053,7 @@ L0:
     SetCharacterDefaultBackreadState(2410740, Disabled);
 });
 
-// Co-Blood Hunting _Fake NPC Summoning_Cooperation_Success
+// Co-Blood Hunting _Fake NPC Summoning_Cooperation_Success - UNUSED
 $Event(12414502, Restart, function() {
     EndIf(EventFlag(12411700));
     EndIf(EventFlag(12414501));
@@ -5012,7 +5069,7 @@ L0:
     ChangeCharacterEnableState(2410740, Disabled);
 });
 
-// Co-Blood Hunting _ Summoning phony NPC _ Cooperating _ Aiming for the boss room
+// Co-Blood Hunting _ Summoning phony NPC _ Cooperating _ Aiming for the boss room - UNUSED
 $Event(12414503, Restart, function() {
     EndIf(!CharacterType(10000, TargetType.Alive));
     EndIf(EventFlag(12411700));
@@ -5032,7 +5089,7 @@ L0:
     RequestCharacterAIReplan(2410740);
 });
 
-// Co-Blood Hunting _ Summoning phony NPC _ Cooperating _ Entering the boss room
+// Co-Blood Hunting _ Summoning phony NPC _ Cooperating _ Entering the boss room - UNUSED
 $Event(12414504, Restart, function() {
     EndIf(EventFlag(12411700));
     EndIf(EventFlag(12414501));
@@ -5044,7 +5101,7 @@ $Event(12414504, Restart, function() {
     RequestCharacterAIReplan(2410740);
 });
 
-// Co-Blood Hunting_Messenger
+// Co-Blood Hunting_Messenger - UNUSED
 $Event(12414505, Restart, function() {
     SetVisibilityOfMessage(2413221, Disabled);
     SetVisibilityOfMessage(2413223, Disabled);
@@ -5068,7 +5125,7 @@ $Event(12414505, Restart, function() {
     DeleteMapSFX(2413233, true);
 });
 
-// Fake NPC summon_cooperation_participation
+// Fake NPC summon_cooperation_participation - UNUSED
 $Event(12414600, Restart, function() {
     if (ThisEvent()) {
         SetCharacterDefaultBackreadState(2410158, Enabled);
@@ -5110,7 +5167,7 @@ L2:
     ActivateHit(2414200, Disabled);
 });
 
-// Fake NPC Summon_Cooperation_Return
+// Fake NPC Summon_Cooperation_Return - UNUSED
 $Event(12414601, Restart, function() {
     if (!ThisEvent()) {
         WaitFor(CharacterHasEventMessage(2410158, 1000));
@@ -5121,7 +5178,7 @@ L0:
     ActivateHit(2414200, Enabled);
 });
 
-// Fake NPC Summon_Cooperation_Return_Success
+// Fake NPC Summon_Cooperation_Return_Success - UNUSED
 $Event(12414602, Restart, function() {
     EndIf(!CharacterType(10000, TargetType.Alive));
     if (!ThisEvent()) {
@@ -5137,7 +5194,7 @@ L0:
     RequestCharacterAIReplan(2410158);
 });
 
-// Fake NPC Summon_Cooperation_Return_Farewell Cannon
+// Fake NPC Summon_Cooperation_Return_Farewell Cannon - UNUSED
 $Event(12414603, Restart, function() {
     EndIf(!CharacterType(10000, TargetType.Alive));
     if (!ThisEvent()) {
@@ -5155,7 +5212,7 @@ L0:
     RequestCharacterAIReplan(2410158);
 });
 
-// Summon phony NPC_Cooperation_Aim for the boss room
+// Summon phony NPC_Cooperation_Aim for the boss room - UNUSED
 $Event(12414604, Restart, function() {
     EndIf(!CharacterType(10000, TargetType.Alive));
     EndIf(ThisEvent());
@@ -5165,7 +5222,7 @@ $Event(12414604, Restart, function() {
     RequestCharacterAIReplan(2410158);
 });
 
-// Summon phony NPC_cooperation_enter the boss room
+// Summon phony NPC_cooperation_enter the boss room - UNUSED
 $Event(12414605, Restart, function() {
     EndIf(ThisEvent());
     WaitFor(EventFlag(12414604) && InArea(2410158, 2412710));
@@ -5175,7 +5232,7 @@ $Event(12414605, Restart, function() {
     RequestCharacterAIReplan(2410158);
 });
 
-// Summon phony NPC_Messenger
+// Summon phony NPC_Messenger - UNUSED
 $Event(12414606, Restart, function() {
     SetVisibilityOfMessage(2413220, Disabled);
     SetVisibilityOfMessage(2413222, Disabled);
@@ -5198,7 +5255,7 @@ $Event(12414606, Restart, function() {
     DeleteMapSFX(2413232, true);
 });
 
-// Summon phony NPC_Judgment at the moment the bell rings
+// Summon phony NPC_Judgment at the moment the bell rings - UNUSED
 $Event(12414607, Restart, function() {
     WaitFor(CharacterType(10000, TargetType.Alive) && CharacterHasSpEffect(10000, 9000));
     SetEventFlag(12414608, ON);
@@ -5208,7 +5265,7 @@ $Event(12414607, Restart, function() {
     RestartEvent();
 });
 
-// Summon phony NPC_react to music box
+// Summon phony NPC_react to music box - UNUSED
 $Event(12414610, Restart, function() {
     EndIf(ThisEvent());
     WaitFor(
@@ -5528,4 +5585,3 @@ $Event(12415010, Restart, function(entityId, soundType, soundId, timeSeconds) {
     }
     RestartEvent();
 });
-

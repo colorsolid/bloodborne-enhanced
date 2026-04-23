@@ -4,7 +4,7 @@
 // @game    Bloodborne
 // @string    "クリア時間_通し\u0000クリア時間_1プレイ\u0000ボス_撃破\u0000PC情報_ボス撃破_アイコレクター\u0000ボス_戦闘開始\u0000ボス戦_撃破時間\u0000ギミック_m22_最初の門を開けた\u0000ギミック_m22_SC開通\u0000ギミック_エレベーター起動\u0000PC情報_墓地街到達\u0000N:\\SPRJ\\data\\Param\\event\\common.emevd\u0000\u0000\u0000\u0000\u0000"
 // @linked    [236]
-// @version    3.6
+// @version    3.6.3
 // ==/EMEVD==
 
 const area_id = 22;
@@ -17,7 +17,6 @@ const hemwick_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10);
 const witches_offset = 4;
 const witches_lamp_offset = 1;
 const witches_defeat = 12201800;
-const witches_met = 12201802;
 const witches_return = 2201899;
 const witches_lamp_id = 2201951;
 const witches_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10) + 2;
@@ -43,7 +42,7 @@ const witches_id2 = 2200801;
 $Event(0, Default, function() {
     SetEventFlag(8900+witches_offset, OFF);
     
-    $InitializeEvent(0, 7900, 10000000+witches_return, witches_return, area_id, block_id, 8500+hemwick_lamp_offset);
+    $InitializeEvent(1, 7900, 10000000+witches_return, witches_return, area_id, block_id);
     
     $InitializeEvent(hemwick_lamp_offset, 8500, 8500+hemwick_lamp_offset, hemwick_lamp_id, 72111212);
     $InitializeEvent(witches_lamp_offset, 8500, 8500+witches_lamp_offset, witches_lamp_id, 72111313);
@@ -60,8 +59,14 @@ $Event(0, Default, function() {
         }
         SetEventFlag(witches_rematch_cleanup, OFF);
         SetEventFlag(witches_defeat, ON);
-        $InitializeEvent(witches_lamp_offset, 8300, witches_lamp_id+2000, 999, witches_lamp_kindle, witches_lamp_id+6000, witches_lamp_id+3000);
-        DummyPlayCutsceneAndWarpPlayer(witches_lamp_id+4000, area_id, block_id);
+        if (EventFlag(12111120)) {
+            SetEventFlag(12111120, OFF);
+            $InitializeEvent(witches_lamp_offset, 8300, witches_lamp_id+2000, -1, witches_lamp_kindle, witches_lamp_id+6000, witches_lamp_id+3000);
+        }
+        else {
+            $InitializeEvent(witches_lamp_offset, 8300, witches_lamp_id+2000, 999, witches_lamp_kindle, witches_lamp_id+6000, witches_lamp_id+3000);
+            DummyPlayCutsceneAndWarpPlayer(witches_lamp_id+4000, area_id, block_id);
+        }
     } else if (EventFlag(witches_rematch_started) || EventFlag(witches_auto_rematch)) {
         if (EventFlag(witches_rematch_death_occurred)) {
             SetEventFlag(witches_rematch_death_occurred, OFF);
@@ -351,8 +356,6 @@ $Event(0, Default, function() {
     $InitializeEvent(1, 7200, 72200101, 2201951, 2102951);
     $InitializeEvent(0, 7300, 72102200, 2201950);
     $InitializeEvent(1, 7300, 72102201, 2201951);
-    $InitializeEvent(0, 12102220, 2201950, 2200950);
-    $InitializeEvent(1, 12102220, 2201951, 2200951);
     $InitializeEvent(0, 7600, 2201999, 2203999);
     $InitializeEvent(0, 9200, 2203900);
     $InitializeEvent(0, 9220, 2200710, 12204220, 12204221, 2200, 22, 0);
@@ -661,7 +664,7 @@ $Event(12201800, Default, function() {
     }
 L0:
     WaitFor(CharacterDead(2200800) && CharacterDead(2200801));
-    DisplayBanner(TextBannerType.DemonKilled);
+    DisplayBanner(TextBannerType.DemonKilled); // witches defeated
     DeactivateObject(2201800, Disabled);
     DeactivateObject(2201801, Disabled);
     DeleteMapSFX(2203800, true);
@@ -2222,4 +2225,3 @@ $Event(12200990, Default, function() {
     ParameterOutput(PlayerPlayLogParameter.Weapon, 214, PlayLogMultiplayerType.HostOnly);
     ParameterOutput(PlayerPlayLogParameter.Armor, 214, PlayLogMultiplayerType.HostOnly);
 });
-

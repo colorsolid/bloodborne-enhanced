@@ -4,7 +4,7 @@
 // @game    Bloodborne
 // @string    "PC情報_拠点到達時\u0000ボス_撃破\u0000PC情報_ボス撃破_拠点ボス\u0000ボス_戦闘開始\u0000ボス_撃破時間\u0000PC情報_ボス撃破_拠点ボス2\u0000ボス_戦闘開始2\u0000ボス_撃破時間2\u0000N:\\SPRJ\\data\\Param\\event\\common.emevd\u0000"
 // @linked    [164]
-// @version    3.6
+// @version    3.6.3
 // ==/EMEVD==
 
 const area_id = 21;
@@ -150,12 +150,12 @@ const ludwig_rematch_triggered = ludwig_defeat + 11;
 const ludwig_rematch_started = ludwig_defeat + 12;
 const ludwig_rematch_spawn_point = ludwig_lamp_id + 1000;
 
-const lawrence_offset = 18;
-const lawrence_defeat = 13401850;
-const lawrence_lamp_id = 3401953;
-const lawrence_rematch_triggered = lawrence_defeat + 11;
-const lawrence_rematch_started = lawrence_defeat + 12;
-const lawrence_rematch_spawn_point = lawrence_lamp_id + 1000;
+const laurence_offset = 18;
+const laurence_defeat = 13401850;
+const laurence_lamp_id = 3401953;
+const laurence_rematch_triggered = laurence_defeat + 11;
+const laurence_rematch_started = laurence_defeat + 12;
+const laurence_rematch_spawn_point = laurence_lamp_id + 1000;
 
 const living_failures_offset = 19;
 const living_failures_defeat = 13501850;
@@ -180,12 +180,7 @@ const orphan_rematch_spawn_point = orphan_lamp_id + 1000;
 
 // constructor
 $Event(0, Default, function() {
-    $InitializeEvent(0, 12308030);
-    $InitializeEvent(0, 12308031);
-    $InitializeEvent(0, 12308032);
-    $InitializeEvent(0, 12308084);
-    $InitializeEvent(0, 12100005);
-    //SetEventFlag(12308034, OFF);
+    $InitializeEvent(0, 12100005); // shop display fix
     
     $InitializeEvent(0, 8701); // broken lamp enable/disable
     
@@ -214,8 +209,13 @@ $Event(0, Default, function() {
         SetEventFlag(gehrman_rematch_played, OFF);
         SetEventFlag(gehrman_defeat, ON);
         SetEventFlag(gehrman_encountered, ON);
-        $InitializeEvent(gehrman_offset, 8300, 2102968, 999, auto_kindle, 2102328, 2102308);
-        DummyPlayCutsceneAndWarpPlayer(2102967, area_id, block_id);
+        if (EventFlag(12111120)) {
+            SetEventFlag(12111120, OFF);
+        }
+        else {
+            $InitializeEvent(gehrman_offset, 8300, 2102968, 999, auto_kindle, 2102328, 2102308);
+            DummyPlayCutsceneAndWarpPlayer(2102967, area_id, block_id);
+        }
     // rematch has started
     } else if (EventFlag(gehrman_rematch_started)
         || EventFlag(gehrman_auto_rematch_trigger)
@@ -226,9 +226,6 @@ $Event(0, Default, function() {
         }
         SetEventFlag(gehrman_defeat, OFF);
         SetEventFlag(gehrman_encountered, OFF);
-        //if (!EventFlag(distorted_rematch_played)) {
-        //SetEventFlag(moon_presence_defeat+2, ON);
-        //}
         SetEventFlag(gehrman_rematch_started, OFF);
         SetEventFlag(gehrman_rematch_played, ON);
         SetEventFlag(gehrman_auto_rematch_trigger, OFF);
@@ -247,8 +244,13 @@ $Event(0, Default, function() {
         SetEventFlag(moon_presence_rematch_played, OFF);
         SetEventFlag(moon_presence_defeat, ON);
         SetEventFlag(moon_presence_defeat+2, ON);
-        $InitializeEvent(moon_presence_offset, 8300, 2102968, 999, auto_kindle, 2102328, 2102308);
-        DummyPlayCutsceneAndWarpPlayer(2102967, area_id, block_id);
+        if (EventFlag(12111120)) {
+            SetEventFlag(12111120, OFF);
+        }
+        else {
+            $InitializeEvent(moon_presence_offset, 8300, 2102968, 999, auto_kindle, 2102328, 2102308);
+            DummyPlayCutsceneAndWarpPlayer(2102967, area_id, block_id);
+        }
     // rematch has started
     } else if (EventFlag(moon_presence_rematch_started)
         || EventFlag(moon_presence_auto_rematch_trigger)
@@ -312,7 +314,7 @@ $Event(0, Default, function() {
     $InitializeEvent(ebrietas_offset, 7700, ebrietas_rematch_triggered, ebrietas_rematch_started, ebrietas_rematch_spawn_point, 821000);
     $InitializeEvent(logarius_offset, 7700, logarius_rematch_triggered, logarius_rematch_started, logarius_rematch_spawn_point, 821000);
     $InitializeEvent(ludwig_offset, 7700, ludwig_rematch_triggered, ludwig_rematch_started, ludwig_rematch_spawn_point, 821000);
-    $InitializeEvent(lawrence_offset, 7700, lawrence_rematch_triggered, lawrence_rematch_started, lawrence_rematch_spawn_point, 821000);
+    $InitializeEvent(laurence_offset, 7700, laurence_rematch_triggered, laurence_rematch_started, laurence_rematch_spawn_point, 821000);
     $InitializeEvent(living_failures_offset, 7700, living_failures_rematch_triggered, living_failures_rematch_started, living_failures_rematch_spawn_point, 821000);
     $InitializeEvent(maria_offset, 7700, maria_rematch_triggered, maria_rematch_started, maria_rematch_spawn_point, 821000);
     $InitializeEvent(orphan_offset, 7700, orphan_rematch_triggered, orphan_rematch_started, orphan_rematch_spawn_point, 821000);
@@ -330,14 +332,6 @@ $Event(0, Default, function() {
         DeactivateObject(2101100, Disabled);
     }
     SetNetworkUpdateRate(2100700, true, CharacterUpdateFrequency.AlwaysUpdate);
-    
-    // SetSpEffect(10000, 110, false);
-    // SetSpEffect(10000, 111, false);
-    // SetSpEffect(10000, 112, false);
-    // SetSpEffect(10000, 113, false);
-    // SetSpEffect(10000, 114, false);
-    // SetSpEffect(10000, 115, false);
-    // SetSpEffect(10000, 116, false);
     
     SetEventFlag(72100100, OFF);
     SetEventFlag(72100101, OFF);
@@ -718,224 +712,7 @@ L0:
     }
 });
 
-const maxInsight = 99;
-const maxLevel = 544;
-// respec - calculate echoes and insight
-$Event(12308030, Default, function() {
-    SetEventFlag(12308030, OFF);
-    WaitFor(ThisEvent());
-    WaitFixedTimeFrames(1);
-    if (EventFlag(12308048)) {
-        EventValueOperation(12308000, 30, 5431, 0, 0, CalculationType.Assign);
-    } else {
-        EventValueOperation(12308000, 30, 829, 0, 0, CalculationType.Assign);
-    }
-    EventValueOperation(12308090, 8, 0, 0, 0, CalculationType.Assign);
-    for (let i = 0; i <= maxInsight; i++) {
-        insightCond &= PlayerInsightAmount() == i;
-        GotoIf(S0, !insightCond);
-        Goto(L0);
-S0:
-        EventValueOperation(12308090, 8, 1, 0, 0, CalculationType.Add);
-        WaitFor(ElapsedSeconds(0)); // dummy statement to clear condition variable
-    }
-L0:
-    for (let i = 12; i <= maxLevel; i++) {
-        const amount = 0.02 * i**3 + 3.06 * i**2 + 105.6 * i - 895;
-        EventValueOperation(12308000, 30, amount, 0, 0, CalculationType.Add);
-        levelCond &= PlayersSoulLevel() == i;
-        GotoIf(S1, !levelCond);
-        Goto(L1);
-S1:
-        WaitFor(ElapsedSeconds(0)); // dummy statement to clear condition variable
-    }
-    EventValueOperation(12308000, 30, 0, 0, 0, CalculationType.Assign);
-L1:
-    SetEventFlag(12308031, ON);
-    RestartEvent();
-});
-
-// 4020 astral clocktower key
-// 4019 balcony key
-// 4003 cainhurst summons
-// 4021 celestial dial
-// 4017 eye pendant
-// 4011 hunter chief emblem
-// 4009 iron door key
-// 4014 lawrence's skull
-// 4012 lecture theatre key
-// 4013 lunarium key
-// 4000 oedon tomb key
-// 4312 old hunter bell
-// 4006 orphanage key
-// 4305 queenly flesh
-// 4304 ring of betrothal
-// 4300 small hair ornament
-// 4310 tonsil stone
-// 4018 underground cell key
-// 4015 underground cell inner key
-// 4308 unopened summons
-// 4010 upper cathedral ward key
-// 4330 yharnam stone
-// 4117 cainhurst badge
-// 4119 cosmic eye watcher badge
-// 4111 crow hunter badge
-// 4120 firing hammer badge
-// 4113 old hunter badge
-// 4112 powder key hunter badge
-// 4115 radiant sword hunter badge
-// 4110 saw hunter badge
-// 4118 spark hunter badge
-// 4114 sword hunter badge
-// 4116 wheel hunter badge
-// 4102 haze extractor
-// 4103 blood gem workshop
-// 4104 rune workshop tool
-// 4002 rite of kindling
-
-// change character
-$Event(12308031, Default, function() {
-    SetEventFlag(12308031, OFF);
-    const itemIds = [
-        4020, 4019, 4003, 4021, 4017, 4011, 4009, 4014, 4012, 4013, 
-        4000, 4312, 4006, 4305, 4304, 4300, 4310, 4018, 4015, 4308, 
-        4010, 4330, 4117, 4119, 4111, 4120, 4113, 4112, 4115, 4110, 
-        4118, 4114, 4116, 4102, 4103, 4104, 4002, 4105
-    ];
-    const keyCount = 38;
-    const baseFlag = 12308050;
-    WaitFor(EventFlag(12308031));
-    for (let i = 0; i < keyCount; i++) {
-        keyCond &= PlayerHasItem(ItemType.Goods, itemIds[i]);
-        if (keyCond) {
-            SetEventFlag(baseFlag + i, ON);
-        }
-        WaitFor(ElapsedSeconds(0)); // dummy statement to clear condition variable
-    }
-    WaitFor(
-        EventFlag(12308040)
-            || EventFlag(12308041)
-            || EventFlag(12308042)
-            || EventFlag(12308043)
-            || EventFlag(12308044)
-            || EventFlag(12308045)
-            || EventFlag(12308046)
-            || EventFlag(12308047)
-            || EventFlag(12308048));
-    if (EventFlag(12308040)) {
-        ChangeCharacter(2000);
-    } else if (EventFlag(12308041)) {
-        ChangeCharacter(2001);
-    } else if (EventFlag(12308042)) {
-        ChangeCharacter(2002);
-    } else if (EventFlag(12308043)) {
-        ChangeCharacter(2003);
-    } else if (EventFlag(12308044)) {
-        ChangeCharacter(2004);
-    } else if (EventFlag(12308045)) {
-        ChangeCharacter(2005);
-    } else if (EventFlag(12308046)) {
-        ChangeCharacter(2006);
-    } else if (EventFlag(12308047)) {
-        ChangeCharacter(2007);
-    } else if (EventFlag(12308048)) {
-        ChangeCharacter(2008);
-    }
-    EventValueOperation(12308049, 1, 1, 0, 0, CalculationType.Assign);
-    for (let i = 0; i < keyCount; i++) {
-        if (EventFlag(baseFlag + i)) {
-            DirectlyGivePlayerItem(ItemType.Goods, itemIds[i], 12308049, 1);
-        }
-    }
-    BatchSetEventFlags(12308040, 12308082, OFF);
-    SetEventFlag(12308034, ON);
-    RestartEvent();
-});
-
-// reimburse echoes
-$Event(12308032, Default, function() {
-    WaitFor(EventFlag(12308034));
-    GotoIf(S0, EventValue(12308000, 30) < 268435456);
-    EventValueOperation(12308000, 30, 268435456, 0, 0, CalculationType.Sub);
-    SetSpEffect(10000, 127, false);
-    WaitFixedTimeFrames(1);
-    ClearSpEffect(10000, 127);
-    RestartEvent();
-    Goto(S7);
-S0:
-    GotoIf(S1, EventValue(12308000, 30) < 16777216);
-    EventValueOperation(12308000, 30, 16777216, 0, 0, CalculationType.Sub);
-    SetSpEffect(10000, 126, false);
-    WaitFixedTimeFrames(1);
-    ClearSpEffect(10000, 126);
-    RestartEvent();
-    Goto(S7);
-S1:
-    GotoIf(S2, EventValue(12308000, 30) < 1048576);
-    EventValueOperation(12308000, 30, 1048576, 0, 0, CalculationType.Sub);
-    SetSpEffect(10000, 125, false);
-    WaitFixedTimeFrames(1);
-    ClearSpEffect(10000, 125);
-    RestartEvent();
-    Goto(S7);
-S2:
-    GotoIf(S3, EventValue(12308000, 30) < 65536);
-    EventValueOperation(12308000, 30, 65536, 0, 0, CalculationType.Sub);
-    SetSpEffect(10000, 124, false);
-    WaitFixedTimeFrames(1);
-    ClearSpEffect(10000, 124);
-    RestartEvent();
-    Goto(S7);
-S3:
-    GotoIf(S4, EventValue(12308000, 30) < 4096);
-    EventValueOperation(12308000, 30, 4096, 0, 0, CalculationType.Sub);
-    SetSpEffect(10000, 123, false);
-    WaitFixedTimeFrames(1);
-    ClearSpEffect(10000, 123);
-    RestartEvent();
-    Goto(S7);
-S4:
-    GotoIf(S5, EventValue(12308000, 30) < 256);
-    EventValueOperation(12308000, 30, 256, 0, 0, CalculationType.Sub);
-    SetSpEffect(10000, 122, false);
-    WaitFixedTimeFrames(1);
-    ClearSpEffect(10000, 122);
-    RestartEvent();
-    Goto(S7);
-S5:
-    GotoIf(S6, EventValue(12308000, 30) < 16);
-    EventValueOperation(12308000, 30, 16, 0, 0, CalculationType.Sub);
-    SetSpEffect(10000, 121, false);
-    WaitFixedTimeFrames(1);
-    ClearSpEffect(10000, 121);
-    RestartEvent();
-    Goto(S7);
-S6:
-    GotoIf(S7, EventValue(12308000, 30) < 1);
-    EventValueOperation(12308000, 30, 1, 0, 0, CalculationType.Sub);
-    SetSpEffect(10000, 120, false);
-    WaitFixedTimeFrames(1);
-    ClearSpEffect(10000, 120);
-    RestartEvent();
-S7:
-    SetEventFlag(12308034, OFF);
-    SetEventFlag(12308085, ON);
-    RestartEvent();
-});
-
-// reimburse insight
-$Event(12308084, Default, function() {
-    WaitFor(EventFlag(12308085));
-    if (EventValue(12308090, 8) > 0) {
-        SetSpEffect(10000, 4680, false);
-        EventValueOperation(12308090, 8, 1, 0, 0, CalculationType.Sub);
-        RestartEvent();
-    }
-    SetEventFlag(12308085, OFF);
-    RestartEvent();
-});
-
-// ?
+// shop display fix
 $Event(12100005, Default, function() {
     WaitFixedTimeSeconds(0.5);
     SetEventFlag(12100001, OFF);
@@ -1055,9 +832,9 @@ $Event(12102000, Default, function() {
         SetEventFlag(ludwig_defeat+15, ON);
     }
     
-    if (EventFlag(lawrence_defeat+13)) {
-        SetEventFlag(lawrence_defeat+13, OFF);
-        SetEventFlag(lawrence_defeat, ON);
+    if (EventFlag(laurence_defeat+13)) {
+        SetEventFlag(laurence_defeat+13, OFF);
+        SetEventFlag(laurence_defeat, ON);
     }
     
     if (EventFlag(living_failures_defeat+13)) {
@@ -2255,7 +2032,7 @@ L0:
         EndEvent();
     }
     WaitFor(CharacterDead(2100800));
-    DisplayBanner(TextBannerType.DemonKilled);
+    DisplayBanner(TextBannerType.DemonKilled); // gehrman defeated
     SetLockcamSlotNumber(21, 0, 0);
     WaitFixedTimeSeconds(3);
     if (!EventFlag(9900) || EventFlag(gehrman_rematch_played)) {
@@ -2519,7 +2296,7 @@ L0:
         WaitFor(CharacterDead(2100810));
     }
     SetEventFlag(12104859, ON);
-    DisplayBanner(TextBannerType.StadiumDraw);
+    DisplayBanner(TextBannerType.StadiumDraw); // moon presence defeated
     SetLockcamSlotNumber(21, 0, 0);
     WaitFixedTimeSeconds(3);
     HandleBossDefeat(2100810);
@@ -3725,7 +3502,15 @@ $Event(12101028, Default, function() {
         WaitFixedTimeFrames(74);
     }
 L0:
-    ForceAnimationPlayback(2100231, 7053, true, false, false);
+    if (!EventFlag(12105034)) {
+        ForceAnimationPlayback(2100231, 7053, true, false, false);
+    }
+    else {
+        ForceAnimationPlayback(2100231, 7054, false, false, false);
+        WaitFixedTimeFrames(30);
+        WaitFixedTimeFrames(79);
+        ForceAnimationPlayback(2100231, 7051, true, false, false);
+    }
 });
 
 // Warp item sales to Cathedral District D begin
@@ -3881,4 +3666,3 @@ $Event(12105310, Restart, function(eventFlagId, entityId) {
     WaitFixedTimeFrames(74);
     RestartEvent();
 });
-

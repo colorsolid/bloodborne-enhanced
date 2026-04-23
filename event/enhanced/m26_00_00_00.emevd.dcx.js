@@ -4,7 +4,7 @@
 // @game    Bloodborne
 // @string    "クリア時間_通し\u0000クリア時間_1プレイ\u0000ボス_撃破\u0000PC情報_ボス撃破_死と闇レッサー\u0000ボス_戦闘開始\u0000ボス戦_撃破時間\u0000トラップロード_闇魔法_解除状態\u0000トラップロード_闇魔法_発動状態\u0000PC情報_ボス撃破_トラップロード中ボス\u0000トラップロード_中ボス戦_撃破時間\u0000PC情報_トラップロード到達時\u0000N:\\SPRJ\\data\\Param\\event\\common.emevd\u0000\u0000\u0000\u0000\u0000"
 // @linked    [300]
-// @version    3.6
+// @version    3.6.3
 // ==/EMEVD==
 
 const area_id = 26;
@@ -52,11 +52,8 @@ $Event(0, Default, function() {
         SetEventFlag(wet_nurse_defeat+15, ON);
     }
     
-    $InitializeEvent(14, 7900, 10000000+micolash_return, micolash_return, area_id, block_id, 8500+nightmare_lamp_offset);
-    $InitializeEvent(15, 7900, 10000000+micolash_return-3, micolash_return, area_id, block_id, 8500+base_lamp_offset);
-    $InitializeEvent(16, 7900, 10000000+wet_nurse_return, wet_nurse_return, area_id, block_id, 8500+nightmare_lamp_offset);
-    $InitializeEvent(17, 7900, 10000000+wet_nurse_return-3, wet_nurse_return, area_id, block_id, 8500+base_lamp_offset);
-    $InitializeEvent(18, 7900, 10000000+wet_nurse_return-2, wet_nurse_return, area_id, block_id, 8500+micolash_lamp_offset);
+    $InitializeEvent(0, 7900, 10000000+micolash_return, micolash_return, area_id, block_id);
+    $InitializeEvent(1, 7900, 10000000+wet_nurse_return, wet_nurse_return, area_id, block_id);
     
     $InitializeEvent(nightmare_lamp_offset, 8500, 8500+nightmare_lamp_offset, nightmare_lamp_id, 72113030);
     $InitializeEvent(base_lamp_offset, 8500, 8500+base_lamp_offset, base_lamp_id, 72113131);
@@ -78,8 +75,14 @@ $Event(0, Default, function() {
         }
         SetEventFlag(micolash_defeat+13, OFF);
         SetEventFlag(micolash_defeat, ON);
-        $InitializeEvent(micolash_lamp_offset, 8300, micolash_lamp_id+2000, 999, micolash_lamp_kindle, micolash_lamp_id+6000, micolash_lamp_id+3000);
-        DummyPlayCutsceneAndWarpPlayer(micolash_lamp_id+4000, area_id, block_id);
+        if (EventFlag(12111120)) {
+            SetEventFlag(12111120, OFF);
+            $InitializeEvent(micolash_lamp_offset, 8300, micolash_lamp_id+2000, -1, micolash_lamp_kindle, micolash_lamp_id+6000, micolash_lamp_id+3000);
+        }
+        else {
+            $InitializeEvent(micolash_lamp_offset, 8300, micolash_lamp_id+2000, 999, micolash_lamp_kindle, micolash_lamp_id+6000, micolash_lamp_id+3000);
+            DummyPlayCutsceneAndWarpPlayer(micolash_lamp_id+4000, area_id, block_id);
+        }
     } else if (EventFlag(micolash_defeat+12) || EventFlag(micolash_defeat-1)) {
         if (EventFlag(micolash_defeat-2)) {
             SetEventFlag(micolash_defeat-2, OFF);
@@ -104,8 +107,14 @@ $Event(0, Default, function() {
         }
         SetEventFlag(wet_nurse_defeat+13, OFF);
         SetEventFlag(wet_nurse_defeat, ON);
-        $InitializeEvent(wet_nurse_lamp_offset, 8300, wet_nurse_lamp_id+2000, 999, wet_nurse_lamp_kindle, wet_nurse_lamp_id+6000, wet_nurse_lamp_id+3000);
-        DummyPlayCutsceneAndWarpPlayer(wet_nurse_lamp_id+4000, area_id, block_id);
+        if (EventFlag(12111120)) {
+            SetEventFlag(12111120, OFF);
+            $InitializeEvent(wet_nurse_lamp_offset, 8300, wet_nurse_lamp_id+2000, -1, wet_nurse_lamp_kindle, wet_nurse_lamp_id+6000, wet_nurse_lamp_id+3000);
+        }
+        else {
+            $InitializeEvent(wet_nurse_lamp_offset, 8300, wet_nurse_lamp_id+2000, 999, wet_nurse_lamp_kindle, wet_nurse_lamp_id+6000, wet_nurse_lamp_id+3000);
+            DummyPlayCutsceneAndWarpPlayer(wet_nurse_lamp_id+4000, area_id, block_id);
+        }
     } else if (EventFlag(wet_nurse_defeat+12) || EventFlag(wet_nurse_defeat-1)) {
         if (EventFlag(wet_nurse_defeat-2)) {
             SetEventFlag(wet_nurse_defeat-2, OFF);
@@ -664,10 +673,6 @@ $Event(0, Default, function() {
     $InitializeEvent(31, 7300, 72102601, 2601951);
     $InitializeEvent(32, 7300, 72102602, 2601952);
     $InitializeEvent(33, 7300, 72102603, 2601953);
-    $InitializeEvent(30, 12102220, 2601950, 2600950);
-    $InitializeEvent(31, 12102220, 2601951, 2600951);
-    $InitializeEvent(32, 12102220, 2601952, 2600952);
-    $InitializeEvent(33, 12102220, 2601953, 2600953);
     $InitializeEvent(6, 9200, 2603900);
     StartTimeMeasurement(2600000, 0, Disabled);
     StartTimeMeasurement(2600001, 18, Enabled);
@@ -1201,7 +1206,7 @@ L0:
         PlaySE(2602300, SoundType.aEnvironmentalSound, 260000004);
         WaitFixedTimeSeconds(18);
     }
-    DisplayBanner(TextBannerType.StadiumDraw);
+    DisplayBanner(TextBannerType.StadiumDraw); // wet nurse defeated
     DeactivateObject(2601800, Disabled);
     DeleteMapSFX(2603800, true);
     SetLockcamSlotNumber(26, 0, 0);
@@ -1615,7 +1620,7 @@ L0:
     WaitFor(CharacterDead(2600850));
     SetEventFlag(12604857, ON);
     WaitFor(EventFlag(72600301));
-    DisplayBanner(TextBannerType.DemonKilled);
+    DisplayBanner(TextBannerType.DemonKilled); // micolash defeated
     DeactivateObject(2601850, Disabled);
     DeactivateObject(2601851, Disabled);
     DeactivateObject(2601859, Disabled);
@@ -3170,4 +3175,3 @@ $Event(12607050, Default, function(eventFlagId, chrEntityId, entityId) {
     ForceAnimationPlayback(chrEntityId, 101166, false, true, false);
     ChangeCharacterEnableState(chrEntityId, Disabled);
 });
-

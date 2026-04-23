@@ -4,7 +4,7 @@
 // @game    Bloodborne
 // @string    "ボス_撃破\u0000PC情報_ボス撃破_ラスボス\u0000ボス_戦闘開始\u0000ボス戦_撃破時間\u0000N:\\SPRJ\\data\\Param\\event\\common.emevd\u0000\u0000\u0000\u0000\u0000"
 // @linked    [76]
-// @version    3.6
+// @version    3.6.3
 // ==/EMEVD==
 
 const area_id = 36;
@@ -37,8 +37,7 @@ $Event(0, Default, function() {
     
     SetEventFlag(8900+orphan_offset, OFF);
     
-    $InitializeEvent(36, 7900, 10000000+orphan_return, orphan_return, area_id, block_id, 8500+hamlet_lamp_offset);
-    $InitializeEvent(37, 7900, 10000000+orphan_return-1, orphan_return, area_id, block_id, 8500+lighthouse_lamp_offset);
+    $InitializeEvent(1, 7900, 10000000+orphan_return, orphan_return, area_id, block_id);
     
     $InitializeEvent(hamlet_lamp_offset, 8500, 8500+hamlet_lamp_offset, hamlet_lamp_id, 72114141);
     $InitializeEvent(lighthouse_lamp_offset, 8500, 8500+lighthouse_lamp_offset, lighthouse_lamp_id, 72114242);
@@ -65,8 +64,14 @@ $Event(0, Default, function() {
         }
         SetEventFlag(orphan_defeat+13, OFF);
         SetEventFlag(orphan_defeat, ON);
-        $InitializeEvent(orphan_lamp_offset, 8300, orphan_lamp_id+2000, 999, orphan_lamp_kindle, orphan_lamp_id+6000, orphan_lamp_id+3000);
-        DummyPlayCutsceneAndWarpPlayer(orphan_lamp_id+4000, area_id, block_id);
+        if (EventFlag(12111120)) {
+            SetEventFlag(12111120, OFF);
+            $InitializeEvent(orphan_lamp_offset, 8300, orphan_lamp_id+2000, -1, orphan_lamp_kindle, orphan_lamp_id+6000, orphan_lamp_id+3000);
+        }
+        else {
+            $InitializeEvent(orphan_lamp_offset, 8300, orphan_lamp_id+2000, 999, orphan_lamp_kindle, orphan_lamp_id+6000, orphan_lamp_id+3000);
+            DummyPlayCutsceneAndWarpPlayer(orphan_lamp_id+4000, area_id, block_id);
+        }
     // rematch has started
     } else if (EventFlag(orphan_defeat+12) || EventFlag(orphan_defeat-1)) {
         if (EventFlag(orphan_defeat-2)) {
@@ -490,9 +495,6 @@ $Event(0, Default, function() {
     $InitializeEvent(65, 7300, 72103600, 3601950);
     $InitializeEvent(66, 7300, 72103601, 3601951);
     $InitializeEvent(67, 7300, 72103602, 3601952);
-    $InitializeEvent(65, 12102220, 3601950, 3600950);
-    $InitializeEvent(66, 12102220, 3601951, 3600951);
-    $InitializeEvent(67, 12102220, 3601952, 3600952);
     $InitializeEvent(0, 13604700, 3600790, 13604701, 13604711, 3600, 999);
     $InitializeEvent(5, 13604700, 3600791, 13604702, 13604712, 3600, 999);
     $InitializeEvent(0, 13604710, 3600790, 13604701, 13604711, 13604721);
@@ -1204,7 +1206,7 @@ L0:
     } else {
         WaitFor(chr || chr2);
     }
-    DisplayBanner(TextBannerType.DemonKilled);
+    DisplayBanner(TextBannerType.DemonKilled); // orphan defeated
     DeactivateObject(3601800, Disabled);
     DeactivateObject(3601801, Disabled);
     DeleteMapSFX(3603800, true);
@@ -1335,7 +1337,7 @@ $Event(13601803, Default, function() {
             DeactivateObject(3601811, Enabled);
         }
         WaitFor(CharacterDead(3600802));
-        DisplayBanner(TextBannerType.StadiumDraw);
+        DisplayBanner(TextBannerType.StadiumDraw); // kos spirit killed
         WaitFixedTimeSeconds(5);
         EndIf(!CharacterType(10000, TargetType.Alive));
     }
@@ -2394,4 +2396,3 @@ $Event(13600995, Default, function() {
     WaitFor(EventFlag(13605952));
     SetEventFlag(13605940, OFF);
 });
-

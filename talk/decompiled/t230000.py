@@ -4,6 +4,8 @@ def t230000_0():
     t230000_x1(flag1=6000, flag2=6001, actionbutton1=6100, actionbutton2=6101, actionbutton3=6103, flag3=230, flag4=0, action1=10010715)
     Quit()
 
+# standard lamp
+
 def t230000_x0():
     """State 0,1"""
     SetEventState(8500+5, 0)
@@ -421,12 +423,14 @@ def t230000_x50():
         if not GetTalkListEntryResult() or not IsTalkExclusiveMenuOpen():
             """State 4"""
             return 1
+        # awaken above ground
         elif GetTalkListEntryResult() == 1:
             call = t230000_x49()
             if call.Get() == 1:
                 ForceCloseMenu()
             elif call.Done():
                 return 0
+        # quick warp to boss
         elif GetTalkListEntryResult() == 2:
             call = t230000_x48()
             if call.Get() == 1:
@@ -463,6 +467,7 @@ def t230000_x50():
                 ForceCloseGenericDialog()
                 pass
         
+# quick warp to boss
 def t230000_x48():
     while True:
         ClearTalkListData()
@@ -483,7 +488,7 @@ def t230000_x48():
             SetEventState(12301899, 1)
             return 0
         elif GetTalkListEntryResult() == 2:
-            SetEventState(12301799, 1)
+            SetEventState(12301759, 1)
             return 0
 
 # awaken above ground
@@ -540,7 +545,7 @@ def t230000_x49():
 def t230000_x20(flag2=_, flag3=_, action1=_):
     """State 0,3"""
     DebugEvent('Flag judgment')
-    if GetEventStatus(12100968) and flag2 * 10 + flag3 == 10903: # 10003
+    if GetEventStatus(12100968) and flag2 * 10 + flag3 == 10903: # gascoigne
         if not GetEventStatus(70002413):
             SetEventState(72102413, 1)
             SetEventState(flag2 * 10 + 72100000 + flag3 * 1, 1)
@@ -551,7 +556,7 @@ def t230000_x20(flag2=_, flag3=_, action1=_):
                 SetTalkTime(0.33)
             assert not IsGenericDialogOpen()
             return 1
-    elif GetEventStatus(12100968) and flag2 * 10 + flag3 == 10905: # 10005
+    elif GetEventStatus(12100968) and flag2 * 10 + flag3 == 10905: # amelia
         if not GetEventStatus(70002401):
             SetEventState(72102401, 1)
             SetEventState(flag2 * 10 + 72100000 + flag3 * 1, 1)
@@ -562,7 +567,7 @@ def t230000_x20(flag2=_, flag3=_, action1=_):
                 SetTalkTime(0.33)
             assert not IsGenericDialogOpen()
             return 1
-    elif GetEventStatus(12100968) and flag2 * 10 + flag3 == 10921: # 10021
+    elif GetEventStatus(12100968) and flag2 * 10 + flag3 == 10921: # g
         if not GetEventStatus(70002802):
             SetEventState(72102802, 1)
             SetEventState(flag2 * 10 + 72100000 + flag3 * 1, 1)
@@ -1863,7 +1868,7 @@ def t230000_x93():
         AddTalkListData(2, 200088, 12101401) # all standard trick weapons
         AddTalkListData(3, 200089, 12101402) # all uncanny trick weapons
         AddTalkListData(4, 200090, 12101403) # all lost trick weapons
-        AddTalkListData(5, 200140, -1) # rune list
+        AddTalkListData(5, 200141, 12109000) # all runes
         AddTalkListData(10, 200083, 12101410) # secondary weapons
         AddTalkListData(20, 200091, 12101420) # hunter's tools
         AddTalkListData(30, 200084, 12101430) # all armors
@@ -1902,12 +1907,11 @@ def t230000_x93():
             OpenGenericDialog(1, 200103, 1, 0, 1)
             def WhilePaused():
                 SetTalkTime(0.33)
-        elif GetTalkListEntryResult() == 5: # rune list
-            call = t230000_x89()
-            if call.Get() == 1:
-                ForceCloseMenu()
-            elif call.Done():
-                return 0
+        elif GetTalkListEntryResult() == 5: # all runes
+            SetEventState(12100005, 1)
+            OpenGenericDialog(1, 200142, 1, 0, 1)
+            def WhilePaused():
+                SetTalkTime(0.33)
             assert not IsGenericDialogOpen()
         elif GetTalkListEntryResult() == 10: # all secondary weapons
             SetEventState(12101310, 1)
@@ -1969,29 +1973,6 @@ def t230000_x93():
             def WhilePaused():
                 SetTalkTime(0.33)
             assert not IsGenericDialogOpen()
-
-def t230000_x89():
-    while True:
-        ClearTalkListData()
-        AddTalkListData(1, 200141, -1) # all runes
-        AddTalkListData(50, 200037, 12100870) # beast
-        AddTalkListData(51, 200038, 12100869) # milkweed        
-        ShowShopMessage(0, 0, 0)
-        def WhilePaused():
-            SetTalkTime(0.33)
-        if not GetTalkListEntryResult() or not IsTalkExclusiveMenuOpen():
-            return 1
-        elif GetTalkListEntryResult() == 1: # all runes
-            SetEventState(12100006, 1)
-            OpenGenericDialog(1, 200142, 1, 0, 1)            
-            def WhilePaused():
-                SetTalkTime(0.33)
-            assert not IsGenericDialogOpen()
-            return 1
-        elif GetTalkListEntryResult() == 50: # beast
-            SetEventState(12100770, 1)
-        elif GetTalkListEntryResult() == 51: # milkweed
-            SetEventState(12100769, 1)
 
 # stump messengers
 def t230000_x92():

@@ -4,7 +4,7 @@
 // @game    Bloodborne
 // @string    "PC情報_大学到達時\u0000クリア時間_通し\u0000クリア時間_1プレイ\u0000ボス戦_撃破時間\u0000ボス_撃破\u0000PC情報_ボス撃破_白痴の蜘蛛\u0000ボス_戦闘開始\u0000N:\\SPRJ\\data\\Param\\event\\common.emevd\u0000\u0000\u0000\u0000\u0000"
 // @linked    [140]
-// @version    3.6
+// @version    3.6.3
 // ==/EMEVD==
 
 const area_id = 32;
@@ -40,7 +40,7 @@ $Event(0, Default, function() {
     
     SetEventFlag(8900+rom_offset, OFF);
     
-    $InitializeEvent(27, 7900, 10000000+rom_return, rom_return, area_id, block_id, 8500+byrgenwerth_lamp_offset);
+    $InitializeEvent(0, 7900, 10000000+rom_return, rom_return, area_id, block_id);
     
     $InitializeEvent(byrgenwerth_lamp_offset, 8500, 8500+byrgenwerth_lamp_offset, byrgenwerth_lamp_id, 72111616);
     $InitializeEvent(lecture_hall_1_lamp_offset, 8500, 8500+lecture_hall_1_lamp_offset, lecture_hall_1_lamp_id, 72112626);
@@ -64,8 +64,14 @@ $Event(0, Default, function() {
         SetEventFlag(rom_defeat+13, OFF);
         SetEventFlag(rom_defeat, ON);
         SetEventFlag(rom_defeat+3, ON);
-        $InitializeEvent(rom_lamp_offset, 8300, rom_lamp_id+2000, 999, rom_lamp_kindle, rom_lamp_id+6000, rom_lamp_id+3000);
-        DummyPlayCutsceneAndWarpPlayer(rom_lamp_id+4000, area_id, block_id);
+        if (EventFlag(12111120)) {
+            SetEventFlag(12111120, OFF);
+            $InitializeEvent(rom_lamp_offset, 8300, rom_lamp_id+2000, -1, rom_lamp_kindle, rom_lamp_id+6000, rom_lamp_id+3000);
+        }
+        else {
+            $InitializeEvent(rom_lamp_offset, 8300, rom_lamp_id+2000, 999, rom_lamp_kindle, rom_lamp_id+6000, rom_lamp_id+3000);
+            DummyPlayCutsceneAndWarpPlayer(rom_lamp_id+4000, area_id, block_id);
+        }
     } else if (EventFlag(rom_defeat+12) || EventFlag(rom_defeat-1)) {
         if (EventFlag(rom_defeat-2)) {
             SetEventFlag(rom_defeat-2, OFF);
@@ -622,10 +628,6 @@ $Event(0, Default, function() {
     $InitializeEvent(46, 7300, 72103201, 3201951);
     $InitializeEvent(47, 7300, 72103202, 3201952);
     $InitializeEvent(48, 7300, 72103203, 3201953);
-    $InitializeEvent(45, 12102220, 3201950, 3200950);
-    $InitializeEvent(46, 12102220, 3201951, 3200951);
-    $InitializeEvent(47, 12102220, 3201952, 3200952);
-    $InitializeEvent(48, 12102220, 3201953, 3200953);
     $InitializeEvent(70, 7600, 3201999, 3203999);
     $InitializeEvent(9, 9200, 3203900);
     $InitializeEvent(8, 9220, 3200710, 13204220, 13204221, 3200, 32, 0);
@@ -646,6 +648,16 @@ $Event(0, Default, function() {
     DeleteMapSFX(3203910, false);
     DeleteMapSFX(3203911, false);
     DeleteMapSFX(3203912, false);
+    
+    $InitializeEvent(0, 8617, 3200910, 13204420, 101161, 101162, 163); // damien
+    $InitializeEvent(0, 8630, 8630, 8640, 3200910, 13204420, 3203910, 3200, -1, 200240, 101207, 200251, 200261);
+    
+    $InitializeEvent(1, 8617, 3200911, 13204421, 101161, 101208, 163); // madaras twin - c
+    $InitializeEvent(1, 8630, 8631, 8641, 3200911, 13204421, 3203911, 3200, -1, 200243, 101208, 200253, 200263);
+    
+    $InitializeEvent(2, 8617, 3200912, 13204422, 101161, 101208, 163); // henryk - c
+    $InitializeEvent(2, 8630, 8632, 8642, 3200912, 13204422, 3203912, 3200, -1, 200244, 101208, 200254, 200264);
+    
     $InitializeEvent(0, 13204400, 13204440, 3203910, 13204420, 13204430, 13201800, 6001);
     $InitializeEvent(0, 13204401, 13204441, 3203911, 13204421, 13204431, 13201800, 13204420);
     $InitializeEvent(0, 13204402, 13204442, 3203912, 13204422, 13204432, 13201800, 13204420);
@@ -658,6 +670,7 @@ $Event(0, Default, function() {
     $InitializeEvent(0, 13204460, 3200910, 3202911, 3202800, 3202809, 101130, 13204450, 3202809);
     $InitializeEvent(1, 13204460, 3200911, 3202915, 3202800, 3202809, 101130, 13204451, 3202809);
     $InitializeEvent(2, 13204460, 3200912, 3202916, 3202800, 3202809, 101130, 13204452, 3202809);
+    
     $InitializeEvent(0, 13204470, 3200910);
     $InitializeEvent(1, 13204470, 3200911);
     $InitializeEvent(2, 13204470, 3200912);
@@ -1277,7 +1290,7 @@ $Event(13201800, Default, function() {
     }
 L0:
     WaitFor(CharacterDead(3200800));
-    DisplayBanner(TextBannerType.DemonKilled);
+    DisplayBanner(TextBannerType.DemonKilled); // rom defeated
     DeactivateObject(3201800, Disabled);
     DeleteMapSFX(3203800, true);
     ActivateHit(3204010, Disabled);
@@ -1523,22 +1536,31 @@ S0:
     SetNetworkUpdateAuthority(3200800, AuthorityLevel.Forced);
 L0:
     SetEventFlag(13204800, ON);
+    GotoIf(L1, CountEventFlags(TargetEventFlagType.EventFlag, 8630, 8639) == 0);
+    GotoIf(L2, CountEventFlags(TargetEventFlagType.EventFlag, 8630, 8639) == 1);
+    GotoIf(L3, CountEventFlags(TargetEventFlagType.EventFlag, 8630, 8639) == 2);
+    GotoIf(L4, CountEventFlags(TargetEventFlagType.EventFlag, 8630, 8639) > 2);
     GotoIf(L1, NumberOfCoopClients() == 0);
     GotoIf(L2, NumberOfCoopClients() == 1);
     GotoIf(L3, NumberOfCoopClients() == 2);
 L1:
-    Goto(L4);
+    Goto(L5);
 L2:
     SetSpEffect(3200800, 7500, true);
     WaitFixedTimeFrames(1);
     AdaptHpchangingSpEffectToNPCPartOfTarget(3200800);
-    Goto(L4);
+    Goto(L5);
 L3:
     SetSpEffect(3200800, 7501, true);
     WaitFixedTimeFrames(1);
     AdaptHpchangingSpEffectToNPCPartOfTarget(3200800);
-    Goto(L4);
+    Goto(L5);
 L4:
+    SetSpEffect(3200800, 7502, true);
+    WaitFixedTimeFrames(1);
+    AdaptHpchangingSpEffectToNPCPartOfTarget(3200800);
+    Goto(L5);
+L5:
     if (EventFlag(rom_defeat+13)) {
         WaitFixedTimeSeconds(2);
     }
@@ -1997,6 +2019,14 @@ L0:
 
 // ★University_New NPC Summoning_Summoning Judgment_High Rank Hunting
 $Event(13204400, Restart, function(eventFlagId, entityId, eventFlagId2, eventFlagId3, eventFlagId4, eventFlagId5) {
+    if (EventFlag(12100889)) {
+        SetEventFlag(eventFlagId2, OFF);
+        SetEventFlag(eventFlagId3, OFF);
+        SpawnMapSFX(entityId);
+        WaitFor(EventFlag(eventFlagId2));
+        DeleteMapSFX(entityId, true);
+        EndEvent();
+    }
     if (!EventFlag(eventFlagId)) {
         SetEventFlag(eventFlagId, OFF);
         DeleteMapSFX(entityId, true);
@@ -2031,6 +2061,14 @@ L0:
 
 // ★University_New NPC Summoning_Summoning Judgment_Alliance: Executioner
 $Event(13204401, Restart, function(eventFlagId, entityId, eventFlagId2, eventFlagId3, eventFlagId4, eventFlagId5) {
+    if (EventFlag(12100889)) {
+        SetEventFlag(eventFlagId2, OFF);
+        SetEventFlag(eventFlagId3, OFF);
+        SpawnMapSFX(entityId);
+        WaitFor(EventFlag(eventFlagId2));
+        DeleteMapSFX(entityId, true);
+        EndEvent();
+    }
     if (!EventFlag(eventFlagId)) {
         SetEventFlag(eventFlagId, OFF);
         DeleteMapSFX(entityId, true);
@@ -2065,6 +2103,14 @@ L0:
 
 // ★University_New NPC Summoning_Summoning Judgment_Alliance: Henrik
 $Event(13204402, Restart, function(eventFlagId, entityId, eventFlagId2, eventFlagId3, eventFlagId4, eventFlagId5) {
+    if (EventFlag(12100889)) {
+        SetEventFlag(eventFlagId2, OFF);
+        SetEventFlag(eventFlagId3, OFF);
+        SpawnMapSFX(entityId);
+        WaitFor(EventFlag(eventFlagId2));
+        DeleteMapSFX(entityId, true);
+        EndEvent();
+    }
     if (!EventFlag(eventFlagId)) {
         SetEventFlag(eventFlagId, OFF);
         DeleteMapSFX(entityId, true);
@@ -2098,20 +2144,34 @@ L0:
 });
 
 // University_New NPC Summon_Participation_XX
-$Event(13204410, Restart, function(signType, areaEntityId, entityId, eventFlagId, eventFlagId2, eventFlagId3, eventFlagId4, actionButtonParameterId) {
-    SetCharacterDefaultBackreadState(areaEntityId, Enabled);
-    SetNetworkUpdateRate(areaEntityId, true, CharacterUpdateFrequency.AlwaysUpdate);
+$Event(13204410, Restart, function(signType, entityId, areaEntityId, eventFlagId, eventFlagId2, eventFlagId3, eventFlagId4, actionButtonParameterId) {
+    SetCharacterDefaultBackreadState(entityId, Enabled);
+    SetNetworkUpdateRate(entityId, true, CharacterUpdateFrequency.AlwaysUpdate);
+    if (EventFlag(12100889)) {
+        WarpCharacterAndCopyFloor(entityId, TargetEntityType.Area, areaEntityId, -1, areaEntityId);
+        ChangeCharacterEnableState(entityId, Disabled);
+        WaitFor(!EventFlag(eventFlagId) && ActionButtonInArea(actionButtonParameterId, entityId));
+        SetEventFlag(3200, OFF);
+        ForceAnimationPlayback(10000, 100111, false, false, false);
+        SetSpEffect(10000, 4682, false);
+        SummonNPC(signType, entityId, areaEntityId, eventFlagId, eventFlagId2);
+        ClearSpEffect(10000, 9005);
+        ClearSpEffect(10000, 9025);
+        WaitFixedTimeSeconds(5);
+        DisplayMessage(100051, 0);
+        EndEvent();
+    }
     if (!EventFlag(eventFlagId)) {
-        ChangeCharacterEnableState(areaEntityId, Disabled);
+        ChangeCharacterEnableState(entityId, Disabled);
     }
     GotoIf(S0, EventFlag(eventFlagId2));
     GotoIf(S1, HasMultiplayerState(MultiplayerState.Client) && EventFlag(eventFlagId));
 S0:
-    ChangeCharacterEnableState(areaEntityId, Disabled);
+    ChangeCharacterEnableState(entityId, Disabled);
 S1:
     EndIf(EventFlag(eventFlagId4));
     if (!HasMultiplayerState(MultiplayerState.Client)) {
-        SetNetworkUpdateAuthority(areaEntityId, AuthorityLevel.Forced);
+        SetNetworkUpdateAuthority(entityId, AuthorityLevel.Forced);
     }
     WaitFor(
         PlayerHasItem(ItemType.Goods, 4312)
@@ -2119,10 +2179,10 @@ S1:
             && !EventFlag(eventFlagId2)
             && EventFlag(eventFlagId3)
             && !EventFlag(eventFlagId4)
-            && ActionButtonInArea(actionButtonParameterId, areaEntityId));
+            && ActionButtonInArea(actionButtonParameterId, entityId));
     ForceAnimationPlayback(10000, 100111, false, false, false);
     SetSpEffect(10000, 4682, false);
-    SummonNPC(signType, areaEntityId, entityId, eventFlagId, eventFlagId2);
+    SummonNPC(signType, entityId, areaEntityId, eventFlagId, eventFlagId2);
     ClearSpEffect(10000, 9005);
     ClearSpEffect(10000, 9025);
     WaitFixedTimeSeconds(5);
@@ -2147,4 +2207,3 @@ $Event(13204460, Restart, function(chrEntityId, areaEntityId, entityId, areaEnti
     RequestCharacterAICommand(chrEntityId, -1, 0);
     RequestCharacterAIReplan(chrEntityId);
 });
-

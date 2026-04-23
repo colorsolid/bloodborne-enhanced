@@ -4,7 +4,7 @@
 // @game    Bloodborne
 // @string    "\u0000聖堂街A_邪神投げ開始\u0000聖堂街A_扉を閉じる領域侵入\u0000聖堂街A_ショートカット領域侵入\u0000聖堂街A_トラップ発動\u0000ボス_撃破\u0000PC情報_ボス撃破_聖女ビースト\u0000ボス_戦闘開始\u0000ボス戦_撃破時間\u0000PC情報_聖堂街A到達時\u0000N:\\SPRJ\\data\\Param\\event\\common.emevd\u0000\u0000\u0000\u0000\u0000"
 // @linked    [220]
-// @version    3.6
+// @version    3.6.3
 // ==/EMEVD==
 
 const area_id = 24;
@@ -59,7 +59,7 @@ $Event(0, Default, function() {
     $InitializeEvent(cathedral_ward_lamp_offset, 8100, cathedral_ward_lamp_kindle_trigger, cathedral_ward_lamp_kindle_state);
     $InitializeEvent(amelia_lamp_offset, 8100, amelia_lamp_kindle_trigger, amelia_lamp_kindle_state);
     
-    $InitializeEvent(3, 7900, amelia_return_flag, amelia_return, area_id, block_id, cathedral_ward_lamp_rest);
+    $InitializeEvent(0, 7900, amelia_return_flag, amelia_return, area_id, block_id);
     
     SetEventFlag(amelia_auto_rematch_check, OFF);
     $InitializeEvent(cathedral_ward_lamp_offset, 8300, cathedral_ward_lamp_spawn_checker, -1, cathedral_ward_lamp_kindle_state, cathedral_warp_lamp_hidden_region, cathedral_warp_lamp_temp_region);
@@ -71,8 +71,14 @@ $Event(0, Default, function() {
         }
         SetEventFlag(amelia_rematch_played, OFF);
         SetEventFlag(amelia_defeat, ON);
-        $InitializeEvent(amelia_lamp_offset, 8300, amelia_lamp_spawn_checker, 999, amelia_lamp_kindle_state, amelia_lamp_hidden_region, amelia_lamp_temp_region);
-        DummyPlayCutsceneAndWarpPlayer(amelia_lamp_spawn_region, area_id, block_id);
+        if (EventFlag(12111120)) {
+            SetEventFlag(12111120, OFF);
+            $InitializeEvent(amelia_lamp_offset, 8300, amelia_lamp_spawn_checker, -1, amelia_lamp_kindle_state, amelia_lamp_hidden_region, amelia_lamp_temp_region);
+        }
+        else {
+            $InitializeEvent(amelia_lamp_offset, 8300, amelia_lamp_spawn_checker, 999, amelia_lamp_kindle_state, amelia_lamp_hidden_region, amelia_lamp_temp_region);
+            DummyPlayCutsceneAndWarpPlayer(amelia_lamp_spawn_region, area_id, block_id);
+        }
     } else if (EventFlag(amelia_rematch_started) || EventFlag(amelia_auto_rematch_trigger)) {
         if (EventFlag(amelia_rdo)) {
             SetEventFlag(amelia_rdo, OFF);
@@ -366,8 +372,6 @@ $Event(0, Default, function() {
     $InitializeEvent(11, 7200, 72400101, 2401951, 2102950);
     $InitializeEvent(10, 7300, 72102400, 2401950);
     $InitializeEvent(11, 7300, 72102401, 2401951);
-    $InitializeEvent(10, 12102220, 2401950, 2400950);
-    $InitializeEvent(11, 12102220, 2401951, 2400951);
     $InitializeEvent(2, 9200, 2403900);
     $InitializeEvent(2, 9220, 2400710, 12404220, 12404221, 2400, 24, 0);
     $InitializeEvent(2, 9240, 2400710, 12404220, 12404221, 12404222, 24, 0);
@@ -397,10 +401,15 @@ $Event(0, Default, function() {
         SetEventFlag(2407, OFF);
     }
     DeleteMapSFX(2403910, false);
+    
+    $InitializeEvent(0, 8617, 2400910, 12404420, 101161, 101162, 163); // henriett
+    $InitializeEvent(0, 8630, 8630, 8640, 2400910, 12404420, 2403910, 2400, -1, 200241, 101207, 200252, 200262);
+    
     $InitializeEvent(0, 12404400, 12404440, 2403910, 12404420, 12404430, 12401800, 6001);
     $InitializeEvent(0, 12404410, SingleplayerSummonSignType.NormalCoop, 2400910, 2402910, 12404420, 12404430, 12404440, 12401800, 10567);
     $InitializeEvent(0, 12404450, 2400910, 2402911, 12404420, 12404430, 12404800);
     $InitializeEvent(0, 12404460, 2400910, 2402911, 2402800, 2402801, 101130, 12404450, 2402801);
+    
     $InitializeEvent(0, 12404490);
     CreateObjectfollowingSFX(2401900, 200, 900130);
     CreateObjectfollowingSFX(2401901, 200, 900130);
@@ -2069,7 +2078,7 @@ $Event(12405251, Restart, function(eventFlagId, entityId, eventFlagId2) {
 $Event(12405259, Restart, function() {
     SetNetworkSyncState(Disabled);
     WaitFor(CharacterHasEventMessage(2400899, 700) && CharacterHasSpEffect(10000, 5577));
-    DisplayBanner(TextBannerType.StadiumLoss);
+    DisplayBanner(TextBannerType.StadiumLoss); // amygdala grab fade out
     RestartEvent();
 });
 
@@ -3833,16 +3842,13 @@ $Event(12400654, Default, function() {
     SetCharacterBackreadState(2400901, true);
     ChangeCharacterEnableState(2400901, Disabled);
     ForceCharacterTreasure(2400901);
-    DisplayBanner(TextBannerType.TargetDefeated);
     EndEvent();
     EndIf(!CharacterType(10000, TargetType.Alive));
 L0:
     if (EventFlag(amelia_rematch_played)) {
-        DisplayBanner(TextBannerType.SoulRecovery);
         ChangeCharacterEnableState(2400901, Disabled);
         EndEvent();
     }
-    DisplayBanner(TextBannerType.StadiumDraw);
     WaitFor(CharacterDead(2400901));
     EndIf(!EventFlag(1370));
     BatchSetEventFlags(1360, 1379, OFF);
@@ -3854,7 +3860,6 @@ $Event(12400655, Default, function() {
     EndIf(ThisEvent());
     SetCharacterBackreadState(2400901, true);
     EndIf(EventFlag(amelia_rematch_played));
-    DisplayBanner(TextBannerType.Dead);
     WaitFor(EventFlag(1370));
     SetCharacterBackreadState(2400901, false);
 });
@@ -4675,7 +4680,7 @@ $Event(12400849, Default, function() {
     IssueShortWarpRequest(10000, TargetEntityType.Object, 2400869, 210);
     ForceAnimationPlayback(10000, 101320, false, false, false);
     WaitFixedTimeFrames(25);
-    DisplayBanner(TextBannerType.StadiumLoss);
+    DisplayBanner(TextBannerType.StadiumLoss); // bridge door fadeout
     WaitFixedTimeFrames(20);
     SetPlayerRespawnPoint(2418089);
     WaitFixedTimeFrames(20);
@@ -4765,7 +4770,7 @@ $Event(12401800, Default, function() {
     }
 L0:
     WaitFor(CharacterDead(2400800));
-    DisplayBanner(TextBannerType.DemonKilled);
+    DisplayBanner(TextBannerType.DemonKilled); // amelia defeated
     DeactivateObject(2401800, Disabled);
     DeleteMapSFX(2403800, true);
     SetLockcamSlotNumber(24, 0, 0);
@@ -4967,6 +4972,9 @@ $Event(12404802, Default, function() {
 L0:
     SetEventFlag(12404223, ON);
     SetEventFlag(12404800, ON);
+    GotoIf(L1, CountEventFlags(TargetEventFlagType.EventFlag, 8630, 8639) == 0);
+    GotoIf(L2, CountEventFlags(TargetEventFlagType.EventFlag, 8630, 8639) == 1);
+    GotoIf(L3, CountEventFlags(TargetEventFlagType.EventFlag, 8630, 8639) > 1);
     GotoIf(L1, NumberOfCoopClients() == 0);
     GotoIf(L2, NumberOfCoopClients() == 1);
     GotoIf(L3, NumberOfCoopClients() == 2);
@@ -5235,6 +5243,14 @@ $Event(12404450, Restart, function(chrEntityId, entityId, eventFlagId, eventFlag
 
 // Holy Street_New NPC Summoning_Summoning Judgment_Top Hat Hunter
 $Event(12404400, Restart, function(eventFlagId, entityId, eventFlagId2, eventFlagId3, eventFlagId4, eventFlagId5) {
+    if (EventFlag(12100889)) {
+        SetEventFlag(eventFlagId2, OFF);
+        SetEventFlag(eventFlagId3, OFF);
+        SpawnMapSFX(entityId);
+        WaitFor(EventFlag(eventFlagId2));
+        DeleteMapSFX(entityId, true);
+        EndEvent();
+    }
     if (!EventFlag(eventFlagId)) {
         SetEventFlag(eventFlagId, OFF);
         DeleteMapSFX(entityId, true);
@@ -5268,18 +5284,36 @@ L0:
 });
 
 // Cathedral Street_New NPC Summon_Participate_XX
-$Event(12404410, Restart, function(signType, areaEntityId, entityId, eventFlagId, eventFlagId2, eventFlagId3, eventFlagId4, actionButtonParameterId) {
+$Event(12404410, Restart, function(signType, entityId, areaEntityId, eventFlagId, eventFlagId2, eventFlagId3, eventFlagId4, actionButtonParameterId) {
+    if (EventFlag(12100889)) {
+        ChangeCharacterEnableState(entityId, Disabled);
+        WaitFor(!EventFlag(eventFlagId) && ActionButtonInArea(actionButtonParameterId, entityId));
+        WarpCharacterAndCopyFloor(entityId, TargetEntityType.Character, 10000, 236, 10000);
+        SetEventFlag(2400, OFF);
+        WaitFixedTimeFrames(1);
+        ForceAnimationPlayback(10000, 100111, false, false, false);
+        SetSpEffect(10000, 4682, false);
+        SummonNPC(signType, entityId, areaEntityId, eventFlagId, eventFlagId2);
+        ClearSpEffect(10000, 9005);
+        ClearSpEffect(10000, 9025);
+        WaitFixedTimeSeconds(5);
+        DisplayMessage(100051, 0);
+        WaitFixedTimeSeconds(5);
+        WarpCharacterAndCopyFloor(entityId, TargetEntityType.Area, areaEntityId, -1, areaEntityId);
+        ActivateHit(2404120, Disabled);
+        EndEvent();
+    }
     if (!EventFlag(eventFlagId)) {
-        ChangeCharacterEnableState(areaEntityId, Disabled);
+        ChangeCharacterEnableState(entityId, Disabled);
     }
     GotoIf(S0, EventFlag(eventFlagId2));
     GotoIf(S1, HasMultiplayerState(MultiplayerState.Client) && EventFlag(eventFlagId));
 S0:
-    ChangeCharacterEnableState(areaEntityId, Disabled);
+    ChangeCharacterEnableState(entityId, Disabled);
 S1:
     EndIf(EventFlag(eventFlagId4));
     if (!HasMultiplayerState(MultiplayerState.Client)) {
-        SetNetworkUpdateAuthority(areaEntityId, AuthorityLevel.Forced);
+        SetNetworkUpdateAuthority(entityId, AuthorityLevel.Forced);
     }
     WaitFor(
         PlayerHasItem(ItemType.Goods, 4312)
@@ -5287,10 +5321,10 @@ S1:
             && !EventFlag(eventFlagId2)
             && EventFlag(eventFlagId3)
             && !EventFlag(eventFlagId4)
-            && ActionButtonInArea(actionButtonParameterId, areaEntityId));
+            && ActionButtonInArea(actionButtonParameterId, entityId));
     ForceAnimationPlayback(10000, 100111, false, false, false);
     SetSpEffect(10000, 4682, false);
-    SummonNPC(signType, areaEntityId, entityId, eventFlagId, eventFlagId2);
+    SummonNPC(signType, entityId, areaEntityId, eventFlagId, eventFlagId2);
     ClearSpEffect(10000, 9005);
     ClearSpEffect(10000, 9025);
     WaitFixedTimeSeconds(5);

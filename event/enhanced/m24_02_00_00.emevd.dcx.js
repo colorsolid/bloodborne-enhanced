@@ -4,7 +4,7 @@
 // @game    Bloodborne
 // @string    "クリア時間_通し\u0000クリア時間_1プレイ\u0000ボス戦_撃破時間\u0000ボス_撃破\u0000PC情報_ボス撃破_月の落とし子\u0000ボス_戦闘開始\u0000PC情報_ボス撃破_月からの使者\u0000PC情報_聖堂街C到達時\u0000N:\\SPRJ\\data\\Param\\event\\common.emevd\u0000"
 // @linked    [180]
-// @version    3.6
+// @version    3.6.3
 // ==/EMEVD==
 
 const area_id = 24;
@@ -17,7 +17,7 @@ const upper_ward_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10);
 const celestial_emissary_lamp_offset = 21;
 const celestial_emissary_offset = 12;
 const celestial_emissary_defeat = 12421700;
-const celestial_emissary_return = 2421799;
+const celestial_emissary_return = 2421759;
 const celestial_emissary_lamp_id = 2421952;
 const celestial_emissary_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10) + 2;
 const celestial_emissary_region = 2422812;
@@ -25,6 +25,7 @@ const celestial_emissary_id = 2420811;
 
 const ebrietas_lamp_offset = 22;
 const ebrietas_offset = 13;
+// 12421799
 const ebrietas_defeat = 12421800;
 const ebrietas_return = 2421899;
 const ebrietas_lamp_id = 2421951;
@@ -40,9 +41,8 @@ $Event(0, Default, function() {
     SetEventFlag(8900+celestial_emissary_offset, OFF);
     SetEventFlag(8900+ebrietas_offset, OFF);
     
-    $InitializeEvent(10, 7900, 10000000+celestial_emissary_return, celestial_emissary_return, area_id, block_id, 8500+upper_ward_lamp_offset);
-    $InitializeEvent(11, 7900, 10000000+ebrietas_return, ebrietas_return, area_id, block_id, 8500+upper_ward_lamp_offset);
-    $InitializeEvent(12, 7900, 10000000+ebrietas_return-2, ebrietas_return, area_id, block_id, 8500+celestial_emissary_lamp_offset);
+    $InitializeEvent(1, 7900, 10000000+celestial_emissary_return, celestial_emissary_return, area_id, block_id);
+    $InitializeEvent(2, 7900, 10000000+ebrietas_return, ebrietas_return, area_id, block_id);
     
     $InitializeEvent(upper_ward_lamp_offset, 8500, 8500+upper_ward_lamp_offset, upper_ward_lamp_id, 72110606);
     $InitializeEvent(celestial_emissary_lamp_offset, 8500, 8500+celestial_emissary_lamp_offset, celestial_emissary_lamp_id, 72110707);
@@ -61,8 +61,14 @@ $Event(0, Default, function() {
         }
         SetEventFlag(celestial_emissary_defeat+13, OFF);
         SetEventFlag(celestial_emissary_defeat, ON);
-        $InitializeEvent(celestial_emissary_lamp_offset, 8300, celestial_emissary_lamp_id+2000, 999, celestial_emissary_lamp_kindle, celestial_emissary_lamp_id+6000, celestial_emissary_lamp_id+3000);
-        DummyPlayCutsceneAndWarpPlayer(celestial_emissary_lamp_id+4000, area_id, block_id);
+        if (EventFlag(12111120)) {
+            SetEventFlag(12111120, OFF);
+            $InitializeEvent(celestial_emissary_lamp_offset, 8300, celestial_emissary_lamp_id+2000, -1, celestial_emissary_lamp_kindle, celestial_emissary_lamp_id+6000, celestial_emissary_lamp_id+3000);
+        }
+        else {
+            $InitializeEvent(celestial_emissary_lamp_offset, 8300, celestial_emissary_lamp_id+2000, 999, celestial_emissary_lamp_kindle, celestial_emissary_lamp_id+6000, celestial_emissary_lamp_id+3000);
+            DummyPlayCutsceneAndWarpPlayer(celestial_emissary_lamp_id+4000, area_id, block_id);
+        }
     } else if (EventFlag(celestial_emissary_defeat+12) || EventFlag(celestial_emissary_defeat-1)) {
         if (EventFlag(celestial_emissary_defeat-2)) {
             SetEventFlag(celestial_emissary_defeat-2, OFF);
@@ -87,7 +93,12 @@ $Event(0, Default, function() {
         SetEventFlag(ebrietas_defeat+13, OFF);
         SetEventFlag(ebrietas_defeat, ON);
         $InitializeEvent(ebrietas_lamp_offset, 8300, ebrietas_lamp_id+2000, 999, ebrietas_lamp_kindle, ebrietas_lamp_id+6000, ebrietas_lamp_id+3000);
-        DummyPlayCutsceneAndWarpPlayer(ebrietas_lamp_id+4000, area_id, block_id);
+        if (EventFlag(12111120)) {
+            SetEventFlag(12111120, OFF);
+        }
+        else {
+            DummyPlayCutsceneAndWarpPlayer(ebrietas_lamp_id+4000, area_id, block_id);
+        }
     } else if (EventFlag(ebrietas_defeat+12) || EventFlag(ebrietas_defeat-1)) {
         if (EventFlag(ebrietas_defeat-2)) {
             SetEventFlag(ebrietas_defeat-2, OFF);
@@ -516,14 +527,16 @@ $Event(0, Default, function() {
     $InitializeEvent(20, 7300, 72102420, 2421950);
     $InitializeEvent(21, 7300, 72102421, 2421951);
     $InitializeEvent(22, 7300, 72102422, 2421952);
-    $InitializeEvent(20, 12102220, 2421950, 2420950);
-    $InitializeEvent(21, 12102220, 2421951, 2420951);
-    $InitializeEvent(22, 12102220, 2421952, 2420952);
     DeleteMapSFX(2423910, false);
+    
+    $InitializeEvent(1, 8617, 2420910, 12424420, 101161, 101162, 163); // damien
+    $InitializeEvent(1, 8630, 8631, 8641, 2420910, 12424420, 2423910, 2420, 2421, 200240, 101207, 200251, 200261);
+    
     $InitializeEvent(0, 12424400, 12424440, 2423910, 12424420, 12424430, 12421800, 6001);
     $InitializeEvent(0, 12424410, SingleplayerSummonSignType.NormalCoop, 2420910, 2422910, 12424420, 12424430, 12424440, 12421800, 10566);
     $InitializeEvent(0, 12424450, 2420910, 2422911, 12424420, 12424430, 12424800);
     $InitializeEvent(0, 12424460, 2420910, 2422911, 2422800, 2422801, 101130, 12424450, 2422801);
+    
     $InitializeEvent(4, 9200, 2423900);
     $InitializeEvent(4, 9220, 2420710, 12424220, 12424221, 2420, 24, 2);
     $InitializeEvent(4, 9240, 2420710, 12424220, 12424221, 12424222, 24, 2);
@@ -763,7 +776,7 @@ $Event(12421800, Default, function() {
     }
 L0:
     WaitFor(CharacterDead(2420800));
-    DisplayBanner(TextBannerType.DemonKilled);
+    DisplayBanner(TextBannerType.DemonKilled); // ebrietas defeated
     DeactivateObject(2421800, Disabled);
     DeleteMapSFX(2423800, true);
     SetLockcamSlotNumber(24, 2, 0);
@@ -928,6 +941,9 @@ S0:
     SetNetworkUpdateAuthority(2420800, AuthorityLevel.Forced);
 L0:
     SetEventFlag(12424800, ON);
+    GotoIf(L1, CountEventFlags(TargetEventFlagType.EventFlag, 8630, 8639) == 0);
+    GotoIf(L2, CountEventFlags(TargetEventFlagType.EventFlag, 8630, 8639) == 1);
+    GotoIf(L3, CountEventFlags(TargetEventFlagType.EventFlag, 8630, 8639) > 1);
     GotoIf(L1, NumberOfCoopClients() == 0);
     GotoIf(L2, NumberOfCoopClients() == 1);
     GotoIf(L3, NumberOfCoopClients() == 2);
@@ -1106,7 +1122,7 @@ $Event(12421700, Default, function() {
     }
 L0:
     WaitFor(CharacterDead(2420811));
-    DisplayBanner(TextBannerType.DemonKilled);
+    DisplayBanner(TextBannerType.DemonKilled); // emissary defeated
     DeactivateObject(2421700, Disabled);
     DeactivateObject(2421701, Disabled);
     DeleteMapSFX(2423810, true);
@@ -1330,6 +1346,9 @@ $Event(12424702, Default, function() {
     }
 L0:
     SetEventFlag(12424700, ON);
+    GotoIf(L1, CountEventFlags(TargetEventFlagType.EventFlag, 8630, 8639) == 0);
+    GotoIf(L2, CountEventFlags(TargetEventFlagType.EventFlag, 8630, 8639) == 1);
+    GotoIf(L3, CountEventFlags(TargetEventFlagType.EventFlag, 8630, 8639) > 1);
     GotoIf(L1, NumberOfCoopClients() == 0);
     GotoIf(L2, NumberOfCoopClients() == 1);
     GotoIf(L3, NumberOfCoopClients() == 2);
@@ -1896,6 +1915,11 @@ L0:
 
 // Time zone change_Cathedral city C
 $Event(12420400, Default, function() {
+    if (EventFlag(12100856)) {
+        BatchSetEventFlags(12805000, 12805002, OFF);
+        RandomlySetEventFlagInRange(12805000, 12805001, ON);
+        WaitFixedTimeFrames(1);
+    }
     if (!EventFlag(9802)) {
         if (!EventFlag(9801)) {
             if (!EventFlag(9800)) {
@@ -1908,13 +1932,25 @@ L1:
             NoOp();
         }
 L2:
-        ActivateMapPart(2424000, Enabled);
-        ActivateMapPart(2424010, Disabled);
+        if (EventFlag(12100956) || EventFlag(12805000)) {    
+            ActivateMapPart(2424000, Enabled);
+            ActivateMapPart(2424010, Disabled);
+        }
+        else {
+            ActivateMapPart(2424000, Disabled);
+            ActivateMapPart(2424010, Enabled);
+        }
         EndEvent();
     }
 L3:
-    ActivateMapPart(2424000, Disabled);
-    ActivateMapPart(2424010, Enabled);
+    if (EventFlag(12100956) || EventFlag(12805001)) { 
+        ActivateMapPart(2424000, Disabled);
+        ActivateMapPart(2424010, Enabled);
+    }
+    else {
+        ActivateMapPart(2424000, Enabled);
+        ActivateMapPart(2424010, Disabled);
+    }
 });
 
 // Queen of the Tainted Bloodline_Resurrection
@@ -2245,6 +2281,14 @@ $Event(12424450, Restart, function(chrEntityId, entityId, eventFlagId, eventFlag
 
 // ★Cathedral Town C_New NPC Summon_Summonability Judgment_Top Ranking Hunt
 $Event(12424400, Restart, function(eventFlagId, entityId, eventFlagId2, eventFlagId3, eventFlagId4, eventFlagId5) {
+    if (EventFlag(12100889)) {
+        SetEventFlag(eventFlagId2, OFF);
+        SetEventFlag(eventFlagId3, OFF);
+        SpawnMapSFX(entityId);
+        WaitFor(EventFlag(eventFlagId2));
+        DeleteMapSFX(entityId, true);
+        EndEvent();
+    }
     if (!EventFlag(eventFlagId)) {
         SetEventFlag(eventFlagId, OFF);
         DeleteMapSFX(entityId, true);
@@ -2274,18 +2318,32 @@ L0:
 });
 
 // ★Cathedral City C_New NPC Summon_Participation_XX
-$Event(12424410, Restart, function(signType, areaEntityId, entityId, eventFlagId, eventFlagId2, eventFlagId3, eventFlagId4, actionButtonParameterId) {
+$Event(12424410, Restart, function(signType, entityId, areaEntityId, eventFlagId, eventFlagId2, eventFlagId3, eventFlagId4, actionButtonParameterId) {
+    if (EventFlag(12100889)) {
+        WarpCharacterAndCopyFloor(entityId, TargetEntityType.Area, areaEntityId, -1, areaEntityId);
+        ChangeCharacterEnableState(entityId, Disabled);
+        WaitFor(!EventFlag(eventFlagId) && ActionButtonInArea(actionButtonParameterId, entityId));
+        SetEventFlag(2421, OFF);
+        ForceAnimationPlayback(10000, 100111, false, false, false);
+        SetSpEffect(10000, 4682, false);
+        SummonNPC(signType, entityId, areaEntityId, eventFlagId, eventFlagId2);
+        ClearSpEffect(10000, 9005);
+        ClearSpEffect(10000, 9025);
+        WaitFixedTimeSeconds(5);
+        DisplayMessage(100051, 0);
+        EndEvent();
+    }
     if (!EventFlag(eventFlagId)) {
-        ChangeCharacterEnableState(areaEntityId, Disabled);
+        ChangeCharacterEnableState(entityId, Disabled);
     }
     GotoIf(S0, EventFlag(eventFlagId2));
     GotoIf(S1, HasMultiplayerState(MultiplayerState.Client) && EventFlag(eventFlagId));
 S0:
-    ChangeCharacterEnableState(areaEntityId, Disabled);
+    ChangeCharacterEnableState(entityId, Disabled);
 S1:
     EndIf(EventFlag(eventFlagId4));
     if (!HasMultiplayerState(MultiplayerState.Client)) {
-        SetNetworkUpdateAuthority(areaEntityId, AuthorityLevel.Forced);
+        SetNetworkUpdateAuthority(entityId, AuthorityLevel.Forced);
     }
     WaitFor(
         PlayerHasItem(ItemType.Goods, 4312)
@@ -2293,10 +2351,10 @@ S1:
             && !EventFlag(eventFlagId2)
             && EventFlag(eventFlagId3)
             && !EventFlag(eventFlagId4)
-            && ActionButtonInArea(actionButtonParameterId, areaEntityId));
+            && ActionButtonInArea(actionButtonParameterId, entityId));
     ForceAnimationPlayback(10000, 100111, false, false, false);
     SetSpEffect(10000, 4682, false);
-    SummonNPC(signType, areaEntityId, entityId, eventFlagId, eventFlagId2);
+    SummonNPC(signType, entityId, areaEntityId, eventFlagId, eventFlagId2);
     ClearSpEffect(10000, 9005);
     ClearSpEffect(10000, 9025);
     WaitFixedTimeSeconds(5);
@@ -2321,4 +2379,3 @@ $Event(12424460, Restart, function(chrEntityId, areaEntityId, entityId, areaEnti
     RequestCharacterAICommand(chrEntityId, -1, 0);
     RequestCharacterAIReplan(chrEntityId);
 });
-

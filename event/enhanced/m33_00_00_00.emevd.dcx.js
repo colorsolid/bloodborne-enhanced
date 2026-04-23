@@ -4,7 +4,7 @@
 // @game    Bloodborne
 // @string    "クリア時間_通し\u0000クリア時間_1プレイ\u0000ボス_撃破\u0000PC情報_ボス撃破_邪神\u0000ボス_戦闘開始\u0000ボス戦_撃破時間\u0000ギミック_エレベーター起動\u0000PC情報_故郷到達時\u0000N:\\SPRJ\\data\\Param\\event\\common.emevd\u0000\u0000"
 // @linked    [162]
-// @version    3.6
+// @version    3.6.3
 // ==/EMEVD==
 
 const area_id = 33;
@@ -37,7 +37,7 @@ const amygdala_id = 3300800;
 $Event(0, Default, function() {
     SetEventFlag(8900+amygdala_offset, OFF);
     
-    $InitializeEvent(28, 7900, 10000000+amygdala_return, amygdala_return, area_id, block_id, 8500+frontier_lamp_offset);
+    $InitializeEvent(0, 7900, 10000000+amygdala_return, amygdala_return, area_id, block_id);
     
     $InitializeEvent(frontier_lamp_offset, 8500, 8500+frontier_lamp_offset, frontier_lamp_id, 72112828);
     $InitializeEvent(amygdala_lamp_offset, 8500, 8500+amygdala_lamp_offset, amygdala_lamp_id, 72112929);
@@ -54,8 +54,14 @@ $Event(0, Default, function() {
         }
         SetEventFlag(amygdala_defeat+13, OFF);
         SetEventFlag(amygdala_defeat, ON);
-        $InitializeEvent(amygdala_lamp_offset, 8300, amygdala_lamp_id+2000, 999, amygdala_lamp_kindle, amygdala_lamp_id+6000, amygdala_lamp_id+3000);
-        DummyPlayCutsceneAndWarpPlayer(amygdala_lamp_id+4000, area_id, block_id);
+        if (EventFlag(12111120)) {
+            SetEventFlag(12111120, OFF);
+            $InitializeEvent(amygdala_lamp_offset, 8300, amygdala_lamp_id+2000, -1, amygdala_lamp_kindle, amygdala_lamp_id+6000, amygdala_lamp_id+3000);
+        }
+        else {
+            $InitializeEvent(amygdala_lamp_offset, 8300, amygdala_lamp_id+2000, 999, amygdala_lamp_kindle, amygdala_lamp_id+6000, amygdala_lamp_id+3000);
+            DummyPlayCutsceneAndWarpPlayer(amygdala_lamp_id+4000, area_id, block_id);
+        }
     } else if (EventFlag(amygdala_defeat+12) || EventFlag(amygdala_defeat-1)) {
         if (EventFlag(amygdala_defeat-2)) {
             SetEventFlag(amygdala_defeat-2, OFF);
@@ -344,8 +350,6 @@ $Event(0, Default, function() {
     $InitializeEvent(51, 7200, 73300101, 3301951, 2102953);
     $InitializeEvent(50, 7300, 72103300, 3301950);
     $InitializeEvent(51, 7300, 72103301, 3301951);
-    $InitializeEvent(50, 12102220, 3301950, 3300950);
-    $InitializeEvent(51, 12102220, 3301951, 3300951);
     $InitializeEvent(10, 9200, 3303900);
     SetMapSoundState(3304000, Disabled);
     SetMapSoundState(3304001, Disabled);
@@ -650,7 +654,7 @@ $Event(13301800, Default, function() {
     }
 L0:
     WaitFor(CharacterDead(3300800));
-    DisplayBanner(TextBannerType.DemonKilled);
+    DisplayBanner(TextBannerType.DemonKilled); // amygdala defeated
     DeactivateObject(3301800, Disabled);
     DeactivateObject(3301801, Disabled);
     DeleteMapSFX(3303800, true);
@@ -1333,4 +1337,3 @@ $Event(13300990, Default, function() {
     ParameterOutput(PlayerPlayLogParameter.Armor, 140, PlayLogMultiplayerType.HostOnly);
     $InitializeEvent(0, 9350, 2);
 });
-

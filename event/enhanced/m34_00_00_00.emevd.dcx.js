@@ -4,7 +4,7 @@
 // @game    Bloodborne
 // @string    "ボス_撃破\u0000PC情報_ボス撃破_ルドウイーク\u0000ボス_戦闘開始\u0000ボス戦_撃破時間\u0000PC情報_ボス撃破_教区長Ω\u0000N:\\SPRJ\\data\\Param\\event\\common.emevd\u0000\u0000\u0000\u0000"
 // @linked    [110]
-// @version    3.6
+// @version    3.6.3
 // ==/EMEVD==
 
 const area_id = 34;
@@ -42,16 +42,12 @@ const laurence_id = 3400850;
 
 // constructor
 $Event(0, Default, function() {
-    
+    SetEventFlag(13401210, ON);
     SetEventFlag(8900+ludwig_offset, OFF);
     SetEventFlag(8900+laurence_offset, OFF);
     
-    $InitializeEvent(29, 7900, 10000000+ludwig_return, ludwig_return, area_id, block_id, 8500+nightmare_lamp_offset);
-    $InitializeEvent(30, 7900, 10000000+ludwig_return-1, ludwig_return, area_id, block_id, 8500+church_lamp_offset);
-    $InitializeEvent(31, 7900, 10000000+ludwig_return-3, ludwig_return, area_id, block_id, 8500+laurence_lamp_offset);
-    $InitializeEvent(32, 7900, 10000000+laurence_return, laurence_return, area_id, block_id, 8500+nightmare_lamp_offset);
-    $InitializeEvent(33, 7900, 10000000+laurence_return-1, laurence_return, area_id, block_id, 8500+church_lamp_offset);
-    $InitializeEvent(34, 7900, 10000000+laurence_return-2, laurence_return, area_id, block_id, 8500+ludwig_lamp_offset);
+    $InitializeEvent(1, 7900, 10000000+ludwig_return, ludwig_return, area_id, block_id);
+    $InitializeEvent(2, 7900, 10000000+laurence_return, laurence_return, area_id, block_id);
     
     $InitializeEvent(nightmare_lamp_offset, 8500, 8500+nightmare_lamp_offset, nightmare_lamp_id, 72113434);
     $InitializeEvent(church_lamp_offset, 8500, 8500+church_lamp_offset, church_lamp_id, 72113535);
@@ -86,8 +82,14 @@ $Event(0, Default, function() {
         SetEventFlag(ludwig_defeat+13, OFF);
         SetEventFlag(9471, ON);
         SetEventFlag(ludwig_defeat, ON);
-        $InitializeEvent(ludwig_lamp_offset, 8300, ludwig_lamp_id+2000, 999, ludwig_lamp_kindle, ludwig_lamp_id+6000, ludwig_lamp_id+3000);
-        DummyPlayCutsceneAndWarpPlayer(ludwig_lamp_id+4000, area_id, block_id);
+        if (EventFlag(12111120)) {
+            SetEventFlag(12111120, OFF);
+            $InitializeEvent(ludwig_lamp_offset, 8300, ludwig_lamp_id+2000, -1, ludwig_lamp_kindle, ludwig_lamp_id+6000, ludwig_lamp_id+3000);
+        }
+        else {
+            $InitializeEvent(ludwig_lamp_offset, 8300, ludwig_lamp_id+2000, 999, ludwig_lamp_kindle, ludwig_lamp_id+6000, ludwig_lamp_id+3000);
+            DummyPlayCutsceneAndWarpPlayer(ludwig_lamp_id+4000, area_id, block_id);
+        }
     } else if (EventFlag(ludwig_defeat+12) || EventFlag(ludwig_defeat-1)) {
         if (EventFlag(ludwig_defeat-2)) {
             SetEventFlag(ludwig_defeat-2, OFF);
@@ -115,8 +117,14 @@ $Event(0, Default, function() {
         }
         SetEventFlag(laurence_defeat+13, OFF);
         SetEventFlag(laurence_defeat, ON);
-        $InitializeEvent(laurence_lamp_offset, 8300, laurence_lamp_id+2000, 999, laurence_lamp_kindle, laurence_lamp_id+6000, laurence_lamp_id+3000);
-        DummyPlayCutsceneAndWarpPlayer(laurence_lamp_id+4000, area_id, block_id);
+        if (EventFlag(12111120)) {
+            SetEventFlag(12111120, OFF);
+            $InitializeEvent(laurence_lamp_offset, 8300, laurence_lamp_id+2000, -1, laurence_lamp_kindle, laurence_lamp_id+6000, laurence_lamp_id+3000);
+        }
+        else {
+            $InitializeEvent(laurence_lamp_offset, 8300, laurence_lamp_id+2000, 999, laurence_lamp_kindle, laurence_lamp_id+6000, laurence_lamp_id+3000);
+            DummyPlayCutsceneAndWarpPlayer(laurence_lamp_id+4000, area_id, block_id);
+        }
     } else if (EventFlag(laurence_defeat+12) || EventFlag(laurence_defeat-1)) {
         if (EventFlag(laurence_defeat-2)) {
             SetEventFlag(laurence_defeat-2, OFF);
@@ -676,11 +684,7 @@ $Event(0, Default, function() {
         $InitializeEvent(55, 7300, 72103400, 3401950);
         $InitializeEvent(56, 7300, 72103401, 3401951);
         $InitializeEvent(57, 7300, 72103402, 3401952);
-        $InitializeEvent(58, 7300, 72103403, 3401953);
-        $InitializeEvent(55, 12102220, 3401950, 3400950);
-        $InitializeEvent(56, 12102220, 3401951, 3400951);
-        $InitializeEvent(57, 12102220, 3401952, 3400952);
-        $InitializeEvent(58, 12102220, 3401953, 3400953);
+        $InitializeEvent(58, 7300, 72103403, 3401953)
         DeactivateObject(3401999, Disabled);
         DeleteMapSFX(3403999, false);
     } else {
@@ -1005,30 +1009,71 @@ L3:
     DeleteMapSFX(3403914, false);
     DeleteMapSFX(3403915, false);
     DeleteMapSFX(3403916, false);
-    $InitializeEvent(0, 13404401, 13404441, 3403911, 13404421, 13404431, 13401800, 6001);
-    $InitializeEvent(0, 13404402, 13404442, 3403912, 13404422, 13404432, 13401800, 13404421);
-    $InitializeEvent(0, 13404403, 13404443, 3403913, 13404423, 13404433, 13401800, 13404421);
-    $InitializeEvent(0, 13404404, 13404444, 3403914, 13404424, 13404434, 13401800, 13404421);
-    $InitializeEvent(0, 13404405, 13404445, 3403915, 13404425, 13404435, 13401850, 13404421);
-    $InitializeEvent(0, 13404406, 13404446, 3403916, 13404426, 13404436, 13401850, 13404421);
-    $InitializeEvent(1, 13404410, SingleplayerSummonSignType.NormalCoop, 3400921, 3402921, 13404421, 13404431, 13404441, 13401800, 10567);
-    $InitializeEvent(2, 13404410, 6, 3400922, 3402922, 13404422, 13404432, 13404442, 13401800, 10562);
-    $InitializeEvent(3, 13404410, 6, 3400923, 3402923, 13404423, 13404433, 13404443, 13401800, 10563);
-    $InitializeEvent(4, 13404410, 5, 3400924, 3402924, 13404424, 13404434, 13404444, 13401800, 10565);
-    $InitializeEvent(5, 13404410, 6, 3400925, 3402925, 13404425, 13404435, 13404445, 13401850, 10562);
-    $InitializeEvent(6, 13404410, 6, 3400926, 3402926, 13404426, 13404436, 13404446, 13401850, 10563);
-    $InitializeEvent(1, 13404450, 3400921, 3402930, 13404421, 13404431, 13404808);
-    $InitializeEvent(2, 13404450, 3400922, 3402931, 13404422, 13404432, 13404808);
-    $InitializeEvent(3, 13404450, 3400923, 3402931, 13404423, 13404433, 13404808);
-    $InitializeEvent(4, 13404450, 3400924, 3402932, 13404424, 13404434, 13404808);
-    $InitializeEvent(5, 13404450, 3400925, 3402935, 13404425, 13404435, 13404858);
-    $InitializeEvent(6, 13404450, 3400926, 3402935, 13404426, 13404436, 13404858);
-    $InitializeEvent(1, 13404460, 3400921, 3402930, 3402800, 3402801, 101130, 13404451, 3402801);
-    $InitializeEvent(2, 13404460, 3400922, 3402931, 3402800, 3402801, 101130, 13404452, 3402801);
-    $InitializeEvent(3, 13404460, 3400923, 3402931, 3402800, 3402801, 101130, 13404453, 3402801);
-    $InitializeEvent(4, 13404460, 3400924, 3402932, 3402800, 3402801, 101130, 13404454, 3402801);
-    $InitializeEvent(5, 13404460, 3400925, 3402935, 3402850, 3402851, 101130, 13404455, 3402851);
-    $InitializeEvent(6, 13404460, 3400926, 3402935, 3402850, 3402851, 101130, 13404456, 3402851);
+    
+    $InitializeEvent(0, 8617, 3400921, 13404421, 101161, 101162, 233);
+    $InitializeEvent(0, 8630, 8630, 8640, 3400921, 13404421, 13404431, 3400, -1, 200241, 101207, 200252, 200262); // henriett
+    
+    $InitializeEvent(1, 8617, 3400922, 13404422, 101161, 101208, 163);
+    $InitializeEvent(1, 8630, 8631, 8641, 3400922, 13404422, 13404432, 3400, -1, 200249, 101208, 200259, 200269); // master valtr 1 - c
+    
+    $InitializeEvent(2, 8617, 3400923, 13404423, 101161, 101208, 163);
+    $InitializeEvent(2, 8630, 8632, 8642, 3400923, 13404423, 13404433, 3400, -1, 200250, 101208, 200260, 200270); // valtr beast eater 1 - c
+    
+    $InitializeEvent(3, 8617, 3400924, 13404424, 101161, 101208, 183);
+    $InitializeEvent(3, 8630, 8633, 8643, 3400924, 13404424, 13404434, 3400, -1, 200243, 101208, 200253, 200263); // madaras twin - c
+    
+    $InitializeEvent(4, 8617, 3400925, 13404425, 101161, 101208, 163);
+    $InitializeEvent(4, 8630, 8634, 8644, 3400925, 13404425, 13404435, 3400, -1, 200249, 101208, 200259, 200269); // master valtr 2 - c
+    
+    $InitializeEvent(5, 8617, 3400926, 13404426, 101161, 101208, 163);
+    $InitializeEvent(5, 8630, 8635, 8645, 3400926, 13404426, 13404436, 3400, -1, 200249, 101208, 200260, 200270); // master beast eater 2 - c
+    
+    $InitializeEvent(0, 13404401, 13404441, 3403911, 13404421, 13404431, 13401800, 6001); // henriett
+    $InitializeEvent(0, 13404402, 13404442, 3403912, 13404422, 13404432, 13401800, 13404421); // master valtr 1
+    $InitializeEvent(0, 13404403, 13404443, 3403913, 13404423, 13404433, 13401800, 13404421); // valtr beast 1
+    $InitializeEvent(0, 13404404, 13404444, 3403914, 13404424, 13404434, 13401800, 13404421); // madaras twin
+    $InitializeEvent(0, 13404405, 13404445, 3403915, 13404425, 13404435, 13401850, 13404421); // master valtr 2
+    $InitializeEvent(0, 13404406, 13404446, 3403916, 13404426, 13404436, 13401850, 13404421); // valtr beast 2
+    
+    $InitializeEvent(1, 13404410, SingleplayerSummonSignType.NormalCoop, 3400921, 3402921, 13404421, 13404431, 13404441, 13401800, 10567); // henriett
+    $InitializeEvent(2, 13404410, 6, 3400922, 3402922, 13404422, 13404432, 13404442, 13401800, 10562); // master valtr 1
+    $InitializeEvent(3, 13404410, 6, 3400923, 3402923, 13404423, 13404433, 13404443, 13401800, 10563); // valtr beast 1
+    $InitializeEvent(4, 13404410, 5, 3400924, 3402924, 13404424, 13404434, 13404444, 13401800, 10565); // madaras twin
+    $InitializeEvent(5, 13404410, 6, 3400925, 3402925, 13404425, 13404435, 13404445, 13401850, 10562); // master valtr 2
+    $InitializeEvent(6, 13404410, 6, 3400926, 3402926, 13404426, 13404436, 13404446, 13401850, 10563); // valtr beast 2
+    
+    $InitializeEvent(1, 13404450, 3400921, 3402930, 13404421, 13404431, 13404808); // henriett -> ludwig
+    $InitializeEvent(2, 13404450, 3400922, 3402931, 13404422, 13404432, 13404808); // master valtr 1 -> ludwig
+    $InitializeEvent(3, 13404450, 3400923, 3402931, 13404423, 13404433, 13404808); // valtr beast 1 -> ludwig
+    $InitializeEvent(4, 13404450, 3400924, 3402932, 13404424, 13404434, 13404808); // madaras twin -> ludwig
+    
+    $InitializeEvent(0, 13404550, 3400925, 3402931, 13404425, 13404435, 13404808); // master valtr 2 -> ludwig
+    $InitializeEvent(1, 13404550, 3400926, 3402931, 13404426, 13404436, 13404808); // valtr beast 2 -> ludwig
+    
+    $InitializeEvent(1, 13404460, 3400921, 3402930, 3402800, 3402801, 101130, 13404451, 3402801); // henriett -> ludwig
+    $InitializeEvent(2, 13404460, 3400922, 3402931, 3402800, 3402801, 101130, 13404452, 3402801); // master valtr 1 -> ludwig
+    $InitializeEvent(3, 13404460, 3400923, 3402931, 3402800, 3402801, 101130, 13404453, 3402801); // valtr beast 1 -> ludwig
+    $InitializeEvent(4, 13404460, 3400924, 3402932, 3402800, 3402801, 101130, 13404454, 3402801); // madaras twin -> ludwig
+    
+    $InitializeEvent(0, 13404560, 3400925, 3402931, 3402800, 3402801, 101130, 13404550, 3402801); // master valtr 2 -> ludwig
+    $InitializeEvent(1, 13404560, 3400926, 3402931, 3402800, 3402801, 101130, 13404551, 3402801); // valtr beast 2 -> ludwig
+    
+    $InitializeEvent(5, 13404450, 3400925, 3402935, 13404425, 13404435, 13404858); // master valtr 2 -> laurence
+    $InitializeEvent(6, 13404450, 3400926, 3402935, 13404426, 13404436, 13404858); // valtr beast 2 -> laurence
+    
+    $InitializeEvent(2, 13404550, 3400921, 3402935, 13404421, 13404431, 13404858); // henriett -> laurence
+    $InitializeEvent(3, 13404550, 3400922, 3402935, 13404422, 13404432, 13404858); // master valtr 1 -> laurence
+    $InitializeEvent(4, 13404550, 3400923, 3402935, 13404423, 13404433, 13404858); // valtr beast 1 -> laurence
+    $InitializeEvent(5, 13404550, 3400924, 3402935, 13404424, 13404434, 13404858); // madaras twin -> laurence
+    
+    $InitializeEvent(5, 13404460, 3400925, 3402935, 3402850, 3402851, 101130, 13404455, 3402851); // master valtr 2 -> laurence
+    $InitializeEvent(6, 13404460, 3400926, 3402935, 3402850, 3402851, 101130, 13404456, 3402851); // valtr beast 2 -> laurence
+    
+    $InitializeEvent(2, 13404560, 3400921, 3402935, 3402850, 3402851, 101130, 13404552, 3402851); // henriett -> laurence
+    $InitializeEvent(3, 13404560, 3400922, 3402935, 3402850, 3402851, 101130, 13404553, 3402851); // master valtr 1 -> laurence
+    $InitializeEvent(4, 13404560, 3400923, 3402935, 3402850, 3402851, 101130, 13404554, 3402851); // valtr beast 1 -> laurence
+    $InitializeEvent(5, 13404560, 3400924, 3402935, 3402850, 3402851, 101130, 13404555, 3402851); // madaras twin -> laurence
+    
     $InitializeEvent(0, 13404490, 3400925, 13404425, 13404435, 13404858);
     $InitializeEvent(1, 13404490, 3400926, 13404426, 13404436, 13404858);
     SetEventPoint(3400911, 3402910, 0);
@@ -1470,7 +1515,7 @@ L0:
         }
         WaitFor(chr);
     }
-    DisplayBanner(TextBannerType.DemonKilled);
+    DisplayBanner(TextBannerType.DemonKilled); // ludwig defeated
     DeactivateObject(3401800, Disabled);
     DeleteMapSFX(3403800, true);
     SetLockcamSlotNumber(34, 0, 0);
@@ -1685,26 +1730,45 @@ $Event(13404802, Default, function() {
 L0:
     SetEventFlag(13404810, ON);
     SetEventFlag(13404808, ON);
+    GotoIf(L1, CountEventFlags(TargetEventFlagType.EventFlag, 8630, 8639) == 0);
+    GotoIf(L2, CountEventFlags(TargetEventFlagType.EventFlag, 8630, 8639) == 1);
+    GotoIf(L3, CountEventFlags(TargetEventFlagType.EventFlag, 8630, 8639) == 2);
+    GotoIf(L4, CountEventFlags(TargetEventFlagType.EventFlag, 8630, 8639) == 3);
+    GotoIf(L5, CountEventFlags(TargetEventFlagType.EventFlag, 8630, 8639) > 3);
     GotoIf(L1, NumberOfCoopClients() == 0);
     GotoIf(L2, NumberOfCoopClients() == 1);
     GotoIf(L3, NumberOfCoopClients() == 2);
 L1:
-    Goto(L4);
+    Goto(L6);
 L2:
     SetSpEffect(3400800, 7500, true);
     SetSpEffect(3400801, 7500, true);
     WaitFixedTimeFrames(1);
     AdaptHpchangingSpEffectToNPCPartOfTarget(3400800);
     AdaptHpchangingSpEffectToNPCPartOfTarget(3400801);
-    Goto(L4);
+    Goto(L6);
 L3:
     SetSpEffect(3400800, 7501, true);
     SetSpEffect(3400801, 7501, true);
     WaitFixedTimeFrames(1);
     AdaptHpchangingSpEffectToNPCPartOfTarget(3400800);
     AdaptHpchangingSpEffectToNPCPartOfTarget(3400801);
-    Goto(L4);
+    Goto(L6);
 L4:
+    SetSpEffect(3400800, 7502, true);
+    SetSpEffect(3400801, 7502, true);
+    WaitFixedTimeFrames(1);
+    AdaptHpchangingSpEffectToNPCPartOfTarget(3400800);
+    AdaptHpchangingSpEffectToNPCPartOfTarget(3400801);
+    Goto(L6);
+L5:
+    SetSpEffect(3400800, 7503, true);
+    SetSpEffect(3400801, 7503, true);
+    WaitFixedTimeFrames(1);
+    AdaptHpchangingSpEffectToNPCPartOfTarget(3400800);
+    AdaptHpchangingSpEffectToNPCPartOfTarget(3400801);
+    Goto(L6);
+L6:
     if (EventFlag(ludwig_defeat+13)) {
         WaitFixedTimeSeconds(2);
     }
@@ -2019,7 +2083,7 @@ L0:
         WaitFor(CharacterDead(3400850));
     }
     SetEventFlag(3400, ON);
-    DisplayBanner(TextBannerType.DemonKilled);
+    DisplayBanner(TextBannerType.DemonKilled); // lawrence defeated
     DeactivateObject(3401850, Disabled);
     DeleteMapSFX(3403850, true);
     SetLockcamSlotNumber(34, 0, 0);
@@ -2189,6 +2253,7 @@ $Event(13404852, Restart, function() {
     SetCharacterAIState(3400851, Disabled);
     SetCharacterHPBarDisplay(3400851, Disabled);
     SetCharacterGravity(3400851, Disabled);
+    EndEvent();
     if (!ThisEvent()) {
         WaitFor(EventFlag(13404858) || EventFlag(laurence_defeat+13));
         if (!HasMultiplayerState(MultiplayerState.Client)) {
@@ -2201,22 +2266,37 @@ $Event(13404852, Restart, function() {
 L0:
     SetEventFlag(13404860, ON);
     SetEventFlag(13404858, ON);
+    GotoIf(L1, CountEventFlags(TargetEventFlagType.EventFlag, 8630, 8639) == 0);
+    GotoIf(L2, CountEventFlags(TargetEventFlagType.EventFlag, 8630, 8639) == 1);
+    GotoIf(L3, CountEventFlags(TargetEventFlagType.EventFlag, 8630, 8639) == 2);
+    GotoIf(L4, CountEventFlags(TargetEventFlagType.EventFlag, 8630, 8639) == 3);
+    GotoIf(L5, CountEventFlags(TargetEventFlagType.EventFlag, 8630, 8639) > 3);
     GotoIf(L1, NumberOfCoopClients() == 0);
     GotoIf(L2, NumberOfCoopClients() == 1);
     GotoIf(L3, NumberOfCoopClients() == 2);
 L1:
-    Goto(L4);
+    Goto(L6);
 L2:
     SetSpEffect(3400850, 7500, true);
     WaitFixedTimeFrames(1);
     AdaptHpchangingSpEffectToNPCPartOfTarget(3400850);
-    Goto(L4);
+    Goto(L6);
 L3:
     SetSpEffect(3400850, 7501, true);
     WaitFixedTimeFrames(1);
     AdaptHpchangingSpEffectToNPCPartOfTarget(3400850);
-    Goto(L4);
+    Goto(L6);
 L4:
+    SetSpEffect(3400850, 7502, true);
+    WaitFixedTimeFrames(1);
+    AdaptHpchangingSpEffectToNPCPartOfTarget(3400850);
+    Goto(L6);
+L5:
+    SetSpEffect(3400850, 7503, true);
+    WaitFixedTimeFrames(1);
+    AdaptHpchangingSpEffectToNPCPartOfTarget(3400850);
+    Goto(L6);
+L6:
     if (EventFlag(laurence_defeat+13)) {
         WaitFixedTimeSeconds(2);
     }
@@ -3333,14 +3413,32 @@ $Event(13400995, Default, function(eventFlagId, itemLotId, itemLotId2, eventFlag
 $Event(13404450, Restart, function(chrEntityId, entityId, eventFlagId, eventFlagId2, eventFlagId3) {
     EndIf(ThisEventSlot());
     EndIf(HasMultiplayerState(MultiplayerState.Client));
-    SetEventPoint(chrEntityId, entityId, 1);
     WaitFor(EventFlag(eventFlagId) && !EventFlag(eventFlagId2) && EventFlag(eventFlagId3));
+    SetEventPoint(chrEntityId, entityId, 1);
+    RequestCharacterAICommand(chrEntityId, 990, 0);
+    RequestCharacterAIReplan(chrEntityId);
+});
+
+// ★Cathedral Town D_New NPC Summon_Aim for the Boss Room_XX
+$Event(13404550, Restart, function(chrEntityId, entityId, eventFlagId, eventFlagId2, eventFlagId3) {
+    EndIf(ThisEventSlot());
+    EndIf(HasMultiplayerState(MultiplayerState.Client));
+    WaitFor(EventFlag(eventFlagId) && !EventFlag(eventFlagId2) && EventFlag(eventFlagId3));
+    SetEventPoint(chrEntityId, entityId, 1);
     RequestCharacterAICommand(chrEntityId, 990, 0);
     RequestCharacterAIReplan(chrEntityId);
 });
 
 // ★Cathedral Town D_New NPC Summon_Summonability Judgment_Top Hat_vs Ludo
 $Event(13404401, Restart, function(eventFlagId, entityId, eventFlagId2, eventFlagId3, eventFlagId4, eventFlagId5) {
+    if (EventFlag(12100889)) {
+        SetEventFlag(eventFlagId2, OFF);
+        SetEventFlag(eventFlagId3, OFF);
+        SpawnMapSFX(entityId);
+        WaitFor(EventFlag(eventFlagId2));
+        DeleteMapSFX(entityId, true);
+        EndEvent();
+    }
     if (!EventFlag(eventFlagId)) {
         SetEventFlag(eventFlagId, OFF);
         DeleteMapSFX(entityId, true);
@@ -3373,6 +3471,14 @@ L0:
 
 // ★Cathedral City D_New NPC summons_Summonability determination_Leader of the Federation (with helmet)_vs.
 $Event(13404402, Restart, function(eventFlagId, entityId, eventFlagId2, eventFlagId3, eventFlagId4, eventFlagId5) {
+    if (EventFlag(12100889)) {
+        SetEventFlag(eventFlagId2, OFF);
+        SetEventFlag(eventFlagId3, OFF);
+        SpawnMapSFX(entityId);
+        WaitFor(EventFlag(eventFlagId2));
+        DeleteMapSFX(entityId, true);
+        EndEvent();
+    }
     if (!EventFlag(eventFlagId)) {
         SetEventFlag(eventFlagId, OFF);
         DeleteMapSFX(entityId, true);
@@ -3407,6 +3513,14 @@ L0:
 
 // ★Cathedral City D_New NPC Summon_Summonability Judgment_Leader of the Federation (without helmet) vs Ludo
 $Event(13404403, Restart, function(eventFlagId, entityId, eventFlagId2, eventFlagId3, eventFlagId4, eventFlagId5) {
+    if (EventFlag(12100889)) {
+        SetEventFlag(eventFlagId2, OFF);
+        SetEventFlag(eventFlagId3, OFF);
+        SpawnMapSFX(entityId);
+        WaitFor(EventFlag(eventFlagId2));
+        DeleteMapSFX(entityId, true);
+        EndEvent();
+    }
     if (!EventFlag(eventFlagId)) {
         SetEventFlag(eventFlagId, OFF);
         DeleteMapSFX(entityId, true);
@@ -3441,6 +3555,14 @@ L0:
 
 // ★Cathedral Town D_New NPC Summon_Summonability Judgment_Federation: Executioner_vsΩ
 $Event(13404404, Restart, function(eventFlagId, entityId, eventFlagId2, eventFlagId3, eventFlagId4, eventFlagId5) {
+    if (EventFlag(12100889)) {
+        SetEventFlag(eventFlagId2, OFF);
+        SetEventFlag(eventFlagId3, OFF);
+        SpawnMapSFX(entityId);
+        WaitFor(EventFlag(eventFlagId2));
+        DeleteMapSFX(entityId, true);
+        EndEvent();
+    }
     if (!EventFlag(eventFlagId)) {
         SetEventFlag(eventFlagId, OFF);
         DeleteMapSFX(entityId, true);
@@ -3475,6 +3597,14 @@ L0:
 
 // ★Cathedral City D_New NPC summons_Summonability determination_Leader of the Federation (with helmet)_vsΩ
 $Event(13404405, Restart, function(eventFlagId, entityId, eventFlagId2, eventFlagId3, eventFlagId4, eventFlagId5) {
+    if (EventFlag(12100889)) {
+        SetEventFlag(eventFlagId2, OFF);
+        SetEventFlag(eventFlagId3, OFF);
+        SpawnMapSFX(entityId);
+        WaitFor(EventFlag(eventFlagId2));
+        DeleteMapSFX(entityId, true);
+        EndEvent();
+    }
     if (!EventFlag(eventFlagId)) {
         SetEventFlag(eventFlagId, OFF);
         DeleteMapSFX(entityId, true);
@@ -3511,6 +3641,14 @@ L0:
 
 // ★Cathedral Town D_New NPC Summon_Summonability Judgment_Leader of the Federation (without helmet)_vsΩ
 $Event(13404406, Restart, function(eventFlagId, entityId, eventFlagId2, eventFlagId3, eventFlagId4, eventFlagId5) {
+    if (EventFlag(12100889)) {
+        SetEventFlag(eventFlagId2, OFF);
+        SetEventFlag(eventFlagId3, OFF);
+        SpawnMapSFX(entityId);
+        WaitFor(EventFlag(eventFlagId2));
+        DeleteMapSFX(entityId, true);
+        EndEvent();
+    }
     if (!EventFlag(eventFlagId)) {
         SetEventFlag(eventFlagId, OFF);
         DeleteMapSFX(entityId, true);
@@ -3546,18 +3684,35 @@ L0:
 });
 
 // ★Cathedral Town D_New NPC Summon_Participation_XX
-$Event(13404410, Restart, function(signType, areaEntityId, entityId, eventFlagId, eventFlagId2, eventFlagId3, eventFlagId4, actionButtonParameterId) {
+$Event(13404410, Restart, function(signType, entityId, areaEntityId, eventFlagId, eventFlagId2, eventFlagId3, eventFlagId4, actionButtonParameterId) {
+    if (EventFlag(12100889)) {
+        ChangeCharacterEnableState(entityId, Disabled);
+        WaitFor(!EventFlag(eventFlagId) && ActionButtonInArea(actionButtonParameterId, entityId));
+        WarpCharacterAndCopyFloor(entityId, TargetEntityType.Character, 10000, 236, 10000);
+        SetEventFlag(3400, OFF);
+        WaitFixedTimeFrames(1);
+        ForceAnimationPlayback(10000, 100111, false, false, false);
+        SetSpEffect(10000, 4682, false);
+        SummonNPC(signType, entityId, areaEntityId, eventFlagId, eventFlagId2);
+        ClearSpEffect(10000, 9005);
+        ClearSpEffect(10000, 9025);
+        WaitFixedTimeSeconds(5);
+        DisplayMessage(100051, 0);
+        WaitFixedTimeSeconds(5);
+        WarpCharacterAndCopyFloor(entityId, TargetEntityType.Area, areaEntityId, -1, areaEntityId);
+        EndEvent();
+    }
     if (!EventFlag(eventFlagId)) {
-        ChangeCharacterEnableState(areaEntityId, Disabled);
+        ChangeCharacterEnableState(entityId, Disabled);
     }
     GotoIf(S0, EventFlag(eventFlagId2));
     GotoIf(S1, HasMultiplayerState(MultiplayerState.Client) && EventFlag(eventFlagId));
 S0:
-    ChangeCharacterEnableState(areaEntityId, Disabled);
+    ChangeCharacterEnableState(entityId, Disabled);
 S1:
     EndIf(EventFlag(eventFlagId4));
     if (!HasMultiplayerState(MultiplayerState.Client)) {
-        SetNetworkUpdateAuthority(areaEntityId, AuthorityLevel.Forced);
+        SetNetworkUpdateAuthority(entityId, AuthorityLevel.Forced);
     }
     WaitFor(
         PlayerHasItem(ItemType.Goods, 4312)
@@ -3565,10 +3720,10 @@ S1:
             && !EventFlag(eventFlagId2)
             && EventFlag(eventFlagId3)
             && !EventFlag(eventFlagId4)
-            && ActionButtonInArea(actionButtonParameterId, areaEntityId));
+            && ActionButtonInArea(actionButtonParameterId, entityId));
     ForceAnimationPlayback(10000, 100111, false, false, false);
     SetSpEffect(10000, 4682, false);
-    SummonNPC(signType, areaEntityId, entityId, eventFlagId, eventFlagId2);
+    SummonNPC(signType, entityId, areaEntityId, eventFlagId, eventFlagId2);
     ClearSpEffect(10000, 9005);
     ClearSpEffect(10000, 9025);
     WaitFixedTimeSeconds(5);
@@ -3577,6 +3732,25 @@ S1:
 
 // ★Cathedral Town D_New NPC Summon_Enter Boss Room_XX
 $Event(13404460, Restart, function(chrEntityId, areaEntityId, entityId, areaEntityId2, playAnimationId, eventFlagId, areaEntityId3) {
+    EndIf(HasMultiplayerState(MultiplayerState.Client));
+    WaitFor(EventFlag(eventFlagId) && InArea(chrEntityId, areaEntityId));
+    RequestCharacterAnimationReset(chrEntityId, Interpolation.Interpolated);
+    RotateCharacter(chrEntityId, entityId, playAnimationId, true);
+    RestartIf(!InArea(chrEntityId, areaEntityId2));
+    SetEventPoint(chrEntityId, entityId, 1);
+    RequestCharacterAICommand(chrEntityId, 990, 0);
+    RequestCharacterAIReplan(chrEntityId);
+    SetCharacterGravity(chrEntityId, Disabled);
+    SetCharacterMaphits(chrEntityId, true);
+    WaitFor(InArea(chrEntityId, areaEntityId3));
+    SetCharacterGravity(chrEntityId, Enabled);
+    SetCharacterMaphits(chrEntityId, false);
+    RequestCharacterAICommand(chrEntityId, -1, 0);
+    RequestCharacterAIReplan(chrEntityId);
+});
+
+// ★Cathedral Town D_New NPC Summon_Enter Boss Room_XX
+$Event(13404560, Restart, function(chrEntityId, areaEntityId, entityId, areaEntityId2, playAnimationId, eventFlagId, areaEntityId3) {
     EndIf(HasMultiplayerState(MultiplayerState.Client));
     WaitFor(EventFlag(eventFlagId) && InArea(chrEntityId, areaEntityId));
     RequestCharacterAnimationReset(chrEntityId, Interpolation.Interpolated);
@@ -3606,4 +3780,3 @@ $Event(13404490, Restart, function(chrEntityId, eventFlagId, eventFlagId2, event
     WaitFixedTimeFrames(1);
     RestartEvent();
 });
-

@@ -4,7 +4,7 @@
 // @game    Bloodborne
 // @string    "PC情報_現実拠点到達時\u0000N:\\SPRJ\\data\\Param\\event\\common.emevd\u0000\u0000\u0000\u0000\u0000\u0000"
 // @linked    [26]
-// @version    3.6
+// @version    3.6.3
 // ==/EMEVD==
 
 const lamp_offset = 52;
@@ -158,7 +158,6 @@ $Event(0, Default, function() {
     $InitializeEvent(52, 7100, 72110200, 2111950);
     $InitializeEvent(52, 7200, 72110100, 2111950, 2102952);
     $InitializeEvent(52, 7300, 72102110, 2111950);
-    $InitializeEvent(52, 12102220, 2111950, 2110950);
 });
 
 // pre-constructor
@@ -271,4 +270,3 @@ $Event(12110990, Default, function() {
     $InitializeEvent(0, 9350, 2);
     AwardAchievement(12);
 });
-

@@ -4,7 +4,7 @@
 // @game    Bloodborne
 // @string    "クリア時間_通し\u0000クリア時間_1プレイ\u0000ボス_撃破\u0000PC情報_ボス撃破_闇の旅団\u0000ボス_戦闘開始\u0000ボス戦_撃破時間\u0000ギミック_エレベーター起動\u0000PC情報_森到達時\u0000N:\\SPRJ\\data\\Param\\event\\common.emevd\u0000"
 // @linked    [164]
-// @version    3.6
+// @version    3.6.3
 // ==/EMEVD==
 
 const area_id = 27;
@@ -36,7 +36,7 @@ $Event(0, Default, function() {
     
     //InitializeEvent(0, 12701820, 0);
     
-    $InitializeEvent(19, 7900, 10000000+shadows_return, shadows_return, area_id, block_id, 8500+woods_lamp_offset);
+    $InitializeEvent(3, 7900, 10000000+shadows_return, shadows_return, area_id, block_id);
     
     $InitializeEvent(woods_lamp_offset, 8500, 8500+woods_lamp_offset, woods_lamp_id, 72111414);
     $InitializeEvent(shadows_lamp_offset, 8500, 8500+shadows_lamp_offset, shadows_lamp_id, 72111515);
@@ -53,8 +53,14 @@ $Event(0, Default, function() {
         }
         SetEventFlag(shadows_defeat+13, OFF);
         SetEventFlag(shadows_defeat, ON);
-        $InitializeEvent(shadows_lamp_offset, 8300, shadows_lamp_id+2000, 999, shadows_lamp_kindle, shadows_lamp_id+6000, shadows_lamp_id+3000);
-        DummyPlayCutsceneAndWarpPlayer(shadows_lamp_id+4000, area_id, block_id);
+        if (EventFlag(12111120)) {
+            SetEventFlag(12111120, OFF);
+            $InitializeEvent(shadows_lamp_offset, 8300, shadows_lamp_id+2000, -1, shadows_lamp_kindle, shadows_lamp_id+6000, shadows_lamp_id+3000);
+        }
+        else {
+            $InitializeEvent(shadows_lamp_offset, 8300, shadows_lamp_id+2000, 999, shadows_lamp_kindle, shadows_lamp_id+6000, shadows_lamp_id+3000);
+            DummyPlayCutsceneAndWarpPlayer(shadows_lamp_id+4000, area_id, block_id);
+        }
     } else if (EventFlag(shadows_defeat+12) || EventFlag(shadows_defeat-1)) {
         if (EventFlag(shadows_defeat-2)) {
             SetEventFlag(shadows_defeat-2, OFF);
@@ -343,8 +349,6 @@ $Event(0, Default, function() {
     $InitializeEvent(36, 7200, 72700101, 2701951, 2102951);
     $InitializeEvent(35, 7300, 72102700, 2701950);
     $InitializeEvent(36, 7300, 72102701, 2701951);
-    $InitializeEvent(35, 12102220, 2701950, 2700950);
-    $InitializeEvent(36, 12102220, 2701951, 2700951);
     $InitializeEvent(50, 7600, 2701999, 2703999);
     $InitializeEvent(51, 7600, 2701998, 2703998);
     $InitializeEvent(7, 9200, 2703900);
@@ -355,6 +359,13 @@ $Event(0, Default, function() {
     DeleteMapSFX(2703910, false);
     DeleteMapSFX(2703911, false);
     DeleteMapSFX(2703912, false);
+    
+    $InitializeEvent(4, 8617, 2700920, 12704420, 101161, 101208, 163); // henryk - c
+    $InitializeEvent(4, 8630, 8634, 8644, 2700920, 12704420, 2703910, 2701, -1, 200244, 101208, 200254, 200264);
+    
+    $InitializeEvent(5, 8617, 2700921, 12704421, 101161, 101208, 163); // madaras twin - c
+    $InitializeEvent(5, 8630, 8635, 8645, 2700921, 12704421, 2703911, 2701, -1, 200243, 101208, 200253, 200263);
+    
     $InitializeEvent(0, 12704400, 12704440, 2703910, 12704420, 12704430, 12701800, 6001);
     $InitializeEvent(0, 12704401, 12704441, 2703911, 12704421, 12704431, 12701800, 6001);
     $InitializeEvent(0, 12704410, 5, 2700920, 2702910, 12704420, 12704430, 12704440, 12701800, 10561);
@@ -363,6 +374,7 @@ $Event(0, Default, function() {
     $InitializeEvent(1, 12704450, 2700921, 2702911, 12704421, 12704431, 12704800);
     $InitializeEvent(0, 12704460, 2700920, 2702914, 2702800, 2702801, 101130, 12704800, 2702801);
     $InitializeEvent(1, 12704460, 2700921, 2702911, 2702800, 2702801, 101130, 12704800, 2702801);
+    
     RegisterLadder(12700602, 12700603, 2701071);
     RegisterLadder(12700604, 12700605, 2701072);
     RegisterLadder(12700606, 12700607, 2701073);
@@ -737,7 +749,7 @@ $Event(12701800, Default, function() {
     }
 L0:
     WaitFor(CharacterDead(2700800) && CharacterDead(2700801) && CharacterDead(2700802));
-    DisplayBanner(TextBannerType.DemonKilled);
+    DisplayBanner(TextBannerType.DemonKilled); // shadow defeated
     DeactivateObject(2701800, Disabled);
     DeactivateObject(2701801, Disabled);
     DeleteMapSFX(2703800, true);
@@ -935,6 +947,9 @@ $Event(12704802, Default, function() {
     }
 L0:
     SetEventFlag(12704800, ON);
+    GotoIf(L1, CountEventFlags(TargetEventFlagType.EventFlag, 8630, 8639) == 0);
+    GotoIf(L2, CountEventFlags(TargetEventFlagType.EventFlag, 8630, 8639) == 1);
+    GotoIf(L3, CountEventFlags(TargetEventFlagType.EventFlag, 8630, 8639) > 1);
     GotoIf(L1, NumberOfCoopClients() == 0);
     GotoIf(L2, NumberOfCoopClients() == 1);
     GotoIf(L3, NumberOfCoopClients() == 2);
@@ -2489,6 +2504,14 @@ $Event(12704450, Restart, function(chrEntityId, entityId, eventFlagId, eventFlag
 
 // ★Forest_New NPC summoning_Summonability determination_Federation Hunter: Henrik
 $Event(12704400, Restart, function(eventFlagId, entityId, eventFlagId2, eventFlagId3, eventFlagId4, eventFlagId5) {
+    if (EventFlag(12100889)) {
+        SetEventFlag(eventFlagId2, OFF);
+        SetEventFlag(eventFlagId3, OFF);
+        SpawnMapSFX(entityId);
+        WaitFor(EventFlag(eventFlagId2));
+        DeleteMapSFX(entityId, true);
+        EndEvent();
+    }
     if (!EventFlag(eventFlagId)) {
         SetEventFlag(eventFlagId, OFF);
         DeleteMapSFX(entityId, true);
@@ -2523,6 +2546,14 @@ L0:
 
 // ★Forest_New NPC summons_Summonability determination_Federation Hunter: Executioner
 $Event(12704401, Restart, function(eventFlagId, entityId, eventFlagId2, eventFlagId3, eventFlagId4, eventFlagId5) {
+    if (EventFlag(12100889)) {
+        SetEventFlag(eventFlagId2, OFF);
+        SetEventFlag(eventFlagId3, OFF);
+        SpawnMapSFX(entityId);
+        WaitFor(EventFlag(eventFlagId2));
+        DeleteMapSFX(entityId, true);
+        EndEvent();
+    }
     if (!EventFlag(eventFlagId)) {
         SetEventFlag(eventFlagId, OFF);
         DeleteMapSFX(entityId, true);
@@ -2556,18 +2587,32 @@ L0:
 });
 
 // ★Forest_New NPC Summon_Participation_XX
-$Event(12704410, Restart, function(signType, areaEntityId, entityId, eventFlagId, eventFlagId2, eventFlagId3, eventFlagId4, actionButtonParameterId) {
+$Event(12704410, Restart, function(signType, entityId, areaEntityId, eventFlagId, eventFlagId2, eventFlagId3, eventFlagId4, actionButtonParameterId) {
+    if (EventFlag(12100889)) {
+        WarpCharacterAndCopyFloor(entityId, TargetEntityType.Area, areaEntityId, -1, areaEntityId);
+        ChangeCharacterEnableState(entityId, Disabled);
+        WaitFor(!EventFlag(eventFlagId) && ActionButtonInArea(actionButtonParameterId, entityId));
+        SetEventFlag(2701, OFF);
+        ForceAnimationPlayback(10000, 100111, false, false, false);
+        SetSpEffect(10000, 4682, false);
+        SummonNPC(signType, entityId, areaEntityId, eventFlagId, eventFlagId2);
+        ClearSpEffect(10000, 9005);
+        ClearSpEffect(10000, 9025);
+        WaitFixedTimeSeconds(5);
+        DisplayMessage(100051, 0);
+        EndEvent();
+    }
     if (!EventFlag(eventFlagId)) {
-        ChangeCharacterEnableState(areaEntityId, Disabled);
+        ChangeCharacterEnableState(entityId, Disabled);
     }
     GotoIf(S0, EventFlag(eventFlagId2));
     GotoIf(S1, HasMultiplayerState(MultiplayerState.Client) && EventFlag(eventFlagId));
 S0:
-    ChangeCharacterEnableState(areaEntityId, Disabled);
+    ChangeCharacterEnableState(entityId, Disabled);
 S1:
     EndIf(EventFlag(eventFlagId4));
     if (!HasMultiplayerState(MultiplayerState.Client)) {
-        SetNetworkUpdateAuthority(areaEntityId, AuthorityLevel.Forced);
+        SetNetworkUpdateAuthority(entityId, AuthorityLevel.Forced);
     }
     WaitFor(
         PlayerHasItem(ItemType.Goods, 4312)
@@ -2575,10 +2620,10 @@ S1:
             && !EventFlag(eventFlagId2)
             && EventFlag(eventFlagId3)
             && !EventFlag(eventFlagId4)
-            && ActionButtonInArea(actionButtonParameterId, areaEntityId));
+            && ActionButtonInArea(actionButtonParameterId, entityId));
     ForceAnimationPlayback(10000, 100111, false, false, false);
     SetSpEffect(10000, 4682, false);
-    SummonNPC(signType, areaEntityId, entityId, eventFlagId, eventFlagId2);
+    SummonNPC(signType, entityId, areaEntityId, eventFlagId, eventFlagId2);
     ClearSpEffect(10000, 9005);
     ClearSpEffect(10000, 9025);
     WaitFixedTimeSeconds(5);
@@ -2603,4 +2648,3 @@ $Event(12704460, Restart, function(chrEntityId, areaEntityId, entityId, areaEnti
     RequestCharacterAICommand(chrEntityId, -1, 0);
     RequestCharacterAIReplan(chrEntityId);
 });
-

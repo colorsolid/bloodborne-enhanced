@@ -4,7 +4,7 @@
 // @game    Bloodborne
 // @string    "クリア時間_通し\u0000クリア時間_1プレイ\u0000ボス_撃破\u0000PC情報_ボス撃破_王の死神\u0000ボス_戦闘開始\u0000ボス戦_撃破時間\u0000古城_ボス戦_大魔法持続時間\u0000古城_アイテム取得順_アイテムA\u0000古城_アイテム取得順_アイテムB\u0000古城_アイテム取得順_アイテムC\u0000古城_アイテム取得順_アイテムD\u0000PC情報_古城到達時\u0000N:\\SPRJ\\data\\Param\\event\\common.emevd\u0000\u0000\u0000"
 // @linked    [304]
-// @version    3.6
+// @version    3.6.3
 // ==/EMEVD==
 
 const area_id = 25;
@@ -34,7 +34,7 @@ const logarius_id = 2500800;
 $Event(0, Default, function() {
     SetEventFlag(8900+logarius_offset, OFF);
     
-    $InitializeEvent(13, 7900, 10000000+logarius_return, logarius_return, area_id, block_id, 8500+cainhurst_lamp_offset);
+    $InitializeEvent(0, 7900, 10000000+logarius_return, logarius_return, area_id, block_id);
     
     $InitializeEvent(cainhurst_lamp_offset, 8500, 8500+cainhurst_lamp_offset, cainhurst_lamp_id, 72112222);
     $InitializeEvent(queens_lamp_offset, 8500, 8500+queens_lamp_offset, queens_lamp_id, 72112424);
@@ -61,8 +61,14 @@ $Event(0, Default, function() {
         }
         SetEventFlag(logarius_defeat+13, OFF);
         SetEventFlag(logarius_defeat, ON);
-        $InitializeEvent(logarius_lamp_offset, 8300, logarius_lamp_id+2000, 999, logarius_lamp_kindle, logarius_lamp_id+6000, logarius_lamp_id+3000);
-        DummyPlayCutsceneAndWarpPlayer(logarius_lamp_id+4000, area_id, block_id);
+        if (EventFlag(12111120)) {
+            SetEventFlag(12111120, OFF);
+            $InitializeEvent(logarius_lamp_offset, 8300, logarius_lamp_id+2000, -1, logarius_lamp_kindle, logarius_lamp_id+6000, logarius_lamp_id+3000);
+        }
+        else {
+            $InitializeEvent(logarius_lamp_offset, 8300, logarius_lamp_id+2000, 999, logarius_lamp_kindle, logarius_lamp_id+6000, logarius_lamp_id+3000);
+            DummyPlayCutsceneAndWarpPlayer(logarius_lamp_id+4000, area_id, block_id);
+        }
     // rematch mode started, warp player to boss trigger point
     } else if (EventFlag(logarius_defeat+12) || EventFlag(logarius_defeat-1)) {
         if (EventFlag(logarius_defeat-2)) {
@@ -887,9 +893,6 @@ $Event(12500000, Default, function() {
     SetEventFlag(12200134, ON);
     PlayCutsceneToPlayer(25000000, CutscenePlayMode.SkippableWithFadeOut, 10000);
     WaitFixedTimeFrames(1);
-    $InitializeEvent(25, 12102220, 2501950, 2500950);
-    $InitializeEvent(26, 12102220, 2501951, 2500951);
-    $InitializeEvent(27, 12102220, 2501952, 2500952);
     AwardAchievement(10);
     SetEventFlag(9180, OFF);
 });
@@ -1765,7 +1768,7 @@ $Event(12501800, Default, function() {
     }
 L0:
     WaitFor(CharacterDead(2500800));
-    DisplayBanner(TextBannerType.DemonKilled);
+    DisplayBanner(TextBannerType.DemonKilled); // logarius defeated
     DeactivateObject(2501800, Disabled);
     DeleteMapSFX(2503800, true);
     SetLockcamSlotNumber(25, 0, 0);
@@ -2284,4 +2287,3 @@ $Event(12507050, Default, function(eventFlagId, chrEntityId, entityId) {
     ForceAnimationPlayback(chrEntityId, 101166, false, true, false);
     ChangeCharacterEnableState(chrEntityId, Disabled);
 });
-

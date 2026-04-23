@@ -4,7 +4,7 @@
 // @game    Bloodborne
 // @string    ""
 // @linked    []
-// @version    3.6
+// @version    3.6.3
 // ==/EMEVD==
 
 // boss_defeat-2:  rematch death occured
@@ -18,10 +18,25 @@
 
 // constructor
 $Event(0, Default, function() {
-    //BatchSetEventFlags(15000000, 40000000, ON);
-    //SetEventFlag(21, ON);
-    SetEventFlag(12102065, OFF);
-    $InitializeEvent(0, 12102037);
+    $InitializeEvent(0, 8890); // test
+    
+    $InitializeEvent(0, 12308030); // respec init - calc echoes and insight
+    $InitializeEvent(0, 12308031); // change character - restore keys
+    $InitializeEvent(0, 12308032); // reimburse echoes
+    $InitializeEvent(0, 12308084); // reimburse insight
+    SetEventFlag(12414590, ON); // ?
+    
+    SetEventFlag(12102065, OFF); // dark fog - change trigger
+    $InitializeEvent(0, 12102037); // dark fog - random time timer
+    
+    $InitializeEvent(0, 8618); // map change check
+    $InitializeEvent(0, 8619); // double tap init
+    $InitializeEvent(0, 8620, 2111); // portable lamp
+    $InitializeEvent(1, 8620, 2108); // summons menu
+    $InitializeEvent(0, 8603); // portable lamp warping
+    $InitializeEvent(0, 8604); // portable lamp warping to chalice
+    $InitializeEvent(0, 8615); // portable lamp reawaken
+    $InitializeEvent(0, 8616); // traverse
     
     $InitializeEvent(0, 12102069);
     
@@ -29,13 +44,9 @@ $Event(0, Default, function() {
     
     $InitializeEvent(0, 8410); // rite of kindling failsafe
     $InitializeEvent(0, 8411); // remove right on deactivate
-    //InitializeEvent(0, 8412, 0); // test
     
-    // unlock phantasm paper
-    $InitializeEvent(0, 12108450);
-    
-    SetEventFlag(1509, OFF);
-    SetEventFlag(1510, OFF);
+    SetEventFlag(1509, OFF); // restock disable flag - enabled after short delay
+    SetEventFlag(1510, OFF); // chalice menu while resting check
     SetEventFlag(12100761, OFF); // re-enable rest in the menu
     
     $InitializeEvent(0, 12101000, 4110, 2100211, 1, 10);
@@ -93,10 +104,6 @@ $Event(0, Default, function() {
     $InitializeEvent(0, 12101360);
     $InitializeEvent(0, 12101361);
     
-    // beast and broccoli runes
-    $InitializeEvent(0, 12100770);
-    $InitializeEvent(0, 12100769);
-    
     // lesser hunter's mark
     $InitializeEvent(0, 12100768);
     
@@ -106,9 +113,6 @@ $Event(0, Default, function() {
     
     // Settings initializers
     $InitializeEvent(0, 8400); // lamp
-    $InitializeEvent(0, 8401); // lamp 2
-    $InitializeEvent(0, 8405); // broken lamp
-    $InitializeEvent(0, 8406); // misc
     
     if (EventFlag(12100850)) { // auto rematch enabled, rematch initiated from dream, and death respawn location is dream
         SetEventFlag(12100850, OFF);
@@ -287,6 +291,72 @@ S1:
     $InitializeEvent(48, 9500, 3482, 101320);
     $InitializeEvent(49, 9500, 3483, 101330);
     $InitializeEvent(50, 9500, 3484, 101340);
+    
+    $InitializeEvent(51, 9500, 3413, 110750);
+    $InitializeEvent(52, 9500, 3444, 110390);
+    $InitializeEvent(53, 9500, 3445, 110400);
+    $InitializeEvent(54, 9500, 3446, 110120);
+    $InitializeEvent(55, 9500, 3438, 110580);
+    $InitializeEvent(56, 9500, 3439, 110200);
+    $InitializeEvent(57, 9500, 3432, 110330);
+    $InitializeEvent(58, 9500, 3433, 110050);
+    $InitializeEvent(59, 9500, 3416, 110290);
+    $InitializeEvent(60, 9500, 3417, 110030);
+    $InitializeEvent(61, 9500, 3430, 110310);
+    $InitializeEvent(62, 9500, 3431, 110040);
+    $InitializeEvent(63, 9500, 3447, 110490);
+    $InitializeEvent(64, 9500, 3448, 110500);
+    $InitializeEvent(65, 9500, 3449, 110160);
+    $InitializeEvent(66, 9500, 3418, 110600);
+    $InitializeEvent(67, 9500, 3419, 110610);
+    $InitializeEvent(68, 9500, 3420, 110620);
+    $InitializeEvent(69, 9500, 3421, 110210);
+    $InitializeEvent(70, 9500, 3499, 110720);
+    $InitializeEvent(71, 9500, 3414, 110270);
+    $InitializeEvent(72, 9500, 3415, 110020);
+    $InitializeEvent(73, 9500, 3485, 110530);
+    $InitializeEvent(74, 9500, 3486, 110540);
+    $InitializeEvent(75, 9500, 3487, 110180);
+    $InitializeEvent(76, 9500, 3488, 110430);
+    $InitializeEvent(77, 9500, 3489, 110440);
+    $InitializeEvent(78, 9500, 3490, 110130);
+    $InitializeEvent(79, 9500, 3442, 110250);
+    $InitializeEvent(80, 9500, 3443, 110010);
+    $InitializeEvent(81, 9500, 3491, 110410);
+    $InitializeEvent(82, 9500, 3492, 110420);
+    $InitializeEvent(83, 9500, 3493, 110110);
+    $InitializeEvent(84, 9500, 3422, 110640);
+    $InitializeEvent(85, 9500, 3423, 110650);
+    $InitializeEvent(86, 9500, 3424, 110660);
+    $InitializeEvent(87, 9500, 3425, 110670);
+    $InitializeEvent(88, 9500, 3428, 110560);
+    $InitializeEvent(89, 9500, 3429, 110190);
+    $InitializeEvent(90, 9500, 3426, 110480);
+    $InitializeEvent(91, 9500, 3427, 110150);
+    $InitializeEvent(92, 9500, 3494, 110680);
+    $InitializeEvent(93, 9500, 3495, 110690);
+    $InitializeEvent(94, 9500, 3496, 110700);
+    $InitializeEvent(95, 9500, 3436, 110380);
+    $InitializeEvent(96, 9500, 3437, 110060);
+    $InitializeEvent(97, 9500, 3497, 110730);
+    $InitializeEvent(98, 9500, 3498, 110740);
+    $InitializeEvent(99, 9500, 3500, 110450);
+    $InitializeEvent(100, 9500, 3501, 110460);
+    $InitializeEvent(101, 9500, 3502, 110140);
+    $InitializeEvent(102, 9500, 3506, 110100);
+    $InitializeEvent(103, 9500, 3504, 110080);
+    $InitializeEvent(104, 9500, 3503, 110070);
+    $InitializeEvent(105, 9500, 3505, 110090);
+    $InitializeEvent(106, 9500, 3507, 110760);
+    $InitializeEvent(107, 9500, 3440, 110230);
+    $InitializeEvent(108, 9500, 3441, 110000);
+    $InitializeEvent(109, 9500, 3434, 110350);
+    $InitializeEvent(110, 9500, 3435, 110360);
+    $InitializeEvent(111, 9500, 3508, 110710);
+    $InitializeEvent(112, 9500, 3509, 110510);
+    $InitializeEvent(113, 9500, 3531, 110520);
+    $InitializeEvent(114, 9500, 3532, 110170);
+    $InitializeEvent(115, 9500, 3533, 110770);
     $InitializeEvent(0, 9440, 9440, 10500);
     $InitializeEvent(1, 9440, 9441, 11500);
     $InitializeEvent(2, 9440, 9442, 12500);
@@ -623,208 +693,280 @@ L1:
     NoOp();
 });
 
-// initialize lamp settings
+// initialize enhanced settings
 $Event(8400, Default, function() {
+    // --------------------------------------------------- \\
+    // -------------------- L A M P S -------------------- //
+    // --------------------------------------------------- \\
+    
     // prevent lamp deactivation
     // on: 12100868, off: 12100968
-    if (!EventFlag(12100968) && !EventFlag(12100868)) {
-        SetEventFlag(12100968, ON);
+    if (!EventFlag(12100968)) {
+        if (!EventFlag(12100868)) {
+            SetEventFlag(12100968, ON);
+        }
     }
     
     // auto refill vials & bullets
     // on: 12100862, off: 12100962
-    if (!EventFlag(12100962) && !EventFlag(12100862)) {
-        SetEventFlag(12100862, ON);
-    }
-    
-    // infinite durability
-    // on: 12100855, off: 12100955
-    if (!EventFlag(12100955) && !EventFlag(12100855)) {
-        SetEventFlag(12100855, ON);
-    }
-    
-    // rest
-    // on: 12100861, off: 12100961
-    if (!EventFlag(12100961) && !EventFlag(12100861)) {
-        SetEventFlag(12100961, ON);
-    }
-    
-    // auto rest
-    // on: 12100858, off: 12100958
-    if (!EventFlag(12100958) && !EventFlag(12100858)) {
-        SetEventFlag(12100958, ON);
-    }
-    
-    // quick warp to boss
-    // on: 12100857, off: 12100957
-    if (!EventFlag(12100957) && !EventFlag(12100857)) {
-        SetEventFlag(12100857, ON);
-    }
-    
-    // lamp menu
-    // on: 12100872, off: 12100972
-    if (!EventFlag(12100972) && !EventFlag(12100872)) {
-        SetEventFlag(12100872, ON);
-    }
-    
-    // warp
-    // on: 12100880, off: 12100980
-    if (!EventFlag(12100980) && !EventFlag(12100880)) {
-        SetEventFlag(12100880, ON);
-    }
-    
-    // level up
-    // on: 12100879, off: 12100979
-    if (!EventFlag(12100979) && !EventFlag(12100879)) {
-        SetEventFlag(12100879, ON);
-    }
-    
-    // workshop
-    // on: 12100878, off: 12100978
-    if (!EventFlag(12100978) && !EventFlag(12100878)) {
-        SetEventFlag(12100878, ON);
-    }
-    
-    // memory alter
-    // on: 12100877, off: 12100977
-    if (!EventFlag(12100977) && !EventFlag(12100877)) {
-        SetEventFlag(12100877, ON);
-    }
-    
-    // storage
-    // on: 12100876, off: 12100976
-    if (!EventFlag(12100976) && !EventFlag(12100876)) {
-        SetEventFlag(12100876, ON);
-    }
-    
-    // messengers
-    // on: 12100875, off: 12100975
-    if (!EventFlag(12100975) && !EventFlag(12100875)) {
-        SetEventFlag(12100875, ON);
-    }
-    
-    // change appearance
-    // on: 12100874, off: 12100974
-    if (!EventFlag(12100974) && !EventFlag(12100874)) {
-        SetEventFlag(12100874, ON);
-    }
-    
-    // boss rematches
-    // on: 12100867, off: 12100967
-    if (!EventFlag(12100967) && !EventFlag(12100867)) {
-        SetEventFlag(12100867, ON);
-    }
-});
-
-// initialize lamp settings 2
-$Event(8401, Default, function() {
-    // enable Iosefka lamp from start
-    // on: 12100853, off: 12100953
-    if (!EventFlag(12100953) && !EventFlag(12100853)) {
-        SetEventFlag(12100853, ON);
+    if (!EventFlag(12100962)) {
+        if (!EventFlag(12100862)) {
+            SetEventFlag(12100862, ON);
+        }
     }
     
     // kindling
     // on: 12100851, off: 12100951
-    if (!EventFlag(12100951) && !EventFlag(12100851)) {
-        SetEventFlag(12100851, ON);
+    if (!EventFlag(12100951)) {
+        if (!EventFlag(12100851)) {
+            SetEventFlag(12100851, ON);
+        }
     }
-});
-
-// initialize broken lamp settings
-$Event(8405, Default, function() {
+    
+    // rest
+    // on: 12100861, off: 12100961
+    if (!EventFlag(12100961)) {
+        if (!EventFlag(12100861)) {
+            SetEventFlag(12100961, ON);
+        }
+    }
+    
+    // auto rest
+    // on: 12100858, off: 12100958
+    if (!EventFlag(12100958)) {
+        if (!EventFlag(12100858)) {
+            SetEventFlag(12100958, ON);
+        }
+    }
+    
+    // lamp menu
+    // on: 12100872, off: 12100972
+    if (!EventFlag(12100972)) {
+        if (!EventFlag(12100872)) {
+            SetEventFlag(12100872, ON);
+        }
+    }
+    
+    // warp
+    // on: 12100880, off: 12100980
+    if (!EventFlag(12100980)) {
+        if (!EventFlag(12100880)) {
+            SetEventFlag(12100880, ON);
+        }
+    }
+    
+    // level up
+    // on: 12100879, off: 12100979
+    if (!EventFlag(12100979)) {
+        if (!EventFlag(12100879)) {
+            SetEventFlag(12100879, ON);
+        }
+    }
+    
+    // workshop
+    // on: 12100878, off: 12100978
+    if (!EventFlag(12100978)) {
+        if (!EventFlag(12100878)) {
+            SetEventFlag(12100878, ON);
+        }
+    }
+    
+    // memory alter
+    // on: 12100877, off: 12100977
+    if (!EventFlag(12100977)) {
+        if (!EventFlag(12100877)) {
+            SetEventFlag(12100877, ON);
+        }
+    }
+    
+    // storage
+    // on: 12100876, off: 12100976
+    if (!EventFlag(12100976)) {
+        if (!EventFlag(12100876)) {
+            SetEventFlag(12100876, ON);
+        }
+    }
+    
+    // messengers
+    // on: 12100875, off: 12100975
+    if (!EventFlag(12100975)) {
+        if (!EventFlag(12100875)) {
+            SetEventFlag(12100875, ON);
+        }
+    }
+    
+    // change appearance
+    // on: 12100874, off: 12100974
+    if (!EventFlag(12100974)) {
+        if (!EventFlag(12100874)) {
+            SetEventFlag(12100874, ON);
+        }
+    }
+    
+    // boss rematches
+    // on: 12100867, off: 12100967
+    if (!EventFlag(12100967)) {
+        if (!EventFlag(12100867)) {
+            SetEventFlag(12100867, ON);
+        }
+    }
+    
+    // quick warp to boss
+    // on: 12100857, off: 12100957
+    if (!EventFlag(12100957)) {
+        if (!EventFlag(12100857)) {
+            SetEventFlag(12100857, ON);
+        }
+    }
+    
+    // enable Iosefka lamp from start
+    // on: 12100853, off: 12100953
+    if (!EventFlag(12100953)) {
+        if (!EventFlag(12100853)) {
+            SetEventFlag(12100853, ON);
+        }
+    }
+    
+    // --------------------------------------------------- //
+    // -------------- B R O K E N _ L A M P -------------- \\
+    // --------------------------------------------------- //
+    
     // broken lamp
     // on: 12100865, off: 12100965
-    if (!EventFlag(12100965) && !EventFlag(12100865)) {
-        SetEventFlag(12100865, ON);
+    if (!EventFlag(12100965)) {
+        if (!EventFlag(12100865)) {
+            SetEventFlag(12100865, ON);
+        }
     }
     
     // broken lamp respawn location on victory and hunter's mark - dream or lamp, 
     // boss lamp: 12100863, dream: 12100963
-    if (!EventFlag(12100963) && !EventFlag(12100863)) {
-        SetEventFlag(12100963, ON);
+    if (!EventFlag(12100963)) {
+        if (!EventFlag(12100863)) {
+            SetEventFlag(12100963, ON);
+        }
     }
     
     // broken lamp respawn location on death - dream or lamp
     // boss lamp: 12100859, dream: 12100959
-    if (!EventFlag(12100959) && !EventFlag(12100859)) {
-        SetEventFlag(12100959, ON);
-    }
-});
-
-// initialize other settings
-$Event(8406, Default, function() {
-    // prevent auto ng+
-    // on: 12100873, off: 12100973
-    if (!EventFlag(12100973) && !EventFlag(12100873)) {
-        SetEventFlag(12100873, ON);
+    if (!EventFlag(12100959)) {
+        if (!EventFlag(12100859)) {
+            SetEventFlag(12100959, ON);
+        }
     }
     
-    // stocked shop
-    // on: 12100871, off: 12100971
-    if (!EventFlag(12100971) && !EventFlag(12100871)) {
-        SetEventFlag(12100871, ON);
+    // --------------------------------------------------- \\
+    // ------ P R I M E _ H U N T E R ' S _ M A R K ------ //
+    // --------------------------------------------------- \\
+    
+    // warp menu
+    // on: 12100881, off: 12100981
+    if (!EventFlag(12100881)) {
+        if (!EventFlag(12100981)) {
+            SetEventFlag(12100881, ON);
+        }
     }
     
-    // rematch death - end rematch or restart
-    // restart: 12100864, end: 12100964
-    if (!EventFlag(12100964) && !EventFlag(12100864)) {
-        SetEventFlag(12100864, ON);
+    // level up
+    // on: 12100882, off: 12100982
+    if (!EventFlag(12100882)) {
+        if (!EventFlag(12100982)) {
+            SetEventFlag(12100882, ON);
+        }
     }
     
-    // rematch cutscenes
-    // on: 12100866, off: 12100966
-    if (!EventFlag(12100966) && !EventFlag(12100866)) {
-        SetEventFlag(12100966, ON);
+    // workshop
+    // on: 12100883, off: 12100983
+    if (!EventFlag(12100883)) {
+        if (!EventFlag(12100983)) {
+            SetEventFlag(12100883, ON);
+        }
     }
     
-    // auto unlock chalice doors
-    // on: 12100860, off: 12100960
-    if (!EventFlag(12100960) && !EventFlag(12100860)) {
-        SetEventFlag(12100860, ON);
+    // memory alter
+    // on: 12100884, off: 12100984
+    if (!EventFlag(12100884)) {
+        if (!EventFlag(12100984)) {
+            SetEventFlag(12100884, ON);
+        }
     }
     
-    // random time
-    // on: 12100856, off: 12100956
-    if (!EventFlag(12100956) && !EventFlag(12100856)) {
-        SetEventFlag(12100856, ON);
+    // storage
+    // on: 12100885, off: 12100985
+    if (!EventFlag(12100885)) {
+        if (!EventFlag(12100985)) {
+            SetEventFlag(12100885, ON);
+        }
     }
     
-    // doll gesture
-    // on: 12100854, off: 12100954
-    if (!EventFlag(12100954) && !EventFlag(12100854)) {
-        SetEventFlag(12100954, ON);
+    // messengers
+    // on: 12100886, off: 12100986
+    if (!EventFlag(12100886)) {
+        if (!EventFlag(12100986)) {
+            SetEventFlag(12100886, ON);
+        }
     }
+    
+    // change appearance
+    // on: 12100887, off: 12100987
+    if (!EventFlag(12100887)) {
+        if (!EventFlag(12100987)) {
+            SetEventFlag(12100887, ON);
+        }
+    }
+    
+    // enhanced features
+    // on: 12100888, off: 12100988
+    if (!EventFlag(12100888)) {
+        if (!EventFlag(12100988)) {
+                SetEventFlag(12100888, ON);
+        }
+    }
+        
+    // double tap action
+    if (!AnyBatchEventFlags(12102100, 12102103)) {
+        SetEventFlag(12102100, OFF); // warp menu
+        SetEventFlag(12102101, ON);  // hunter's dream
+        SetEventFlag(12102102, OFF); // reawaken
+        SetEventFlag(12102103, OFF); // nothing
+    }
+    
+    BatchSetEventFlags(12102100, 12102103, OFF);
+    SetEventFlag(12102100, ON); // warp menu
+    
+    // --------------------------------------------------- //
+    // ---------------- S U M M O N I N G ---------------- \\
+    // --------------------------------------------------- //
+    
+    // g-r bell double tap action
+    if (!AnyBatchEventFlags(12102110, 12102111)) {
+        SetEventFlag(12102110, ON);  // gather
+        SetEventFlag(12102111, OFF); // nothing
+    }
+    
+    // always show npc summon signs
+    // on: 12100889, off: 12100989
+    if (!EventFlag(12100989)) {
+        if (!EventFlag(12100889)) {
+            SetEventFlag(12100889, ON);
+        }
+    }
+    
+    // --------------------------------------------------- \\
+    // --------------- D I F F I C U L T Y --------------- //
+    // --------------------------------------------------- \\
     
     // rematch scaling
     // on: 12100852, off: 12100952
-    if (!EventFlag(12100952) && !EventFlag(12100852)) {
-        SetEventFlag(12100952, ON);
-    }
-    
-    // bridge door
-    // on: 12100849, off: 12100949
-    if (!EventFlag(12100949) && !EventFlag(12100849)) {
-        SetEventFlag(12100949, ON);
-    }
-    
-    // unlock lamps
-    SetEventFlag(12102301, OFF);
-    
-    // unlock shortcuts
-    SetEventFlag(12102311, OFF);
-    
-    // game effect / dark fog
-    if (!AnyBatchEventFlags(12102033, 12102036)) {
-        SetEventFlag(12102033, OFF); // random spawn
-        SetEventFlag(12102034, ON); // disabled
-        SetEventFlag(12102035, OFF); // always on
-        SetEventFlag(12102036, OFF); // random time
+    if (!EventFlag(12100952)) {
+        if (!EventFlag(12100852)) {
+            SetEventFlag(12100952, ON);
+        }
     }
     
     // increase cycle
     if (!AnyBatchEventFlags(12102022, 12102028)) {
-        SetEventFlag(12102022, ON); // ng
+        SetEventFlag(12102022, ON);  // ng
         SetEventFlag(12102023, OFF); // ng+1
         SetEventFlag(12102024, OFF); // ng+2
         SetEventFlag(12102025, OFF); // ng+3
@@ -833,19 +975,326 @@ $Event(8406, Default, function() {
         SetEventFlag(12102028, OFF); // ng+6
     }
     
-    // shops+
-    // on 12100848, off: 12100948
-    if (!EventFlag(12100948) && !EventFlag(12100848)) {
-        SetEventFlag(12100948, ON); // off
+    // game effect / dark fog
+    if (!AnyBatchEventFlags(12102033, 12102036)) {
+        SetEventFlag(12102033, OFF); // random spawn
+        SetEventFlag(12102034, ON);  // disabled
+        SetEventFlag(12102035, OFF); // always on
+        SetEventFlag(12102036, OFF); // random time
     }
     
+    // --------------------------------------------------- //
+    // -------------------- O T H E R -------------------- \\
+    // --------------------------------------------------- //
+
+    // prevent auto ng+
+    // on: 12100873, off: 12100973
+    if (!EventFlag(12100973)) {
+        if (!EventFlag(12100873)) {
+            SetEventFlag(12100873, ON);
+        }
+    }
     
+    // stocked shop
+    // on: 12100871, off: 12100971
+    if (!EventFlag(12100971)) {
+        if (!EventFlag(12100871)) {
+            SetEventFlag(12100871, ON);
+        }
+    }
+    
+    // shops+
+    // on 12100848, off: 12100948
+    if (!EventFlag(12100948)) {
+        if (!EventFlag(12100848)) {
+            SetEventFlag(12100948, ON);
+        }
+    }
+    
+    // rematch death - end rematch or restart
+    // restart: 12100864, end: 12100964
+    if (!EventFlag(12100964)) {
+        if (!EventFlag(12100864)) {
+            SetEventFlag(12100864, ON);
+        }
+    }
+    
+    // rematch cutscenes
+    // on: 12100866, off: 12100966
+    if (!EventFlag(12100966)) {
+        if (!EventFlag(12100866)) {
+            SetEventFlag(12100966, ON);
+        }
+    }
+    
+    // auto unlock chalice doors
+    // on: 12100860, off: 12100960
+    if (!EventFlag(12100960)) {
+        if (!EventFlag(12100860)) {
+            SetEventFlag(12100860, ON);
+        }
+    }
+    
+    // random time
+    // on: 12100856, off: 12100956
+    if (!EventFlag(12100956)) {
+        if (!EventFlag(12100856)) {
+            SetEventFlag(12100856, ON);
+        }
+    }
+    
+    // doll gesture
+    // on: 12100854, off: 12100954
+    if (!EventFlag(12100954)) {
+        if (!EventFlag(12100854)) {
+            SetEventFlag(12100954, ON);
+        }
+    }
+    
+    // bridge door
+    // on: 12100849, off: 12100949
+    if (!EventFlag(12100949)) {
+        if (!EventFlag(12100849)) {
+            SetEventFlag(12100949, ON);
+        }
+    }
+    
+    // unlock lamps
+    SetEventFlag(12102301, OFF);
+    
+    // unlock shortcuts
+    SetEventFlag(12102311, OFF);
+    
+    // infinite durability
+    // on: 12100855, off: 12100955
+    if (!EventFlag(12100955)) {
+        if (!EventFlag(12100855)) {
+            SetEventFlag(12100855, ON);
+        }
+    }
 });
 
-// unlock phantasm paper
-$Event(12108450, Default, function() {
-    EndIf(ThisEvent());
-    WaitFor(PlayerHasItem(ItemType.Goods, 1310));
+const maxInsight = 99;
+const maxLevel = 544;
+// respec - calculate echoes and insight
+$Event(12308030, Default, function() {
+    SetEventFlag(12308030, OFF);
+    WaitFor(ThisEvent());
+    WaitFixedTimeFrames(1);
+    if (EventFlag(12308048)) {
+        EventValueOperation(12308000, 30, 5431, 0, 0, CalculationType.Assign);
+    } else {
+        EventValueOperation(12308000, 30, 829, 0, 0, CalculationType.Assign);
+    }
+    EventValueOperation(12308190, 8, 0, 0, 0, CalculationType.Assign);
+    for (let i = 0; i <= maxInsight; i++) {
+        insightCond &= PlayerInsightAmount() == i;
+        GotoIf(S0, !insightCond);
+        Goto(L0);
+S0:
+        EventValueOperation(12308190, 8, 1, 0, 0, CalculationType.Add);
+        WaitFor(ElapsedSeconds(0)); // dummy statement to clear condition variable
+    }
+L0:
+    for (let i = 12; i <= maxLevel; i++) {
+        const amount = 0.02 * i**3 + 3.06 * i**2 + 105.6 * i - 895;
+        EventValueOperation(12308000, 30, amount, 0, 0, CalculationType.Add);
+        levelCond &= PlayersSoulLevel() == i;
+        GotoIf(S1, !levelCond);
+        Goto(L1);
+S1:
+        WaitFor(ElapsedSeconds(0)); // dummy statement to clear condition variable
+    }
+    EventValueOperation(12308000, 30, 0, 0, 0, CalculationType.Assign);
+L1:
+    SetEventFlag(12308031, ON);
+    RestartEvent();
+});
+
+// 4000 oedon tomb key
+// 4002 rite of kindling
+// 4003 cainhurst summons
+// 4006 orphanage key
+// 4009 iron door key
+// 4010 upper cathedral ward key
+// 4011 hunter chief emblem
+// 4012 lecture theatre key
+// 4013 lunarium key
+// 4014 laurence's skull
+// 4015 underground cell inner key
+// 4017 eye pendant
+// 4018 underground cell key
+// 4019 balcony key
+// 4020 astral clocktower key
+// 4021 celestial dial
+// 4102 haze extractor
+// 4103 blood gem workshop
+// 4104 rune workshop tool
+// 4105 short ritual root chalice
+// 4110 saw hunter badge
+// 4111 crow hunter badge
+// 4112 powder key hunter badge
+// 4113 old hunter badge
+// 4114 sword hunter badge
+// 4115 radiant sword hunter badge
+// 4116 wheel hunter badge
+// 4117 cainhurst badge
+// 4118 spark hunter badge
+// 4119 cosmic eye watcher badge
+// 4120 firing hammer badge
+// 4300 small hair ornament
+// 4304 ring of betrothal
+// 4305 queenly flesh
+// 4308 unopened summons
+// 4310 tonsil stone
+// 4311 eye of blood drunk hunter
+// 4312 old hunter bell
+// 4320-4323 umbilical cords
+// 4330 yharnam stone
+// 4340-4342 brain fluids
+
+// change character
+$Event(12308031, Default, function() {
+    SetEventFlag(12308031, OFF);
+    const itemIds = [
+        4000, 4002, 4003, 4006, 4009, 4010, 4011, 4012,
+        4013, 4014, 4015, 4017, 4018, 4019, 4020, 4021,
+        4102, 4103, 4104, 4105, 4110, 4111, 4112, 4113, 
+        4114, 4115, 4116, 4117, 4118, 4119, 4120, 4300, 
+        4304, 4305, 4308, 4310, 4311, 4312, 4320, 4321, 
+        4322, 4323, 4330, 4340, 4341, 4342
+    ]
+    const itemRestoreCount = itemIds.length;
+    const baseFlag = 12308050;
+    WaitFor(EventFlag(12308031));
+    for (let i = 0; i < itemRestoreCount; i++) {
+        itemCond &= PlayerHasItem(ItemType.Goods, itemIds[i]);
+        if (itemCond) {
+            SetEventFlag(baseFlag + i, ON);
+        }
+        WaitFor(ElapsedSeconds(0)); // dummy statement to clear condition variable
+    }
+    WaitFor(
+        EventFlag(12308040)
+            || EventFlag(12308041)
+            || EventFlag(12308042)
+            || EventFlag(12308043)
+            || EventFlag(12308044)
+            || EventFlag(12308045)
+            || EventFlag(12308046)
+            || EventFlag(12308047)
+            || EventFlag(12308048));
+    if (EventFlag(12308040)) {
+        ChangeCharacter(2000);
+    } else if (EventFlag(12308041)) {
+        ChangeCharacter(2001);
+    } else if (EventFlag(12308042)) {
+        ChangeCharacter(2002);
+    } else if (EventFlag(12308043)) {
+        ChangeCharacter(2003);
+    } else if (EventFlag(12308044)) {
+        ChangeCharacter(2004);
+    } else if (EventFlag(12308045)) {
+        ChangeCharacter(2005);
+    } else if (EventFlag(12308046)) {
+        ChangeCharacter(2006);
+    } else if (EventFlag(12308047)) {
+        ChangeCharacter(2007);
+    } else if (EventFlag(12308048)) {
+        ChangeCharacter(2008);
+    }
+    EventValueOperation(12308049, 1, 1, 0, 0, CalculationType.Assign);
+    for (let i = 0; i < itemRestoreCount; i++) {
+        if (EventFlag(baseFlag + i)) {
+            DirectlyGivePlayerItem(ItemType.Goods, itemIds[i], 12308049, 1);
+        }
+    }
+    BatchSetEventFlags(12308040, baseFlag+itemRestoreCount, OFF);
+    SetEventFlag(12308034, ON);
+    RestartEvent();
+});
+
+// reimburse echoes
+$Event(12308032, Default, function() {
+    WaitFor(EventFlag(12308034));
+    GotoIf(S0, EventValue(12308000, 30) < 268435456);
+    EventValueOperation(12308000, 30, 268435456, 0, 0, CalculationType.Sub);
+    SetSpEffect(10000, 127, false);
+    WaitFixedTimeFrames(1);
+    ClearSpEffect(10000, 127);
+    RestartEvent();
+    Goto(S7);
+S0:
+    GotoIf(S1, EventValue(12308000, 30) < 16777216);
+    EventValueOperation(12308000, 30, 16777216, 0, 0, CalculationType.Sub);
+    SetSpEffect(10000, 126, false);
+    WaitFixedTimeFrames(1);
+    ClearSpEffect(10000, 126);
+    RestartEvent();
+    Goto(S7);
+S1:
+    GotoIf(S2, EventValue(12308000, 30) < 1048576);
+    EventValueOperation(12308000, 30, 1048576, 0, 0, CalculationType.Sub);
+    SetSpEffect(10000, 125, false);
+    WaitFixedTimeFrames(1);
+    ClearSpEffect(10000, 125);
+    RestartEvent();
+    Goto(S7);
+S2:
+    GotoIf(S3, EventValue(12308000, 30) < 65536);
+    EventValueOperation(12308000, 30, 65536, 0, 0, CalculationType.Sub);
+    SetSpEffect(10000, 124, false);
+    WaitFixedTimeFrames(1);
+    ClearSpEffect(10000, 124);
+    RestartEvent();
+    Goto(S7);
+S3:
+    GotoIf(S4, EventValue(12308000, 30) < 4096);
+    EventValueOperation(12308000, 30, 4096, 0, 0, CalculationType.Sub);
+    SetSpEffect(10000, 123, false);
+    WaitFixedTimeFrames(1);
+    ClearSpEffect(10000, 123);
+    RestartEvent();
+    Goto(S7);
+S4:
+    GotoIf(S5, EventValue(12308000, 30) < 256);
+    EventValueOperation(12308000, 30, 256, 0, 0, CalculationType.Sub);
+    SetSpEffect(10000, 122, false);
+    WaitFixedTimeFrames(1);
+    ClearSpEffect(10000, 122);
+    RestartEvent();
+    Goto(S7);
+S5:
+    GotoIf(S6, EventValue(12308000, 30) < 16);
+    EventValueOperation(12308000, 30, 16, 0, 0, CalculationType.Sub);
+    SetSpEffect(10000, 121, false);
+    WaitFixedTimeFrames(1);
+    ClearSpEffect(10000, 121);
+    RestartEvent();
+    Goto(S7);
+S6:
+    GotoIf(S7, EventValue(12308000, 30) < 1);
+    EventValueOperation(12308000, 30, 1, 0, 0, CalculationType.Sub);
+    SetSpEffect(10000, 120, false);
+    WaitFixedTimeFrames(1);
+    ClearSpEffect(10000, 120);
+    RestartEvent();
+S7:
+    SetEventFlag(12308034, OFF);
+    SetEventFlag(12308085, ON);
+    RestartEvent();
+});
+
+// reimburse insight
+$Event(12308084, Default, function() {
+    WaitFor(EventFlag(12308085));
+    if (EventValue(12308190, 8) > 0) {
+        SetSpEffect(10000, 4680, false);
+        EventValueOperation(12308190, 8, 1, 0, 0, CalculationType.Sub);
+        RestartEvent();
+    }
+    SetEventFlag(12308085, OFF);
+    RestartEvent();
 });
 
 // Lantern lights up when passing area_XX
@@ -866,7 +1315,7 @@ $Event(12102200, Default, function() {
     SetEventFlag(12102202, ON);
     WaitFor(EventFlag(12102201) || EventFlag(12102301));
     if (!EventFlag(12102301)) {
-        DisplayBanner(TextBannerType.StadiumWin); // unlocked
+        DisplayBanner(TextBannerType.StadiumWin); // activated all lamps
     }
     SetEventFlag(12117810, ON); // show lamp in menus
     SetEventFlag(72110200, ON); // light lamp - somehow triggers warp when activated at start
@@ -931,7 +1380,7 @@ $Event(12102200, Default, function() {
     SetEventFlag(13207850, ON);
     SetEventFlag(73200202, ON);
     SetEventFlag(13207870, ON);
-    SetEventFlag(73200203, ON);
+    SetEventFlag(73200203, ON);    
     SetEventFlag(13307810, ON);
     SetEventFlag(73300200, ON);
     SetEventFlag(13307830, ON);
@@ -970,17 +1419,25 @@ $Event(12102210, Default, function() {
     SetEventFlag(12102212, ON);
     WaitFor(EventFlag(12102211) || EventFlag(12102311));
     if (!EventFlag(12102311)) {
-        DisplayBanner(TextBannerType.StadiumWin);
+        DisplayBanner(TextBannerType.StadiumWin); // unlocked all shortcuts
     }
     
+    SetEventFlag(12102211, OFF);
+    SetEventFlag(12102212, OFF);
+    
+    SetEventFlag(12200100, ON);  // hemwick entrance door
     SetEventFlag(12200110, ON);
     SetEventFlag(12200125, ON);
+    
     SetEventFlag(12300120, ON);
     SetEventFlag(12300121, ON);
+    
     SetEventFlag(12409453, ON);
     SetEventFlag(12400160, ON);
     SetEventFlag(12400157, ON);
     SetEventFlag(12400177, ON);
+    SetEventFlag(12400130, ON);  // grand cathedral door
+    
     SetEventFlag(12410200, ON);
     SetEventFlag(12410202, ON);
     SetEventFlag(12410203, ON);
@@ -990,58 +1447,42 @@ $Event(12102210, Default, function() {
     SetEventFlag(12410350, ON);
     SetEventFlag(12410330, ON);
     SetEventFlag(12420123, ON);
+    SetEventFlag(62411303, ON);  // house door 1
+    SetEventFlag(62411306, ON);  // house door 2
+    SetEventFlag(12410285, ON);  // ladder at start
+    
     SetEventFlag(12500074, ON);
     SetEventFlag(12500501, ON);
     
-    
     SetEventFlag(12601251, OFF);
-    
-    // mensis first cage elevator
-    SetEventFlag(12601253, OFF);
+    SetEventFlag(12601253, OFF); // mensis first cage elevator
     SetEventFlag(12601254, OFF);
     SetEventFlag(12601334, ON);
-    
-    // mensis second cage elevator
-    SetEventFlag(12605254, OFF);
+    SetEventFlag(12605254, OFF); // mensis second cage elevator
     SetEventFlag(12601255, OFF);
     SetEventFlag(12601335, ON);
-    
-    // mensis bottom elevator
-    SetEventFlag(12605256, OFF);
+    SetEventFlag(12605256, OFF); // mensis bottom elevator
     SetEventFlag(12601256, ON);
     SetEventFlag(12601323, ON);
-    
-    // mensis top elevator
-    SetEventFlag(12605251, OFF);
+    SetEventFlag(12605251, OFF); // mensis top elevator
     SetEventFlag(12601251, OFF);
     SetEventFlag(12601331, ON);
+    SetEventFlag(12601051, ON);  // micolash door
     
-    // mikolash door
-    SetEventFlag(12601051, ON);
-    
-    // woods elevator 1
-    SetEventFlag(12700134, OFF);
+    SetEventFlag(12700134, OFF); // woods elevator 1
     SetEventFlag(12700135, OFF);
     SetEventFlag(12700137, ON);
-    
-    // woods elevator 2
-    SetEventFlag(12700144, OFF);
+    SetEventFlag(12700144, OFF); // woods elevator 2
     SetEventFlag(12700147, ON);
-    
     SetEventFlag(12700110, ON);
     SetEventFlag(12700111, ON);
     SetEventFlag(12700112, ON);
     
-    // yahar'gul elevator
-    SetEventFlag(12800610, ON);
+    SetEventFlag(12800610, ON);  // yahar'gul elevator
     SetEventFlag(12800612, ON);
     SetEventFlag(12800630, ON);
-    
-    // yahar'gul big door
-    SetEventFlag(12809802, ON);
-    
-    // yahar'gul small doors
-    SetEventFlag(12800480, ON);
+    SetEventFlag(12809802, ON);  // yahar'gul big door
+    SetEventFlag(12800480, ON);  // yahar'gul small doors
     SetEventFlag(12800481, ON);
     SetEventFlag(12800482, ON);
     SetEventFlag(12800483, ON);
@@ -1052,19 +1493,13 @@ $Event(12102210, Default, function() {
     SetEventFlag(13200043, ON);
     SetEventFlag(13200010, ON);
     
-    // nightmare frontier slab
-    SetEventFlag(13300100, ON);
-    
-    // nightmare frontier elevator
-    SetEventFlag(13300115, OFF);
+    SetEventFlag(13300100, ON);  // nightmare frontier slab
+    SetEventFlag(13300115, OFF); // nightmare frontier elevator
     SetEventFlag(13300116, OFF);
     SetEventFlag(13300111, ON);
     
-    // hunter's nightmare door
-    SetEventFlag(13401211, ON);
-    
-    // hunter's nightmare gate
-    SetEventFlag(13401220, ON);
+    SetEventFlag(13401211, ON);  // hunter's nightmare door
+    SetEventFlag(13401220, ON);  // hunter's nightmare gate
     
     SetEventFlag(13501250, ON);
     SetEventFlag(13504110, OFF);
@@ -1073,35 +1508,21 @@ $Event(12102210, Default, function() {
     SetEventFlag(13504120, OFF);
     SetEventFlag(13501128, ON);
     SetEventFlag(13501126, OFF);
+    
     SetEventFlag(13601312, ON);
     SetEventFlag(13601200, ON);
     SetEventFlag(13601201, ON);
     SetEventFlag(13604100, OFF);
     SetEventFlag(13601108, ON);
     SetEventFlag(13601106, ON);
-    
-    SetEventFlag(12102211, OFF);
-    
-    SetEventFlag(12102212, OFF);
-    
-    //RestartEvent();
 });
 
 // infinite durability
 $Event(12102069, Default, function() {
     WaitFor(EventFlag(12100855));
-    SetSpEffect(10000, 1330, false);
+    SetSpEffect(10000, 1330, false); // apply repair effect every 10 seconds
     WaitFixedTimeSeconds(10);
     RestartEvent();
-});
-
-// something to do with lamp activation? unused currently
-$Event(12102220, Default, function(objEntityId, chrEntityId) {
-    EndEvent();
-    EndIf(!EventFlag(12102200) || ThisEventSlot());
-    WaitFor(CharacterBackreadStatus(chrEntityId));
-    WaitFixedTimeSeconds(1);
-    InitializeWarpObject(objEntityId);
 });
 
 // increase ng cycle - doll
@@ -1350,96 +1771,6 @@ $Event(12100003, Default, function() {
     }
 });
 
-// acquire all runes
-$Event(12100005, Default, function() {
-    //EndIf(ThisEvent());
-    SetEventFlag(12109000, ON);
-    WaitFor(EventFlag(12100006));
-    AwardItemLot(110000);
-    AwardItemLot(110010);
-    AwardItemLot(110020);
-    AwardItemLot(110030);
-    AwardItemLot(110040);
-    AwardItemLot(110050);
-    AwardItemLot(110060);
-    AwardItemLot(110070);
-    AwardItemLot(110080);
-    AwardItemLot(110090);
-    AwardItemLot(110100);
-    AwardItemLot(110110);
-    AwardItemLot(110120);
-    AwardItemLot(110130);
-    AwardItemLot(110140);
-    AwardItemLot(110150);
-    AwardItemLot(110160);
-    AwardItemLot(110170);
-    AwardItemLot(110180);
-    AwardItemLot(110190);
-    AwardItemLot(110200);
-    AwardItemLot(110210);
-    AwardItemLot(110220);
-    AwardItemLot(110230);
-    AwardItemLot(110240);
-    AwardItemLot(110250);
-    AwardItemLot(110260);
-    AwardItemLot(110270);
-    AwardItemLot(110280);
-    AwardItemLot(110290);
-    AwardItemLot(110300);
-    AwardItemLot(110310);
-    AwardItemLot(110320);
-    AwardItemLot(110330);
-    AwardItemLot(110340);
-    AwardItemLot(110350);
-    AwardItemLot(110360);
-    AwardItemLot(110370);
-    AwardItemLot(110380);
-    AwardItemLot(110390);
-    AwardItemLot(110400);
-    AwardItemLot(110410);
-    AwardItemLot(110420);
-    AwardItemLot(110430);
-    AwardItemLot(110440);
-    AwardItemLot(110450);
-    AwardItemLot(110460);
-    AwardItemLot(110470);
-    AwardItemLot(110480);
-    AwardItemLot(110490);
-    AwardItemLot(110500);
-    AwardItemLot(110510);
-    AwardItemLot(110520);
-    AwardItemLot(110530);
-    AwardItemLot(110540);
-    AwardItemLot(110550);
-    AwardItemLot(110560);
-    AwardItemLot(110570);
-    AwardItemLot(110580);
-    AwardItemLot(110590);
-    AwardItemLot(110600);
-    AwardItemLot(110610);
-    AwardItemLot(110620);
-    AwardItemLot(110630);
-    AwardItemLot(110640);
-    AwardItemLot(110650);
-    AwardItemLot(110660);
-    AwardItemLot(110670);
-    AwardItemLot(110680);
-    AwardItemLot(110690);
-    AwardItemLot(110700);
-    AwardItemLot(110710);
-    AwardItemLot(110720);
-    AwardItemLot(110730);
-    AwardItemLot(110740);
-    if (EventFlag(12100870)) {
-        AwardItemLot(110750);
-    }
-    if (EventFlag(12100869)) {
-        AwardItemLot(110760);
-    }
-    SetEventFlag(12100006, OFF);
-    RestartEvent();
-});
-
 // Gravestone messenger animation propriety judgment_gravestone 0
 $Event(12105020, Restart, function() {
     WaitFor(
@@ -1594,26 +1925,6 @@ $Event(8411, Default, function() {
     RestartEvent();
 });
 
-$Event(8412, Default, function() {
-    //give souls
-    SetSpEffect(10000, 126, false);
-    WaitFixedTimeFrames(1);
-    ClearSpEffect(10000, 126);
-    
-    //EventValueOperation(12308049, 1, 1, 0, 0, CalculationType.Assign);
-    //
-    //const itemIds = [
-    //    4020, 4019, 4003, 4021, 4017, 4011, 4009, 4014, 4012, 4013, 4000,
-    //    4312, 4006, 4305, 4304, 4300, 4310, 4018, 4015, 4308, 4010, 4330,
-    //    4117, 4119, 4111, 4120, 4113, 4112, 4115, 4110, 4118, 4114, 4116,
-    //    4102, 4103, 4104, 4002, 4105
-    //];
-    //const baseFlag = 12308050;    
-    //for (let i = 0; i < 38; i++) {
-    //    DirectlyGivePlayerItem(ItemType.Goods, itemIds[i], 12308049, 1);
-    //}
-});
-
 // change effect
 $Event(12102032, Default, function() {
     //EndEvent();
@@ -1664,30 +1975,97 @@ $Event(12102037, Default, function() {
     RestartEvent();
 });
 
-// beast 
-$Event(12100770, Default, function() {
-    EndIf(ThisEvent());
-    SetEventFlag(12100870, ON);
-    WaitFor(ThisEvent());
-    AwardItemLot(3401850);
-    SetEventFlag(12100870, OFF);
-});
-
-// milkweed
-$Event(12100769, Default, function() {
-    EndIf(ThisEvent());
-    SetEventFlag(12100869, ON);
-    WaitFor(ThisEvent());
-    AwardItemLot(43020);
-    SetEventFlag(12100869, OFF);
-});
-
 // return to dream / lesser hunter's mark
 $Event(12100768, Default, function() {
     WaitFor(CharacterHasSpEffect(10000, 2102));
     SetPlayerRespawnPoint(2102962);
     WaitFixedTimeFrames(1);
     SetSpEffect(10000, 2101, false);
+});
+
+// acquire all runes
+$Event(12100005, Default, function() {
+    EndIf(ThisEvent());
+    SetEventFlag(12109000, ON);
+    WaitFor(ThisEvent());
+    AwardItemLot(110000);
+    AwardItemLot(110010);
+    AwardItemLot(110020);
+    AwardItemLot(110030);
+    AwardItemLot(110040);
+    AwardItemLot(110050);
+    AwardItemLot(110060);
+    AwardItemLot(110070);
+    AwardItemLot(110080);
+    AwardItemLot(110090);
+    AwardItemLot(110100);
+    AwardItemLot(110110);
+    AwardItemLot(110120);
+    AwardItemLot(110130);
+    AwardItemLot(110140);
+    AwardItemLot(110150);
+    AwardItemLot(110160);
+    AwardItemLot(110170);
+    AwardItemLot(110180);
+    AwardItemLot(110190);
+    AwardItemLot(110200);
+    AwardItemLot(110210);
+    AwardItemLot(110220);
+    AwardItemLot(110230);
+    AwardItemLot(110240);
+    AwardItemLot(110250);
+    AwardItemLot(110260);
+    AwardItemLot(110270);
+    AwardItemLot(110280);
+    AwardItemLot(110290);
+    AwardItemLot(110300);
+    AwardItemLot(110310);
+    AwardItemLot(110320);
+    AwardItemLot(110330);
+    AwardItemLot(110340);
+    AwardItemLot(110350);
+    AwardItemLot(110360);
+    AwardItemLot(110370);
+    AwardItemLot(110380);
+    AwardItemLot(110390);
+    AwardItemLot(110400);
+    AwardItemLot(110410);
+    AwardItemLot(110420);
+    AwardItemLot(110430);
+    AwardItemLot(110440);
+    AwardItemLot(110450);
+    AwardItemLot(110460);
+    AwardItemLot(110470);
+    AwardItemLot(110480);
+    AwardItemLot(110490);
+    AwardItemLot(110500);
+    AwardItemLot(110510);
+    AwardItemLot(110520);
+    AwardItemLot(110530);
+    AwardItemLot(110540);
+    AwardItemLot(110550);
+    AwardItemLot(110560);
+    AwardItemLot(110570);
+    AwardItemLot(110580);
+    AwardItemLot(110590);
+    AwardItemLot(110600);
+    AwardItemLot(110610);
+    AwardItemLot(110620);
+    AwardItemLot(110630);
+    AwardItemLot(110640);
+    AwardItemLot(110650);
+    AwardItemLot(110660);
+    AwardItemLot(110670);
+    AwardItemLot(110680);
+    AwardItemLot(110690);
+    AwardItemLot(110700);
+    AwardItemLot(110710);
+    AwardItemLot(110720);
+    AwardItemLot(110730);
+    AwardItemLot(110740);
+    AwardItemLot(110750);
+    AwardItemLot(110760);
+    SetEventFlag(12109000, OFF);
 });
 
 // acquire all trick weapons
@@ -3053,7 +3431,6 @@ $Event(6816, Default, function() {
 });
 
 // Warp OBJ_Registration_XX
-// InitializeEvent(5, 7000, 2300950, 2301950, 999, 12307800, -1);
 $Event(7000, Default, function(chrEntityId, objEntityId, eventFlagId, eventFlagId2, eventFlagId3) {
     SetNetworkSyncState(Disabled);
     ChangeCharacterEnableState(chrEntityId, Disabled);
@@ -3165,6 +3542,7 @@ $Event(7700, Default, function(rematchTrigger, rematchActive, rematchSpawnPoint,
 
 // rematch victory
 $Event(7800, Default, function(postRematchSpawnPoint, fogSfxId) {
+    AwardItemLot(110770);
     RequestCharacterAnimationReset(10000, Interpolation.Interpolated);
     ForceAnimationPlayback(10000, 101161, false, false, false);
     
@@ -3187,29 +3565,27 @@ $Event(7800, Default, function(postRematchSpawnPoint, fogSfxId) {
 });
 
 // return/quick warp to boss
-$Event(7900, Default, function(warpTrigger, bossEntrancePoint, areaId, blockId, restFlag) {
+$Event(7900, Default, function(warpTrigger, bossEntrancePoint, areaId, blockId) {
     WaitFor(EventFlag(warpTrigger)); // 12801899
     SetEventFlag(warpTrigger, OFF);
     SetEventFlag(7999, ON);
     WaitFixedTimeFrames(1);
-    SetEventFlag(restFlag, OFF); // 8540
-    
-    if (!AnyBatchEventFlags(8500, 8599)) { // not resting
-        ForceAnimationPlayback(10000, 101170, false, false, false);
-        WaitFixedTimeSeconds(2);
-    } else {
+    if (AnyBatchEventFlags(8500, 8599)) { // resting
+        BatchSetEventFlags(8500, 8599, OFF);
         WaitFixedTimeSeconds(0.5);
+    } else { // not resting
+        ForceAnimationPlayback(10000, 101167, false, false, false);
+        WaitFixedTimeSeconds(3);
     }
     DummyPlayCutsceneAndWarpPlayer(bossEntrancePoint, areaId, blockId);
     SetCharacterAnimationState(10000, Enabled);
     SetCharacterTeamType(10000, TeamType.Host);
     ActivateHit(10000, Enabled);
-    ForceAnimationPlayback(10000, 101282, false, false, false);
+    ForceAnimationPlayback(10000, 101201, false, false, false);
     RestartEvent();
 });
 
 // kindle
-// this_event_slot, lamp_kindle_flag (12121100)
 $Event(8100, Default, function(thisEventSlot, lampKindleFlag) {
     SetEventFlag(thisEventSlot, OFF);
     WaitFor(ThisEventSlot());
@@ -3311,11 +3687,11 @@ $Event(8300, Default, function(spawnCheckerRegion, bypassChecker, lampKindleFlag
     }
 });
 
-// rest
+// resting
 $Event(8500, Default, function(thisEventSlot, lampId, lampWarpFlag) {
     SetEventFlag(thisEventSlot, OFF); // this event slot
     WaitFixedTimeFrames(1);
-    if (EventFlag(1510)) { // a chalice menu has been opened
+    if (EventFlag(1510)) { // a chalice menu has been opened, forces an animation that breaks the menu, reopen
         WaitFixedTimeSeconds(0.5);
         SetEventFlag(1510, OFF);
         SetEventFlag(thisEventSlot, ON);
@@ -3343,7 +3719,356 @@ $Event(8500, Default, function(thisEventSlot, lampId, lampWarpFlag) {
 // fade
 $Event(8600, Default, function() {
     WaitFixedTimeSeconds(1);
-    DisplayBanner(TextBannerType.StadiumLoss);
+    DisplayBanner(TextBannerType.StadiumLoss); // fade out
+});
+
+// map change check
+$Event(8618, Default, function() {
+    SetEventFlag(8619, OFF);
+    if (PlayerInMap(21, 1)) {
+        WaitFor(PlayerInOutMap(false, 21, 1));
+        SetEventFlag(8619, ON);
+    }
+    else if (PlayerInMap(22, 0)) {
+        WaitFor(PlayerInOutMap(false, 22, 0));
+        SetEventFlag(8619, ON);
+    }
+    else if (PlayerInMap(23, 0)) {
+        WaitFor(PlayerInOutMap(false, 23, 0));
+        SetEventFlag(8619, ON);
+    }
+    else if (PlayerInMap(24, 0)) {
+        WaitFor(PlayerInOutMap(false, 24, 0));
+        SetEventFlag(8619, ON);
+    }
+    else if (PlayerInMap(24, 1)) {
+        WaitFor(PlayerInOutMap(false, 24, 1));
+        SetEventFlag(8619, ON);
+    }
+    else if (PlayerInMap(24, 2)) {
+        WaitFor(PlayerInOutMap(false, 24, 2));
+        SetEventFlag(8619, ON);
+    }
+    else if (PlayerInMap(26, 0)) {
+        WaitFor(PlayerInOutMap(false, 26, 0));
+        SetEventFlag(8619, ON);
+    }
+    else if (PlayerInMap(27, 0)) {
+        WaitFor(PlayerInOutMap(false, 27, 0));
+        SetEventFlag(8619, ON);
+    }
+    else if (PlayerInMap(28, 0)) {
+        WaitFor(PlayerInOutMap(false, 28, 0));
+        SetEventFlag(8619, ON);
+    }
+    else if (PlayerInMap(32, 0)) {
+        WaitFor(PlayerInOutMap(false, 32, 0));
+        SetEventFlag(8619, ON);
+    }
+    else if (PlayerInMap(34, 0)) {
+        WaitFor(PlayerInOutMap(false, 34, 0));
+        SetEventFlag(8619, ON);
+    }
+    else if (PlayerInMap(35, 0)) {
+        WaitFor(PlayerInOutMap(false, 35, 0));
+        SetEventFlag(8619, ON);
+    }
+    else if (PlayerInMap(36, 0)) {
+        WaitFor(PlayerInOutMap(false, 36, 0));
+        SetEventFlag(8619, ON);
+    }
+    else {
+        WaitFor(EventFlag(8619));
+    }
+    RestartEvent();
+});
+
+// double tap init
+// item swapping via speffect has to be initialized each time the player enters a different map for some reason
+// without this, double-tap never works the first time after a loading screen or map transition
+$Event(8619, Default, function() {
+    if (!EventFlag(8619)) {
+        WaitFixedTimeSeconds(1);
+    }
+    else {
+        WaitFixedTimeSeconds(0.1);
+    }
+    SetEventFlag(8619, OFF);
+    SetSpEffect(10000, 2112, false);
+    WaitFixedTimeFrames(1);
+    SetSpEffect(10000, 2111, false);
+    WaitFor(ThisEvent());
+    RestartEvent();
+});
+
+// summon portable menu npc and trigger action
+$Event(8620, Default, function(spEffectId) {
+    BatchSetEventFlags(12421900, 12421904, OFF);
+    WaitFor(CharacterHasSpEffect(10000, spEffectId));
+    if ((PlayerInMap(23, 0) || PlayerInMap(27, 0)) 
+            && CharacterBackreadStatus(2990002)) {
+        IssueShortWarpRequest(2990002, TargetEntityType.Character, 10000, 236);
+    }
+    else if ((PlayerInMap(21, 1) || PlayerInMap(22, 0) || PlayerInMap(24, 1) || PlayerInMap(24, 2) || PlayerInMap(28, 0) || PlayerInMap(32, 0) || PlayerInMap(35, 0)) 
+            && CharacterBackreadStatus(2990001)) {
+        IssueShortWarpRequest(2990001, TargetEntityType.Character, 10000, 236);
+    }
+    else {
+        IssueShortWarpRequest(2990000, TargetEntityType.Character, 10000, 236);
+    }
+    
+    if (!CharacterHasSpEffect(10000, 2112))  { // not during double tap init
+        if (spEffectId == 2111) {
+            WaitFor(CharacterHasSpEffect(10000, 2103) || !CharacterHasSpEffect(10000, 2111));
+            if (CharacterHasSpEffect(10000, 2103)) { // prime hunter's mark double tap
+                if (EventFlag(12102100)) { // warp menu
+                    SetEventFlag(12421902, ON);
+                }
+                else if (EventFlag(12102101)) { // hunter's dream
+                    SetEventFlag(12421903, ON);
+                }
+                else if (EventFlag(12102102)) { // reawaken
+                    SetEventFlag(12421904, ON);
+                }
+                else {
+                    WaitFixedTimeSeconds(0.3);
+                    SetEventFlag(12421900, ON); // lamp menu 
+                }
+            }
+            else {
+                SetEventFlag(12421900, ON); // lamp menu
+            }
+        }
+        else if (spEffectId == 2108) {
+            WaitFor(CharacterHasSpEffect(10000, 2109) || !CharacterHasSpEffect(10000, 2108));
+            if (CharacterHasSpEffect(10000, 2109)) { // grand-resonance bell double tap
+                if (EventFlag(12102110)) {
+                    SetEventFlag(12106500, ON); // gather
+                }
+                else {
+                    WaitFixedTimeSeconds(0.3);
+                    SetEventFlag(12421901, ON); // summon menu
+                }
+            }
+            else {
+                SetEventFlag(12421901, ON); // summon menu
+            }
+        }
+    }
+    WaitFor(!CharacterHasSpEffect(10000, spEffectId));
+    RestartEvent();
+});
+
+// 8604 - 32
+// 8605 - 16
+// 8606 - 8
+// 8607 - 4
+// 8608 - 2
+// 8609 - 1
+
+// portable lamp warping
+$Event(8603, Default, function() {
+    BatchSetEventFlags(8603, 8609, OFF);
+    WaitFor(EventFlag(8603));
+    SetEventFlag(12111120, ON); // prevent rematch cleanup short warp
+    const spawnPoints = [
+        2102959, 2412950, 2412951, 2412952, 2412953, 2402950, 2402951, 2422950, 
+        2422952, 2422951, 2302950, 2302951, 2302952, 2202950, 2202951, 2702950, 
+        2702951, 3202950, 3202952, 2802950, 2802953, 2802951, 2802952, 2502950, 
+        2502952, 2502951, 2112950, 3202951, 3202953, 3302950, 3302951, 2602950, 
+        2602953, 2602952, 2602951, 3402950, 3402951, 3402953, 3402952, 3502950, 
+        3502951, 3502952, 3602950, 3602951, 3602952
+    ];
+    for (let i = 0; i < spawnPoints.length; i++) {
+        spawnCond &= EventValue(8604, 6) == i;
+        if (spawnCond) {
+            RequestCharacterAnimationReset(10000, Interpolation.Interpolated);
+            ForceAnimationPlayback(10000, 101161, false, false, false);
+            WaitFixedTimeFrames(59);
+            SetPlayerRespawnPoint(spawnPoints[i]);
+            SetSpEffect(10000, 2101, false);
+        }
+        WaitFor(ElapsedSeconds(0)); // dummy statement to clear condition variable
+    }
+}); 
+
+// portable lamp warping to chalice
+$Event(8604, Default, function() {
+    BatchSetEventFlags(8610, 8614, OFF);
+    WaitFor(EventFlag(8610));
+    ForceAnimationPlayback(10000, 101161, false, false, false);
+    WaitFixedTimeFrames(59);
+    if (EventValue(8611, 4) == 0) {
+        SetEventFlag(72100300, ON);
+    }
+    else if (EventValue(8611, 4) == 1) {
+        SetEventFlag(72100301, ON);
+    }
+    else if (EventValue(8611, 4) == 2) {
+        SetEventFlag(72100302, ON);
+    }
+    else if (EventValue(8611, 4) == 3) {
+        SetEventFlag(72100303, ON);
+    }
+    else if (EventValue(8611, 4) == 4) {
+        SetEventFlag(72100304, ON);
+    }
+    else if (EventValue(8611, 4) == 5) {
+        SetEventFlag(72100305, ON);
+    }
+    else if (EventValue(8611, 4) == 6) {
+        SetEventFlag(72100306, ON);
+    }
+    else if (EventValue(8611, 4) == 7) {
+        SetEventFlag(72100307, ON);
+    }
+    else if (EventValue(8611, 4) == 8) {
+        SetEventFlag(72100308, ON);
+    }
+});
+
+// portable lamp - reawaken
+$Event(8615, Default, function() {
+    SetEventFlag(8615, OFF);
+    WaitFor(EventFlag(8615));
+    RequestCharacterAnimationReset(10000, Interpolation.Interpolated);
+    ForceAnimationPlayback(10000, 101161, false, false, false);
+    WaitFixedTimeFrames(59);
+    SetSpEffect(10000, 2101, false);
+});
+
+// traverse
+$Event(8616, Default, function() {
+    WaitFor(CharacterHasSpEffect(10000, 2104));
+    ClearSpEffect(10000, 2104);
+    ForceAnimationPlayback(10000, 101130, false, false, false);
+    RestartEvent();
+});
+
+// test
+$Event(8890, Default, function() {
+    SetEventFlag(8890, OFF);
+    WaitFor(EventFlag(8890));
+    DisplayBanner(TextBannerType.Dead); // test
+    RestartEvent();
+});
+
+// 163 - close front
+// 233 - close behind
+// 183 - far front
+
+// gather summons
+$Event(8617, Default, function(npcId, summonedFlag, startAnimId, endAnimId, dummyPolyId) {
+    WaitFor(EventFlag(12106500));
+    ForceAnimationPlayback(10000, 100111, false, false, false);
+    WaitFixedTimeSeconds(0.5);
+    if (CountEventFlags(TargetEventFlagType.EventFlag, 8630, 8639) > 0) {    
+        SetSpEffect(10000, 2107, false);
+        if (EventFlag(summonedFlag)) {
+            ForceAnimationPlayback(npcId, startAnimId, false, false, false);
+            WaitFixedTimeSeconds(2);
+            WarpCharacterAndCopyFloor(npcId, TargetEntityType.Character, 10000, dummyPolyId, 10000);
+            ForceAnimationPlayback(npcId, endAnimId, false, false, false);
+        }
+        WaitFixedTimeFrames(1);
+    }
+    else {
+        DisplayMessage(200238, 0);
+    }
+    SetEventFlag(12106500, OFF);
+    RestartEvent();
+});
+
+// summon npcs - new - bypasses summon system
+$Event(8630, Default, function(entryTriggeredFlag, entryEnabledFlag, npcId, summonedFlag, sfxId, multiDisabledFlag, multiDisabledFlag2, spawnMessage, spawnAnimId, leaveMessage, deadMessage) {
+    SetEventFlag(entryTriggeredFlag, OFF);
+    SetEventFlag(entryEnabledFlag, ON);
+    WaitFor(ThisEventSlot() || EventFlag(summonedFlag));
+    ForceAnimationPlayback(10000, 100111, false, false, false);
+    SetSpEffect(10000, 2107, false);
+    SetEventFlag(entryEnabledFlag, OFF);
+    SetEventFlag(multiDisabledFlag, OFF);
+    SetEventFlag(multiDisabledFlag2, OFF);
+    if (EventFlag(summonedFlag)) {
+        SetEventFlag(entryTriggeredFlag, ON);
+        EndEvent();
+    }
+    SetEventFlag(summonedFlag, ON);
+    SetCharacterBackreadState(npcId, true);
+    WaitFixedTimeFrames(1);
+    WarpCharacterAndCopyFloor(npcId, TargetEntityType.Character, 10000, 233, 10000);
+    WaitFixedTimeFrames(1);
+    DeleteMapSFX(sfxId, true);
+    WaitFixedTimeSeconds(0.5);
+    DisplayMessage(100051, 0);
+    WaitFixedTimeSeconds(2);
+    DisplayMessage(spawnMessage, 0);
+    SetCharacterBackreadState(npcId, false);
+    ChangeCharacterEnableState(npcId, Enabled);
+    WaitFixedTimeFrames(1);
+    ForceAnimationPlayback(npcId, spawnAnimId, false, false, false);
+    WaitFixedTimeSeconds(1);
+    
+    SetCharacterHPBarDisplay(npcId, true);
+    WaitFor(!EventFlag(entryTriggeredFlag) || CharacterDead(npcId));
+    if (CharacterDead(npcId)) {
+        SetEventFlag(entryTriggeredFlag, OFF);
+        DisplayMessage(deadMessage, 0);
+    }
+    else {
+        ForceAnimationPlayback(10000, 101222, false, false, false);
+        WaitFixedTimeSeconds(0.2);
+        if (npcId == 2410158) {
+            RotateCharacter(npcId, 10000, 7012, true);
+        }
+        else {
+            RotateCharacter(npcId, 10000, 101160, true);
+        }
+        SetCharacterBackreadState(npcId, true);
+        DisplayMessage(leaveMessage, 0);
+    }
+    WaitFor(EventFlag(entryTriggeredFlag));
+});
+
+// summon npcs - old - uses internal summoning system
+$Event(86300, Default, function(entryTriggered, entryEnabled, npcId, signType, areaId, summonedEventFlag, dismissedEventFlag, sfxId, multiDisabledFlag, multiDisabledFlag2) {
+    SetEventFlag(entryTriggered, OFF);
+    SetEventFlag(entryEnabled, ON);
+    WaitFor(ThisEventSlot() || EventFlag(summonedEventFlag));
+    if (EventFlag(entryTriggered)) {
+        if (NumberOfCoopClients() > 1) {
+            DisplayMessage(200239, 0);
+            RestartEvent();
+        }
+    }
+    SetSpEffect(10000, 2107, false);
+    SetEventFlag(entryEnabled, OFF);
+    SetEventFlag(multiDisabledFlag, OFF);
+    SetEventFlag(multiDisabledFlag2, OFF);
+    if (EventFlag(summonedEventFlag)) {
+        EndEvent();
+    }
+    SetCharacterBackreadState(npcId, true);
+    WaitFixedTimeFrames(1);
+    WarpCharacterAndCopyFloor(npcId, TargetEntityType.Character, 10000, 233, 10000); // needed for summon to work
+    WaitFixedTimeFrames(1);
+    SummonNPC(signType, npcId, areaId, summonedEventFlag, dismissedEventFlag);
+    WaitFixedTimeFrames(1);
+    if (!EventFlag(summonedEventFlag)) {
+        DisplayMessage(200237, 0);
+        WarpCharacterAndCopyFloor(npcId, TargetEntityType.Area, areaId, -1, areaId);
+        RestartEvent();
+    }
+    DeleteMapSFX(sfxId, true);
+    WaitFixedTimeSeconds(2);
+    DisplayMessage(100051, 0);
+    WaitFixedTimeSeconds(15);
+    SetCharacterBackreadState(npcId, false);
+    WaitFixedTimeSeconds(0.5);
+    SetCharacterBackreadState(npcId, true);
+    WarpCharacterAndCopyFloor(npcId, TargetEntityType.Character, 10000, 233, 10000);
+    WaitFixedTimeSeconds(0.1);
+    SetCharacterBackreadState(npcId, false);
 });
 
 // Disable restock after spawn
@@ -3364,6 +4089,7 @@ $Event(8800, Default, function(rematchActive, lampNpc, lampObject, tempLocation)
 // Auto restart rematch if dead + move player to rematch point
 $Event(8900, Default, function(autoRematchFlag, lampSpawnPoint, rematchDeathOccurred, distortedActive, distortedTrigger, rematchStartRegion, areaId, blockId) {
     EndIf(!ThisEventSlot()); // game's state is not in rematch mode
+    SetSpEffect(10000, 1934, false);
     DummyPlayCutsceneAndWarpPlayer(rematchStartRegion, areaId, blockId);
     WaitFor(HPRatio(10000) <= 0);
     SetEventFlag(rematchDeathOccurred, ON); // used for moving bloodstain
@@ -3378,7 +4104,6 @@ $Event(8900, Default, function(autoRematchFlag, lampSpawnPoint, rematchDeathOccu
         SetPlayerRespawnPoint(lampSpawnPoint);
         SetEventFlag(8950, ON);
     // auto rematch disabled
-    // EndIf(!EventFlag(12100650));
     } else if (EventFlag(12100859)) { // death respawn location is boss lamp
         SetPlayerRespawnPoint(lampSpawnPoint);
     } else if (EventFlag(12100750)) {
@@ -3474,14 +4199,14 @@ $Event(9183, Default, function() {
 // Determine if NPC summoning can be executed
 $Event(9186, Default, function() {
     SetNetworkSyncState(Disabled);
-    SetEventFlag(9187, ON);
-    EndIf(!chrFlag);
-    SetEventFlag(9187, ON);
-    chrFlag = CharacterType(10000, TargetType.Alive) && PlayerInsightAmount() >= 1 && !EventFlag(6009);
-    WaitFor(chrFlag);
     SetEventFlag(9187, OFF);
-    WaitFor(!(PlayerInsightAmount() >= 1 && !EventFlag(6009)));
-    RestartEvent();
+    //EndIf(!chrFlag);
+    //SetEventFlag(9187, ON);
+    //chrFlag = CharacterType(10000, TargetType.Alive) && PlayerInsightAmount() >= 1 && !EventFlag(6009);
+    //WaitFor(chrFlag);
+    //SetEventFlag(9187, OFF);
+    //WaitFor(!(PlayerInsightAmount() >= 1 && !EventFlag(6009)));
+    //RestartEvent();
 });
 
 // Special effects during host play
