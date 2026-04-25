@@ -361,10 +361,10 @@ $Event(0, Default, function() {
     DeleteMapSFX(2703912, false);
     
     $InitializeEvent(4, 8617, 2700920, 12704420, 101161, 101208, 163); // henryk - c
-    $InitializeEvent(4, 8630, 8634, 8644, 2700920, 12704420, 2703910, 2701, -1, 200244, 101208, 200254, 200264);
+    $InitializeEvent(4, 8630, 8634, 8644, 2700920, 12704420, 2703910, 200244, 101208, 200254, 200264);
     
     $InitializeEvent(5, 8617, 2700921, 12704421, 101161, 101208, 163); // madaras twin - c
-    $InitializeEvent(5, 8630, 8635, 8645, 2700921, 12704421, 2703911, 2701, -1, 200243, 101208, 200253, 200263);
+    $InitializeEvent(5, 8630, 8635, 8645, 2700921, 12704421, 2703911, 200243, 101208, 200253, 200263);
     
     $InitializeEvent(0, 12704400, 12704440, 2703910, 12704420, 12704430, 12701800, 6001);
     $InitializeEvent(0, 12704401, 12704441, 2703911, 12704421, 12704431, 12701800, 6001);
@@ -374,6 +374,7 @@ $Event(0, Default, function() {
     $InitializeEvent(1, 12704450, 2700921, 2702911, 12704421, 12704431, 12704800);
     $InitializeEvent(0, 12704460, 2700920, 2702914, 2702800, 2702801, 101130, 12704800, 2702801);
     $InitializeEvent(1, 12704460, 2700921, 2702911, 2702800, 2702801, 101130, 12704800, 2702801);
+    $InitializeEvent(0, 12704470);
     
     RegisterLadder(12700602, 12700603, 2701071);
     RegisterLadder(12700604, 12700605, 2701072);
@@ -2647,4 +2648,13 @@ $Event(12704460, Restart, function(chrEntityId, areaEntityId, entityId, areaEnti
     SetCharacterMaphits(chrEntityId, false);
     RequestCharacterAICommand(chrEntityId, -1, 0);
     RequestCharacterAIReplan(chrEntityId);
+});
+
+// heal npcs
+$Event(12704470, Default, function() {
+    WaitFor(CharacterHasSpEffect(10000, 3010));
+    SetSpEffect(2700920, 3012, false);
+    SetSpEffect(2700921, 3012, false);
+    WaitFixedTimeFrames(1);
+    RestartEvent();
 });

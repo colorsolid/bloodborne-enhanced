@@ -709,10 +709,10 @@ $Event(0, Default, function() {
     
     // gather summons
     $InitializeEvent(1, 8617, 2410158, 12414420, 7012, 7010, 233);
-    $InitializeEvent(1, 8630, 8631, 8641, 2410158, 12414420, 2413230, 2410, -1, 200246, 7010, 200256, 200266); // gascoigne
+    $InitializeEvent(1, 8630, 8631, 8641, 2410158, 12414420, 2413230, 200246, 7010, 200256, 200266); // gascoigne
     
     $InitializeEvent(2, 8617, 2410740, 12414421, 101161, 101162, 163); // alfred
-    $InitializeEvent(2, 8630, 8632, 8642, 2410740, 12414421, 2413233, 2410, -1, 200245, 101207, 200255, 200265);
+    $InitializeEvent(2, 8630, 8632, 8642, 2410740, 12414421, 2413233, 200245, 101207, 200255, 200265);
     
     // summon signs
     $InitializeEvent(0, 12414400, 12414440, 2413230, 12414420, 12414430, 12411700, 6001);
@@ -721,15 +721,19 @@ $Event(0, Default, function() {
     $InitializeEvent(0, 12414410, 7, 2410158, 2412920, 12414420, 12414430, 12414440, 12411700, 10575);
     $InitializeEvent(1, 12414410, SingleplayerSummonSignType.NormalCoop, 2410740, 2412921, 12414421, 12414431, 12414441, 12411700, 10576);
     
-    $InitializeEvent(0, 12414450, 2410158, 2412710, 12414420, 12414430, 12414700);
-    $InitializeEvent(1, 12414450, 2410740, 2412711, 12414421, 12414431, 12414700);
-    $InitializeEvent(2, 12414450, 2410158, 2412818, 12414420, 12414430, 12414800);
-    $InitializeEvent(3, 12414450, 2410740, 2412819, 12414421, 12414431, 12414800);
+    $InitializeEvent(0, 12414450, 2410158, 2412710, 12414420, 12414430, 12414700); // gascoigne --> cleric
+    $InitializeEvent(1, 12414450, 2410740, 2412711, 12414421, 12414431, 12414700); // alfred --> cleric
     
-    $InitializeEvent(0, 12414460, 2410158, 2412710, 2412800, 2412801, 7014, 12414450, 2412801);
-    $InitializeEvent(1, 12414460, 2410740, 2412711, 2412800, 2412801, 101130, 12414451, 2412801);
-    $InitializeEvent(2, 12414460, 2410158, 2412818, 2412332, 2412811, 7014, 12414452, 2412811);
-    $InitializeEvent(3, 12414460, 2410740, 2412819, 2412332, 2412811, 101130, 12414453, 2412811);
+    //$InitializeEvent(2, 12414450, 2410158, 2412818, 12414420, 12414430, 12414800); // gascoigne --> gascoigne
+    //$InitializeEvent(3, 12414450, 2410740, 2412819, 12414421, 12414431, 12414800); // alfred --> gascoigne
+    
+    $InitializeEvent(0, 12414460, 2410158, 2412710, 2412800, 2412801, 7014, 12414450, 2412801); // gascoigne --> cleric
+    $InitializeEvent(1, 12414460, 2410740, 2412711, 2412800, 2412801, 101130, 12414451, 2412801); // alfred --> cleric
+    
+    //$InitializeEvent(2, 12414460, 2410158, 2412818, 2412332, 2412811, 7014, 12414452, 2412811); // gascoigne --> gascoigne
+    //$InitializeEvent(3, 12414460, 2410740, 2412819, 2412332, 2412811, 101130, 12414453, 2412811); // alfred --> gascoigne
+    
+    $InitializeEvent(0, 12414471);
     
     $InitializeEvent(0, 12414470);
     $InitializeEvent(0, 12414480);
@@ -4997,6 +5001,15 @@ $Event(12414460, Restart, function(chrEntityId, areaEntityId, entityId, areaEnti
     SetCharacterMaphits(chrEntityId, false);
     RequestCharacterAICommand(chrEntityId, -1, 0);
     RequestCharacterAIReplan(chrEntityId);
+});
+
+// heal npcs
+$Event(12414471, Default, function() {
+    WaitFor(CharacterHasSpEffect(10000, 3010));
+    SetSpEffect(2410158, 3012, false);
+    SetSpEffect(2410740, 3012, false);
+    WaitFixedTimeFrames(1);
+    RestartEvent();
 });
 
 // Co-Blood Hunting _Fake NPC Summoning_Cooperation_Participation - UNUSED

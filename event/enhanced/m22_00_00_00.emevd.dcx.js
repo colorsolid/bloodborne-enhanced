@@ -350,6 +350,15 @@ $Event(0, Default, function() {
     $InitializeEvent(1, 7000, 2200951, 2201951, 12201800, 12207820, witches_defeat+13);
     $InitializeEvent(witches_offset, 8800, witches_defeat+13, witches_lamp_id-1000, witches_lamp_id, witches_lamp_id+3000);
     
+    $InitializeEvent(1, 8617, 2200910, 12204420, 101161, 101162, 163); // henriett
+    $InitializeEvent(1, 8630, 8631, 8641, 2200910, 12204420, 2203910, 200241, 101207, 200252, 200262);
+    
+    $InitializeEvent(0, 12204400, 2203910, 12204420, 12204430);
+    $InitializeEvent(0, 12204410, SingleplayerSummonSignType.NormalCoop, 2200910, 2202910, 12204420, 12204430, 10567);
+    $InitializeEvent(0, 12204450, 2200910, 2202911, 12204420, 12204430, 12204800);
+    $InitializeEvent(0, 12204460, 2200910, 2202911, 2202804, 2202804, 101130, 12204450, 2202804);
+    $InitializeEvent(0, 12204470);
+    
     $InitializeEvent(0, 7100, 72200200, 2201950);
     $InitializeEvent(1, 7100, 72200201, 2201951);
     $InitializeEvent(0, 7200, 72200100, 2201950, 2102951);
@@ -2224,4 +2233,86 @@ $Event(12200990, Default, function() {
     ParameterOutput(PlayerPlayLogParameter.TemporaryParameters, 214, PlayLogMultiplayerType.HostOnly);
     ParameterOutput(PlayerPlayLogParameter.Weapon, 214, PlayLogMultiplayerType.HostOnly);
     ParameterOutput(PlayerPlayLogParameter.Armor, 214, PlayLogMultiplayerType.HostOnly);
+});
+
+// Hemwick_New NPC Summoning_Summoning Judgment_Top Hat Hunter
+$Event(12204400, Restart, function(entityId, eventFlagId2, eventFlagId3) {
+    DeleteMapSFX(entityId, true);
+    EndIf(!EventFlag(12100889));
+    SetEventFlag(eventFlagId2, OFF);
+    SetEventFlag(eventFlagId3, OFF);
+    SpawnMapSFX(entityId);
+    WaitFor(EventFlag(eventFlagId2));
+    ActivateHit(2202109, Disabled);
+    DeleteMapSFX(entityId, true);
+});
+
+// Hemwick_New NPC Summon_Participate_XX
+$Event(12204410, Restart, function(signType, entityId, areaEntityId, eventFlagId, eventFlagId2, actionButtonParameterId) {
+    ChangeCharacterEnableState(entityId, Disabled);
+    EndIf(!EventFlag(12100889));
+    WaitFor(!EventFlag(eventFlagId) && ActionButtonInArea(actionButtonParameterId, entityId));
+    WarpCharacterAndCopyFloor(entityId, TargetEntityType.Character, 10000, 236, 10000);
+    SetEventFlag(2200, OFF);
+    WaitFixedTimeFrames(1);
+    ForceAnimationPlayback(10000, 100111, false, false, false);
+    SetSpEffect(10000, 4682, false);
+    SummonNPC(signType, entityId, areaEntityId, eventFlagId, eventFlagId2);
+    ClearSpEffect(10000, 9005);
+    ClearSpEffect(10000, 9025);
+    WaitFixedTimeSeconds(5);
+    DisplayMessage(100051, 0);
+    WaitFixedTimeSeconds(5);
+    WarpCharacterAndCopyFloor(entityId, TargetEntityType.Area, areaEntityId, -1, areaEntityId);
+    ActivateHit(2404120, Disabled);
+});
+
+// Hemwick_New NPC summons_Aim for the boss room_XX
+$Event(12204450, Restart, function(chrEntityId, entityId, eventFlagId, eventFlagId2, eventFlagId3) {
+    EndIf(ThisEventSlot());
+    EndIf(HasMultiplayerState(MultiplayerState.Client));
+    WaitFor(EventFlag(eventFlagId) && !EventFlag(eventFlagId2) && EventFlag(eventFlagId3));
+    SetEventPoint(chrEntityId, entityId, 1);
+    RequestCharacterAICommand(chrEntityId, 990, 0);
+    RequestCharacterAIReplan(chrEntityId);
+});
+
+// Hemwick_New NPC summons_Enter boss room_XX
+$Event(12204460, Restart, function(chrEntityId, areaEntityId, entityId, areaEntityId2, playAnimationId, eventFlagId, areaEntityId3) {
+    EndIf(HasMultiplayerState(MultiplayerState.Client));
+    WaitFor(EventFlag(eventFlagId) && InArea(chrEntityId, areaEntityId));
+    RequestCharacterAnimationReset(chrEntityId, Interpolation.Interpolated);
+    RotateCharacter(chrEntityId, entityId, playAnimationId, true);
+    RestartIf(!InArea(chrEntityId, areaEntityId2));
+    SetEventPoint(chrEntityId, entityId, 1);
+    RequestCharacterAICommand(chrEntityId, 990, 0);
+    RequestCharacterAIReplan(chrEntityId);
+    SetCharacterGravity(chrEntityId, Disabled);
+    SetCharacterMaphits(chrEntityId, true);
+    WaitFor(InArea(chrEntityId, areaEntityId3));
+    SetCharacterGravity(chrEntityId, Enabled);
+    SetCharacterMaphits(chrEntityId, false);
+    RequestCharacterAICommand(chrEntityId, -1, 0);
+    RequestCharacterAIReplan(chrEntityId);
+});
+
+// heal npcs
+$Event(12204470, Default, function() {
+    WaitFor(CharacterHasSpEffect(10000, 3010));
+    SetSpEffect(2200910, 3012, false);
+    WaitFixedTimeFrames(1);
+    RestartEvent();
+});
+
+// Hemwick_New NPC summons_Disable throw during boss battle__Top Hat Hunter
+$Event(12204490, Restart, function() {
+    SetNetworkSyncState(Disabled);
+    WaitFor(
+        HasMultiplayerState(MultiplayerState.Host)
+        && EventFlag(12204420)
+        && !EventFlag(12204430)
+        && EventFlag(12204800));
+        SetSpEffectAndUnknown200455(2200910, 35, false);
+    WaitFixedTimeFrames(1);
+    RestartEvent();
 });

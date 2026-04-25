@@ -403,12 +403,13 @@ $Event(0, Default, function() {
     DeleteMapSFX(2403910, false);
     
     $InitializeEvent(0, 8617, 2400910, 12404420, 101161, 101162, 163); // henriett
-    $InitializeEvent(0, 8630, 8630, 8640, 2400910, 12404420, 2403910, 2400, -1, 200241, 101207, 200252, 200262);
+    $InitializeEvent(0, 8630, 8630, 8640, 2400910, 12404420, 2403910, 200241, 101207, 200252, 200262);
     
     $InitializeEvent(0, 12404400, 12404440, 2403910, 12404420, 12404430, 12401800, 6001);
     $InitializeEvent(0, 12404410, SingleplayerSummonSignType.NormalCoop, 2400910, 2402910, 12404420, 12404430, 12404440, 12401800, 10567);
     $InitializeEvent(0, 12404450, 2400910, 2402911, 12404420, 12404430, 12404800);
-    $InitializeEvent(0, 12404460, 2400910, 2402911, 2402800, 2402801, 101130, 12404450, 2402801);
+    $InitializeEvent(0, 12404460, 2400910, 2402911, 2202814, 2202804, 101130, 12404450, 2202804);
+    $InitializeEvent(0, 12404470);
     
     $InitializeEvent(0, 12404490);
     CreateObjectfollowingSFX(2401900, 200, 900130);
@@ -5349,6 +5350,14 @@ $Event(12404460, Restart, function(chrEntityId, areaEntityId, entityId, areaEnti
     SetCharacterMaphits(chrEntityId, false);
     RequestCharacterAICommand(chrEntityId, -1, 0);
     RequestCharacterAIReplan(chrEntityId);
+});
+
+// heal npcs
+$Event(12404470, Default, function() {
+    WaitFor(CharacterHasSpEffect(10000, 3010));
+    SetSpEffect(2400910, 3012, false);
+    WaitFixedTimeFrames(1);
+    RestartEvent();
 });
 
 // Holy Street_New NPC summons_Disable throw during boss battle__Top Hat Hunter

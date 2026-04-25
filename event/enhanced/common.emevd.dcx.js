@@ -38,6 +38,8 @@ $Event(0, Default, function() {
     $InitializeEvent(0, 8615); // portable lamp reawaken
     $InitializeEvent(0, 8616); // traverse
     
+    $InitializeEvent(0, 8640); // death test
+    
     $InitializeEvent(0, 12102069);
     
     //RemoveItemFromPlayer(ItemType.Goods, 4002, 1);
@@ -3697,8 +3699,9 @@ $Event(8500, Default, function(thisEventSlot, lampId, lampWarpFlag) {
         SetEventFlag(thisEventSlot, ON);
     }
     WaitFor(ThisEventSlot()); // menu opened, trigger animation
+    BatchSetEventFlags(8630, 8639, OFF); // dismiss summons or they'll tweak
     RotateCharacter(10000, lampId, 101280, false);
-    PlaySE(10000, SoundType.sSFX, 777777774);
+    //PlaySE(10000, SoundType.sSFX, 777777774);
     SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, 140);
     SetCharacterAnimationState(10000, Disabled);
     SetCharacterTeamType(10000, TeamType.Baby);
@@ -3945,6 +3948,13 @@ $Event(8616, Default, function() {
     RestartEvent();
 });
 
+// death test
+$Event(8640, Default, function() {
+    //SetSpEffect(10000, 2113, false);
+    WaitFor(HPRatio(10000) <= 0);
+    DisplayMessage(14000, 0);
+});
+
 // test
 $Event(8890, Default, function() {
     SetEventFlag(8890, OFF);
@@ -3980,15 +3990,13 @@ $Event(8617, Default, function(npcId, summonedFlag, startAnimId, endAnimId, dumm
 });
 
 // summon npcs - new - bypasses summon system
-$Event(8630, Default, function(entryTriggeredFlag, entryEnabledFlag, npcId, summonedFlag, sfxId, multiDisabledFlag, multiDisabledFlag2, spawnMessage, spawnAnimId, leaveMessage, deadMessage) {
+$Event(8630, Default, function(entryTriggeredFlag, entryEnabledFlag, npcId, summonedFlag, sfxId, spawnMessage, spawnAnimId, leaveMessage, deadMessage) {
     SetEventFlag(entryTriggeredFlag, OFF);
     SetEventFlag(entryEnabledFlag, ON);
     WaitFor(ThisEventSlot() || EventFlag(summonedFlag));
     ForceAnimationPlayback(10000, 100111, false, false, false);
     SetSpEffect(10000, 2107, false);
     SetEventFlag(entryEnabledFlag, OFF);
-    SetEventFlag(multiDisabledFlag, OFF);
-    SetEventFlag(multiDisabledFlag2, OFF);
     if (EventFlag(summonedFlag)) {
         SetEventFlag(entryTriggeredFlag, ON);
         EndEvent();
@@ -4007,21 +4015,22 @@ $Event(8630, Default, function(entryTriggeredFlag, entryEnabledFlag, npcId, summ
     ChangeCharacterEnableState(npcId, Enabled);
     WaitFixedTimeFrames(1);
     ForceAnimationPlayback(npcId, spawnAnimId, false, false, false);
+    SetSpEffect(npcId, 9006, false);
     WaitFixedTimeSeconds(1);
-    
-    SetCharacterHPBarDisplay(npcId, true);
     WaitFor(!EventFlag(entryTriggeredFlag) || CharacterDead(npcId));
     if (CharacterDead(npcId)) {
         SetEventFlag(entryTriggeredFlag, OFF);
         DisplayMessage(deadMessage, 0);
     }
     else {
-        ForceAnimationPlayback(10000, 101222, false, false, false);
+        if (!AnyBatchEventFlags(8500, 8599)) { // not triggered by resting
+            ForceAnimationPlayback(10000, 101222, false, false, false); // snap animation
+        }
         WaitFixedTimeSeconds(0.2);
-        if (npcId == 2410158) {
+        if (npcId == 2410158) { // gascoigne
             RotateCharacter(npcId, 10000, 7012, true);
         }
-        else {
+        else { // other hunters
             RotateCharacter(npcId, 10000, 101160, true);
         }
         SetCharacterBackreadState(npcId, true);
@@ -4067,8 +4076,6 @@ $Event(86300, Default, function(entryTriggered, entryEnabled, npcId, signType, a
     WaitFixedTimeSeconds(0.5);
     SetCharacterBackreadState(npcId, true);
     WarpCharacterAndCopyFloor(npcId, TargetEntityType.Character, 10000, 233, 10000);
-    WaitFixedTimeSeconds(0.1);
-    SetCharacterBackreadState(npcId, false);
 });
 
 // Disable restock after spawn

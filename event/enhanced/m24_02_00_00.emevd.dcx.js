@@ -530,12 +530,13 @@ $Event(0, Default, function() {
     DeleteMapSFX(2423910, false);
     
     $InitializeEvent(1, 8617, 2420910, 12424420, 101161, 101162, 163); // damien
-    $InitializeEvent(1, 8630, 8631, 8641, 2420910, 12424420, 2423910, 2420, 2421, 200240, 101207, 200251, 200261);
+    $InitializeEvent(1, 8630, 8631, 8641, 2420910, 12424420, 2423910, 200240, 101207, 200251, 200261);
     
     $InitializeEvent(0, 12424400, 12424440, 2423910, 12424420, 12424430, 12421800, 6001);
     $InitializeEvent(0, 12424410, SingleplayerSummonSignType.NormalCoop, 2420910, 2422910, 12424420, 12424430, 12424440, 12421800, 10566);
     $InitializeEvent(0, 12424450, 2420910, 2422911, 12424420, 12424430, 12424800);
     $InitializeEvent(0, 12424460, 2420910, 2422911, 2422800, 2422801, 101130, 12424450, 2422801);
+    $InitializeEvent(0, 12424470);
     
     $InitializeEvent(4, 9200, 2423900);
     $InitializeEvent(4, 9220, 2420710, 12424220, 12424221, 2420, 24, 2);
@@ -2378,4 +2379,12 @@ $Event(12424460, Restart, function(chrEntityId, areaEntityId, entityId, areaEnti
     SetCharacterMaphits(chrEntityId, false);
     RequestCharacterAICommand(chrEntityId, -1, 0);
     RequestCharacterAIReplan(chrEntityId);
+});
+
+// heal npcs
+$Event(12424470, Default, function() {
+    WaitFor(CharacterHasSpEffect(10000, 3010));
+    SetSpEffect(2420910, 3012, false);
+    WaitFixedTimeFrames(1);
+    RestartEvent();
 });

@@ -34,7 +34,6 @@ const orphan_id2 = 3600801;
 
 // constructor
 $Event(0, Default, function() {
-    
     SetEventFlag(8900+orphan_offset, OFF);
     
     $InitializeEvent(1, 7900, 10000000+orphan_return, orphan_return, area_id, block_id);

@@ -650,13 +650,13 @@ $Event(0, Default, function() {
     DeleteMapSFX(3203912, false);
     
     $InitializeEvent(0, 8617, 3200910, 13204420, 101161, 101162, 163); // damien
-    $InitializeEvent(0, 8630, 8630, 8640, 3200910, 13204420, 3203910, 3200, -1, 200240, 101207, 200251, 200261);
+    $InitializeEvent(0, 8630, 8630, 8640, 3200910, 13204420, 3203910, 200240, 101207, 200251, 200261);
     
     $InitializeEvent(1, 8617, 3200911, 13204421, 101161, 101208, 163); // madaras twin - c
-    $InitializeEvent(1, 8630, 8631, 8641, 3200911, 13204421, 3203911, 3200, -1, 200243, 101208, 200253, 200263);
+    $InitializeEvent(1, 8630, 8631, 8641, 3200911, 13204421, 3203911, 200243, 101208, 200253, 200263);
     
     $InitializeEvent(2, 8617, 3200912, 13204422, 101161, 101208, 163); // henryk - c
-    $InitializeEvent(2, 8630, 8632, 8642, 3200912, 13204422, 3203912, 3200, -1, 200244, 101208, 200254, 200264);
+    $InitializeEvent(2, 8630, 8632, 8642, 3200912, 13204422, 3203912, 200244, 101208, 200254, 200264);
     
     $InitializeEvent(0, 13204400, 13204440, 3203910, 13204420, 13204430, 13201800, 6001);
     $InitializeEvent(0, 13204401, 13204441, 3203911, 13204421, 13204431, 13201800, 13204420);
@@ -670,6 +670,7 @@ $Event(0, Default, function() {
     $InitializeEvent(0, 13204460, 3200910, 3202911, 3202800, 3202809, 101130, 13204450, 3202809);
     $InitializeEvent(1, 13204460, 3200911, 3202915, 3202800, 3202809, 101130, 13204451, 3202809);
     $InitializeEvent(2, 13204460, 3200912, 3202916, 3202800, 3202809, 101130, 13204452, 3202809);
+    $InitializeEvent(0, 13204473);
     
     $InitializeEvent(0, 13204470, 3200910);
     $InitializeEvent(1, 13204470, 3200911);
@@ -2206,4 +2207,14 @@ $Event(13204460, Restart, function(chrEntityId, areaEntityId, entityId, areaEnti
     SetCharacterMaphits(chrEntityId, false);
     RequestCharacterAICommand(chrEntityId, -1, 0);
     RequestCharacterAIReplan(chrEntityId);
+});
+
+// heal npcs
+$Event(13204473, Default, function() {
+    WaitFor(CharacterHasSpEffect(10000, 3010));
+    SetSpEffect(3200910, 3012, false);
+    SetSpEffect(3200911, 3012, false);
+    SetSpEffect(3200912, 3012, false);
+    WaitFixedTimeFrames(1);
+    RestartEvent();
 });

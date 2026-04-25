@@ -15,6 +15,7 @@ def t330001_x0():
 
 def t330001_x1(flag1=6000, flag2=6001, actionbutton1=6100, actionbutton2=6101, actionbutton3=6103, flag3=330, flag4=1, action1=10010715):
     """State 0"""
+    MainBonfireMenuFlag()
     while True:
         """State 2"""
         DebugEvent('Beacon warp chair non-multi medium')

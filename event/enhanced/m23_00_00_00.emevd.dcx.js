@@ -537,13 +537,13 @@ $Event(0, Default, function() {
     DeleteMapSFX(2303911, false);
     
     $InitializeEvent(3, 8617, 2300740, 12304420, 101161, 101162, 233); // alfred
-    $InitializeEvent(3, 8630, 8633, 8643, 2300740, 12304420, 2303400, 2300, -1, 200245, 101207, 200255, 200265);
+    $InitializeEvent(3, 8630, 8633, 8643, 2300740, 12304420, 2303400, 200245, 101207, 200255, 200265);
     
     $InitializeEvent(4, 8617, 2300930, 12304421, 101161, 101162, 163); // antal
-    $InitializeEvent(4, 8630, 8634, 8644, 2300930, 12304421, 2303910, 2301, -1, 200247, 101207, 200257, 200267);
+    $InitializeEvent(4, 8630, 8634, 8644, 2300930, 12304421, 2303910, 200247, 101207, 200257, 200267);
     
     $InitializeEvent(5, 8617, 2300931, 12304422, 101161, 101208, 183); // yamamura - c
-    $InitializeEvent(5, 8630, 8635, 8645, 2300931, 12304422, 2303911, 2301, -1, 200248, 101208, 200258, 200268);
+    $InitializeEvent(5, 8630, 8635, 8645, 2300931, 12304422, 2303911, 200248, 101208, 200258, 200268);
     
     $InitializeEvent(0, 12304400, 12304440, 2303400, 12304420, 12304430, 12301800, 6001);
     $InitializeEvent(0, 12304401, 12304441, 2303910, 12304421, 12304431, 12301700, 12304422);
@@ -568,6 +568,8 @@ $Event(0, Default, function() {
     $InitializeEvent(5, 12304460, 2300740, 2302915, 2302810, 2302811, 101130, 12304455, 2302811); // alfred --> paarl
     $InitializeEvent(1, 12304460, 2300930, 2302911, 2302810, 2302811, 101130, 12304451, 2302811); // antal --> paarl
     $InitializeEvent(2, 12304460, 2300931, 2302914, 2302810, 2302811, 101130, 12304452, 2302811); // yama --> paarl
+    
+    $InitializeEvent(0, 12304470);
     
     StartTimeMeasurement(2300000, 0, Disabled);
     StartTimeMeasurement(2300001, 18, Enabled);
@@ -1817,6 +1819,16 @@ $Event(12304460, Restart, function(chrEntityId, areaEntityId, entityId, areaEnti
     SetCharacterMaphits(chrEntityId, false);
     RequestCharacterAICommand(chrEntityId, -1, 0);
     RequestCharacterAIReplan(chrEntityId);
+});
+
+// heal npcs
+$Event(12304470, Default, function() {
+    WaitFor(CharacterHasSpEffect(10000, 3010));
+    SetSpEffect(2300740, 3012, false);
+    SetSpEffect(2300930, 3012, false);
+    SetSpEffect(2300931, 3012, false);
+    WaitFixedTimeFrames(1);
+    RestartEvent();
 });
 
 // Bogus NPC summon_cooperation_participation - UNUSED

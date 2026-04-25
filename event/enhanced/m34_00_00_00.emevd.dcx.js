@@ -1011,22 +1011,22 @@ L3:
     DeleteMapSFX(3403916, false);
     
     $InitializeEvent(0, 8617, 3400921, 13404421, 101161, 101162, 233);
-    $InitializeEvent(0, 8630, 8630, 8640, 3400921, 13404421, 13404431, 3400, -1, 200241, 101207, 200252, 200262); // henriett
+    $InitializeEvent(0, 8630, 8630, 8640, 3400921, 13404421, 13404431, 200241, 101207, 200252, 200262); // henriett
     
     $InitializeEvent(1, 8617, 3400922, 13404422, 101161, 101208, 163);
-    $InitializeEvent(1, 8630, 8631, 8641, 3400922, 13404422, 13404432, 3400, -1, 200249, 101208, 200259, 200269); // master valtr 1 - c
+    $InitializeEvent(1, 8630, 8631, 8641, 3400922, 13404422, 13404432, 200249, 101208, 200259, 200269); // master valtr 1 - c
     
     $InitializeEvent(2, 8617, 3400923, 13404423, 101161, 101208, 163);
-    $InitializeEvent(2, 8630, 8632, 8642, 3400923, 13404423, 13404433, 3400, -1, 200250, 101208, 200260, 200270); // valtr beast eater 1 - c
+    $InitializeEvent(2, 8630, 8632, 8642, 3400923, 13404423, 13404433, 200250, 101208, 200260, 200270); // valtr beast eater 1 - c
     
     $InitializeEvent(3, 8617, 3400924, 13404424, 101161, 101208, 183);
-    $InitializeEvent(3, 8630, 8633, 8643, 3400924, 13404424, 13404434, 3400, -1, 200243, 101208, 200253, 200263); // madaras twin - c
+    $InitializeEvent(3, 8630, 8633, 8643, 3400924, 13404424, 13404434, 200243, 101208, 200253, 200263); // madaras twin - c
     
     $InitializeEvent(4, 8617, 3400925, 13404425, 101161, 101208, 163);
-    $InitializeEvent(4, 8630, 8634, 8644, 3400925, 13404425, 13404435, 3400, -1, 200249, 101208, 200259, 200269); // master valtr 2 - c
+    $InitializeEvent(4, 8630, 8634, 8644, 3400925, 13404425, 13404435, 200249, 101208, 200259, 200269); // master valtr 2 - c
     
     $InitializeEvent(5, 8617, 3400926, 13404426, 101161, 101208, 163);
-    $InitializeEvent(5, 8630, 8635, 8645, 3400926, 13404426, 13404436, 3400, -1, 200249, 101208, 200260, 200270); // master beast eater 2 - c
+    $InitializeEvent(5, 8630, 8635, 8645, 3400926, 13404426, 13404436, 200249, 101208, 200260, 200270); // master beast eater 2 - c
     
     $InitializeEvent(0, 13404401, 13404441, 3403911, 13404421, 13404431, 13401800, 6001); // henriett
     $InitializeEvent(0, 13404402, 13404442, 3403912, 13404422, 13404432, 13401800, 13404421); // master valtr 1
@@ -1073,6 +1073,8 @@ L3:
     $InitializeEvent(3, 13404560, 3400922, 3402935, 3402850, 3402851, 101130, 13404553, 3402851); // master valtr 1 -> laurence
     $InitializeEvent(4, 13404560, 3400923, 3402935, 3402850, 3402851, 101130, 13404554, 3402851); // valtr beast 1 -> laurence
     $InitializeEvent(5, 13404560, 3400924, 3402935, 3402850, 3402851, 101130, 13404555, 3402851); // madaras twin -> laurence
+    
+    $InitializeEvent(0, 13404470);
     
     $InitializeEvent(0, 13404490, 3400925, 13404425, 13404435, 13404858);
     $InitializeEvent(1, 13404490, 3400926, 13404426, 13404436, 13404858);
@@ -3777,6 +3779,19 @@ $Event(13404490, Restart, function(chrEntityId, eventFlagId, eventFlagId2, event
             && !EventFlag(eventFlagId2)
             && EventFlag(eventFlagId3));
     SetSpEffectAndUnknown200455(chrEntityId, 35, false);
+    WaitFixedTimeFrames(1);
+    RestartEvent();
+});
+
+// heal npcs
+$Event(13404470, Default, function() {
+    WaitFor(CharacterHasSpEffect(10000, 3010));
+    SetSpEffect(3400921, 3012, false);
+    SetSpEffect(3400922, 3012, false);
+    SetSpEffect(3400923, 3012, false);
+    SetSpEffect(3400924, 3012, false);
+    SetSpEffect(3400925, 3012, false);
+    SetSpEffect(3400926, 3012, false);
     WaitFixedTimeFrames(1);
     RestartEvent();
 });

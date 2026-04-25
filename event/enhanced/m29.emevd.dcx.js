@@ -12902,6 +12902,14 @@ $Event(12907600, Default, function(objEntityId, entityId) {
 
 // Dungeon_New NPC Summoning_Summoning Judgment_General Purpose
 $Event(12906962, Restart, function(eventFlagId, entityId, eventFlagId2, eventFlagId3, eventFlagId4, eventFlagId5) {
+    if (EventFlag(12100889)) {
+        SetEventFlag(eventFlagId2, OFF);
+        SetEventFlag(eventFlagId3, OFF);
+        SpawnMapSFX(entityId);
+        WaitFor(EventFlag(eventFlagId2));
+        DeleteMapSFX(entityId, true);
+        EndEvent();
+    }
     if (!EventFlag(eventFlagId)) {
         SetEventFlag(eventFlagId, OFF);
         DeleteMapSFX(entityId, true);
@@ -12939,18 +12947,36 @@ L0:
 });
 
 // Dungeon_New NPC Summon_Participation_XX
-$Event(12906966, Restart, function(signType, areaEntityId, entityId, eventFlagId, eventFlagId2, actionButtonParameterId, eventFlagId3, eventFlagId4) {
+$Event(12906966, Restart, function(signType, entityId, areaEntityId, eventFlagId, eventFlagId2, actionButtonParameterId, eventFlagId3, eventFlagId4) {
+    if (EventFlag(12100889)) {
+        ChangeCharacterEnableState(entityId, Disabled);
+        WaitFor(!EventFlag(eventFlagId) && ActionButtonInArea(actionButtonParameterId, entityId));
+        WarpCharacterAndCopyFloor(entityId, TargetEntityType.Character, 10000, 236, 10000);
+        SetEventFlag(2400, OFF);
+        WaitFixedTimeFrames(1);
+        ForceAnimationPlayback(10000, 100111, false, false, false);
+        SetSpEffect(10000, 4682, false);
+        SummonNPC(signType, entityId, areaEntityId, eventFlagId, eventFlagId2);
+        ClearSpEffect(10000, 9005);
+        ClearSpEffect(10000, 9025);
+        WaitFixedTimeSeconds(5);
+        DisplayMessage(100051, 0);
+        WaitFixedTimeSeconds(5);
+        WarpCharacterAndCopyFloor(entityId, TargetEntityType.Area, areaEntityId, -1, areaEntityId);
+        ActivateHit(2404120, Disabled);
+        EndEvent();
+    }
     if (!EventFlag(eventFlagId)) {
-        ChangeCharacterEnableState(areaEntityId, Disabled);
+        ChangeCharacterEnableState(entityId, Disabled);
     }
     GotoIf(S0, EventFlag(eventFlagId2));
     GotoIf(S1, HasMultiplayerState(MultiplayerState.Client) && EventFlag(eventFlagId));
 S0:
-    ChangeCharacterEnableState(areaEntityId, Disabled);
+    ChangeCharacterEnableState(entityId, Disabled);
 S1:
     EndIf(EventFlag(eventFlagId3));
     if (!HasMultiplayerState(MultiplayerState.Client)) {
-        SetNetworkUpdateAuthority(areaEntityId, AuthorityLevel.Forced);
+        SetNetworkUpdateAuthority(entityId, AuthorityLevel.Forced);
     }
     WaitFor(
         PlayerHasItem(ItemType.Goods, 4312)
@@ -12958,10 +12984,10 @@ S1:
             && !EventFlag(eventFlagId2)
             && EventFlagState(ON, TargetEventFlagType.EventIDAndSlotNumber, 14)
             && !EventFlag(eventFlagId3)
-            && ActionButtonInArea(actionButtonParameterId, areaEntityId));
+            && ActionButtonInArea(actionButtonParameterId, entityId));
     ForceAnimationPlayback(10000, 100111, false, false, false);
     SetSpEffect(10000, 4682, false);
-    SummonNPC(signType, areaEntityId, entityId, eventFlagId, eventFlagId2);
+    SummonNPC(signType, entityId, areaEntityId, eventFlagId, eventFlagId2);
     SetEventFlag(eventFlagId4, ON);
     ClearSpEffect(10000, 9005);
     ClearSpEffect(10000, 9025);

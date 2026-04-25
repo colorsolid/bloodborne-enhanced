@@ -745,10 +745,10 @@ $Event(0, Default, function() {
     DeleteMapSFX(2803921, false);
     
     $InitializeEvent(1, 8617, 2800910, 12804420, 101161, 101208, 163); // yamamura - c
-    $InitializeEvent(1, 8630, 8631, 8641, 2800910, 12804420, 2803920, 2800, -1, 200248, 101208, 200258, 200268);
+    $InitializeEvent(1, 8630, 8631, 8641, 2800910, 12804420, 2803920, 200248, 101208, 200258, 200268);
     
     $InitializeEvent(2, 8617, 2800911, 12804421, 101161, 101162, 233); // antal
-    $InitializeEvent(2, 8630, 8632, 8642, 2800911, 12804421, 2803921, 2800, -1, 200247, 101207, 200257, 200267);
+    $InitializeEvent(2, 8630, 8632, 8642, 2800911, 12804421, 2803921, 200247, 101207, 200257, 200267);
     
     $InitializeEvent(0, 12804400, 12804440, 2803920, 12804420, 12804430, 12801800, 12804421);
     $InitializeEvent(0, 12804401, 12804441, 2803921, 12804421, 12804431, 12801800, 12804420);
@@ -758,6 +758,7 @@ $Event(0, Default, function() {
     $InitializeEvent(1, 12804450, 2800911, 2802914, 12804421, 12804431, 12804800);
     $InitializeEvent(0, 12804460, 2800910, 2802911, 2802800, 2802801, 101130, 12804450, 2802801);
     $InitializeEvent(1, 12804460, 2800911, 2802914, 2802800, 2802801, 101130, 12804451, 2802801);
+    $InitializeEvent(0, 12804470);
     
     $InitializeEvent(0, 12804882);
     $InitializeEvent(0, 12804883);
@@ -3285,4 +3286,13 @@ $Event(12804460, Restart, function(chrEntityId, areaEntityId, entityId, areaEnti
     SetCharacterEventTarget(chrEntityId, 2800800);
     RequestCharacterAICommand(chrEntityId, -1, 0);
     RequestCharacterAIReplan(chrEntityId);
+});
+
+// heal npcs
+$Event(12804470, Default, function() {
+    WaitFor(CharacterHasSpEffect(10000, 3010));
+    SetSpEffect(2800910, 3012, false);
+    SetSpEffect(2800911, 3012, false);
+    WaitFixedTimeFrames(1);
+    RestartEvent();
 });

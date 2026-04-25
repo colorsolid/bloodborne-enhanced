@@ -69,15 +69,22 @@ def t220029_x3():
             """State 7"""
             ClearPlayerDamageInfo()
             SetTalkTime(0.33)
-            OpenGenericDialog(1, 200238, 1, 0, 1)
-            def WhilePaused():
-                SetTalkTime(0.33)
-            if GetGenericDialogButtonResult() == 1:
-                DebugEvent('OK')
-                pass
-            elif not IsGenericDialogOpen():
-                DebugEvent('CANCEL')
-                pass
+            if GetEventStatus(8631) == 0 and GetEventStatus(8641) == 0:
+                OpenGenericDialog(1, 200238, 1, 0, 1)
+                def WhilePaused():
+                    SetTalkTime(0.33)
+                if GetGenericDialogButtonResult() == 1:
+                    DebugEvent('OK')
+                    pass
+                elif not IsGenericDialogOpen():
+                    DebugEvent('CANCEL')
+                    pass
+            else:
+                call = t220029_x41()
+                if call.Done():
+                    pass
+                elif HasPlayerBeenAttacked() == 1:
+                    assert t220029_x0()
     """Unused"""
     """State 9"""
     return 0
@@ -157,6 +164,33 @@ def t220029_x7(z1=99999, z2=99999, z3=99999, z4=99999):
 # 12100970 - beast's embrace
 # 12100969 - milkweed rune
 # 12100968 - lamp cheat
+
+# summons menu
+def t220029_x41():
+    while True:
+        ClearTalkListData()
+        AddTalkListData(2, 10010567, 8641) # summon henriett
+        AddTalkListData(3, 10010583, 8631) # dismiss henriett
+        if (GetEventStatus(8630) == 1 or GetEventStatus(8631) == 1 or GetEventStatus(8632) == 1 or GetEventStatus(8633) == 1
+                or GetEventStatus(8634) == 1 or GetEventStatus(8635) == 1 or GetEventStatus(8636) == 1
+                or GetEventStatus(8637) == 1 or GetEventStatus(8638) == 1 or GetEventStatus(8639) == 1):
+            AddTalkListData(1, 200236, -1) # gather summons
+        else:
+            pass
+        ShowShopMessage(0, 0, 0)
+        def WhilePaused():
+            SetTalkTime(0.33)
+        if not GetTalkListEntryResult() or not IsTalkExclusiveMenuOpen():
+            return 1
+        elif GetTalkListEntryResult() == 1: # gather summons
+            SetEventState(12106500, 1)
+            return 1
+        elif GetTalkListEntryResult() == 2: # summon henriett
+            SetEventState(8631, 1)
+            return 1
+        elif GetTalkListEntryResult() == 3: # dismiss henriett
+            SetEventState(8631, 0)
+            return 1
 
 # top level
 def t220029_x60():
