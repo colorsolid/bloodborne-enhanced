@@ -49,11 +49,6 @@ $Event(0, Default, function() {
     
     // rematch mode has ended 
     if (EventFlag(logarius_defeat+13) && !EventFlag(logarius_defeat-1)) {
-        if (EventFlag(logarius_defeat-2)) {
-            SetEventFlag(logarius_defeat-2, OFF);
-            $InitializeEvent(logarius_offset, 7500, logarius_region, logarius_lamp_id+4000);
-        }
-        
         // hidden area display check
         if (EventFlag(12500819)) {
             SetEventFlag(12500819, OFF);
@@ -71,10 +66,6 @@ $Event(0, Default, function() {
         }
     // rematch mode started, warp player to boss trigger point
     } else if (EventFlag(logarius_defeat+12) || EventFlag(logarius_defeat-1)) {
-        if (EventFlag(logarius_defeat-2)) {
-            SetEventFlag(logarius_defeat-2, OFF);
-            $InitializeEvent(logarius_offset, 7500, logarius_region, logarius_lamp_id+5000);
-        }
         if (EventFlag(12500810)) {
             SetEventFlag(12500810, OFF);
             SetEventFlag(12500819, ON);
@@ -94,7 +85,7 @@ $Event(0, Default, function() {
     
     $InitializeEvent(logarius_offset, 12102070, logarius_defeat+13, 0, 7457, logarius_id, -1, -1, -1, -1);
     
-    $InitializeEvent(logarius_offset, 8900, logarius_defeat-1, logarius_lamp_id+1000, logarius_defeat-2, 0, 0, logarius_lamp_id+5000, area_id, block_id);
+    $InitializeEvent(logarius_offset, 8900, logarius_defeat-1, logarius_lamp_id+1000, 0, 0, logarius_lamp_id+5000, area_id, block_id);
     $InitializeEvent(logarius_offset, 7700, logarius_defeat+11, logarius_defeat+12, logarius_lamp_id+1000, 825000);
     
     $InitializeEvent(2200, 12107000, 72112200, 2501950, 2412950);

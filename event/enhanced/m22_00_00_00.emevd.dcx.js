@@ -20,17 +20,16 @@ const witches_defeat = 12201800;
 const witches_return = 2201899;
 const witches_lamp_id = 2201951;
 const witches_lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10) + 2;
-const witches_lamp_spawn_point = witches_lamp_id+1000;
-const witches_lamp_spawn_checker = witches_lamp_id+2000;
-const witches_lamp_hunt_region = witches_lamp_id+3000;
-const witches_lamp_spawn_region = witches_lamp_id+4000;
-const witches_rematch_start_region = witches_lamp_id+5000;
-const witches_lamp_hidden_region = witches_lamp_id+6000;
-const witches_rematch_death_occurred = witches_defeat-2;
-const witches_auto_rematch = witches_defeat-1;
-const witches_rematch_triggered = witches_defeat+11;
-const witches_rematch_started = witches_defeat+12;
-const witches_rematch_cleanup = witches_defeat+13;
+const witches_lamp_spawn_point = witches_lamp_id + 1000;
+const witches_lamp_spawn_checker = witches_lamp_id + 2000;
+const witches_lamp_hunt_region = witches_lamp_id + 3000;
+const witches_lamp_spawn_region = witches_lamp_id + 4000;
+const witches_rematch_start_region = witches_lamp_id + 5000;
+const witches_lamp_hidden_region = witches_lamp_id + 6000;
+const witches_auto_rematch = witches_defeat - 1;
+const witches_rematch_triggered = witches_defeat + 11;
+const witches_rematch_started = witches_defeat + 12;
+const witches_rematch_cleanup = witches_defeat + 13;
 const witches_region = 2202802;
 const witches_id1 = 2200800;
 const witches_id2 = 2200801;
@@ -53,10 +52,6 @@ $Event(0, Default, function() {
     $InitializeEvent(hemwick_lamp_offset, 8300, hemwick_lamp_id+2000, -1, hemwick_lamp_kindle, hemwick_lamp_id+6000, hemwick_lamp_id+3000);
     
     if (EventFlag(witches_rematch_cleanup) && !EventFlag(witches_auto_rematch)) {
-        if (EventFlag(witches_rematch_death_occurred)) {
-            SetEventFlag(witches_rematch_death_occurred, OFF);
-            $InitializeEvent(witches_offset, 7500, witches_region, witches_lamp_spawn_region);
-        }
         SetEventFlag(witches_rematch_cleanup, OFF);
         SetEventFlag(witches_defeat, ON);
         if (EventFlag(12111120)) {
@@ -68,10 +63,6 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(witches_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(witches_rematch_started) || EventFlag(witches_auto_rematch)) {
-        if (EventFlag(witches_rematch_death_occurred)) {
-            SetEventFlag(witches_rematch_death_occurred, OFF);
-            $InitializeEvent(witches_offset, 7500, witches_region, witches_rematch_start_region);
-        }
         SetEventFlag(witches_defeat, OFF);
         SetEventFlag(witches_defeat+2, OFF);
         SetEventFlag(witches_defeat+3, OFF);
@@ -86,7 +77,7 @@ $Event(0, Default, function() {
     
     $InitializeEvent(witches_offset, 12102070, witches_rematch_cleanup, 0, 7418, witches_id1, witches_id2, -1, -1, -1);
     
-    $InitializeEvent(witches_offset, 8900, witches_auto_rematch, witches_lamp_spawn_point, witches_rematch_death_occurred, 0, 0, witches_rematch_start_region, area_id, block_id);
+    $InitializeEvent(witches_offset, 8900, witches_auto_rematch, witches_lamp_spawn_point, 0, 0, witches_rematch_start_region, area_id, block_id);
     $InitializeEvent(witches_offset, 7700, witches_rematch_triggered, witches_rematch_started, witches_lamp_spawn_point, 822000);
     
     $InitializeEvent(1200, 12107000, 72111200, 2201950, 2412950);

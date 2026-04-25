@@ -40,8 +40,6 @@ const amelia_return_flag = 10000000 + amelia_return
 const amelia_offset = 2;
 const amelia_defeat = 12401800;
 const amelia_auto_rematch_check = 8900 + amelia_offset;
-// rematch death occurred
-const amelia_rdo = amelia_defeat - 2;
 const amelia_auto_rematch_trigger = amelia_defeat - 1;
 const amelia_encountered = amelia_defeat + 2;
 const amelia_rematch_triggered = amelia_defeat + 11;
@@ -65,10 +63,6 @@ $Event(0, Default, function() {
     $InitializeEvent(cathedral_ward_lamp_offset, 8300, cathedral_ward_lamp_spawn_checker, -1, cathedral_ward_lamp_kindle_state, cathedral_warp_lamp_hidden_region, cathedral_warp_lamp_temp_region);
     
     if (EventFlag(amelia_rematch_played) && !EventFlag(amelia_auto_rematch_trigger)) {
-        if (EventFlag(amelia_rdo)) {
-            SetEventFlag(amelia_rdo, OFF);
-            $InitializeEvent(amelia_offset, 7500, amelia_region, amelia_lamp_spawn_region);
-        }
         SetEventFlag(amelia_rematch_played, OFF);
         SetEventFlag(amelia_defeat, ON);
         if (EventFlag(12111120)) {
@@ -80,10 +74,6 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(amelia_lamp_spawn_region, area_id, block_id);
         }
     } else if (EventFlag(amelia_rematch_started) || EventFlag(amelia_auto_rematch_trigger)) {
-        if (EventFlag(amelia_rdo)) {
-            SetEventFlag(amelia_rdo, OFF);
-            $InitializeEvent(amelia_offset, 7500, amelia_region, amelia_rematch_spawn_region);
-        }
         SetEventFlag(amelia_defeat, OFF);
         SetEventFlag(amelia_encountered, OFF);
         SetEventFlag(amelia_rematch_started, OFF);
@@ -97,7 +87,7 @@ $Event(0, Default, function() {
     
     $InitializeEvent(amelia_offset, 12102070, amelia_rematch_played, 0, 7417, amelia_id, -1, -1, -1, -1);
     
-    $InitializeEvent(amelia_offset, 8900, amelia_auto_rematch_trigger, amelia_lamp_object, amelia_rdo, 0, 0, amelia_rematch_spawn_region, area_id, block_id);
+    $InitializeEvent(amelia_offset, 8900, amelia_auto_rematch_trigger, amelia_lamp_object, 0, 0, amelia_rematch_spawn_region, area_id, block_id);
     $InitializeEvent(amelia_offset, 7700, amelia_rematch_triggered, amelia_rematch_started, amelia_lamp_object, 824000);
     
     $InitializeEvent(400, 12107000, 72110400, 2401950, 2412950);

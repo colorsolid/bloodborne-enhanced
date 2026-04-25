@@ -236,6 +236,6 @@ def t210660_x6():
         #     SetEventState(13401850+14, 1)
         elif GetTalkListEntryResult() == 14: # orphans
             SetEventState(12100650, 1)
-            SetEventState(13501800+11, 1)
+            SetEventState(13601800+11, 1)
             SetEventState(13601800+14, 1)
         return 0

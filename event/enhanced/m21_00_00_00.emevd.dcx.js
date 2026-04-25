@@ -121,7 +121,6 @@ const gehrman_defeat = 12101800;
 const gehrman_region = 12102802;
 const gehrman_trigger_short_warp = 2102810;
 const gehrman_id = 2100800;
-const gehrman_rdo = gehrman_defeat - 2;
 const gehrman_auto_rematch_trigger = gehrman_defeat - 1;
 const gehrman_encountered = gehrman_defeat + 2;
 const gehrman_rematch_triggered = gehrman_defeat + 11;
@@ -134,7 +133,6 @@ const moon_presence_region = 12102802;
 const moon_presence_npc = 540000;
 const moon_presence_trigger_short_warp = 2102805;
 const moon_presence_id = 2100810;
-const moon_presence_rdo = moon_presence_defeat - 2;
 const moon_presence_auto_rematch_trigger = moon_presence_defeat - 1;
 const moon_presence_encountered = moon_presence_defeat + 2;
 const moon_presence_rematch_triggered = moon_presence_defeat + 11;
@@ -195,17 +193,13 @@ $Event(0, Default, function() {
     SetEventFlag(8900+moon_presence_offset, OFF);
     
     SetEventFlag(distorted_rematch_played, OFF);
-    if (EventFlag(distorted_rematch_played)) {
-        SetEventFlag(distorted_rematch_played, OFF);
+    if (EventFlag(distorted_rematch_started)) {
+        SetEventFlag(distorted_rematch_started, OFF);
         SetEventFlag(distorted_rematch_played, ON);
     }
     
     // post rematch clean up
     if (EventFlag(gehrman_rematch_played) && !EventFlag(gehrman_auto_rematch_trigger)) {
-        if (EventFlag(gehrman_rdo)) {
-            SetEventFlag(gehrman_rdo, OFF);
-            $InitializeEvent(gehrman_offset, 7500, gehrman_region, 2102967);
-        }
         SetEventFlag(gehrman_rematch_played, OFF);
         SetEventFlag(gehrman_defeat, ON);
         SetEventFlag(gehrman_encountered, ON);
@@ -220,10 +214,6 @@ $Event(0, Default, function() {
     } else if (EventFlag(gehrman_rematch_started)
         || EventFlag(gehrman_auto_rematch_trigger)
         || EventFlag(distorted_rematch_played)) {
-        if (EventFlag(gehrman_rdo)) {
-            SetEventFlag(gehrman_rdo, OFF);
-            $InitializeEvent(gehrman_offset, 7500, gehrman_region, gehrman_trigger_short_warp);
-        }
         SetEventFlag(gehrman_defeat, OFF);
         SetEventFlag(gehrman_encountered, OFF);
         SetEventFlag(gehrman_rematch_started, OFF);
@@ -237,10 +227,6 @@ $Event(0, Default, function() {
     
     // post rematch clean up
     if (EventFlag(moon_presence_rematch_played) && !EventFlag(moon_presence_auto_rematch_trigger)) {
-        if (EventFlag(moon_presence_rdo)) {
-            SetEventFlag(moon_presence_rdo, OFF);
-            $InitializeEvent(moon_presence_offset, 7500, moon_presence_region, 2102967);
-        }
         SetEventFlag(moon_presence_rematch_played, OFF);
         SetEventFlag(moon_presence_defeat, ON);
         SetEventFlag(moon_presence_defeat+2, ON);
@@ -255,9 +241,8 @@ $Event(0, Default, function() {
     } else if (EventFlag(moon_presence_rematch_started)
         || EventFlag(moon_presence_auto_rematch_trigger)
         || EventFlag(distorted_rematch_played)) {
-        if (EventFlag(moon_presence_rdo)) {
-            SetEventFlag(moon_presence_rdo, OFF);
-            $InitializeEvent(moon_presence_offset, 7500, moon_presence_region, moon_presence_trigger_short_warp);
+        if (EventFlag(distorted_rematch_played)) {
+            DisplayBanner(TextBannerType.Dead);
         }
         SetEventFlag(moon_presence_defeat, OFF);
         SetEventFlag(moon_presence_defeat+2, OFF);
@@ -276,8 +261,10 @@ $Event(0, Default, function() {
     }
     $InitializeEvent(moon_presence_offset, 7700, moon_presence_rematch_triggered, moon_presence_rematch_started, 2102969, 821000);
     
-    $InitializeEvent(gehrman_offset, 8900, gehrman_auto_rematch_trigger, 2102969, gehrman_rdo, 0, 0, 2102810, area_id, block_id);
-    $InitializeEvent(moon_presence_offset, 8900, moon_presence_auto_rematch_trigger, 2102969, moon_presence_rdo, distorted_rematch_played, distorted_rematch_played, 2102805, area_id, block_id);
+    if (!EventFlag(distorted_rematch_played)) {
+        $InitializeEvent(gehrman_offset, 8900, gehrman_auto_rematch_trigger, 2102969, 0, 0, gehrman_trigger_short_warp, area_id, block_id);
+    }
+    $InitializeEvent(moon_presence_offset, 8900, moon_presence_auto_rematch_trigger, 2102969, distorted_rematch_played, distorted_rematch_played, moon_presence_trigger_short_warp, area_id, block_id);
     
     $InitializeEvent(0, 12102000); // reset rematch flags
     

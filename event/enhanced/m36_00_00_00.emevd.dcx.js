@@ -57,10 +57,6 @@ $Event(0, Default, function() {
     
     // post rematch clean up
     if (EventFlag(orphan_defeat+13) && !EventFlag(orphan_defeat-1)) {
-        if (EventFlag(orphan_defeat-2)) {
-            SetEventFlag(orphan_defeat-2, OFF);
-            $InitializeEvent(orphan_offset, 7500, orphan_region, orphan_lamp_id+4000);
-        }
         SetEventFlag(orphan_defeat+13, OFF);
         SetEventFlag(orphan_defeat, ON);
         if (EventFlag(12111120)) {
@@ -73,10 +69,6 @@ $Event(0, Default, function() {
         }
     // rematch has started
     } else if (EventFlag(orphan_defeat+12) || EventFlag(orphan_defeat-1)) {
-        if (EventFlag(orphan_defeat-2)) {
-            SetEventFlag(orphan_defeat-2, OFF);
-            $InitializeEvent(orphan_offset, 7500, orphan_region, orphan_lamp_id+5000);
-        }
         SetEventFlag(orphan_defeat, OFF);
         SetEventFlag(orphan_defeat+1, OFF);
         SetEventFlag(orphan_defeat+3011, OFF);
@@ -92,7 +84,7 @@ $Event(0, Default, function() {
     
     $InitializeEvent(orphan_offset, 12102070, orphan_defeat+13, 0, 7506, orphan_id1, orphan_id2, -1, -1, -1);
     
-    $InitializeEvent(orphan_offset, 8900, orphan_defeat-1, orphan_lamp_id+1000, orphan_defeat-2, orphan_defeat+15, orphan_defeat+14, orphan_lamp_id+5000, area_id, block_id);
+    $InitializeEvent(orphan_offset, 8900, orphan_defeat-1, orphan_lamp_id+1000, orphan_defeat+15, orphan_defeat+14, orphan_lamp_id+5000, area_id, block_id);
     $InitializeEvent(orphan_offset, 7700, orphan_defeat+11, orphan_defeat+12, orphan_lamp_id+1000, 836000);
     
     $InitializeEvent(4100, 12107000, 72114100, 3601950, 2412950);
@@ -579,6 +571,7 @@ $Event(0, Default, function() {
     $InitializeEvent(66, 13604400, 3601466);
     $InitializeEvent(67, 13604400, 3601467);
     $InitializeEvent(0, 13601800);
+    $InitializeEvent(0, 13601890); // distorted animation fix
     $InitializeEvent(0, 13604811);
     $InitializeEvent(0, 13601801);
     $InitializeEvent(0, 13604800);
@@ -1198,7 +1191,7 @@ $Event(13601800, Default, function() {
         EndEvent();
     }
 L0:
-    chr = CharacterDead(3600800);
+    chr = HPRatio(3600800) <= 0;
     chr2 = CharacterDead(3600801);
     if (EventFlag(orphan_defeat+15)) {
         WaitFor(chr && chr2);
@@ -1247,6 +1240,18 @@ L0:
 L1:
     WaitFor(CharacterType(10000, TargetType.WhitePhantom));
     WaitFixedTimeSeconds(0);
+});
+
+$Event(13601890, Default, function() {
+    EndIf(EventFlag(13601800));
+    //WaitFixedTimeSeconds(5);
+    WaitFor(HPRatio(3600800) <= 0);
+    SpawnOneshotSFX(TargetEntityType.Character, 3600800, 203, 140);
+    WaitFixedTimeSeconds(0.5);
+    SetCharacterGravity(3600800, Disabled);
+    IssueShortWarpRequest(3600800, TargetEntityType.Area, 3604965, -1);
+    //SetCharacterBackreadState(3600800, true);
+    //SetCharacterBackreadState(3600800, true);
 });
 
 // Last boss_Host enters boss room_First battle

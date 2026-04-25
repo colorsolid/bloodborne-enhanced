@@ -64,10 +64,6 @@ $Event(0, Default, function() {
     $InitializeEvent(gaol_lamp_offset, 8300, gaol_lamp_id+2000, -1, gaol_lamp_kindle, gaol_lamp_id+6000, gaol_lamp_id+3000);
     
     if (EventFlag(one_reborn_defeat+13) && !EventFlag(one_reborn_defeat-1)) {
-        if (EventFlag(one_reborn_defeat-2)) {
-            SetEventFlag(one_reborn_defeat-2, OFF);
-            $InitializeEvent(one_reborn_offset, 7500, one_reborn_region, one_reborn_lamp_id+4000);
-        }
         SetEventFlag(one_reborn_defeat+13, OFF);
         SetEventFlag(one_reborn_defeat, ON);
         if (EventFlag(12111120)) {
@@ -79,10 +75,6 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(one_reborn_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(one_reborn_defeat+12) || EventFlag(one_reborn_defeat-1)) {
-        if (EventFlag(one_reborn_defeat-2)) {
-            SetEventFlag(one_reborn_defeat-2, OFF);
-            $InitializeEvent(one_reborn_offset, 7500, one_reborn_region, one_reborn_lamp_id+5000);
-        }
         SetEventFlag(one_reborn_defeat, OFF);
         SetEventFlag(one_reborn_defeat+2, OFF);
         SetEventFlag(one_reborn_defeat+12, OFF);
@@ -96,7 +88,7 @@ $Event(0, Default, function() {
     
     $InitializeEvent(one_reborn_offset, 12102070, one_reborn_defeat+13, 0, 7458, one_reborn_id1, one_reborn_id2, one_reborn_id3, one_reborn_id4, -1);
     
-    $InitializeEvent(one_reborn_offset, 8900, one_reborn_defeat-1, one_reborn_lamp_id+1000, one_reborn_defeat-2, 0, 0, one_reborn_lamp_id+5000, area_id, block_id);
+    $InitializeEvent(one_reborn_offset, 8900, one_reborn_defeat-1, one_reborn_lamp_id+1000, 0, 0, one_reborn_lamp_id+5000, area_id, block_id);
     $InitializeEvent(one_reborn_offset, 7700, one_reborn_defeat+11, one_reborn_defeat+12, one_reborn_lamp_id+1000, 828000);
     
     $InitializeEvent(1800, 12107000, 72111800, 2801950, 2412950);

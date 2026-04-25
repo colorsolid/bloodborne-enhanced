@@ -57,10 +57,6 @@ $Event(0, Default, function() {
     $InitializeEvent(lecture_hall_2_lamp_offset, 8300, lecture_hall_2_lamp_id+2000, -1, lecture_hall_2_lamp_kindle, lecture_hall_2_lamp_id+6000, lecture_hall_2_lamp_id+3000);
     
     if (EventFlag(rom_defeat+13) && !EventFlag(rom_defeat-1)) {
-        if (EventFlag(rom_defeat-2)) {
-            SetEventFlag(rom_defeat-2, OFF);
-            $InitializeEvent(rom_offset, 7500, rom_region, rom_lamp_id+4000);
-        }
         SetEventFlag(rom_defeat+13, OFF);
         SetEventFlag(rom_defeat, ON);
         SetEventFlag(rom_defeat+3, ON);
@@ -73,10 +69,6 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(rom_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(rom_defeat+12) || EventFlag(rom_defeat-1)) {
-        if (EventFlag(rom_defeat-2)) {
-            SetEventFlag(rom_defeat-2, OFF);
-            $InitializeEvent(rom_offset, 7500, rom_region, rom_lamp_id+5000);
-        }
         SetEventFlag(rom_defeat, OFF);
         SetEventFlag(rom_defeat+2, ON);
         SetEventFlag(rom_defeat+3, OFF);
@@ -94,7 +86,7 @@ $Event(0, Default, function() {
     
     $InitializeEvent(rom_offset, 12102070, rom_defeat+13, 0, 7456, rom_id, -1, -1, -1, -1);
     
-    $InitializeEvent(rom_offset, 8900, rom_defeat-1, rom_lamp_id+1000, rom_defeat-2, 0, 0, rom_lamp_id+5000, area_id, block_id);
+    $InitializeEvent(rom_offset, 8900, rom_defeat-1, rom_lamp_id+1000, 0, 0, rom_lamp_id+5000, area_id, block_id);
     $InitializeEvent(rom_offset, 7700, rom_defeat+11, rom_defeat+12, rom_lamp_id+1000, 832001);
     
     $InitializeEvent(1600, 12107000, 72111600, 3201950, 2412950);

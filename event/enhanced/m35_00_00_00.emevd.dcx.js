@@ -56,10 +56,6 @@ $Event(0, Default, function() {
     $InitializeEvent(research_hall_lamp_offset, 8300, research_hall_lamp_id+2000, -1, research_hall_lamp_kindle, research_hall_lamp_id+6000, research_hall_lamp_id+3000);
     
     if (EventFlag(living_failures_defeat+13) && !EventFlag(living_failures_defeat-1)) {
-        if (EventFlag(living_failures_defeat-2)) {
-            SetEventFlag(living_failures_defeat-2, OFF);
-            $InitializeEvent(living_failures_offset, 7500, living_failures_region, living_failures_lamp_id+4000);
-        }
         SetEventFlag(living_failures_defeat+13, OFF);
         SetEventFlag(living_failures_defeat, ON);
         if (EventFlag(12111120)) {
@@ -71,10 +67,6 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(living_failures_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(living_failures_defeat+12) || EventFlag(living_failures_defeat-1)) {
-        if (EventFlag(living_failures_defeat-2)) {
-            SetEventFlag(living_failures_defeat-2, OFF);
-            $InitializeEvent(living_failures_offset, 7500, living_failures_region, living_failures_lamp_id+5000);
-        }
         SetEventFlag(living_failures_defeat, OFF);
         SetEventFlag(living_failures_defeat+1, OFF);
         SetEventFlag(living_failures_defeat+12, OFF);
@@ -87,10 +79,6 @@ $Event(0, Default, function() {
     }
     
     if (EventFlag(maria_defeat+13) && !EventFlag(maria_defeat-1)) {
-        if (EventFlag(maria_defeat-2)) {
-            SetEventFlag(maria_defeat-2, OFF);
-            $InitializeEvent(maria_offset, 7500, maria_region, maria_lamp_id+4000);
-        }
         SetEventFlag(maria_defeat+13, OFF);
         SetEventFlag(maria_defeat, ON);
         if (EventFlag(12111120)) {
@@ -102,10 +90,6 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(maria_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(maria_defeat+12) || EventFlag(maria_defeat-1)) {
-        if (EventFlag(maria_defeat-2)) {
-            SetEventFlag(maria_defeat-2, OFF);
-            $InitializeEvent(maria_offset, 7500, maria_region, maria_lamp_id+5000);
-        }
         SetEventFlag(maria_defeat, OFF);
         SetEventFlag(maria_defeat+1, OFF);
         SetEventFlag(maria_defeat+12, OFF);
@@ -120,8 +104,8 @@ $Event(0, Default, function() {
     $InitializeEvent(living_failures_offset, 12102070, living_failures_defeat+13, 0, 7504, living_failures_id1, living_failures_id2, living_failures_id3, living_failures_id4, living_failures_id5);
     $InitializeEvent(maria_offset, 12102070, maria_defeat+13, 0, 7505, maria_id, -1, -1, -1, -1);
     
-    $InitializeEvent(living_failures_offset, 8900, living_failures_defeat-1, living_failures_lamp_id+1000, living_failures_defeat-2, 0, 0, living_failures_lamp_id+5000, area_id, block_id);
-    $InitializeEvent(maria_offset, 8900, maria_defeat-1, maria_lamp_id+1000, maria_defeat-2, 0, 0, maria_lamp_id+5000, area_id, block_id);
+    $InitializeEvent(living_failures_offset, 8900, living_failures_defeat-1, living_failures_lamp_id+1000, 0, 0, living_failures_lamp_id+5000, area_id, block_id);
+    $InitializeEvent(maria_offset, 8900, maria_defeat-1, maria_lamp_id+1000, 0, 0, maria_lamp_id+5000, area_id, block_id);
     
     $InitializeEvent(living_failures_offset, 7700, living_failures_defeat+11, living_failures_defeat+12, living_failures_lamp_id+1000, 835001);
     $InitializeEvent(maria_offset, 7700, maria_defeat+11, maria_defeat+12, maria_lamp_id+1000, 835002);

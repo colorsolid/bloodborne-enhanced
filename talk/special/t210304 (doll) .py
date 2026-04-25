@@ -648,7 +648,7 @@ def t210304_x95():
             AddTalkListData(19, 200018, 12100878)
             AddTalkListData(20, 200017, 12100978)
 
-            # memory alter
+            # memory altar
             AddTalkListData(21, 200020, 12100877)
             AddTalkListData(22, 200019, 12100977)
 
@@ -733,10 +733,10 @@ def t210304_x95():
         elif GetTalkListEntryResult() == 20: # enable - workshop
             SetEventState(12100978, 0)
             SetEventState(12100878, 1)
-        elif GetTalkListEntryResult() == 21: # disable - memory alter
+        elif GetTalkListEntryResult() == 21: # disable - memory altar
             SetEventState(12100977, 1)
             SetEventState(12100877, 0)
-        elif GetTalkListEntryResult() == 22: # enable - memory alter
+        elif GetTalkListEntryResult() == 22: # enable - memory altar
             SetEventState(12100977, 0)
             SetEventState(12100877, 1)
         elif GetTalkListEntryResult() == 23: # disable - storage
@@ -1066,7 +1066,7 @@ def t210304_x106():
         AddTalkListData(5, 200018, 12100883)
         AddTalkListData(6, 200017, 12100983)
 
-        # memory alter
+        # memory altar
         AddTalkListData(7, 200020, 12100884)
         AddTalkListData(8, 200019, 12100984)
 
@@ -1115,11 +1115,11 @@ def t210304_x106():
         elif GetTalkListEntryResult() == 6: # enable - workshop
             SetEventState(12100983, 0)
             SetEventState(12100883, 1)
-        elif GetTalkListEntryResult() == 7: # disable - memory alter
+        elif GetTalkListEntryResult() == 7: # disable - memory altar
             SetEventState(12100984, 1)
             SetEventState(12100884, 0)
-        elif GetTalkListEntryResult() == 8: # enable - memory alter
-            SetEventState(12100884, 0)
+        elif GetTalkListEntryResult() == 8: # enable - memory altar
+            SetEventState(12100984, 0)
             SetEventState(12100884, 1)
         elif GetTalkListEntryResult() == 9: # disable - storage
             SetEventState(12100985, 1)

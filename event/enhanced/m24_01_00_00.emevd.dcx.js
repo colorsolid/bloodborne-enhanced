@@ -76,10 +76,6 @@ $Event(0, Default, function() {
     
     // post rematch cleanup
     if (EventFlag(cleric_beast_defeat+13) && !EventFlag(cleric_beast_defeat-1)) {
-        if (EventFlag(cleric_beast_defeat-2)) {
-            SetEventFlag(cleric_beast_defeat-2, OFF);
-            $InitializeEvent(cleric_beast_offset, 7500, cleric_beast_region, cleric_beast_lamp_id+4000);
-        }
         SetEventFlag(cleric_beast_defeat+13, OFF);
         SetEventFlag(cleric_beast_defeat, ON);
         if (EventFlag(12111120)) {
@@ -92,10 +88,6 @@ $Event(0, Default, function() {
         }
     // rematch has started
     } else if (EventFlag(cleric_beast_defeat+12) || EventFlag(cleric_beast_defeat-1)) {
-        if (EventFlag(cleric_beast_defeat-2)) {
-            SetEventFlag(cleric_beast_defeat-2, OFF);
-            $InitializeEvent(cleric_beast_offset, 7500, cleric_beast_region, cleric_beast_lamp_id+5000);
-        }
         SetEventFlag(cleric_beast_defeat, OFF);
         SetEventFlag(cleric_beast_defeat+2, OFF);
         SetEventFlag(cleric_beast_defeat+12, OFF);
@@ -108,10 +100,6 @@ $Event(0, Default, function() {
     }
     
     if (EventFlag(gascoigne_defeat+13) && !EventFlag(gascoigne_defeat-1)) {
-        if (EventFlag(gascoigne_defeat-2)) {
-            SetEventFlag(gascoigne_defeat-2, OFF);
-            $InitializeEvent(gascoigne_offset, 7500, gascoigne_region, gascoigne_lamp_id+4000);
-        }
         SetEventFlag(gascoigne_defeat+13, OFF);
         SetEventFlag(gascoigne_defeat, ON);
         
@@ -130,10 +118,6 @@ $Event(0, Default, function() {
             DirectlyGivePlayerItem(ItemType.Goods, 4000, 12411819, 8);
         }
     } else if (EventFlag(gascoigne_defeat+12) || EventFlag(gascoigne_defeat-1)) {
-        if (EventFlag(gascoigne_defeat-2)) {
-            SetEventFlag(gascoigne_defeat-2, OFF);
-            $InitializeEvent(gascoigne_offset, 7500, gascoigne_region, gascoigne_lamp_id+5000);
-        }
         RemoveItemFromPlayer(ItemType.Goods, 4000, 1);
         SetEventFlag(gascoigne_defeat, OFF);
         SetEventFlag(gascoigne_defeat+2, OFF);
@@ -149,8 +133,8 @@ $Event(0, Default, function() {
     $InitializeEvent(cleric_beast_offset, 12102070, cleric_beast_defeat+13, 0, 7447, cleric_beast_id, -1, -1, -1, -1);
     $InitializeEvent(gascoigne_offset, 12102070, gascoigne_defeat+13, gascoigne_defeat+15, 7448, gascoigne_id1, gascoigne_id2, -1, -1, -1);
     
-    $InitializeEvent(cleric_beast_offset, 8900, cleric_beast_defeat-1, cleric_beast_lamp_id+1000, cleric_beast_defeat-2, 0, 0, cleric_beast_lamp_id+5000, area_id, block_id);
-    $InitializeEvent(gascoigne_offset, 8900, gascoigne_defeat-1, gascoigne_lamp_id+1000, gascoigne_defeat-2, gascoigne_defeat+15, gascoigne_defeat+14, gascoigne_lamp_id+5000, area_id, block_id);
+    $InitializeEvent(cleric_beast_offset, 8900, cleric_beast_defeat-1, cleric_beast_lamp_id+1000, 0, 0, cleric_beast_lamp_id+5000, area_id, block_id);
+    $InitializeEvent(gascoigne_offset, 8900, gascoigne_defeat-1, gascoigne_lamp_id+1000, gascoigne_defeat+15, gascoigne_defeat+14, gascoigne_lamp_id+5000, area_id, block_id);
     
     $InitializeEvent(cleric_beast_offset, 7700, cleric_beast_defeat+11, cleric_beast_defeat+12, cleric_beast_lamp_id+1000, 824100);
     $InitializeEvent(gascoigne_offset, 7700, gascoigne_defeat+11, gascoigne_defeat+12, gascoigne_lamp_id+1000, 824102);
@@ -724,14 +708,14 @@ $Event(0, Default, function() {
     $InitializeEvent(0, 12414450, 2410158, 2412710, 12414420, 12414430, 12414700); // gascoigne --> cleric
     $InitializeEvent(1, 12414450, 2410740, 2412711, 12414421, 12414431, 12414700); // alfred --> cleric
     
-    //$InitializeEvent(2, 12414450, 2410158, 2412818, 12414420, 12414430, 12414800); // gascoigne --> gascoigne
-    //$InitializeEvent(3, 12414450, 2410740, 2412819, 12414421, 12414431, 12414800); // alfred --> gascoigne
+    $InitializeEvent(2, 12414450, 2410158, 2412818, 12414420, 12414430, 12414800); // gascoigne --> gascoigne
+    $InitializeEvent(3, 12414450, 2410740, 2412819, 12414421, 12414431, 12414800); // alfred --> gascoigne
     
     $InitializeEvent(0, 12414460, 2410158, 2412710, 2412800, 2412801, 7014, 12414450, 2412801); // gascoigne --> cleric
     $InitializeEvent(1, 12414460, 2410740, 2412711, 2412800, 2412801, 101130, 12414451, 2412801); // alfred --> cleric
     
-    //$InitializeEvent(2, 12414460, 2410158, 2412818, 2412332, 2412811, 7014, 12414452, 2412811); // gascoigne --> gascoigne
-    //$InitializeEvent(3, 12414460, 2410740, 2412819, 2412332, 2412811, 101130, 12414453, 2412811); // alfred --> gascoigne
+    $InitializeEvent(2, 12414460, 2410158, 2412818, 2412332, 2412811, 7014, 12414452, 2412811); // gascoigne --> gascoigne
+    $InitializeEvent(3, 12414460, 2410740, 2412819, 2412332, 2412811, 101130, 12414453, 2412811); // alfred --> gascoigne
     
     $InitializeEvent(0, 12414471);
     
@@ -4805,6 +4789,7 @@ $Event(12410460, Default, function(chrEntityId, animationId, animationId2, aiId,
 
 // Holy City B_New NPC summons_Forced return_Father Gascoigne
 $Event(12414470, Restart, function() {
+    EndIf(EventFlag(12100889));
     if (!ThisEvent()) {
         WaitFor(
             EventFlag(12414420)

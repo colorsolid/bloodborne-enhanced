@@ -55,10 +55,6 @@ $Event(0, Default, function() {
     $InitializeEvent(upper_ward_lamp_offset, 8300, upper_ward_lamp_id+2000, -1, upper_ward_lamp_kindle, upper_ward_lamp_id+6000, upper_ward_lamp_id+3000);
     
     if (EventFlag(celestial_emissary_defeat+13) && !EventFlag(celestial_emissary_defeat-1)) {
-        if (EventFlag(celestial_emissary_defeat-2)) {
-            SetEventFlag(celestial_emissary_defeat-2, OFF);
-            $InitializeEvent(celestial_emissary_offset, 7500, celestial_emissary_region, celestial_emissary_lamp_id+4000);
-        }
         SetEventFlag(celestial_emissary_defeat+13, OFF);
         SetEventFlag(celestial_emissary_defeat, ON);
         if (EventFlag(12111120)) {
@@ -70,10 +66,6 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(celestial_emissary_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(celestial_emissary_defeat+12) || EventFlag(celestial_emissary_defeat-1)) {
-        if (EventFlag(celestial_emissary_defeat-2)) {
-            SetEventFlag(celestial_emissary_defeat-2, OFF);
-            $InitializeEvent(celestial_emissary_offset, 7500, celestial_emissary_region, celestial_emissary_lamp_id+5000);
-        }
         SetEventFlag(celestial_emissary_defeat, OFF);
         SetEventFlag(celestial_emissary_defeat+2, OFF);
         SetEventFlag(celestial_emissary_defeat+12, OFF);
@@ -86,10 +78,6 @@ $Event(0, Default, function() {
     }
     
     if (EventFlag(ebrietas_defeat+13) && !EventFlag(ebrietas_defeat-1)) {
-        if (EventFlag(ebrietas_defeat-2)) {
-            SetEventFlag(ebrietas_defeat-2, OFF);
-            $InitializeEvent(ebrietas_offset, 7500, ebrietas_region, ebrietas_lamp_id+4000);
-        }
         SetEventFlag(ebrietas_defeat+13, OFF);
         SetEventFlag(ebrietas_defeat, ON);
         $InitializeEvent(ebrietas_lamp_offset, 8300, ebrietas_lamp_id+2000, 999, ebrietas_lamp_kindle, ebrietas_lamp_id+6000, ebrietas_lamp_id+3000);
@@ -100,10 +88,6 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(ebrietas_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(ebrietas_defeat+12) || EventFlag(ebrietas_defeat-1)) {
-        if (EventFlag(ebrietas_defeat-2)) {
-            SetEventFlag(ebrietas_defeat-2, OFF);
-            $InitializeEvent(ebrietas_offset, 7500, ebrietas_region, ebrietas_lamp_id+5000);
-        }
         SetEventFlag(ebrietas_defeat, OFF);
         SetEventFlag(ebrietas_defeat+2, ON);
         SetEventFlag(ebrietas_defeat+3000, ON);
@@ -120,8 +104,8 @@ $Event(0, Default, function() {
     $InitializeEvent(celestial_emissary_offset, 12102070, celestial_emissary_defeat+13, 0, 7459, celestial_emissary_id, -1, -1, -1, -1);
     $InitializeEvent(ebrietas_offset, 12102070, ebrietas_defeat+13, 0, 7462, ebrietas_id, -1, -1, -1, -1);
     
-    $InitializeEvent(celestial_emissary_offset, 8900, celestial_emissary_defeat-1, celestial_emissary_lamp_id+1000, celestial_emissary_defeat-2, 0, 0, celestial_emissary_lamp_id+5000, area_id, block_id);
-    $InitializeEvent(ebrietas_offset, 8900, ebrietas_defeat-1, ebrietas_lamp_id+1000, ebrietas_defeat-2, 0, 0, ebrietas_lamp_id+5000, area_id, block_id);
+    $InitializeEvent(celestial_emissary_offset, 8900, celestial_emissary_defeat-1, celestial_emissary_lamp_id+1000, 0, 0, celestial_emissary_lamp_id+5000, area_id, block_id);
+    $InitializeEvent(ebrietas_offset, 8900, ebrietas_defeat-1, ebrietas_lamp_id+1000, 0, 0, ebrietas_lamp_id+5000, area_id, block_id);
     
     $InitializeEvent(celestial_emissary_offset, 7700, celestial_emissary_defeat+11, celestial_emissary_defeat+12, celestial_emissary_lamp_id+1000, 824200);
     $InitializeEvent(ebrietas_offset, 7700, ebrietas_defeat+11, ebrietas_defeat+12, ebrietas_lamp_id+1000, 824201);

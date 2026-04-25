@@ -75,10 +75,6 @@ $Event(0, Default, function() {
     }
     
     if (EventFlag(ludwig_defeat+13) && !EventFlag(ludwig_defeat-1)) {
-        if (EventFlag(ludwig_defeat-2)) {
-            SetEventFlag(ludwig_defeat-2, OFF);
-            $InitializeEvent(ludwig_offset, 7500, ludwig_region, ludwig_lamp_id+4000);
-        }
         SetEventFlag(ludwig_defeat+13, OFF);
         SetEventFlag(9471, ON);
         SetEventFlag(ludwig_defeat, ON);
@@ -91,10 +87,6 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(ludwig_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(ludwig_defeat+12) || EventFlag(ludwig_defeat-1)) {
-        if (EventFlag(ludwig_defeat-2)) {
-            SetEventFlag(ludwig_defeat-2, OFF);
-            $InitializeEvent(ludwig_offset, 7500, ludwig_region, ludwig_lamp_id+5000);
-        }
         SetEventFlag(9471, OFF);
         SetEventFlag(ludwig_defeat, OFF);
         SetEventFlag(ludwig_defeat+1, OFF);
@@ -111,10 +103,6 @@ $Event(0, Default, function() {
     }
     
     if (EventFlag(laurence_defeat+13) && !EventFlag(laurence_defeat-1)) {
-        if (EventFlag(laurence_defeat-2)) {
-            SetEventFlag(laurence_defeat-2, OFF);
-            $InitializeEvent(laurence_offset, 7500, laurence_region, laurence_lamp_id+4000);
-        }
         SetEventFlag(laurence_defeat+13, OFF);
         SetEventFlag(laurence_defeat, ON);
         if (EventFlag(12111120)) {
@@ -126,10 +114,6 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(laurence_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(laurence_defeat+12) || EventFlag(laurence_defeat-1)) {
-        if (EventFlag(laurence_defeat-2)) {
-            SetEventFlag(laurence_defeat-2, OFF);
-            $InitializeEvent(laurence_offset, 7500, laurence_region, laurence_lamp_id+5000);
-        }
         SetEventFlag(laurence_defeat, OFF);
         SetEventFlag(laurence_defeat+1, OFF);
         SetEventFlag(laurence_defeat+3011, OFF);
@@ -145,8 +129,8 @@ $Event(0, Default, function() {
     $InitializeEvent(laurence_offset, 12102070, laurence_defeat+13, 0, 7499, laurence_id, -1, -1, -1, -1);
     $InitializeEvent(ludwig_offset, 12102070, ludwig_defeat+13, 0, 7498, ludwig_id1, ludwig_id2, -1, -1, -1);
     
-    $InitializeEvent(laurence_offset, 8900, laurence_defeat-1, laurence_lamp_id+1000, laurence_defeat-2, 0, 0, laurence_lamp_id+5000, area_id, block_id);
-    $InitializeEvent(ludwig_offset, 8900, ludwig_defeat-1, ludwig_lamp_id+1000, ludwig_defeat-2, ludwig_defeat+15, ludwig_defeat+14, ludwig_lamp_id+5000, area_id, block_id);
+    $InitializeEvent(laurence_offset, 8900, laurence_defeat-1, laurence_lamp_id+1000, 0, 0, laurence_lamp_id+5000, area_id, block_id);
+    $InitializeEvent(ludwig_offset, 8900, ludwig_defeat-1, ludwig_lamp_id+1000, ludwig_defeat+15, ludwig_defeat+14, ludwig_lamp_id+5000, area_id, block_id);
     
     $InitializeEvent(ludwig_offset, 7700, ludwig_defeat+11, ludwig_defeat+12, ludwig_lamp_id+1000, 834000);
     $InitializeEvent(laurence_offset, 7700, laurence_defeat+11, laurence_defeat+12, laurence_lamp_id+1000, 834002);
@@ -2252,10 +2236,6 @@ $Event(13404852, Restart, function() {
     EndIf(EventFlag(13401850));
     SetCharacterAIState(3400850, Disabled);
     SetCharacterHPBarDisplay(3400850, Disabled);
-    SetCharacterAIState(3400851, Disabled);
-    SetCharacterHPBarDisplay(3400851, Disabled);
-    SetCharacterGravity(3400851, Disabled);
-    EndEvent();
     if (!ThisEvent()) {
         WaitFor(EventFlag(13404858) || EventFlag(laurence_defeat+13));
         if (!HasMultiplayerState(MultiplayerState.Client)) {
@@ -2302,18 +2282,8 @@ L6:
     if (EventFlag(laurence_defeat+13)) {
         WaitFixedTimeSeconds(2);
     }
-    if (EventFlag(laurence_defeat+15)) {
-        SetCharacterAIState(3400850, Enabled);
-        DisplayBossHealthBar(Enabled, 3400850, 1, 450000);
-        SetCharacterAIState(3400851, Enabled);
-        DisplayBossHealthBar(Enabled, 3400851, 0, 450000);
-        SetCharacterGravity(3400851, Enabled);
-        ChangeCharacterHitmask(3400851, 10, ON);
-        WarpCharacterAndCopyFloor(3400851, TargetEntityType.Area, 3402853, -1, 3400850);
-    } else {
-        SetCharacterAIState(3400850, Enabled);
-        DisplayBossHealthBar(Enabled, 3400850, 1, 450000);
-    }
+    SetCharacterAIState(3400850, Enabled);
+    DisplayBossHealthBar(Enabled, 3400850, 1, 450000);
     CreatePlaylog(46);
     StartTimeMeasurement(3400030, 62, Enabled);
 });

@@ -154,7 +154,7 @@ def t320029_x7(z1=99999, z2=99999, z3=99999, z4=99999):
 # 12100980 - warp
 # 12100979 - level up
 # 12100978 - workshop
-# 12100977 - memory alter
+# 12100977 - memory altar
 # 12100976 - storage
 # 12100975 - messengers
 # 12100974 - change appearance
@@ -277,7 +277,7 @@ def t320029_x60():
             elif call.Done():
                 """State 136"""
                 return 0
-        # memory alter
+        # memory altar
         elif GetTalkListEntryResult() == 5:
             """State 160"""
             if ComparePlayerInventoryNumber(3, 4104, 0, 1, 0) == 1:
@@ -1092,7 +1092,7 @@ def t320029_x115():
         if not GetTalkListEntryResult() or not IsTalkExclusiveMenuOpen():
             """State 4"""
             return 1
-        # first alter
+        # first altar
         elif GetTalkListEntryResult() == 1:
             """State 5"""
             call = t320029_x135(flag1=72100475, flag2=1, actionbutton1=6116, action1=10011120, action2=10011130)
@@ -1101,7 +1101,7 @@ def t320029_x115():
             elif call.Done():
                 """State 6"""
                 return 0
-        # second alter
+        # second altar
         elif GetTalkListEntryResult() == 2:
             """State 7"""
             call = t320029_x135(flag1=72100476, flag2=2, actionbutton1=6117, action1=10011120, action2=10011130)
@@ -1110,7 +1110,7 @@ def t320029_x115():
             elif call.Done():
                 """State 8"""
                 return 0
-        # third alter
+        # third altar
         elif GetTalkListEntryResult() == 3:
             """State 9"""
             call = t320029_x135(flag1=72100477, flag2=3, actionbutton1=6118, action1=10011120, action2=10011130)
@@ -1119,7 +1119,7 @@ def t320029_x115():
             elif call.Done():
                 """State 10"""
                 return 0
-        # fourth alter
+        # fourth altar
         elif GetTalkListEntryResult() == 4:
             """State 11"""
             call = t320029_x135(flag1=72100478, flag2=4, actionbutton1=6119, action1=10011120, action2=10011130)
@@ -1128,7 +1128,7 @@ def t320029_x115():
             elif call.Done():
                 """State 12"""
                 return 0
-        # fifth alter
+        # fifth altar
         elif GetTalkListEntryResult() == 5:
             """State 13"""
             call = t320029_x135(flag1=72100479, flag2=5, actionbutton1=6120, action1=10011120, action2=10011130)
@@ -1137,7 +1137,7 @@ def t320029_x115():
             elif call.Done():
                 """State 14"""
                 return 0
-        # final alter
+        # final altar
         elif GetTalkListEntryResult() == 6:
             """State 15"""
             call = t320029_x135(flag1=72100480, flag2=6, actionbutton1=6121, action1=10011120, action2=10011130)
@@ -2105,7 +2105,7 @@ def t320029_x95():
             AddTalkListData(19, 200018, 12100878)
             AddTalkListData(20, 200017, 12100978)
 
-            # memory alter
+            # memory altar
             AddTalkListData(21, 200020, 12100877)
             AddTalkListData(22, 200019, 12100977)
 
@@ -2190,10 +2190,10 @@ def t320029_x95():
         elif GetTalkListEntryResult() == 20: # enable - workshop
             SetEventState(12100978, 0)
             SetEventState(12100878, 1)
-        elif GetTalkListEntryResult() == 21: # disable - memory alter
+        elif GetTalkListEntryResult() == 21: # disable - memory altar
             SetEventState(12100977, 1)
             SetEventState(12100877, 0)
-        elif GetTalkListEntryResult() == 22: # enable - memory alter
+        elif GetTalkListEntryResult() == 22: # enable - memory altar
             SetEventState(12100977, 0)
             SetEventState(12100877, 1)
         elif GetTalkListEntryResult() == 23: # disable - storage
@@ -2523,7 +2523,7 @@ def t320029_x106():
         AddTalkListData(5, 200018, 12100883)
         AddTalkListData(6, 200017, 12100983)
 
-        # memory alter
+        # memory altar
         AddTalkListData(7, 200020, 12100884)
         AddTalkListData(8, 200019, 12100984)
 
@@ -2572,11 +2572,11 @@ def t320029_x106():
         elif GetTalkListEntryResult() == 6: # enable - workshop
             SetEventState(12100983, 0)
             SetEventState(12100883, 1)
-        elif GetTalkListEntryResult() == 7: # disable - memory alter
+        elif GetTalkListEntryResult() == 7: # disable - memory altar
             SetEventState(12100984, 1)
             SetEventState(12100884, 0)
-        elif GetTalkListEntryResult() == 8: # enable - memory alter
-            SetEventState(12100884, 0)
+        elif GetTalkListEntryResult() == 8: # enable - memory altar
+            SetEventState(12100984, 0)
             SetEventState(12100884, 1)
         elif GetTalkListEntryResult() == 9: # disable - storage
             SetEventState(12100985, 1)

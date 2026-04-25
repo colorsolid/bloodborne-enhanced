@@ -68,8 +68,8 @@ $Event(0, Default, function() {
     $InitializeEvent(0, 12102043);
     
     // increase cycle
-    $InitializeEvent(0, 12102020);
-    $InitializeEvent(0, 12102021);
+    $InitializeEvent(0, 12102020); // in game
+    $InitializeEvent(0, 12102021); // settings tool
     
     // dark fog
     //SetEventFlag(12102031, ON);
@@ -927,8 +927,8 @@ $Event(8400, Default, function() {
         
     // double tap action
     if (!AnyBatchEventFlags(12102100, 12102103)) {
-        SetEventFlag(12102100, OFF); // warp menu
-        SetEventFlag(12102101, ON);  // hunter's dream
+        SetEventFlag(12102100, ON); // warp menu
+        SetEventFlag(12102101, OFF);  // hunter's dream
         SetEventFlag(12102102, OFF); // reawaken
         SetEventFlag(12102103, OFF); // nothing
     }
@@ -966,7 +966,7 @@ $Event(8400, Default, function() {
         }
     }
     
-    // increase cycle
+    // advance cycle
     if (!AnyBatchEventFlags(12102022, 12102028)) {
         SetEventFlag(12102022, ON);  // ng
         SetEventFlag(12102023, OFF); // ng+1
@@ -1527,7 +1527,7 @@ $Event(12102069, Default, function() {
     RestartEvent();
 });
 
-// increase ng cycle - doll
+// advance ng cycle - in game menu
 $Event(12102020, Default, function() {
     SetEventFlag(12102010, ON);
     if (GameCycle() == 0) {
@@ -1560,20 +1560,24 @@ $Event(12102020, Default, function() {
 
 // increase ng cycle - settings tool
 $Event(12102021, Default, function() {
-    EndIf(EventFlag(12102021));
-    WaitFor(EventFlag(8406));
+    EndIf(ThisEvent());
+    WaitFor(CharacterBackreadStatus(10000));
+    WaitFixedTimeSeconds(5);
     if (EventFlag(12102023)) {
         IncrementGameCycle(0);
+        DisplayMessage(200147, 0);
     } else if (EventFlag(12102024)) {
         IncrementGameCycle(0);
         WaitFixedTimeFrames(1);
         IncrementGameCycle(0);
+        DisplayMessage(200148, 0);
     } else if (EventFlag(12102025)) {
         IncrementGameCycle(0);
         WaitFixedTimeFrames(1);
         IncrementGameCycle(0);
         WaitFixedTimeFrames(1);
         IncrementGameCycle(0);
+        DisplayMessage(200149, 0);
     } else if (EventFlag(12102026)) {
         IncrementGameCycle(0);
         WaitFixedTimeFrames(1);
@@ -1582,6 +1586,7 @@ $Event(12102021, Default, function() {
         IncrementGameCycle(0);
         WaitFixedTimeFrames(1);
         IncrementGameCycle(0);
+        DisplayMessage(200150, 0);
     } else if (EventFlag(12102027)) {
         IncrementGameCycle(0);
         WaitFixedTimeFrames(1);
@@ -1592,6 +1597,7 @@ $Event(12102021, Default, function() {
         IncrementGameCycle(0);
         WaitFixedTimeFrames(1);
         IncrementGameCycle(0);
+        DisplayMessage(200151, 0);
     } else if (EventFlag(12102028)) {
         IncrementGameCycle(0);
         WaitFixedTimeFrames(1);
@@ -1604,6 +1610,7 @@ $Event(12102021, Default, function() {
         IncrementGameCycle(0);
         WaitFixedTimeFrames(1);
         IncrementGameCycle(0);
+        DisplayMessage(200152, 0);
     }
 });
 
@@ -3505,12 +3512,6 @@ $Event(7300, Default, function(eventFlagId, objEntityId) {
     SetEventFlag(eventFlagId, OFF);
 });
 
-// move bloodstain for rematches
-$Event(7500, Default, function(lampSpawnPoint, rematchSpawnPoint) {
-    WaitFixedTimeSeconds(1);
-    MoveBloodstainAndDroppedItems(lampSpawnPoint, rematchSpawnPoint);
-});
-
 // Multi Confinement Wall_XX
 $Event(7600, Default, function(objEntityId, entityId) {
     SetNetworkSyncState(Disabled);
@@ -3701,7 +3702,6 @@ $Event(8500, Default, function(thisEventSlot, lampId, lampWarpFlag) {
     WaitFor(ThisEventSlot()); // menu opened, trigger animation
     BatchSetEventFlags(8630, 8639, OFF); // dismiss summons or they'll tweak
     RotateCharacter(10000, lampId, 101280, false);
-    //PlaySE(10000, SoundType.sSFX, 777777774);
     SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, 140);
     SetCharacterAnimationState(10000, Disabled);
     SetCharacterTeamType(10000, TeamType.Baby);
@@ -3730,50 +3730,90 @@ $Event(8618, Default, function() {
     SetEventFlag(8619, OFF);
     if (PlayerInMap(21, 1)) {
         WaitFor(PlayerInOutMap(false, 21, 1));
-        SetEventFlag(8619, ON);
+        SetEventFlag(8619, ON); // force item swap to re-prime double tap
     }
     else if (PlayerInMap(22, 0)) {
         WaitFor(PlayerInOutMap(false, 22, 0));
+        SetEventFlag(8631, OFF); // dismiss summon - prevents boss difficulty scaling from staying higher than it should
+        SetEventFlag(8641, ON);  // re-enable summon option
         SetEventFlag(8619, ON);
     }
     else if (PlayerInMap(23, 0)) {
         WaitFor(PlayerInOutMap(false, 23, 0));
+        SetEventFlag(8633, OFF);
+        SetEventFlag(8634, OFF);
+        SetEventFlag(8635, OFF);
+        SetEventFlag(8643, ON);
+        SetEventFlag(8644, ON);
+        SetEventFlag(8645, ON);
         SetEventFlag(8619, ON);
     }
     else if (PlayerInMap(24, 0)) {
         WaitFor(PlayerInOutMap(false, 24, 0));
+        SetEventFlag(8630, OFF);
+        SetEventFlag(8640, ON);
         SetEventFlag(8619, ON);
     }
     else if (PlayerInMap(24, 1)) {
         WaitFor(PlayerInOutMap(false, 24, 1));
+        SetEventFlag(8631, OFF);
+        SetEventFlag(8632, OFF);
+        SetEventFlag(8641, ON);
+        SetEventFlag(8642, ON);
         SetEventFlag(8619, ON);
     }
     else if (PlayerInMap(24, 2)) {
         WaitFor(PlayerInOutMap(false, 24, 2));
-        SetEventFlag(8619, ON);
-    }
-    else if (PlayerInMap(26, 0)) {
-        WaitFor(PlayerInOutMap(false, 26, 0));
+        SetEventFlag(8631, OFF);
+        SetEventFlag(8641, ON);
         SetEventFlag(8619, ON);
     }
     else if (PlayerInMap(27, 0)) {
         WaitFor(PlayerInOutMap(false, 27, 0));
+        SetEventFlag(8634, OFF);
+        SetEventFlag(8635, OFF);
+        SetEventFlag(8644, ON);
+        SetEventFlag(8645, ON);
         SetEventFlag(8619, ON);
     }
     else if (PlayerInMap(28, 0)) {
         WaitFor(PlayerInOutMap(false, 28, 0));
+        SetEventFlag(8631, OFF);
+        SetEventFlag(8632, OFF);
+        SetEventFlag(8641, ON);
+        SetEventFlag(8642, ON);
         SetEventFlag(8619, ON);
     }
     else if (PlayerInMap(32, 0)) {
         WaitFor(PlayerInOutMap(false, 32, 0));
+        SetEventFlag(8630, OFF);
+        SetEventFlag(8631, OFF);
+        SetEventFlag(8632, OFF);
+        SetEventFlag(8640, ON);
+        SetEventFlag(8641, ON);
+        SetEventFlag(8642, ON);
         SetEventFlag(8619, ON);
     }
     else if (PlayerInMap(34, 0)) {
         WaitFor(PlayerInOutMap(false, 34, 0));
+        SetEventFlag(8630, OFF);
+        SetEventFlag(8631, OFF);
+        SetEventFlag(8632, OFF);
+        SetEventFlag(8633, OFF);
+        SetEventFlag(8634, OFF);
+        SetEventFlag(8635, OFF);
+        SetEventFlag(8640, ON);
+        SetEventFlag(8641, ON);
+        SetEventFlag(8642, ON);
+        SetEventFlag(8643, ON);
+        SetEventFlag(8644, ON);
+        SetEventFlag(8645, ON);
         SetEventFlag(8619, ON);
     }
     else if (PlayerInMap(35, 0)) {
         WaitFor(PlayerInOutMap(false, 35, 0));
+        SetEventFlag(8636, OFF);
+        SetEventFlag(8646, ON);
         SetEventFlag(8619, ON);
     }
     else if (PlayerInMap(36, 0)) {
@@ -3781,7 +3821,7 @@ $Event(8618, Default, function() {
         SetEventFlag(8619, ON);
     }
     else {
-        WaitFor(EventFlag(8619));
+        WaitFor(EventFlag(8619)); // get it stuck if in an isolated map
     }
     RestartEvent();
 });
@@ -3950,6 +3990,7 @@ $Event(8616, Default, function() {
 
 // death test
 $Event(8640, Default, function() {
+    EndEvent();
     //SetSpEffect(10000, 2113, false);
     WaitFor(HPRatio(10000) <= 0);
     DisplayMessage(14000, 0);
@@ -4004,7 +4045,7 @@ $Event(8630, Default, function(entryTriggeredFlag, entryEnabledFlag, npcId, summ
     SetEventFlag(summonedFlag, ON);
     SetCharacterBackreadState(npcId, true);
     WaitFixedTimeFrames(1);
-    WarpCharacterAndCopyFloor(npcId, TargetEntityType.Character, 10000, 233, 10000);
+    WarpCharacterAndCopyFloor(npcId, TargetEntityType.Character, 10000, 163, 10000);
     WaitFixedTimeFrames(1);
     DeleteMapSFX(sfxId, true);
     WaitFixedTimeSeconds(0.5);
@@ -4094,7 +4135,7 @@ $Event(8800, Default, function(rematchActive, lampNpc, lampObject, tempLocation)
 });
 
 // Auto restart rematch if dead + move player to rematch point
-$Event(8900, Default, function(autoRematchFlag, lampSpawnPoint, rematchDeathOccurred, distortedActive, distortedTrigger, rematchStartRegion, areaId, blockId) {
+$Event(8900, Default, function(lampSpawnPoint, rematchDeathOccurred, distortedActive, distortedTrigger, rematchStartRegion, areaId, blockId) {
     EndIf(!ThisEventSlot()); // game's state is not in rematch mode
     SetSpEffect(10000, 1934, false);
     DummyPlayCutsceneAndWarpPlayer(rematchStartRegion, areaId, blockId);
@@ -4104,7 +4145,6 @@ $Event(8900, Default, function(autoRematchFlag, lampSpawnPoint, rematchDeathOccu
         if (distortedActive != 0 && EventFlag(distortedActive)) { // if distorted memory
             SetEventFlag(distortedTrigger, ON);
         }
-        SetEventFlag(autoRematchFlag, ON);
         if (EventFlag(12100750) && EventFlag(12100963)) { // initiated from dream and death respawn location is dream
             SetEventFlag(12100850, ON); // flag to set respawn location back to dream
         }

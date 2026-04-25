@@ -48,10 +48,6 @@ $Event(0, Default, function() {
     $InitializeEvent(frontier_lamp_offset, 8300, frontier_lamp_id+2000, -1, frontier_lamp_kindle, frontier_lamp_id+6000, frontier_lamp_id+3000);
     
     if (EventFlag(amygdala_defeat+13) && !EventFlag(amygdala_defeat-1)) {
-        if (EventFlag(amygdala_defeat-2)) {
-            SetEventFlag(amygdala_defeat-2, OFF);
-            $InitializeEvent(amygdala_offset, 7500, amygdala_region, amygdala_lamp_id+4000);
-        }
         SetEventFlag(amygdala_defeat+13, OFF);
         SetEventFlag(amygdala_defeat, ON);
         if (EventFlag(12111120)) {
@@ -63,10 +59,6 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(amygdala_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(amygdala_defeat+12) || EventFlag(amygdala_defeat-1)) {
-        if (EventFlag(amygdala_defeat-2)) {
-            SetEventFlag(amygdala_defeat-2, OFF);
-            $InitializeEvent(amygdala_offset, 7500, amygdala_region, amygdala_lamp_id+5000);
-        }
         SetEventFlag(amygdala_defeat, OFF);
         SetEventFlag(amygdala_defeat+2, OFF);
         SetEventFlag(amygdala_defeat+12, OFF);
@@ -80,7 +72,7 @@ $Event(0, Default, function() {
     
     $InitializeEvent(amygdala_offset, 12102070, amygdala_defeat+13, 0, 7446, amygdala_id, -1, -1, -1, -1);
     
-    $InitializeEvent(amygdala_offset, 8900, amygdala_defeat-1, amygdala_lamp_id+1000, amygdala_defeat-2, 0, 0, amygdala_lamp_id+5000, area_id, block_id);
+    $InitializeEvent(amygdala_offset, 8900, amygdala_defeat-1, amygdala_lamp_id+1000, 0, 0, amygdala_lamp_id+5000, area_id, block_id);
     $InitializeEvent(amygdala_offset, 7700, amygdala_defeat+11, amygdala_defeat+12, amygdala_lamp_id+1000, 833000);
     
     $InitializeEvent(2800, 12107000, 72112800, 3301950, 2412950);
