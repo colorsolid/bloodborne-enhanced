@@ -68,8 +68,11 @@ $Event(0, Default, function() {
     $InitializeEvent(iosefka_lamp_offset, 8300, iosefka_lamp_id+2000, -1, iosefka_lamp_kindle, iosefka_lamp_id+6000, iosefka_lamp_id+3000);
     $InitializeEvent(central_lamp_offset, 8300, central_lamp_id+2000, -1, central_lamp_kindle, central_lamp_id+6000, central_lamp_id+3000);
     
+    
+    SetEventFlag(7799, OFF);
     SetEventFlag(gascoigne_defeat+15, OFF);
     if (EventFlag(gascoigne_defeat+14)) {
+        SetEventFlag(7799, ON);
         SetEventFlag(gascoigne_defeat+14, OFF);
         SetEventFlag(gascoigne_defeat+15, ON);
     }

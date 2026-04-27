@@ -46,8 +46,10 @@ $Event(0, Default, function() {
     SetEventFlag(8900+micolash_offset, OFF);
     SetEventFlag(8900+wet_nurse_offset, OFF);
     
+    SetEventFlag(7799, OFF);
     SetEventFlag(wet_nurse_defeat+15, OFF);
     if (EventFlag(wet_nurse_defeat+14)) {
+        SetEventFlag(7799, ON);
         SetEventFlag(wet_nurse_defeat+14, OFF);
         SetEventFlag(wet_nurse_defeat+15, ON);
     }

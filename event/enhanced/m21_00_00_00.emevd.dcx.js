@@ -182,7 +182,7 @@ $Event(0, Default, function() {
     
     $InitializeEvent(0, 8701); // broken lamp enable/disable
     
-    if (PlayerHasItem(ItemType.Goods, 4002)) {
+    if (PlayerHasItem(ItemType.Goods, 4002)) { // rite of kindling, dream now fills max
         EventValueOperation(auto_kindle, 2, 3, 0, 0, CalculationType.Assign);
     } else {
         EventValueOperation(auto_kindle, 2, 1, 0, 0, CalculationType.Assign);
@@ -192,8 +192,10 @@ $Event(0, Default, function() {
     SetEventFlag(8900+gehrman_offset, OFF);
     SetEventFlag(8900+moon_presence_offset, OFF);
     
+    SetEventFlag(7799, OFF);
     SetEventFlag(distorted_rematch_played, OFF);
     if (EventFlag(distorted_rematch_started)) {
+        SetEventFlag(7799, ON);
         SetEventFlag(distorted_rematch_started, OFF);
         SetEventFlag(distorted_rematch_played, ON);
     }
@@ -241,9 +243,6 @@ $Event(0, Default, function() {
     } else if (EventFlag(moon_presence_rematch_started)
         || EventFlag(moon_presence_auto_rematch_trigger)
         || EventFlag(distorted_rematch_played)) {
-        if (EventFlag(distorted_rematch_played)) {
-            DisplayBanner(TextBannerType.Dead);
-        }
         SetEventFlag(moon_presence_defeat, OFF);
         SetEventFlag(moon_presence_defeat+2, OFF);
         SetEventFlag(moon_presence_rematch_started, OFF);

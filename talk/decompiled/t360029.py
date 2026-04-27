@@ -30,9 +30,7 @@ def t360029_x3():
         DebugEvent('Operation status Not multi')
         ClearPlayerDamageInfo()
         SetTalkTime(0.33)
-        if False:
-            return 0
-        elif GetEventStatus(12421900) == 1: # portable lamp
+        if GetEventStatus(12421900) == 1 and GetEventStatus(8680) == 1: # portable lamp
             """State 6"""
             ClearPlayerDamageInfo()
             SetTalkTime(0.33)
@@ -41,7 +39,7 @@ def t360029_x3():
                 pass
             elif GetDistanceToPlayer() > 3 or HasPlayerBeenAttacked() == 1:
                 assert t360029_x0()
-        elif GetEventStatus(12421902) == 1: # portable lamp - double tap - warp menu
+        elif GetEventStatus(12421902) == 1 and GetEventStatus(8680) == 1: # portable lamp - double tap - warp menu
             ClearPlayerDamageInfo()
             SetTalkTime(0.33)
             call = t360029_x50()
@@ -49,7 +47,7 @@ def t360029_x3():
                 pass
             elif GetDistanceToPlayer() > 3 or HasPlayerBeenAttacked() == 1:
                 assert t360029_x0()
-        elif GetEventStatus(12421903) == 1: # portable lamp - double tap - hunter's dream
+        elif GetEventStatus(12421903) == 1 and GetEventStatus(8680) == 1: # portable lamp - double tap - hunter's dream
             ClearPlayerDamageInfo()
             SetTalkTime(0.33)
             call = t360029_x4()
@@ -57,7 +55,7 @@ def t360029_x3():
                 pass
             elif GetDistanceToPlayer() > 3 or HasPlayerBeenAttacked() == 1:
                 assert t360029_x0()
-        elif GetEventStatus(12421904) == 1: # portable lamp - double tap - reawaken
+        elif GetEventStatus(12421904) == 1 and GetEventStatus(8680) == 1: # portable lamp - double tap - reawaken
             ClearPlayerDamageInfo()
             SetTalkTime(0.33)
             call = t360029_x40()
@@ -65,7 +63,7 @@ def t360029_x3():
                 pass
             elif GetDistanceToPlayer() > 3 or HasPlayerBeenAttacked() == 1:
                 assert t360029_x0()
-        elif GetEventStatus(12421901) == 1: # grand res bell
+        elif GetEventStatus(12421901) == 1 and GetEventStatus(8680) == 1: # grand res bell
             """State 7"""
             ClearPlayerDamageInfo()
             SetTalkTime(0.33)

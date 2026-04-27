@@ -358,7 +358,7 @@ S1:
     $InitializeEvent(112, 9500, 3509, 110510);
     $InitializeEvent(113, 9500, 3531, 110520);
     $InitializeEvent(114, 9500, 3532, 110170);
-    $InitializeEvent(115, 9500, 3533, 110770);
+    $InitializeEvent(115, 9500, 3533, 125700001);
     $InitializeEvent(0, 9440, 9440, 10500);
     $InitializeEvent(1, 9440, 9441, 11500);
     $InitializeEvent(2, 9440, 9442, 12500);
@@ -3545,7 +3545,22 @@ $Event(7700, Default, function(rematchTrigger, rematchActive, rematchSpawnPoint,
 
 // rematch victory
 $Event(7800, Default, function(postRematchSpawnPoint, fogSfxId) {
-    AwardItemLot(110770);
+    if (EventFlag(12100852) || GameCycle() > 0 || PlayerInMap(21, 0)) {
+        if (EventFlag(7799)) { // distorted rematch
+            AwardItemLot(125700030); // high level cursed gem x2
+        }
+        else {
+            AwardItemLot(125700031); // high level cursed gem
+        }
+    }
+    else {
+        if (EventFlag(7799)) {
+            AwardItemLot(110770); // area-scaled cursed gem x2
+        }
+        else {
+            AwardItemLot(110771); // area-scaled cursed gem
+        }
+    }
     RequestCharacterAnimationReset(10000, Interpolation.Interpolated);
     ForceAnimationPlayback(10000, 101161, false, false, false);
     
@@ -3734,86 +3749,62 @@ $Event(8618, Default, function() {
     }
     else if (PlayerInMap(22, 0)) {
         WaitFor(PlayerInOutMap(false, 22, 0));
+        SetEventFlag(8650, ON); // dismissing summons, skip player animation
         SetEventFlag(8631, OFF); // dismiss summon - prevents boss difficulty scaling from staying higher than it should
-        SetEventFlag(8641, ON);  // re-enable summon option
         SetEventFlag(8619, ON);
     }
     else if (PlayerInMap(23, 0)) {
         WaitFor(PlayerInOutMap(false, 23, 0));
-        SetEventFlag(8633, OFF);
-        SetEventFlag(8634, OFF);
-        SetEventFlag(8635, OFF);
-        SetEventFlag(8643, ON);
-        SetEventFlag(8644, ON);
-        SetEventFlag(8645, ON);
+        SetEventFlag(8650, ON);
+        BatchSetEventFlags(8633, 8635, OFF);
         SetEventFlag(8619, ON);
     }
     else if (PlayerInMap(24, 0)) {
         WaitFor(PlayerInOutMap(false, 24, 0));
+        SetEventFlag(8650, ON);
         SetEventFlag(8630, OFF);
-        SetEventFlag(8640, ON);
         SetEventFlag(8619, ON);
     }
     else if (PlayerInMap(24, 1)) {
         WaitFor(PlayerInOutMap(false, 24, 1));
-        SetEventFlag(8631, OFF);
-        SetEventFlag(8632, OFF);
-        SetEventFlag(8641, ON);
-        SetEventFlag(8642, ON);
+        SetEventFlag(8650, ON);
+        BatchSetEventFlags(8631, 8632, OFF);
         SetEventFlag(8619, ON);
     }
     else if (PlayerInMap(24, 2)) {
         WaitFor(PlayerInOutMap(false, 24, 2));
+        SetEventFlag(8650, ON);
         SetEventFlag(8631, OFF);
-        SetEventFlag(8641, ON);
         SetEventFlag(8619, ON);
     }
     else if (PlayerInMap(27, 0)) {
         WaitFor(PlayerInOutMap(false, 27, 0));
-        SetEventFlag(8634, OFF);
-        SetEventFlag(8635, OFF);
-        SetEventFlag(8644, ON);
-        SetEventFlag(8645, ON);
+        SetEventFlag(8650, ON);
+        BatchSetEventFlags(8634, 8635, OFF);
         SetEventFlag(8619, ON);
     }
     else if (PlayerInMap(28, 0)) {
         WaitFor(PlayerInOutMap(false, 28, 0));
-        SetEventFlag(8631, OFF);
-        SetEventFlag(8632, OFF);
-        SetEventFlag(8641, ON);
-        SetEventFlag(8642, ON);
+        SetEventFlag(8650, ON);
+        BatchSetEventFlags(8631, 8632, OFF);
         SetEventFlag(8619, ON);
     }
     else if (PlayerInMap(32, 0)) {
         WaitFor(PlayerInOutMap(false, 32, 0));
-        SetEventFlag(8630, OFF);
-        SetEventFlag(8631, OFF);
-        SetEventFlag(8632, OFF);
-        SetEventFlag(8640, ON);
-        SetEventFlag(8641, ON);
-        SetEventFlag(8642, ON);
+        SetEventFlag(8650, ON);
+        BatchSetEventFlags(8630, 8632, OFF);
         SetEventFlag(8619, ON);
     }
     else if (PlayerInMap(34, 0)) {
         WaitFor(PlayerInOutMap(false, 34, 0));
-        SetEventFlag(8630, OFF);
-        SetEventFlag(8631, OFF);
-        SetEventFlag(8632, OFF);
-        SetEventFlag(8633, OFF);
-        SetEventFlag(8634, OFF);
-        SetEventFlag(8635, OFF);
-        SetEventFlag(8640, ON);
-        SetEventFlag(8641, ON);
-        SetEventFlag(8642, ON);
-        SetEventFlag(8643, ON);
-        SetEventFlag(8644, ON);
-        SetEventFlag(8645, ON);
+        SetEventFlag(8650, ON);
+        BatchSetEventFlags(8630, 8635, OFF);
         SetEventFlag(8619, ON);
     }
     else if (PlayerInMap(35, 0)) {
         WaitFor(PlayerInOutMap(false, 35, 0));
+        SetEventFlag(8650, ON);
         SetEventFlag(8636, OFF);
-        SetEventFlag(8646, ON);
         SetEventFlag(8619, ON);
     }
     else if (PlayerInMap(36, 0)) {
@@ -3830,10 +3821,11 @@ $Event(8618, Default, function() {
 // item swapping via speffect has to be initialized each time the player enters a different map for some reason
 // without this, double-tap never works the first time after a loading screen or map transition
 $Event(8619, Default, function() {
-    if (!EventFlag(8619)) {
+    SetEventFlag(8650, OFF);
+    if (!ThisEvent()) { // initial load
         WaitFixedTimeSeconds(1);
     }
-    else {
+    else { // map change
         WaitFixedTimeSeconds(0.1);
     }
     SetEventFlag(8619, OFF);
@@ -3846,20 +3838,28 @@ $Event(8619, Default, function() {
 
 // summon portable menu npc and trigger action
 $Event(8620, Default, function(spEffectId) {
-    BatchSetEventFlags(12421900, 12421904, OFF);
+    BatchSetEventFlags(12421900, 12421904, OFF); // controls which menu to open
     WaitFor(CharacterHasSpEffect(10000, spEffectId));
     if ((PlayerInMap(23, 0) || PlayerInMap(27, 0)) 
             && CharacterBackreadStatus(2990002)) {
         IssueShortWarpRequest(2990002, TargetEntityType.Character, 10000, 236);
+        SetEventFlag(8680, OFF); // prevents activating wrong npc near map borders
+        SetEventFlag(8681, OFF);
+        SetEventFlag(8682, ON);
     }
     else if ((PlayerInMap(21, 1) || PlayerInMap(22, 0) || PlayerInMap(24, 1) || PlayerInMap(24, 2) || PlayerInMap(28, 0) || PlayerInMap(32, 0) || PlayerInMap(35, 0)) 
             && CharacterBackreadStatus(2990001)) {
         IssueShortWarpRequest(2990001, TargetEntityType.Character, 10000, 236);
+        SetEventFlag(8680, OFF);
+        SetEventFlag(8681, ON);
+        SetEventFlag(8682, OFF);
     }
     else {
         IssueShortWarpRequest(2990000, TargetEntityType.Character, 10000, 236);
+        SetEventFlag(8680, ON);
+        SetEventFlag(8681, OFF);
+        SetEventFlag(8682, OFF);
     }
-    
     if (!CharacterHasSpEffect(10000, 2112))  { // not during double tap init
         if (spEffectId == 2111) {
             WaitFor(CharacterHasSpEffect(10000, 2103) || !CharacterHasSpEffect(10000, 2111));
@@ -4045,7 +4045,7 @@ $Event(8630, Default, function(entryTriggeredFlag, entryEnabledFlag, npcId, summ
     SetEventFlag(summonedFlag, ON);
     SetCharacterBackreadState(npcId, true);
     WaitFixedTimeFrames(1);
-    WarpCharacterAndCopyFloor(npcId, TargetEntityType.Character, 10000, 163, 10000);
+    WarpCharacterAndCopyFloor(npcId, TargetEntityType.Character, 10000, 233, 10000);
     WaitFixedTimeFrames(1);
     DeleteMapSFX(sfxId, true);
     WaitFixedTimeSeconds(0.5);
@@ -4056,7 +4056,7 @@ $Event(8630, Default, function(entryTriggeredFlag, entryEnabledFlag, npcId, summ
     ChangeCharacterEnableState(npcId, Enabled);
     WaitFixedTimeFrames(1);
     ForceAnimationPlayback(npcId, spawnAnimId, false, false, false);
-    SetSpEffect(npcId, 9006, false);
+    SetSpEffect(npcId, 9006, false); // summon debuff
     WaitFixedTimeSeconds(1);
     WaitFor(!EventFlag(entryTriggeredFlag) || CharacterDead(npcId));
     if (CharacterDead(npcId)) {
@@ -4064,8 +4064,11 @@ $Event(8630, Default, function(entryTriggeredFlag, entryEnabledFlag, npcId, summ
         DisplayMessage(deadMessage, 0);
     }
     else {
-        if (!AnyBatchEventFlags(8500, 8599)) { // not triggered by resting
+        if (!AnyBatchEventFlags(8500, 8599) && !EventFlag(8650)) { // triggered manually, not by resting or map transition
             ForceAnimationPlayback(10000, 101222, false, false, false); // snap animation
+        }
+        else if (EventFlag(8650)) {
+            SetEventFlag(8650, OFF);
         }
         WaitFixedTimeSeconds(0.2);
         if (npcId == 2410158) { // gascoigne
@@ -4074,10 +4077,14 @@ $Event(8630, Default, function(entryTriggeredFlag, entryEnabledFlag, npcId, summ
         else { // other hunters
             RotateCharacter(npcId, 10000, 101160, true);
         }
+        //SetEventFlag(summonedFlag, OFF);
+        SetEventFlag(entryTriggeredFlag, OFF);
+        SetEventFlag(entryEnabledFlag, OFF);
         SetCharacterBackreadState(npcId, true);
         DisplayMessage(leaveMessage, 0);
     }
     WaitFor(EventFlag(entryTriggeredFlag));
+    SetEventFlag(entryTriggeredFlag, OFF); // shouldn't be reachable, but something needs to be after the WaitFor
 });
 
 // summon npcs - old - uses internal summoning system

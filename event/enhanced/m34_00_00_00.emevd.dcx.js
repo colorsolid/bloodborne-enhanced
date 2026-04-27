@@ -62,16 +62,12 @@ $Event(0, Default, function() {
     $InitializeEvent(nightmare_lamp_offset, 8300, nightmare_lamp_id+2000, -1, nightmare_lamp_kindle, nightmare_lamp_id+6000, nightmare_lamp_id+3000);
     $InitializeEvent(church_lamp_offset, 8300, church_lamp_id+2000, -1, church_lamp_kindle, church_lamp_id+6000, church_lamp_id+3000);
     
+    SetEventFlag(7799, OFF);
     SetEventFlag(ludwig_defeat+15, OFF);
     if (EventFlag(ludwig_defeat+14)) {
+        SetEventFlag(7799, ON);
         SetEventFlag(ludwig_defeat+14, OFF);
         SetEventFlag(ludwig_defeat+15, ON);
-    }
-    
-    SetEventFlag(laurence_defeat+15, OFF);
-    if (EventFlag(laurence_defeat+14)) {
-        SetEventFlag(laurence_defeat+14, OFF);
-        SetEventFlag(laurence_defeat+15, ON);
     }
     
     if (EventFlag(ludwig_defeat+13) && !EventFlag(ludwig_defeat-1)) {

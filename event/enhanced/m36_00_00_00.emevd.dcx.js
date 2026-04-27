@@ -49,8 +49,10 @@ $Event(0, Default, function() {
     $InitializeEvent(hamlet_lamp_offset, 8300, hamlet_lamp_id+2000, -1, hamlet_lamp_kindle, hamlet_lamp_id+6000, hamlet_lamp_id+3000);
     $InitializeEvent(lighthouse_lamp_offset, 8300, lighthouse_lamp_id+2000, -1, lighthouse_lamp_kindle, lighthouse_lamp_id+6000, lighthouse_lamp_id+3000);
     
+    SetEventFlag(7799, ON);
     SetEventFlag(orphan_defeat+15, OFF);
     if (EventFlag(orphan_defeat+14)) {
+        SetEventFlag(7799, ON);
         SetEventFlag(orphan_defeat+14, OFF);
         SetEventFlag(orphan_defeat+15, ON);
     }
