@@ -39,7 +39,7 @@ const amelia_return_flag = 10000000 + amelia_return
 
 const amelia_offset = 2;
 const amelia_defeat = 12401800;
-const amelia_auto_rematch_check = 8900 + amelia_offset;
+const amelia_auto_rematch_check = 10008900 + amelia_offset;
 const amelia_auto_rematch_trigger = amelia_defeat - 1;
 const amelia_encountered = amelia_defeat + 2;
 const amelia_rematch_triggered = amelia_defeat + 11;
@@ -51,26 +51,51 @@ const amelia_rematch_played = amelia_defeat + 13;
 
 // constructor
 $Event(0, Default, function() {
-    $InitializeEvent(cathedral_ward_lamp_offset, 8500, cathedral_ward_lamp_rest, cathedral_ward_lamp_id, 72110404);
-    $InitializeEvent(amelia_lamp_offset, 8500, amelia_lamp_rest, amelia_lamp_id, 72110505);
+    // coins
+    const coinsBaseFlag = 60;
+    const coinsBaseId = (area_id * 100000) + (block_id * 10000) + 8500;
+    const ameliaIndex = 5;
+    const plazaIndex = 3;
+    $InitializeEvent(0, 12405025);
+    for (let i = 0; i < 20; i++) {
+        if (i == ameliaIndex) {
+            $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, amelia_defeat, 0);
+        }
+        else if (i == plazaIndex) {
+            $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, 12405025, 0);
+        }
+        else {
+            $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, 10000999, 0);
+        }
+    }
     
-    $InitializeEvent(cathedral_ward_lamp_offset, 8100, cathedral_ward_lamp_kindle_trigger, cathedral_ward_lamp_kindle_state);
-    $InitializeEvent(amelia_lamp_offset, 8100, amelia_lamp_kindle_trigger, amelia_lamp_kindle_state);
+    // ghosts
+    const ghostsBaseFlag = 60;
+    const ghostsBaseId = (area_id * 100000) + (block_id * 10000) + 8600;
+    for (let i = 0; i < 10; i++) {
+        $InitializeEvent(ghostsBaseFlag+i, 10003500, ghostsBaseId+i);
+    }
     
-    $InitializeEvent(0, 7900, amelia_return_flag, amelia_return, area_id, block_id);
+    $InitializeEvent(cathedral_ward_lamp_offset, 10008500, cathedral_ward_lamp_id, 72110404);
+    $InitializeEvent(amelia_lamp_offset, 10008500, amelia_lamp_id, 72110505);
+    
+    $InitializeEvent(cathedral_ward_lamp_offset, 10008100, 10008100+cathedral_ward_lamp_offset, cathedral_ward_lamp_kindle_state);
+    $InitializeEvent(amelia_lamp_offset, 10008100, 10008100+amelia_lamp_offset, amelia_lamp_kindle_state);
+    
+    $InitializeEvent(0, 10007900, amelia_return_flag, amelia_return, area_id, block_id);
     
     SetEventFlag(amelia_auto_rematch_check, OFF);
-    $InitializeEvent(cathedral_ward_lamp_offset, 8300, cathedral_ward_lamp_spawn_checker, -1, cathedral_ward_lamp_kindle_state, cathedral_warp_lamp_hidden_region, cathedral_warp_lamp_temp_region);
+    $InitializeEvent(cathedral_ward_lamp_offset, 10008300, cathedral_ward_lamp_spawn_checker, -1, cathedral_ward_lamp_kindle_state, cathedral_warp_lamp_hidden_region, cathedral_warp_lamp_temp_region);
     
     if (EventFlag(amelia_rematch_played) && !EventFlag(amelia_auto_rematch_trigger)) {
         SetEventFlag(amelia_rematch_played, OFF);
         SetEventFlag(amelia_defeat, ON);
         if (EventFlag(12111120)) {
             SetEventFlag(12111120, OFF);
-            $InitializeEvent(amelia_lamp_offset, 8300, amelia_lamp_spawn_checker, -1, amelia_lamp_kindle_state, amelia_lamp_hidden_region, amelia_lamp_temp_region);
+            $InitializeEvent(amelia_lamp_offset, 10008300, amelia_lamp_spawn_checker, -1, amelia_lamp_kindle_state, amelia_lamp_hidden_region, amelia_lamp_temp_region);
         }
         else {
-            $InitializeEvent(amelia_lamp_offset, 8300, amelia_lamp_spawn_checker, 999, amelia_lamp_kindle_state, amelia_lamp_hidden_region, amelia_lamp_temp_region);
+            $InitializeEvent(amelia_lamp_offset, 10008300, amelia_lamp_spawn_checker, 10000999, amelia_lamp_kindle_state, amelia_lamp_hidden_region, amelia_lamp_temp_region);
             DummyPlayCutsceneAndWarpPlayer(amelia_lamp_spawn_region, area_id, block_id);
         }
     } else if (EventFlag(amelia_rematch_started) || EventFlag(amelia_auto_rematch_trigger)) {
@@ -80,15 +105,15 @@ $Event(0, Default, function() {
         SetEventFlag(amelia_rematch_played, ON);
         SetEventFlag(amelia_auto_rematch_trigger, OFF);
         SetEventFlag(amelia_auto_rematch_check, ON);
-        $InitializeEvent(amelia_lamp_offset, 8300, amelia_lamp_spawn_checker, -1, amelia_lamp_kindle_state, amelia_lamp_hidden_region, amelia_lamp_temp_region);
+        $InitializeEvent(amelia_lamp_offset, 10008300, amelia_lamp_spawn_checker, -1, amelia_lamp_kindle_state, amelia_lamp_hidden_region, amelia_lamp_temp_region);
     } else {
-        $InitializeEvent(amelia_lamp_offset, 8300, amelia_lamp_spawn_checker, -1, amelia_lamp_kindle_state, amelia_lamp_hidden_region, amelia_lamp_temp_region);
+        $InitializeEvent(amelia_lamp_offset, 10008300, amelia_lamp_spawn_checker, -1, amelia_lamp_kindle_state, amelia_lamp_hidden_region, amelia_lamp_temp_region);
     }
     
     $InitializeEvent(amelia_offset, 12102070, amelia_rematch_played, 0, 7417, amelia_id, -1, -1, -1, -1);
     
-    $InitializeEvent(amelia_offset, 8900, amelia_auto_rematch_trigger, amelia_lamp_object, 0, 0, amelia_rematch_spawn_region, area_id, block_id);
-    $InitializeEvent(amelia_offset, 7700, amelia_rematch_triggered, amelia_rematch_started, amelia_lamp_object, 824000);
+    $InitializeEvent(amelia_offset, 10008900, amelia_auto_rematch_trigger, amelia_lamp_object, 0, 0, amelia_rematch_spawn_region, area_id, block_id);
+    $InitializeEvent(amelia_offset, 10007700, amelia_rematch_triggered, amelia_rematch_started, amelia_lamp_object, 824000);
     
     $InitializeEvent(400, 12107000, 72110400, 2401950, 2412950);
     $InitializeEvent(401, 12107000, 72110401, 2401950, 2412951);
@@ -351,10 +376,12 @@ $Event(0, Default, function() {
     $InitializeEvent(22, 7600, 2401997, 2403997);
     $InitializeEvent(23, 7600, 2401996, 2403996);
     $InitializeEvent(24, 7600, 2401995, 2403995);
+    $InitializeEvent(10, 10000100, 2403960, 2403961, 12407810, -1);
     $InitializeEvent(10, 7000, 2400950, 2401950, 999, 12407800, -1);
     
+    $InitializeEvent(11, 10000100, 2403962, 2403963, 12407830, amelia_defeat);
     $InitializeEvent(11, 7000, 2400951, 2401951, 12401800, 12407820, amelia_rematch_played);
-    $InitializeEvent(amelia_offset, 8800, amelia_rematch_played, amelia_lamp_id-1000, amelia_lamp_id, amelia_lamp_temp_region);
+    $InitializeEvent(amelia_offset, 10008800, amelia_rematch_played, amelia_lamp_id-1000, amelia_lamp_id, amelia_lamp_temp_region);
     
     $InitializeEvent(10, 7100, 72400200, 2401950);
     $InitializeEvent(11, 7100, 72400201, 2401951);
@@ -392,8 +419,8 @@ $Event(0, Default, function() {
     }
     DeleteMapSFX(2403910, false);
     
-    $InitializeEvent(0, 8617, 2400910, 12404420, 101161, 101162, 163); // henriett
-    $InitializeEvent(0, 8630, 8630, 8640, 2400910, 12404420, 2403910, 200241, 101207, 200252, 200262);
+    $InitializeEvent(0, 10007400, 2400910, 12404420, 101161, 101162, 163); // henriett
+    $InitializeEvent(0, 10008630, 10008630, 10008640, 2400910, 12404420, 2403910, 200241, 101207, 200252, 200262);
     
     $InitializeEvent(0, 12404400, 12404440, 2403910, 12404420, 12404430, 12401800, 6001);
     $InitializeEvent(0, 12404410, SingleplayerSummonSignType.NormalCoop, 2400910, 2402910, 12404420, 12404430, 12404440, 12401800, 10567);
@@ -1763,6 +1790,15 @@ $Event(12405020, Default, function(chrEntityId, animationId, animationId2, aiId,
     ForceAnimationPlayback(chrEntityId, animationId2, true, false, false);
     WaitFor(CharacterAIState(chrEntityId, AIStateType.Normal));
     RestartEvent();
+});
+
+// plaza giants dead
+$Event(12405025, Default, function() {
+    SetEventFlag(12405025, OFF);
+    chr1 = HPRatio(2400207) <= 0;
+    chr2 = HPRatio(2400119) <= 0;
+    WaitFor(chr1 && chr2);
+    WaitFixedTimeSeconds(0);
 });
 
 // Franken goes to bed at night_Who wakes up_XX
@@ -4790,7 +4826,7 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.Armor, 126, PlayLogMultiplayerType.HostOnly);
         if (EventFlag(amelia_rematch_played)) {
             AwardItemLot(17020);
-            $InitializeEvent(amelia_offset, 7800, amelia_lamp_object, 824000);
+            $InitializeEvent(amelia_offset, 10007800, amelia_lamp_object, 824000, 1);
         }
         EndEvent();
     }

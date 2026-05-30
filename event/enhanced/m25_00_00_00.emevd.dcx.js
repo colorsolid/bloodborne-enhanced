@@ -32,20 +32,40 @@ const logarius_id = 2500800;
 
 // constructor
 $Event(0, Default, function() {
-    SetEventFlag(8900+logarius_offset, OFF);
+    // coins
+    const coinsBaseFlag = 120;
+    const coinsBaseId = (area_id * 100000) + (block_id * 10000) + 8500;
+    const logariusIndex = 5;
+    for (let i = 0; i < 20; i++) {
+        if (i == logariusIndex) {
+            $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, logarius_defeat, 0);
+        }
+        else {
+            $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, 10000999, 0);
+        }
+    }
     
-    $InitializeEvent(0, 7900, 10000000+logarius_return, logarius_return, area_id, block_id);
+    // ghosts
+    const ghostsBaseFlag = 120;
+    const ghostsBaseId = (area_id * 100000) + (block_id * 10000) + 8600;
+    for (let i = 0; i < 10; i++) {
+        $InitializeEvent(ghostsBaseFlag+i, 10003500, ghostsBaseId+i);
+    }
     
-    $InitializeEvent(cainhurst_lamp_offset, 8500, 8500+cainhurst_lamp_offset, cainhurst_lamp_id, 72112222);
-    $InitializeEvent(queens_lamp_offset, 8500, 8500+queens_lamp_offset, queens_lamp_id, 72112424);
-    $InitializeEvent(logarius_lamp_offset, 8500, 8500+logarius_lamp_offset, logarius_lamp_id, 72112323);
+    SetEventFlag(10008900+logarius_offset, OFF);
     
-    $InitializeEvent(cainhurst_lamp_offset, 8100, 8100+cainhurst_lamp_offset, cainhurst_lamp_kindle);
-    $InitializeEvent(queens_lamp_offset, 8100, 8100+queens_lamp_offset, queens_lamp_kindle);
-    $InitializeEvent(logarius_lamp_offset, 8100, 8100+logarius_lamp_offset, logarius_lamp_kindle);
+    $InitializeEvent(0, 10007900, 10000000+logarius_return, logarius_return, area_id, block_id);
     
-    $InitializeEvent(cainhurst_lamp_offset, 8300, cainhurst_lamp_id+2000, -1, cainhurst_lamp_kindle, cainhurst_lamp_id+6000, cainhurst_lamp_id+3000);
-    $InitializeEvent(queens_lamp_offset, 8300, queens_lamp_id+2000, -1, queens_lamp_kindle, queens_lamp_id+6000, queens_lamp_id+3000);
+    $InitializeEvent(cainhurst_lamp_offset, 10008500, cainhurst_lamp_id, 72112222);
+    $InitializeEvent(queens_lamp_offset, 10008500, queens_lamp_id, 72112424);
+    $InitializeEvent(logarius_lamp_offset, 10008500, logarius_lamp_id, 72112323);
+    
+    $InitializeEvent(cainhurst_lamp_offset, 10008100, 10008100+cainhurst_lamp_offset, cainhurst_lamp_kindle);
+    $InitializeEvent(queens_lamp_offset, 10008100, 10008100+queens_lamp_offset, queens_lamp_kindle);
+    $InitializeEvent(logarius_lamp_offset, 10008100, 10008100+logarius_lamp_offset, logarius_lamp_kindle);
+    
+    $InitializeEvent(cainhurst_lamp_offset, 10008300, cainhurst_lamp_id+2000, -1, cainhurst_lamp_kindle, cainhurst_lamp_id+6000, cainhurst_lamp_id+3000);
+    $InitializeEvent(queens_lamp_offset, 10008300, queens_lamp_id+2000, -1, queens_lamp_kindle, queens_lamp_id+6000, queens_lamp_id+3000);
     
     // rematch mode has ended 
     if (EventFlag(logarius_defeat+13) && !EventFlag(logarius_defeat-1)) {
@@ -58,10 +78,10 @@ $Event(0, Default, function() {
         SetEventFlag(logarius_defeat, ON);
         if (EventFlag(12111120)) {
             SetEventFlag(12111120, OFF);
-            $InitializeEvent(logarius_lamp_offset, 8300, logarius_lamp_id+2000, -1, logarius_lamp_kindle, logarius_lamp_id+6000, logarius_lamp_id+3000);
+            $InitializeEvent(logarius_lamp_offset, 10008300, logarius_lamp_id+2000, -1, logarius_lamp_kindle, logarius_lamp_id+6000, logarius_lamp_id+3000);
         }
         else {
-            $InitializeEvent(logarius_lamp_offset, 8300, logarius_lamp_id+2000, 999, logarius_lamp_kindle, logarius_lamp_id+6000, logarius_lamp_id+3000);
+            $InitializeEvent(logarius_lamp_offset, 10008300, logarius_lamp_id+2000, 10000999, logarius_lamp_kindle, logarius_lamp_id+6000, logarius_lamp_id+3000);
             DummyPlayCutsceneAndWarpPlayer(logarius_lamp_id+4000, area_id, block_id);
         }
     // rematch mode started, warp player to boss trigger point
@@ -77,16 +97,16 @@ $Event(0, Default, function() {
         SetEventFlag(logarius_defeat+12, OFF);
         SetEventFlag(logarius_defeat+13, ON);
         SetEventFlag(logarius_defeat-1, OFF);
-        SetEventFlag(8900+logarius_offset, ON);
-        $InitializeEvent(logarius_lamp_offset, 8300, logarius_lamp_id+2000, -1, logarius_lamp_kindle, logarius_lamp_id+6000, logarius_lamp_id+3000);
+        SetEventFlag(10008900+logarius_offset, ON);
+        $InitializeEvent(logarius_lamp_offset, 10008300, logarius_lamp_id+2000, -1, logarius_lamp_kindle, logarius_lamp_id+6000, logarius_lamp_id+3000);
     } else {
-        $InitializeEvent(logarius_lamp_offset, 8300, logarius_lamp_id+2000, -1, logarius_lamp_kindle, logarius_lamp_id+6000, logarius_lamp_id+3000);
+        $InitializeEvent(logarius_lamp_offset, 10008300, logarius_lamp_id+2000, -1, logarius_lamp_kindle, logarius_lamp_id+6000, logarius_lamp_id+3000);
     }
     
     $InitializeEvent(logarius_offset, 12102070, logarius_defeat+13, 0, 7457, logarius_id, -1, -1, -1, -1);
     
-    $InitializeEvent(logarius_offset, 8900, logarius_defeat-1, logarius_lamp_id+1000, 0, 0, logarius_lamp_id+5000, area_id, block_id);
-    $InitializeEvent(logarius_offset, 7700, logarius_defeat+11, logarius_defeat+12, logarius_lamp_id+1000, 825000);
+    $InitializeEvent(logarius_offset, 10008900, logarius_defeat-1, logarius_lamp_id+1000, 0, 0, logarius_lamp_id+5000, area_id, block_id);
+    $InitializeEvent(logarius_offset, 10007700, logarius_defeat+11, logarius_defeat+12, logarius_lamp_id+1000, 825000);
     
     $InitializeEvent(2200, 12107000, 72112200, 2501950, 2412950);
     $InitializeEvent(2201, 12107000, 72112201, 2501950, 2412951);
@@ -472,11 +492,14 @@ $Event(0, Default, function() {
     $InitializeEvent(28, 12107200, 72100328, 2902958, 9009);
     $InitializeEvent(29, 12107200, 72100329, 2902959, 9010);
     
+    $InitializeEvent(25, 10000100, 2503960, 2503961, 12507810, -1);
     $InitializeEvent(25, 7000, 2500950, 2501950, 999, 12507800, -1);
+    $InitializeEvent(26, 10000100, 2503962, 2503963, 12507830, -1);
     $InitializeEvent(26, 7000, 2500951, 2501951, 999, 12507820, -1);
     
+    $InitializeEvent(27, 10000100, 2503964, 2503965, 12507850, logarius_defeat);
     $InitializeEvent(27, 7000, 2500952, 2501952, 12501800, 12507840, logarius_defeat+13);
-    $InitializeEvent(logarius_offset, 8800, logarius_defeat+13, logarius_lamp_id-1000, logarius_lamp_id, logarius_lamp_id+3000);
+    $InitializeEvent(logarius_offset, 10008800, logarius_defeat+13, logarius_lamp_id-1000, logarius_lamp_id, logarius_lamp_id+3000);
     
     $InitializeEvent(25, 7100, 72500200, 2501950);
     $InitializeEvent(26, 7100, 72500201, 2501951);
@@ -1782,7 +1805,7 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.Armor, 52, PlayLogMultiplayerType.HostOnly);
         if (EventFlag(logarius_defeat+13)) {
             AwardItemLot(17020);
-            $InitializeEvent(logarius_offset, 7800, logarius_lamp_id+1000, 825000);
+            $InitializeEvent(logarius_offset, 10007800, logarius_lamp_id+1000, 825000, 2);
         }
         EndEvent();
     }

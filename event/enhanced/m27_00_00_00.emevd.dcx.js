@@ -31,30 +31,49 @@ const shadows_id3 = 2700802;
 
 // constructor
 $Event(0, Default, function() {
+    // coins
+    const coinsBaseFlag = 160;
+    const coinsBaseId = (area_id * 100000) + (block_id * 10000) + 8500;
+    const shadowsIndex = 10;
+    for (let i = 0; i < 20; i++) {
+        if (i == shadowsIndex) {
+            $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, shadows_defeat, 0);
+        }
+        else {
+            $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, 10000999, 0);
+        }
+    }
     
-    SetEventFlag(8900+shadows_offset, OFF);
+    // ghosts
+    const ghostsBaseFlag = 160;
+    const ghostsBaseId = (area_id * 100000) + (block_id * 10000) + 8600;
+    for (let i = 0; i < 10; i++) {
+        $InitializeEvent(ghostsBaseFlag+i, 10003500, ghostsBaseId+i);
+    }
+    
+    SetEventFlag(10008900+shadows_offset, OFF);
     
     //InitializeEvent(0, 12701820, 0);
     
-    $InitializeEvent(3, 7900, 10000000+shadows_return, shadows_return, area_id, block_id);
+    $InitializeEvent(3, 10007900, 10000000+shadows_return, shadows_return, area_id, block_id);
     
-    $InitializeEvent(woods_lamp_offset, 8500, 8500+woods_lamp_offset, woods_lamp_id, 72111414);
-    $InitializeEvent(shadows_lamp_offset, 8500, 8500+shadows_lamp_offset, shadows_lamp_id, 72111515);
+    $InitializeEvent(woods_lamp_offset, 10008500, woods_lamp_id, 72111414);
+    $InitializeEvent(shadows_lamp_offset, 10008500, shadows_lamp_id, 72111515);
     
-    $InitializeEvent(woods_lamp_offset, 8100, 8100+woods_lamp_offset, woods_lamp_kindle);
-    $InitializeEvent(shadows_lamp_offset, 8100, 8100+shadows_lamp_offset, shadows_lamp_kindle);
+    $InitializeEvent(woods_lamp_offset, 10008100, 10008100+woods_lamp_offset, woods_lamp_kindle);
+    $InitializeEvent(shadows_lamp_offset, 10008100, 10008100+shadows_lamp_offset, shadows_lamp_kindle);
     
-    $InitializeEvent(woods_lamp_offset, 8300, woods_lamp_id+2000, -1, woods_lamp_kindle, woods_lamp_id+6000, woods_lamp_id+3000);
+    $InitializeEvent(woods_lamp_offset, 10008300, woods_lamp_id+2000, -1, woods_lamp_kindle, woods_lamp_id+6000, woods_lamp_id+3000);
     
     if (EventFlag(shadows_defeat+13) && !EventFlag(shadows_defeat-1)) {
         SetEventFlag(shadows_defeat+13, OFF);
         SetEventFlag(shadows_defeat, ON);
         if (EventFlag(12111120)) {
             SetEventFlag(12111120, OFF);
-            $InitializeEvent(shadows_lamp_offset, 8300, shadows_lamp_id+2000, -1, shadows_lamp_kindle, shadows_lamp_id+6000, shadows_lamp_id+3000);
+            $InitializeEvent(shadows_lamp_offset, 10008300, shadows_lamp_id+2000, -1, shadows_lamp_kindle, shadows_lamp_id+6000, shadows_lamp_id+3000);
         }
         else {
-            $InitializeEvent(shadows_lamp_offset, 8300, shadows_lamp_id+2000, 999, shadows_lamp_kindle, shadows_lamp_id+6000, shadows_lamp_id+3000);
+            $InitializeEvent(shadows_lamp_offset, 10008300, shadows_lamp_id+2000, 10000999, shadows_lamp_kindle, shadows_lamp_id+6000, shadows_lamp_id+3000);
             DummyPlayCutsceneAndWarpPlayer(shadows_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(shadows_defeat+12) || EventFlag(shadows_defeat-1)) {
@@ -63,16 +82,16 @@ $Event(0, Default, function() {
         SetEventFlag(shadows_defeat+12, OFF);
         SetEventFlag(shadows_defeat+13, ON);
         SetEventFlag(shadows_defeat-1, OFF);
-        SetEventFlag(8900+shadows_offset, ON);
-        $InitializeEvent(shadows_lamp_offset, 8300, shadows_lamp_id+2000, -1, shadows_lamp_kindle, shadows_lamp_id+6000, shadows_lamp_id+3000);
+        SetEventFlag(10008900+shadows_offset, ON);
+        $InitializeEvent(shadows_lamp_offset, 10008300, shadows_lamp_id+2000, -1, shadows_lamp_kindle, shadows_lamp_id+6000, shadows_lamp_id+3000);
     } else {
-        $InitializeEvent(shadows_lamp_offset, 8300, shadows_lamp_id+2000, -1, shadows_lamp_kindle, shadows_lamp_id+6000, shadows_lamp_id+3000);
+        $InitializeEvent(shadows_lamp_offset, 10008300, shadows_lamp_id+2000, -1, shadows_lamp_kindle, shadows_lamp_id+6000, shadows_lamp_id+3000);
     }
     
     $InitializeEvent(shadows_offset, 12102070, shadows_defeat+13, 0, 7419, shadows_id1, shadows_id2, shadows_id3, -1, -1);
     
-    $InitializeEvent(shadows_offset, 8900, shadows_defeat-1, shadows_lamp_id+1000, 0, 0, shadows_lamp_id+5000, area_id, block_id);
-    $InitializeEvent(shadows_offset, 7700, shadows_defeat+11, shadows_defeat+12, shadows_lamp_id+1000, 827000);
+    $InitializeEvent(shadows_offset, 10008900, shadows_defeat-1, shadows_lamp_id+1000, 0, 0, shadows_lamp_id+5000, area_id, block_id);
+    $InitializeEvent(shadows_offset, 10007700, shadows_defeat+11, shadows_defeat+12, shadows_lamp_id+1000, 827000);
     
     $InitializeEvent(1400, 12107000, 72111400, 2701950, 2412950);
     $InitializeEvent(1401, 12107000, 72111401, 2701950, 2412951);
@@ -330,10 +349,12 @@ $Event(0, Default, function() {
     $InitializeEvent(18, 12107200, 72100318, 2902958, 9009);
     $InitializeEvent(19, 12107200, 72100319, 2902959, 9010);
     
+    $InitializeEvent(35, 10000100, 2703960, 2703961, 12707810, -1);
     $InitializeEvent(35, 7000, 2700950, 2701950, 999, 12707800, -1);
     
+    $InitializeEvent(36, 10000100, 2703962, 2703963, 12707830, shadows_defeat);
     $InitializeEvent(36, 7000, 2700951, 2701951, 12701800, 12707820, shadows_defeat+13);
-    $InitializeEvent(shadows_offset, 8800, shadows_defeat+13, shadows_lamp_id-1000, shadows_lamp_id, shadows_lamp_id+3000);
+    $InitializeEvent(shadows_offset, 10008800, shadows_defeat+13, shadows_lamp_id-1000, shadows_lamp_id, shadows_lamp_id+3000);
     
     $InitializeEvent(35, 7100, 72700200, 2701950);
     $InitializeEvent(36, 7100, 72700201, 2701951);
@@ -352,11 +373,11 @@ $Event(0, Default, function() {
     DeleteMapSFX(2703911, false);
     DeleteMapSFX(2703912, false);
     
-    $InitializeEvent(4, 8617, 2700920, 12704420, 101161, 101208, 163); // henryk - c
-    $InitializeEvent(4, 8630, 8634, 8644, 2700920, 12704420, 2703910, 200244, 101208, 200254, 200264);
+    $InitializeEvent(4, 10007400, 2700920, 12704420, 101161, 101208, 163); // henryk - c
+    $InitializeEvent(4, 10008630, 10008634, 10008644, 2700920, 12704420, 2703910, 200244, 101208, 200254, 200264);
     
-    $InitializeEvent(5, 8617, 2700921, 12704421, 101161, 101208, 163); // madaras twin - c
-    $InitializeEvent(5, 8630, 8635, 8645, 2700921, 12704421, 2703911, 200243, 101208, 200253, 200263);
+    $InitializeEvent(5, 10007400, 2700921, 12704421, 101161, 101208, 163); // madaras twin - c
+    $InitializeEvent(5, 10008630, 10008635, 10008645, 2700921, 12704421, 2703911, 200243, 101208, 200253, 200263);
     
     $InitializeEvent(0, 12704400, 12704440, 2703910, 12704420, 12704430, 12701800, 6001);
     $InitializeEvent(0, 12704401, 12704441, 2703911, 12704421, 12704431, 12701800, 6001);
@@ -779,7 +800,7 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.Armor, 52, PlayLogMultiplayerType.HostOnly);
         if (EventFlag(shadows_defeat+13)) {
             AwardItemLot(17020);
-            $InitializeEvent(shadows_offset, 7800, shadows_lamp_id+1000, 827000);
+            $InitializeEvent(shadows_offset, 10007800, shadows_lamp_id+1000, 827000, 2);
         }
         EndEvent();
     }

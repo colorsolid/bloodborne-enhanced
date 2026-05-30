@@ -30,7 +30,7 @@ def t360029_x3():
         DebugEvent('Operation status Not multi')
         ClearPlayerDamageInfo()
         SetTalkTime(0.33)
-        if GetEventStatus(12421900) == 1 and GetEventStatus(8680) == 1: # portable lamp
+        if GetEventStatus(12421900) == 1 and GetEventStatus(10008680) == 1: # portable lamp
             """State 6"""
             ClearPlayerDamageInfo()
             SetTalkTime(0.33)
@@ -39,7 +39,7 @@ def t360029_x3():
                 pass
             elif GetDistanceToPlayer() > 3 or HasPlayerBeenAttacked() == 1:
                 assert t360029_x0()
-        elif GetEventStatus(12421902) == 1 and GetEventStatus(8680) == 1: # portable lamp - double tap - warp menu
+        elif GetEventStatus(12421902) == 1 and GetEventStatus(10008680) == 1: # portable lamp - double tap - warp menu
             ClearPlayerDamageInfo()
             SetTalkTime(0.33)
             call = t360029_x50()
@@ -47,7 +47,7 @@ def t360029_x3():
                 pass
             elif GetDistanceToPlayer() > 3 or HasPlayerBeenAttacked() == 1:
                 assert t360029_x0()
-        elif GetEventStatus(12421903) == 1 and GetEventStatus(8680) == 1: # portable lamp - double tap - hunter's dream
+        elif GetEventStatus(12421903) == 1 and GetEventStatus(10008680) == 1: # portable lamp - double tap - hunter's dream
             ClearPlayerDamageInfo()
             SetTalkTime(0.33)
             call = t360029_x4()
@@ -55,7 +55,7 @@ def t360029_x3():
                 pass
             elif GetDistanceToPlayer() > 3 or HasPlayerBeenAttacked() == 1:
                 assert t360029_x0()
-        elif GetEventStatus(12421904) == 1 and GetEventStatus(8680) == 1: # portable lamp - double tap - reawaken
+        elif GetEventStatus(12421904) == 1 and GetEventStatus(10008680) == 1: # portable lamp - double tap - reawaken
             ClearPlayerDamageInfo()
             SetTalkTime(0.33)
             call = t360029_x40()
@@ -63,7 +63,7 @@ def t360029_x3():
                 pass
             elif GetDistanceToPlayer() > 3 or HasPlayerBeenAttacked() == 1:
                 assert t360029_x0()
-        elif GetEventStatus(12421901) == 1 and GetEventStatus(8680) == 1: # grand res bell
+        elif GetEventStatus(12421901) == 1 and GetEventStatus(10008680) == 1: # grand res bell
             """State 7"""
             ClearPlayerDamageInfo()
             SetTalkTime(0.33)
@@ -432,11 +432,11 @@ def t360029_x49():
 def t360029_x20():
     """State 0,3"""
     DebugEvent('Flag judgment')
-    SetEventState(8615, 1)
+    SetEventState(10008615, 1)
     return 0
     
-def t360029_x21(flag1=999, flag2=999, flag3=999, flag4=999, flag5=999):
-    if flag1 == 8607 and flag2 == 999 and flag3 == 999 and flag4 == 999 and flag5 == 999:
+def t360029_x21(flag1=10000999, flag2=10000999, flag3=10000999, flag4=10000999, flag5=10000999):
+    if GetEventStatus(12100968) and flag1 == 10008607 and flag2 == 10000999 and flag3 == 10000999 and flag4 == 10000999 and flag5 == 10000999:
         if not GetEventStatus(70002413):
             SetEventState(72102413, 1)
         else:
@@ -445,7 +445,7 @@ def t360029_x21(flag1=999, flag2=999, flag3=999, flag4=999, flag5=999):
                 SetTalkTime(0.33)
             assert not IsGenericDialogOpen()
             return 1
-    elif flag1 == 8607 and flag2 == 8608 and flag3 == 999 and flag4 == 999 and flag5 == 999:
+    elif flag1 == 10008607 and flag2 == 10008608 and flag3 == 10000999 and flag4 == 10000999 and flag5 == 10000999:
         if not GetEventStatus(70002401):
             SetEventState(72102401, 1)
         else:
@@ -454,7 +454,7 @@ def t360029_x21(flag1=999, flag2=999, flag3=999, flag4=999, flag5=999):
                 SetTalkTime(0.33)
             assert not IsGenericDialogOpen()
             return 1
-    elif flag1 == 8605 and flag2 == 8607 and flag3 == 8608 and flag4 == 999 and flag5 == 999:
+    elif flag1 == 10008605 and flag2 == 10008607 and flag3 == 10008608 and flag4 == 10000999 and flag5 == 10000999:
         if not GetEventStatus(70002802):
             SetEventState(72102802, 1)
         else:
@@ -471,7 +471,7 @@ def t360029_x21(flag1=999, flag2=999, flag3=999, flag4=999, flag5=999):
     SetEventState(flag4, 1)
     SetEventState(flag5, 1)
 
-    SetEventState(8603, 1)
+    SetEventState(10008603, 1)
 
     return 0
 
@@ -540,7 +540,7 @@ def t360029_x51():
             return 1
         elif GetTalkListEntryResult() == 1:
             """State 7"""
-            call = t360029_x21(flag1=8609)
+            call = t360029_x21(flag1=10008609)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -548,7 +548,7 @@ def t360029_x51():
                 return 0
         elif GetTalkListEntryResult() == 2:
             """State 9"""
-            call = t360029_x21(flag1=8608)
+            call = t360029_x21(flag1=10008608)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -556,7 +556,7 @@ def t360029_x51():
                 return 0
         elif GetTalkListEntryResult() == 3:
             """State 11"""
-            call = t360029_x21(flag1=8608, flag2=8609)
+            call = t360029_x21(flag1=10008608, flag2=10008609)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -564,7 +564,7 @@ def t360029_x51():
                 return 0
         elif GetTalkListEntryResult() == 4:
             """State 13"""
-            call = t360029_x21(flag1=8607)
+            call = t360029_x21(flag1=10008607)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -572,7 +572,7 @@ def t360029_x51():
                 return 0
         elif GetTalkListEntryResult() == 5:
             """State 15"""
-            call = t360029_x21(flag1=8607, flag2=8609)
+            call = t360029_x21(flag1=10008607, flag2=10008609)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -580,7 +580,7 @@ def t360029_x51():
                 return 0
         elif GetTalkListEntryResult() == 6:
             """State 17"""
-            call = t360029_x21(flag1=8607, flag2=8608)
+            call = t360029_x21(flag1=10008607, flag2=10008608)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -588,7 +588,7 @@ def t360029_x51():
                 return 0
         elif GetTalkListEntryResult() == 7:
             """State 19"""
-            call = t360029_x21(flag1=8607, flag2=8608, flag3=8609)
+            call = t360029_x21(flag1=10008607, flag2=10008608, flag3=10008609)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -596,7 +596,7 @@ def t360029_x51():
                 return 0
         elif GetTalkListEntryResult() == 8:
             """State 21"""
-            call = t360029_x21(flag1=8606)
+            call = t360029_x21(flag1=10008606)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -604,7 +604,7 @@ def t360029_x51():
                 return 0
         elif GetTalkListEntryResult() == 9:
             """State 23"""
-            call = t360029_x21(flag1=8606, flag2=8609)
+            call = t360029_x21(flag1=10008606, flag2=10008609)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -612,7 +612,7 @@ def t360029_x51():
                 return 0
         elif GetTalkListEntryResult() == 10:
             """State 25"""
-            call = t360029_x21(flag1=8606, flag2=8608)
+            call = t360029_x21(flag1=10008606, flag2=10008608)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -620,7 +620,7 @@ def t360029_x51():
                 return 0
         elif GetTalkListEntryResult() == 11:
             """State 27"""
-            call = t360029_x21(flag1=8606, flag2=8608, flag3=8609)
+            call = t360029_x21(flag1=10008606, flag2=10008608, flag3=10008609)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -628,7 +628,7 @@ def t360029_x51():
                 return 0
         elif GetTalkListEntryResult() == 12:
             """State 29"""
-            call = t360029_x21(flag1=8606, flag2=8607)
+            call = t360029_x21(flag1=10008606, flag2=10008607)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -667,7 +667,7 @@ def t360029_x52():
             return 1
         elif GetTalkListEntryResult() == 1:
             """State 7"""
-            call = t360029_x21(flag1=8606, flag2=8607, flag3=8609)
+            call = t360029_x21(flag1=10008606, flag2=10008607, flag3=10008609)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -675,7 +675,7 @@ def t360029_x52():
                 return 0
         elif GetTalkListEntryResult() == 2:
             """State 9"""
-            call = t360029_x21(flag1=8606, flag2=8607, flag3=8608)
+            call = t360029_x21(flag1=10008606, flag2=10008607, flag3=10008608)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -683,7 +683,7 @@ def t360029_x52():
                 return 0
         elif GetTalkListEntryResult() == 3:
             """State 11"""
-            call = t360029_x21(flag1=8606, flag2=8607, flag3=8608, flag4=8609)
+            call = t360029_x21(flag1=10008606, flag2=10008607, flag3=10008608, flag4=10008609)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -691,7 +691,7 @@ def t360029_x52():
                 return 0
         elif GetTalkListEntryResult() == 4:
             """State 13"""
-            call = t360029_x21(flag1=8605)
+            call = t360029_x21(flag1=10008605)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -699,7 +699,7 @@ def t360029_x52():
                 return 0
         elif GetTalkListEntryResult() == 5:
             """State 15"""
-            call = t360029_x21(flag1=8605, flag2=8609)
+            call = t360029_x21(flag1=10008605, flag2=10008609)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -707,7 +707,7 @@ def t360029_x52():
                 return 0
         elif GetTalkListEntryResult() == 6:
             """State 17"""
-            call = t360029_x21(flag1=8605, flag2=8608)
+            call = t360029_x21(flag1=10008605, flag2=10008608)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -748,7 +748,7 @@ def t360029_x53():
             return 1
         elif GetTalkListEntryResult() == 1:
             """State 7"""
-            call = t360029_x21(flag1=8605, flag2=8608, flag3=8609)
+            call = t360029_x21(flag1=10008605, flag2=10008608, flag3=10008609)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -756,7 +756,7 @@ def t360029_x53():
                 return 0
         elif GetTalkListEntryResult() == 2:
             """State 9"""
-            call = t360029_x21(flag1=8605, flag2=8607)
+            call = t360029_x21(flag1=10008605, flag2=10008607)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -764,7 +764,7 @@ def t360029_x53():
                 return 0
         elif GetTalkListEntryResult() == 3:
             """State 11"""
-            call = t360029_x21(flag1=8605, flag2=8607, flag3=8609)
+            call = t360029_x21(flag1=10008605, flag2=10008607, flag3=10008609)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -772,7 +772,7 @@ def t360029_x53():
                 return 0
         elif GetTalkListEntryResult() == 4:
             """State 13"""
-            call = t360029_x21(flag1=8605, flag2=8607, flag3=8608)
+            call = t360029_x21(flag1=10008605, flag2=10008607, flag3=10008608)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -780,7 +780,7 @@ def t360029_x53():
                 return 0
         elif GetTalkListEntryResult() == 5:
             """State 15"""
-            call = t360029_x21(flag1=8605, flag2=8607, flag3=8608, flag4=8609)
+            call = t360029_x21(flag1=10008605, flag2=10008607, flag3=10008608, flag4=10008609)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -788,7 +788,7 @@ def t360029_x53():
                 return 0
         elif GetTalkListEntryResult() == 6:
             """State 17"""
-            call = t360029_x21(flag1=8605, flag2=8606)
+            call = t360029_x21(flag1=10008605, flag2=10008606)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -796,7 +796,7 @@ def t360029_x53():
                 return 0
         elif GetTalkListEntryResult() == 7:
             """State 19"""
-            call = t360029_x21(flag1=8605, flag2=8606, flag3=8609)
+            call = t360029_x21(flag1=10008605, flag2=10008606, flag3=10008609)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -804,7 +804,7 @@ def t360029_x53():
                 return 0
         elif GetTalkListEntryResult() == 8:
             """State 21"""
-            call = t360029_x21(flag1=8605, flag2=8606, flag3=8608)
+            call = t360029_x21(flag1=10008605, flag2=10008606, flag3=10008608)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -845,7 +845,7 @@ def t360029_x54():
             return 1
         elif GetTalkListEntryResult() == 1:
             """State 7"""
-            call = t360029_x21(flag1=8605, flag2=8606, flag3=8608, flag4=8609)
+            call = t360029_x21(flag1=10008605, flag2=10008606, flag3=10008608, flag4=10008609)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -853,7 +853,7 @@ def t360029_x54():
                 return 0
         elif GetTalkListEntryResult() == 2:
             """State 9"""
-            call = t360029_x21(flag1=8605, flag2=8606, flag3=8607)
+            call = t360029_x21(flag1=10008605, flag2=10008606, flag3=10008607)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -861,7 +861,7 @@ def t360029_x54():
                 return 0
         elif GetTalkListEntryResult() == 3:
             """State 11"""
-            call = t360029_x21(flag1=8605, flag2=8606, flag3=8607, flag4=8609)
+            call = t360029_x21(flag1=10008605, flag2=10008606, flag3=10008607, flag4=10008609)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -869,7 +869,7 @@ def t360029_x54():
                 return 0
         elif GetTalkListEntryResult() == 4:
             """State 13"""
-            call = t360029_x21(flag1=8605, flag2=8606, flag3=8607, flag4=8608)
+            call = t360029_x21(flag1=10008605, flag2=10008606, flag3=10008607, flag4=10008608)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -877,7 +877,7 @@ def t360029_x54():
                 return 0
         elif GetTalkListEntryResult() == 5:
             """State 15"""
-            call = t360029_x21(flag1=8605, flag2=8606, flag3=8607, flag4=8608, flag5=8609)
+            call = t360029_x21(flag1=10008605, flag2=10008606, flag3=10008607, flag4=10008608, flag5=10008609)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -885,7 +885,7 @@ def t360029_x54():
                 return 0
         elif GetTalkListEntryResult() == 6:
             """State 17"""
-            call = t360029_x21(flag1=8604)
+            call = t360029_x21(flag1=10008604)
             if call.Done():
                 """State 18"""
                 return 0
@@ -893,7 +893,7 @@ def t360029_x54():
                 pass
         elif GetTalkListEntryResult() == 7:
             """State 19"""
-            call = t360029_x21(flag1=8604, flag2=8609)
+            call = t360029_x21(flag1=10008604, flag2=10008609)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -901,7 +901,7 @@ def t360029_x54():
                 return 0
         elif GetTalkListEntryResult() == 8:
             """State 21"""
-            call = t360029_x21(flag1=8604, flag2=8608)
+            call = t360029_x21(flag1=10008604, flag2=10008608)
             if call.Done():
                 """State 22"""
                 return 0
@@ -944,7 +944,7 @@ def t360029_x55():
             return 1
         elif GetTalkListEntryResult() == 9:
             """State 7"""
-            call = t360029_x21(flag1=8604, flag2=8608, flag3=8609)
+            call = t360029_x21(flag1=10008604, flag2=10008608, flag3=10008609)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -952,7 +952,7 @@ def t360029_x55():
                 return 0
         elif GetTalkListEntryResult() == 10:
             """State 9"""
-            call = t360029_x21(flag1=8604, flag2=8607)
+            call = t360029_x21(flag1=10008604, flag2=10008607)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -960,7 +960,7 @@ def t360029_x55():
                 return 0
         elif GetTalkListEntryResult() == 12:
             """State 11"""
-            call = t360029_x21(flag1=8604, flag2=8607, flag3=8609)
+            call = t360029_x21(flag1=10008604, flag2=10008607, flag3=10008609)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -968,7 +968,7 @@ def t360029_x55():
                 return 0
         elif GetTalkListEntryResult() == 11:
             """State 13"""
-            call = t360029_x21(flag1=8604, flag2=8607, flag3=8608)
+            call = t360029_x21(flag1=10008604, flag2=10008607, flag3=10008608)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -976,7 +976,7 @@ def t360029_x55():
                 return 0
         elif GetTalkListEntryResult() == 13:
             """State 15"""
-            call = t360029_x21(flag1=8604, flag2=8607, flag3=8608, flag4=8609)
+            call = t360029_x21(flag1=10008604, flag2=10008607, flag3=10008608, flag4=10008609)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -984,7 +984,7 @@ def t360029_x55():
                 return 0
         elif GetTalkListEntryResult() == 14:
             """State 17"""
-            call = t360029_x21(flag1=8604, flag2=8606)
+            call = t360029_x21(flag1=10008604, flag2=10008606)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -992,12 +992,12 @@ def t360029_x55():
                 return 0
         elif GetTalkListEntryResult() == 15:
             """State 19"""
-            assert t360029_x21(flag1=8604, flag2=8606, flag3=8609)
+            assert t360029_x21(flag1=10008604, flag2=10008606, flag3=10008609)
             """State 20"""
             return 0
         elif GetTalkListEntryResult() == 16:
             """State 21"""
-            call = t360029_x21(flag1=8604, flag2=8606, flag3=8608)
+            call = t360029_x21(flag1=10008604, flag2=10008606, flag3=10008608)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -1005,7 +1005,7 @@ def t360029_x55():
                 return 0
         elif GetTalkListEntryResult() == 17:
             """State 23"""
-            call = t360029_x21(flag1=8604, flag2=8606, flag3=8608, flag4=8609)
+            call = t360029_x21(flag1=10008604, flag2=10008606, flag3=10008608, flag4=10008609)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -1013,7 +1013,7 @@ def t360029_x55():
                 return 0
         elif GetTalkListEntryResult() == 18:
             """State 25"""
-            call = t360029_x21(flag1=8604, flag2=8606, flag3=8607)
+            call = t360029_x21(flag1=10008604, flag2=10008606, flag3=10008607)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -1289,49 +1289,49 @@ def t360029_x136(flag1=72100421, action1=10011120, action2=10011130, flag2=1):
                         """State 10"""
                         DebugEvent('ダンジョン_2F')
                         """State 40"""
-                        assert t360029_x137(flag1=flag1, flag2=8614)
+                        assert t360029_x137(flag1=flag1, flag2=10008614)
                         Goto('L1')
                     elif GetTalkListEntryResult() == 3:
                         """State 4"""
                         DebugEvent('ダンジョン_3F')
                         """State 41"""
-                        assert t360029_x137(flag1=flag1, flag2=8613)
+                        assert t360029_x137(flag1=flag1, flag2=10008613)
                         Goto('L1')
                     elif GetTalkListEntryResult() == 4:
                         """State 7"""
                         DebugEvent('ダンジョン_4F')
                         """State 42"""
-                        assert t360029_x137(flag1=flag1, flag2=8613, flag3=8614)
+                        assert t360029_x137(flag1=flag1, flag2=10008613, flag3=10008614)
                         Goto('L1')
                     elif GetTalkListEntryResult() == 5:
                         """State 11"""
                         DebugEvent('ダンジョン_5F')
                         """State 43"""
-                        assert t360029_x137(flag1=flag1, flag2=8612)
+                        assert t360029_x137(flag1=flag1, flag2=10008612)
                         Goto('L1')
                     elif GetTalkListEntryResult() == 6:
                         """State 8"""
                         DebugEvent('ダンジョン_6F')
                         """State 44"""
-                        assert t360029_x137(flag1=flag1, flag2=8612, flag3=8614)
+                        assert t360029_x137(flag1=flag1, flag2=10008612, flag3=10008614)
                         Goto('L1')
                     elif GetTalkListEntryResult() == 7:
                         """State 9"""
                         DebugEvent('ダンジョン_7F')
                         """State 45"""
-                        assert t360029_x137(flag1=flag1, flag2=8612, flag3=8613)
+                        assert t360029_x137(flag1=flag1, flag2=10008612, flag3=10008613)
                         Goto('L1')
                     elif GetTalkListEntryResult() == 8:
                         """State 12"""
                         DebugEvent('ダンジョン_8F')
                         """State 46"""
-                        assert t360029_x137(flag1=flag1, flag2=8612, flag3=8613, flag4=8614)
+                        assert t360029_x137(flag1=flag1, flag2=10008612, flag3=10008613, flag4=10008614)
                         Goto('L1')
                     elif GetTalkListEntryResult() == 9:
                         """State 13"""
                         DebugEvent('ダンジョン_9F')
                         """State 47"""
-                        assert t360029_x137(flag1=flag1, flag2=8611)
+                        assert t360029_x137(flag1=flag1, flag2=10008611)
                         Goto('L1')
                     elif GetTalkListEntryResult() == 10:
                         """State 14"""
@@ -1397,7 +1397,7 @@ def t360029_x137(flag1=72100421, flag2=999, flag3=999, flag4=999, z1=1):
     SetEventState(flag2, 1)
     SetEventState(flag3, 1)
     SetEventState(flag4, 1)
-    SetEventState(8610, 1)
+    SetEventState(10008610, 1)
     # assert not GetEventStatus(flag1)
     """State 2"""
     # SetEventState(12108900, 1)
@@ -1731,6 +1731,7 @@ def t360029_x93():
         AddTalkListData(40, 200085, 12101440) # chalices
         AddTalkListData(60, 200109, -1) # fill upgrade materials
         AddTalkListData(61, 200110, -1) # fill chalice materials
+        AddTalkListData(62, 14000050, -1) # gestures
         ShowShopMessage(0, 0, 0)
         def WhilePaused():
             SetTalkTime(0.33)
@@ -1826,6 +1827,103 @@ def t360029_x93():
             def WhilePaused():
                 SetTalkTime(0.33)
             assert not IsGenericDialogOpen()
+        elif GetTalkListEntryResult() == 62: # gestures
+            call = t360029_x89()
+            if call.Get() == 1:
+                ForceCloseMenu()
+            elif call.Done():
+                return 0
+            assert not IsGenericDialogOpen()
+
+# gestures
+def t360029_x89():
+    while True:
+        ClearTalkListData()
+        AddTalkListData(1, 200301, -1) # approval
+        AddTalkListData(2, 200302, -1) # beg for life
+        AddTalkListData(3, 200303, -1) # brush off dust
+        AddTalkListData(4, 200304, -1) # church bow (female)
+        AddTalkListData(5, 200305, -1) # church bow (male)
+        AddTalkListData(6, 200306, -1) # curtsy
+        AddTalkListData(7, 200307, -1) # deep respect
+        AddTalkListData(8, 200308, -1) # league oath
+        AddTalkListData(9, 200309, -1) # make contact
+        AddTalkListData(10, 200310, -1) # pray
+        AddTalkListData(11, 200311, -1) # respect
+        AddTalkListData(12, 200312, -1) # roar
+        AddTalkListData(13, 200313, -1) # shake off cape
+        AddTalkListData(14, 200314, -1) # shh!
+        AddTalkListData(15, 200315, -1) # triumph
+        AddTalkListData(16, 200316, -1) # wait
+        ShowShopMessage(0, 0, 0)
+        def WhilePaused():
+            SetTalkTime(0.33)
+        if not GetTalkListEntryResult() or not IsTalkExclusiveMenuOpen():
+            return 1
+        elif GetTalkListEntryResult() == 1: # approval
+            OpenItemAcquisitionMenu(ItemType.Goods, 814, 1)
+            AcquireGesture(14)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 2: # beg for life 
+            OpenItemAcquisitionMenu(ItemType.Goods, 816, 1)
+            AcquireGesture(16)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 3: # brush off dust
+            OpenItemAcquisitionMenu(ItemType.Goods, 817, 1)
+            AcquireGesture(17)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 4: # church bow (female)
+            OpenItemAcquisitionMenu(ItemType.Goods, 807, 1)
+            AcquireGesture(7)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 5: # church bow (male) 
+            OpenItemAcquisitionMenu(ItemType.Goods, 805, 1)
+            AcquireGesture(5)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 6: # curtsy
+            OpenItemAcquisitionMenu(ItemType.Goods, 806, 1)
+            AcquireGesture(6)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 7: # deep respect
+            OpenItemAcquisitionMenu(ItemType.Goods, 819, 1)
+            AcquireGesture(19)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 8: # league oath
+            OpenItemAcquisitionMenu(ItemType.Goods, 822, 1)
+            AcquireGesture(22)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 9: # make contact
+            OpenItemAcquisitionMenu(ItemType.Goods, 820, 1)
+            AcquireGesture(20)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 10: # pray 
+            OpenItemAcquisitionMenu(ItemType.Goods, 809, 1)
+            AcquireGesture(9)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 11: # respect
+            OpenItemAcquisitionMenu(ItemType.Goods, 818, 1)
+            AcquireGesture(18)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 12: # roar
+            OpenItemAcquisitionMenu(ItemType.Goods, 815, 1)
+            AcquireGesture(15)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 13: # shake off cape
+            OpenItemAcquisitionMenu(ItemType.Goods, 804, 1)
+            AcquireGesture(4)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 14: # shh!
+            OpenItemAcquisitionMenu(ItemType.Goods, 811, 1)
+            AcquireGesture(11)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 15: # triumph
+            OpenItemAcquisitionMenu(ItemType.Goods, 813, 1)
+            AcquireGesture(13)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 16: # wait
+            OpenItemAcquisitionMenu(ItemType.Goods, 810, 1)
+            AcquireGesture(10)
+            assert not IsMenuOpen(MenuType.Bonfire)
 
 # stump messengers
 def t360029_x92():
@@ -1956,7 +2054,7 @@ def t360029_x94():
         AddTalkListData(3, 200235, -1) # prime hunter's mark
         AddTalkListData(7, 200174, -1) # balancing
         AddTalkListData(8, 200200, -1) # respec
-        AddTalkListData(9, 200228, 9462) # dream states
+        AddTalkListData(9, 200228, -1) # dream states
         AddTalkListData(10, 200032, -1) # misc settings
         ShowShopMessage(0, 0, 0)
         def WhilePaused():
@@ -2076,6 +2174,10 @@ def t360029_x95():
             # quick warp to boss
             AddTalkListData(31, 200133, 12100857)
             AddTalkListData(32, 200132, 12100957)
+
+            # lamp music
+            AddTalkListData(33, 200320, 12100891)
+            AddTalkListData(34, 200319, 12100991)
         else:
             pass
 
@@ -2174,9 +2276,15 @@ def t360029_x95():
         elif GetTalkListEntryResult() == 32: # enable - quick warp to boss
             SetEventState(12100957, 0)
             SetEventState(12100857, 1)
+        elif GetTalkListEntryResult() == 33: # disable - lamp music
+            SetEventState(12100991, 1)
+            SetEventState(12100891, 0)
+        elif GetTalkListEntryResult() == 34: # enable - lamp music
+            SetEventState(12100991, 0)
+            SetEventState(12100891, 1)
         elif GetTalkListEntryResult() == 35: # enable - lamp kindling
             SetEventState(12100951, 0)
-            SetEventState(8413, 1)
+            SetEventState(10008413, 1)
             SetEventState(12100851, 1)
         elif GetTalkListEntryResult() == 36: # disable - lamp kindling
             SetEventState(12100951, 1)
@@ -2292,41 +2400,59 @@ def t360029_x98():
     while True:
         ClearTalkListData()
 
-        AddTalkListData(1, 200223, 12103900) # fire enabled - switch to no fire
-        AddTalkListData(2, 200224, 12103901) # no fire enabled - switch to fire
+        AddTalkListData(1, 200321, 12103900) # default - switch to always on
+        AddTalkListData(2, 200223, 12103901) # always on - switch to always off
+        AddTalkListData(3, 200224, 12103902) # always off - switch to default
 
-        AddTalkListData(3, 200225, 12103903) # default enabled -  switch to version 1
-        AddTalkListData(4, 200226, 12103904) # version 1 enabled - switch to version 2
-        AddTalkListData(5, 200227, 12103905) # version 2 enabled - switch to default
+        AddTalkListData(4, 200322, 12103904) # default enabled -  switch to version 1
+        AddTalkListData(5, 200226, 12103905) # version 1 enabled - switch to version 2
+        AddTalkListData(6, 200227, 12103906) # version 2 enabled - switch to no music
+        AddTalkListData(7, 200225, 12103907) # no music enabled - switch to default
 
         ShowShopMessage(0, 0, 0)
         def WhilePaused():
             SetTalkTime(0.33)
         if not GetTalkListEntryResult() or not IsTalkExclusiveMenuOpen():
             return 1
-        elif GetTalkListEntryResult() == 1: # fire enabled -  switch to no fire
+        elif GetTalkListEntryResult() == 1: # default - switch to fire
             SetEventState(12103899, 1)
             SetEventState(12103900, 0)
             SetEventState(12103901, 1)
-        elif GetTalkListEntryResult() == 2: # no fire enabled - switch to fire
+            SetEventState(12103902, 0)
+        elif GetTalkListEntryResult() == 2: # fire - switch to no fire
+            SetEventState(12103899, 1)
+            SetEventState(12103900, 0)
+            SetEventState(12103901, 0)
+            SetEventState(12103902, 1)
+        elif GetTalkListEntryResult() == 3: # no fire - switch to default
             SetEventState(12103899, 1)
             SetEventState(12103900, 1)
             SetEventState(12103901, 0)
-        elif GetTalkListEntryResult() == 3: # no music enabled - switch to version 1
-            SetEventState(12103902, 1)
-            SetEventState(12103903, 0)
-            SetEventState(12103904, 1)
-            SetEventState(12103905, 0)
-        elif GetTalkListEntryResult() == 4: # version 1 enabled - switch to version 2
-            SetEventState(12103902, 1)
-            SetEventState(12103903, 0)
+            SetEventState(12103902, 0)
+        elif GetTalkListEntryResult() == 4: # default - switch to version 1
+            SetEventState(12103903, 1)
             SetEventState(12103904, 0)
             SetEventState(12103905, 1)
-        elif GetTalkListEntryResult() == 5: # version 2 enabled - switch to no music
-            SetEventState(12103902, 1)
+            SetEventState(12103906, 0)
+            SetEventState(12103907, 0)
+        elif GetTalkListEntryResult() == 5: # version 1 enabled - switch to version 2
             SetEventState(12103903, 1)
             SetEventState(12103904, 0)
             SetEventState(12103905, 0)
+            SetEventState(12103906, 1)
+            SetEventState(12103907, 0)
+        elif GetTalkListEntryResult() == 6: # version 2 enabled - switch to no music
+            SetEventState(12103903, 1)
+            SetEventState(12103904, 0)
+            SetEventState(12103905, 0)
+            SetEventState(12103906, 0)
+            SetEventState(12103907, 1)
+        elif GetTalkListEntryResult() == 7: # no music - switch to default
+            SetEventState(12103903, 1)
+            SetEventState(12103904, 1)
+            SetEventState(12103905, 0)
+            SetEventState(12103906, 0)
+            SetEventState(12103907, 0)
 
 # misc settings
 def t360029_x99():
@@ -2373,8 +2499,13 @@ def t360029_x99():
         AddTalkListData(30, 200153, 12102202) # activate all lamps
         AddTalkListData(31, 200155, 12102212) # activate all shortcuts
 
+        # infinite durability
         AddTalkListData(32, 200231, 12100955)
         AddTalkListData(33, 200232, 12100855)
+
+        # ghost shop
+        AddTalkListData(34, 200317, 12100990)
+        AddTalkListData(35, 200318, 12100890)
 
         ShowShopMessage(0, 0, 0)
         def WhilePaused():
@@ -2453,6 +2584,12 @@ def t360029_x99():
         elif GetTalkListEntryResult() == 33: # disable - infinite durability
             SetEventState(12100955, 1)
             SetEventState(12100855, 0)
+        elif GetTalkListEntryResult() == 34: # enable - ghost shop
+            SetEventState(12100990, 0)
+            SetEventState(12100890, 1)
+        elif GetTalkListEntryResult() == 35: # disable - ghost shop
+            SetEventState(12100990, 1)
+            SetEventState(12100890, 0)
 
 # portable lamp settings
 def t360029_x106():
@@ -2691,6 +2828,73 @@ def t360029_x102():
 # respec
 def t360029_x103():
     while True:
+        if GetEventStatus(12301600) == 1:
+            if GetEventStatus(6744) == 1:
+                AcquireGesture(4)
+            else:
+                pass
+            if GetEventStatus(6745) == 1:
+                AcquireGesture(5)
+            else:
+                pass
+            if GetEventStatus(6746) == 1:
+                AcquireGesture(6)
+            else:
+                pass
+            if GetEventStatus(6747) == 1:
+                AcquireGesture(7)
+            else:
+                pass
+            if GetEventStatus(6749) == 1:
+                AcquireGesture(9)
+            else:
+                pass
+            if GetEventStatus(6750) == 1:
+                AcquireGesture(10)
+            else:
+                pass
+            if GetEventStatus(6751) == 1:
+                AcquireGesture(11)
+            else:
+                pass
+            if GetEventStatus(6753) == 1:
+                AcquireGesture(13)
+            else:
+                pass
+            if GetEventStatus(6754) == 1:
+                AcquireGesture(14)
+            else:
+                pass
+            if GetEventStatus(6755) == 1:
+                AcquireGesture(15)
+            else:
+                pass
+            if GetEventStatus(6756) == 1:
+                AcquireGesture(16)
+            else:
+                pass
+            if GetEventStatus(6757) == 1:
+                AcquireGesture(17)
+            else:
+                pass
+            if GetEventStatus(6758) == 1:
+                AcquireGesture(18)
+            else:
+                pass
+            if GetEventStatus(6759) == 1:
+                AcquireGesture(19)
+            else:
+                pass
+            if GetEventStatus(6760) == 1:
+                AcquireGesture(20)
+            else:
+                pass
+            if GetEventStatus(6762) == 1:
+                AcquireGesture(22)
+            else:
+                pass
+        else:
+            pass
         ClearTalkListData()
 
         AddTalkListData(1, 200201, -1) # milquetoast

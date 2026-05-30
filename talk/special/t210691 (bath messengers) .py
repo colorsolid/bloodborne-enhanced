@@ -189,6 +189,7 @@ def t210691_x5():
         AddTalkListData(40, 200085, 12101440) # chalices
         AddTalkListData(60, 200109, -1) # fill upgrade materials
         AddTalkListData(61, 200110, -1) # fill chalice materials
+        AddTalkListData(62, 14000050, -1) # gestures
         ShowShopMessage(0, 0, 0)
         def WhilePaused():
             SetTalkTime(0.33)
@@ -283,26 +284,100 @@ def t210691_x5():
             def WhilePaused():
                 SetTalkTime(0.33)
             assert not IsGenericDialogOpen()
+        elif GetTalkListEntryResult() == 62: # gestures
+            call = t210691_x6()
+            if call.Get() == 1:
+                ForceCloseMenu()
+            elif call.Done():
+                return 0
+            assert not IsGenericDialogOpen()
 
+# gestures
 def t210691_x6():
     while True:
         ClearTalkListData()
-        AddTalkListData(1, 200141, -1) # all runes
-        AddTalkListData(50, 200037, 12100870) # beast
-        AddTalkListData(51, 200038, 12100869) # milkweed        
+        AddTalkListData(1, 200301, -1) # approval
+        AddTalkListData(2, 200302, -1) # beg for life
+        AddTalkListData(3, 200303, -1) # brush off dust
+        AddTalkListData(4, 200304, -1) # church bow (female)
+        AddTalkListData(5, 200305, -1) # church bow (male)
+        AddTalkListData(6, 200306, -1) # curtsy
+        AddTalkListData(7, 200307, -1) # deep respect
+        AddTalkListData(8, 200308, -1) # league oath
+        AddTalkListData(9, 200309, -1) # make contact
+        AddTalkListData(10, 200310, -1) # pray
+        AddTalkListData(11, 200311, -1) # respect
+        AddTalkListData(12, 200312, -1) # roar
+        AddTalkListData(13, 200313, -1) # shake off cape
+        AddTalkListData(14, 200314, -1) # shh!
+        AddTalkListData(15, 200315, -1) # triumph
+        AddTalkListData(16, 200316, -1) # wait
         ShowShopMessage(0, 0, 0)
         def WhilePaused():
             SetTalkTime(0.33)
         if not GetTalkListEntryResult() or not IsTalkExclusiveMenuOpen():
             return 1
-        elif GetTalkListEntryResult() == 1: # all runes
-            SetEventState(12100006, 1)
-            OpenGenericDialog(1, 200142, 1, 0, 1)            
-            def WhilePaused():
-                SetTalkTime(0.33)
-            assert not IsGenericDialogOpen()
-            return 1
-        elif GetTalkListEntryResult() == 50: # beast
-            SetEventState(12100770, 1)
-        elif GetTalkListEntryResult() == 51: # milkweed
-            SetEventState(12100769, 1)
+        elif GetTalkListEntryResult() == 1: # approval
+            OpenItemAcquisitionMenu(ItemType.Goods, 814, 1)
+            AcquireGesture(14)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 2: # beg for life 
+            OpenItemAcquisitionMenu(ItemType.Goods, 816, 1)
+            AcquireGesture(16)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 3: # brush off dust
+            OpenItemAcquisitionMenu(ItemType.Goods, 817, 1)
+            AcquireGesture(17)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 4: # church bow (female)
+            OpenItemAcquisitionMenu(ItemType.Goods, 807, 1)
+            AcquireGesture(7)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 5: # church bow (male) 
+            OpenItemAcquisitionMenu(ItemType.Goods, 805, 1)
+            AcquireGesture(5)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 6: # curtsy
+            OpenItemAcquisitionMenu(ItemType.Goods, 806, 1)
+            AcquireGesture(6)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 7: # deep respect
+            OpenItemAcquisitionMenu(ItemType.Goods, 819, 1)
+            AcquireGesture(19)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 8: # league oath
+            OpenItemAcquisitionMenu(ItemType.Goods, 822, 1)
+            AcquireGesture(22)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 9: # make contact
+            OpenItemAcquisitionMenu(ItemType.Goods, 820, 1)
+            AcquireGesture(20)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 10: # pray 
+            OpenItemAcquisitionMenu(ItemType.Goods, 809, 1)
+            AcquireGesture(9)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 11: # respect
+            OpenItemAcquisitionMenu(ItemType.Goods, 818, 1)
+            AcquireGesture(18)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 12: # roar
+            OpenItemAcquisitionMenu(ItemType.Goods, 815, 1)
+            AcquireGesture(15)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 13: # shake off cape
+            OpenItemAcquisitionMenu(ItemType.Goods, 804, 1)
+            AcquireGesture(4)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 14: # shh!
+            OpenItemAcquisitionMenu(ItemType.Goods, 811, 1)
+            AcquireGesture(11)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 15: # triumph
+            OpenItemAcquisitionMenu(ItemType.Goods, 813, 1)
+            AcquireGesture(13)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 16: # wait
+            OpenItemAcquisitionMenu(ItemType.Goods, 810, 1)
+            AcquireGesture(10)
+            assert not IsMenuOpen(MenuType.Bonfire)

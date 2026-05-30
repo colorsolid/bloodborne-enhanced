@@ -8,7 +8,7 @@ def t290111_1():
 
 def t290111_x0():
     """State 0,1"""
-    SetEventState(8500+71, 0)
+    SetEventState(10008500+71, 0)
     assert t290111_x7(z1=99999, z2=99999, z3=99999, z4=99999)
     """State 2"""
     return 0
@@ -172,165 +172,162 @@ def t290111_x8(flag3=290, flag4=1):
 # top level
 def t290111_x60():
     """State 0,6"""
-    if GetEventStatus(999):
-        if GetEventStatus(12100858) and GetEventStatus(12100861):
-            SetEventState(12100761, 1)
-            SetEventState(8500+71, 1)
+    if GetEventStatus(12100858) and GetEventStatus(12100861):
+        SetEventState(12100761, 1)
+        SetEventState(10008500+71, 1)
+    else:
+        pass
+    while True:
+        """State 1"""
+        ClearTalkListData()
+        """State 4"""
+        if GetEventStatus(12100961) == 0 and GetEventStatus(12100761) == 0:
+            AddTalkListData(20, 200087, -1)
         else:
             pass
-        while True:
-            """State 1"""
-            ClearTalkListData()
-            """State 4"""
-            if GetEventStatus(12100961) == 0 and GetEventStatus(12100761) == 0:
-                AddTalkListData(20, 200087, -1)
+        AddTalkListData(1, 200001, 12100880)
+        if GetEventStatus(12100961) or GetEventStatus(12100761):
+            AddTalkListData(2, 70002100, 12100980)
+            AddTalkListData(3, 15000100, 12100879)
+            AddTalkListData(4, 70000001, 12100878)
+            AddTalkListData(5, 70000008, 12100877)
+            AddTalkListData(6, 70000000, 12100876)
+            AddTalkListData(7, 200003, 12100875)
+            AddTalkListData(8, 200004, 12100874)
+            # restock enabled, kindling enabled, and lamp kindling values are not maxed
+            if (
+                GetEventStatus(12100862) == 1
+                and (
+                    GetEventStatus(12110000 + 290 * 10 + 1 * 2) == 0 
+                    or GetEventStatus(12110000 + 290 * 10 + 1 * 2 + 1) == 0
+                )
+            ):
+                AddTalkListData(11, 200168, 12100851)
             else:
                 pass
-            AddTalkListData(1, 200001, 12100880)
-            if GetEventStatus(12100961) or GetEventStatus(12100761):
-                AddTalkListData(2, 70002100, 12100980)
-                AddTalkListData(3, 15000100, 12100879)
-                AddTalkListData(4, 70000001, 12100878)
-                AddTalkListData(5, 70000008, 12100877)
-                AddTalkListData(6, 70000000, 12100876)
-                AddTalkListData(7, 200003, 12100875)
-                AddTalkListData(8, 200004, 12100874)
-                # restock enabled, kindling enabled, and lamp kindling values are not maxed
-                if (
-                    GetEventStatus(12100862) == 1
-                    and (
-                        GetEventStatus(12110000 + 290 * 10 + 1 * 2) == 0 
-                        or GetEventStatus(12110000 + 290 * 10 + 1 * 2 + 1) == 0
-                    )
-                ):
-                    AddTalkListData(11, 200168, 12100851)
-                else:
-                    pass
-            else:
-                pass
-            """State 2"""
-            ShowShopMessage(0, 0, 0)
-            def WhilePaused():
-                SetTalkTime(0.33)
-            if not GetTalkListEntryResult() or not IsTalkExclusiveMenuOpen():
-                """State 3"""
+        else:
+            pass
+        """State 2"""
+        ShowShopMessage(0, 0, 0)
+        def WhilePaused():
+            SetTalkTime(0.33)
+        if not GetTalkListEntryResult() or not IsTalkExclusiveMenuOpen():
+            """State 3"""
+            ForceCloseMenu()
+            break
+        # warp
+        elif GetTalkListEntryResult() == 1:
+            """State 30"""
+            call = t290111_x50()
+            if call.Get() == 1:
                 ForceCloseMenu()
-                break
-            # warp
-            elif GetTalkListEntryResult() == 1:
-                """State 30"""
-                call = t290111_x50()
-                if call.Get() == 1:
-                    ForceCloseMenu()
-                elif call.Done():
-                    """State 34"""
-                    return 0
-            # hunter's dream
-            elif GetTalkListEntryResult() == 2:
-                call = t290111_x4(flag3=290, flag4=1)
-                if call.Get() == 1:
-                    ForceCloseMenu()
-                elif call.Done():
-                    return 0
-            # level up
-            elif GetTalkListEntryResult() == 3:
-                """State 126"""
-                if GetEventStatus(6700) == 1:
-                    pass
-                else:
-                    """State 127"""
-                    OpenGenericDialog(1, 10011000, 1, 0, 1)
-                    """State 128"""
-                    SetEventState(6700, 1)
-                    def WhilePaused():
-                        SetTalkTime(0.33)
-                    assert not IsGenericDialogOpen()
-                """State 130"""
-                OpenSoul()
-                def WhilePaused():
-                    SetTalkTime(0.33)
-                assert not CheckSpecificPersonMenuIsOpen(23, 0)
-            # workshop
-            elif GetTalkListEntryResult() == 4:
-                """State 135"""
-                call = t290111_x70()
-                if call.Get() == 1:
-                    ForceCloseMenu()
-                elif call.Done():
-                    """State 136"""
-                    return 0
-            # memory alter
-            elif GetTalkListEntryResult() == 5:
-                """State 160"""
-                if ComparePlayerInventoryNumber(3, 4104, 0, 1, 0) == 1:
-                    """State 161"""
-                    SetEventState(72100202, 1)
-                    """State 162"""
-                    DebugEvent('Body gem detachable')
-                    if GetEventStatus(6705) == 1:
-                        pass
-                    else:
-                        """State 163"""
-                        OpenGenericDialog(1, 10011080, 1, 0, 1)
-                        """State 164"""
-                        SetEventState(6705, 1)
-                        def WhilePaused():
-                            SetTalkTime(0.33)
-                        assert not IsGenericDialogOpen()
-                    """State 165"""
-                    c1_75()
-                    def WhilePaused():
-                        SetTalkTime(0.33)
-                    assert not CheckSpecificPersonMenuIsOpen(1001, 0)
-                else:
-                    """State 166"""
-                    OpenGenericDialog(7, 10011070, 1, 0, 1)
-                    def WhilePaused():
-                        SetTalkTime(0.33)
-                    assert not IsGenericDialogOpen()
-            # storage
-            elif GetTalkListEntryResult() == 6:
-                """State 125"""
-                if GetEventStatus(6701) == 1:
-                    pass
-                else:
-                    """State 131"""
-                    OpenGenericDialog(1, 10011020, 1, 0, 1)
-                    """State 132"""
-                    SetEventState(6701, 1)
-                    def WhilePaused():
-                        SetTalkTime(0.33)
-                    assert not IsGenericDialogOpen()
-                """State 133"""
-                OpenRepository()
-                def WhilePaused():
-                    SetTalkTime(0.33)
-                assert not CheckSpecificPersonMenuIsOpen(200, 0)
-            # messengers
-            elif GetTalkListEntryResult() == 7:
-                """State 211"""
-                call = t290111_x90()
-                if call.Done():
-                    pass
-            # change appearance
-            elif GetTalkListEntryResult() == 8:
-                """State 212"""
-                call = t290111_x110()
-                if call.Done():
-                    pass
-            # offer insight / kindle
-            elif GetTalkListEntryResult() == 11:
-                SetEventState(8100+71, 1)
+            elif call.Done():
+                """State 34"""
+                return 0
+        # hunter's dream
+        elif GetTalkListEntryResult() == 2:
+            call = t290111_x4(flag3=290, flag4=1)
+            if call.Get() == 1:
+                ForceCloseMenu()
+            elif call.Done():
+                return 0
+        # level up
+        elif GetTalkListEntryResult() == 3:
+            """State 126"""
+            if GetEventStatus(6700) == 1:
+                pass
+            else:
+                """State 127"""
+                OpenGenericDialog(1, 10011000, 1, 0, 1)
+                """State 128"""
+                SetEventState(6700, 1)
                 def WhilePaused():
                     SetTalkTime(0.33)
                 assert not IsGenericDialogOpen()
-            # rest
-            elif GetTalkListEntryResult() == 20:
-                SetEventState(12100761, 1)
-                SetEventState(8500+71, 1)
-    else:
-        return 0
-    SetEventState(8500+71, 0)
+            """State 130"""
+            OpenSoul()
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not CheckSpecificPersonMenuIsOpen(23, 0)
+        # workshop
+        elif GetTalkListEntryResult() == 4:
+            """State 135"""
+            call = t290111_x70()
+            if call.Get() == 1:
+                ForceCloseMenu()
+            elif call.Done():
+                """State 136"""
+                return 0
+        # memory alter
+        elif GetTalkListEntryResult() == 5:
+            """State 160"""
+            if ComparePlayerInventoryNumber(3, 4104, 0, 1, 0) == 1:
+                """State 161"""
+                SetEventState(72100202, 1)
+                """State 162"""
+                DebugEvent('Body gem detachable')
+                if GetEventStatus(6705) == 1:
+                    pass
+                else:
+                    """State 163"""
+                    OpenGenericDialog(1, 10011080, 1, 0, 1)
+                    """State 164"""
+                    SetEventState(6705, 1)
+                    def WhilePaused():
+                        SetTalkTime(0.33)
+                    assert not IsGenericDialogOpen()
+                """State 165"""
+                c1_75()
+                def WhilePaused():
+                    SetTalkTime(0.33)
+                assert not CheckSpecificPersonMenuIsOpen(1001, 0)
+            else:
+                """State 166"""
+                OpenGenericDialog(7, 10011070, 1, 0, 1)
+                def WhilePaused():
+                    SetTalkTime(0.33)
+                assert not IsGenericDialogOpen()
+        # storage
+        elif GetTalkListEntryResult() == 6:
+            """State 125"""
+            if GetEventStatus(6701) == 1:
+                pass
+            else:
+                """State 131"""
+                OpenGenericDialog(1, 10011020, 1, 0, 1)
+                """State 132"""
+                SetEventState(6701, 1)
+                def WhilePaused():
+                    SetTalkTime(0.33)
+                assert not IsGenericDialogOpen()
+            """State 133"""
+            OpenRepository()
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not CheckSpecificPersonMenuIsOpen(200, 0)
+        # messengers
+        elif GetTalkListEntryResult() == 7:
+            """State 211"""
+            call = t290111_x90()
+            if call.Done():
+                pass
+        # change appearance
+        elif GetTalkListEntryResult() == 8:
+            """State 212"""
+            call = t290111_x110()
+            if call.Done():
+                pass
+        # offer insight / kindle
+        elif GetTalkListEntryResult() == 11:
+            SetEventState(10008100+71, 1)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
+        # rest
+        elif GetTalkListEntryResult() == 20:
+            SetEventState(12100761, 1)
+            SetEventState(10008500+71, 1)
+    SetEventState(10008500+71, 0)
     return 0
 
 
@@ -370,13 +367,13 @@ def t290111_x50():
                 ForceCloseMenu()
             elif call.Done():
                 return 0
-        # chalice dungeons
+        # current dungeon
         elif GetTalkListEntryResult() == 6:
             """State 20"""
             call = t290111_x116()
             if call.Get() == 1:
-                SetEventState(1510, 1)
-                SetEventState(8500+71, 0)
+                SetEventState(10001510, 1)
+                SetEventState(10008500+71, 0)
                 ForceCloseMenu()
             elif call.Done():
                 """State 21"""
@@ -1083,7 +1080,7 @@ def t290111_x55():
                 """State 26"""
                 return 0
 
-# special chalice menu
+# current dungeon
 def t290111_x116(flag1=0):
     ClearTalkListData()
     SetEventState(70000230, 0)
@@ -1486,6 +1483,7 @@ def t290111_x93():
         AddTalkListData(40, 200085, 12101440) # chalices
         AddTalkListData(60, 200109, -1) # fill upgrade materials
         AddTalkListData(61, 200110, -1) # fill chalice materials
+        AddTalkListData(62, 14000050, -1) # gestures
         ShowShopMessage(0, 0, 0)
         def WhilePaused():
             SetTalkTime(0.33)
@@ -1580,6 +1578,103 @@ def t290111_x93():
             def WhilePaused():
                 SetTalkTime(0.33)
             assert not IsGenericDialogOpen()
+        elif GetTalkListEntryResult() == 62: # gestures
+            call = t290111_x89()
+            if call.Get() == 1:
+                ForceCloseMenu()
+            elif call.Done():
+                return 0
+            assert not IsGenericDialogOpen()
+
+# gestures
+def t290111_x89():
+    while True:
+        ClearTalkListData()
+        AddTalkListData(1, 200301, -1) # approval
+        AddTalkListData(2, 200302, -1) # beg for life
+        AddTalkListData(3, 200303, -1) # brush off dust
+        AddTalkListData(4, 200304, -1) # church bow (female)
+        AddTalkListData(5, 200305, -1) # church bow (male)
+        AddTalkListData(6, 200306, -1) # curtsy
+        AddTalkListData(7, 200307, -1) # deep respect
+        AddTalkListData(8, 200308, -1) # league oath
+        AddTalkListData(9, 200309, -1) # make contact
+        AddTalkListData(10, 200310, -1) # pray
+        AddTalkListData(11, 200311, -1) # respect
+        AddTalkListData(12, 200312, -1) # roar
+        AddTalkListData(13, 200313, -1) # shake off cape
+        AddTalkListData(14, 200314, -1) # shh!
+        AddTalkListData(15, 200315, -1) # triumph
+        AddTalkListData(16, 200316, -1) # wait
+        ShowShopMessage(0, 0, 0)
+        def WhilePaused():
+            SetTalkTime(0.33)
+        if not GetTalkListEntryResult() or not IsTalkExclusiveMenuOpen():
+            return 1
+        elif GetTalkListEntryResult() == 1: # approval
+            OpenItemAcquisitionMenu(ItemType.Goods, 814, 1)
+            AcquireGesture(14)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 2: # beg for life 
+            OpenItemAcquisitionMenu(ItemType.Goods, 816, 1)
+            AcquireGesture(16)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 3: # brush off dust
+            OpenItemAcquisitionMenu(ItemType.Goods, 817, 1)
+            AcquireGesture(17)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 4: # church bow (female)
+            OpenItemAcquisitionMenu(ItemType.Goods, 807, 1)
+            AcquireGesture(7)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 5: # church bow (male) 
+            OpenItemAcquisitionMenu(ItemType.Goods, 805, 1)
+            AcquireGesture(5)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 6: # curtsy
+            OpenItemAcquisitionMenu(ItemType.Goods, 806, 1)
+            AcquireGesture(6)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 7: # deep respect
+            OpenItemAcquisitionMenu(ItemType.Goods, 819, 1)
+            AcquireGesture(19)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 8: # league oath
+            OpenItemAcquisitionMenu(ItemType.Goods, 822, 1)
+            AcquireGesture(22)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 9: # make contact
+            OpenItemAcquisitionMenu(ItemType.Goods, 820, 1)
+            AcquireGesture(20)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 10: # pray 
+            OpenItemAcquisitionMenu(ItemType.Goods, 809, 1)
+            AcquireGesture(9)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 11: # respect
+            OpenItemAcquisitionMenu(ItemType.Goods, 818, 1)
+            AcquireGesture(18)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 12: # roar
+            OpenItemAcquisitionMenu(ItemType.Goods, 815, 1)
+            AcquireGesture(15)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 13: # shake off cape
+            OpenItemAcquisitionMenu(ItemType.Goods, 804, 1)
+            AcquireGesture(4)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 14: # shh!
+            OpenItemAcquisitionMenu(ItemType.Goods, 811, 1)
+            AcquireGesture(11)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 15: # triumph
+            OpenItemAcquisitionMenu(ItemType.Goods, 813, 1)
+            AcquireGesture(13)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 16: # wait
+            OpenItemAcquisitionMenu(ItemType.Goods, 810, 1)
+            AcquireGesture(10)
+            assert not IsMenuOpen(MenuType.Bonfire)
 
 # stump messengers
 def t290111_x92():

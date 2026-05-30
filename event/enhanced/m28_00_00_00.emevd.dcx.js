@@ -43,35 +43,54 @@ const paarl_return = 2301759;
 
 // constructor
 $Event(0, Default, function() {
+    // coins
+    const coinsBaseFlag = 180;
+    const coinsBaseId = (area_id * 100000) + (block_id * 10000) + 8500;
+    const oneRebornIndex = 7;
+    for (let i = 0; i < 20; i++) {
+        if (i == oneRebornIndex) {
+            $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, one_reborn_defeat, 0);
+        }
+        else {
+            $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, 10000999, 0);
+        }
+    }
     
-    SetEventFlag(8900+one_reborn_offset, OFF);
+    // ghosts
+    const ghostsBaseFlag = 180;
+    const ghostsBaseId = (area_id * 100000) + (block_id * 10000) + 8600;
+    for (let i = 0; i < 10; i++) {
+        $InitializeEvent(ghostsBaseFlag+i, 10003500, ghostsBaseId+i);
+    }
     
-    $InitializeEvent(1, 7900, 10000000+one_reborn_return, one_reborn_return, area_id, block_id);
-    $InitializeEvent(2, 7900, 10000000+paarl_return, paarl_return, area_id, block_id);
+    SetEventFlag(10008900+one_reborn_offset, OFF);
     
-    $InitializeEvent(yahargul_lamp_offset, 8500, 8500+yahargul_lamp_offset, yahargul_lamp_id, 72111818);
-    $InitializeEvent(chapel_lamp_offset, 8500, 8500+chapel_lamp_offset, chapel_lamp_id, 72111919);
-    $InitializeEvent(gaol_lamp_offset, 8500, 8500+gaol_lamp_offset, gaol_lamp_id, 72112021);
-    $InitializeEvent(one_reborn_lamp_offset, 8500, 8500+one_reborn_lamp_offset, one_reborn_lamp_id, 72112020);
+    $InitializeEvent(1, 10007900, 10000000+one_reborn_return, one_reborn_return, area_id, block_id);
+    $InitializeEvent(2, 10007900, 10000000+paarl_return, paarl_return, area_id, block_id);
     
-    $InitializeEvent(yahargul_lamp_offset, 8100, 8100+yahargul_lamp_offset, yahargul_lamp_kindle);
-    $InitializeEvent(chapel_lamp_offset, 8100, 8100+chapel_lamp_offset, chapel_lamp_kindle);
-    $InitializeEvent(gaol_lamp_offset, 8100, 8100+gaol_lamp_offset, gaol_lamp_kindle);
-    $InitializeEvent(one_reborn_lamp_offset, 8100, 8100+one_reborn_lamp_offset, one_reborn_lamp_kindle);
+    $InitializeEvent(yahargul_lamp_offset, 10008500, yahargul_lamp_id, 72111818);
+    $InitializeEvent(chapel_lamp_offset, 10008500, chapel_lamp_id, 72111919);
+    $InitializeEvent(gaol_lamp_offset, 10008500, gaol_lamp_id, 72112021);
+    $InitializeEvent(one_reborn_lamp_offset, 10008500, one_reborn_lamp_id, 72112020);
     
-    $InitializeEvent(yahargul_lamp_offset, 8300, yahargul_lamp_id+2000, -1, yahargul_lamp_kindle, yahargul_lamp_id+6000, yahargul_lamp_id+3000);
-    $InitializeEvent(chapel_lamp_offset, 8300, chapel_lamp_id+2000, -1, chapel_lamp_kindle, chapel_lamp_id+6000, chapel_lamp_id+3000);
-    $InitializeEvent(gaol_lamp_offset, 8300, gaol_lamp_id+2000, -1, gaol_lamp_kindle, gaol_lamp_id+6000, gaol_lamp_id+3000);
+    $InitializeEvent(yahargul_lamp_offset, 10008100, 10008100+yahargul_lamp_offset, yahargul_lamp_kindle);
+    $InitializeEvent(chapel_lamp_offset, 10008100, 10008100+chapel_lamp_offset, chapel_lamp_kindle);
+    $InitializeEvent(gaol_lamp_offset, 10008100, 10008100+gaol_lamp_offset, gaol_lamp_kindle);
+    $InitializeEvent(one_reborn_lamp_offset, 10008100, 10008100+one_reborn_lamp_offset, one_reborn_lamp_kindle);
+    
+    $InitializeEvent(yahargul_lamp_offset, 10008300, yahargul_lamp_id+2000, -1, yahargul_lamp_kindle, yahargul_lamp_id+6000, yahargul_lamp_id+3000);
+    $InitializeEvent(chapel_lamp_offset, 10008300, chapel_lamp_id+2000, -1, chapel_lamp_kindle, chapel_lamp_id+6000, chapel_lamp_id+3000);
+    $InitializeEvent(gaol_lamp_offset, 10008300, gaol_lamp_id+2000, -1, gaol_lamp_kindle, gaol_lamp_id+6000, gaol_lamp_id+3000);
     
     if (EventFlag(one_reborn_defeat+13) && !EventFlag(one_reborn_defeat-1)) {
         SetEventFlag(one_reborn_defeat+13, OFF);
         SetEventFlag(one_reborn_defeat, ON);
         if (EventFlag(12111120)) {
             SetEventFlag(12111120, OFF);
-            $InitializeEvent(one_reborn_lamp_offset, 8300, one_reborn_lamp_id+2000, -1, one_reborn_lamp_kindle, one_reborn_lamp_id+6000, one_reborn_lamp_id+3000);
+            $InitializeEvent(one_reborn_lamp_offset, 10008300, one_reborn_lamp_id+2000, -1, one_reborn_lamp_kindle, one_reborn_lamp_id+6000, one_reborn_lamp_id+3000);
         }
         else {
-            $InitializeEvent(one_reborn_lamp_offset, 8300, one_reborn_lamp_id+2000, 999, one_reborn_lamp_kindle, one_reborn_lamp_id+6000, one_reborn_lamp_id+3000);
+            $InitializeEvent(one_reborn_lamp_offset, 10008300, one_reborn_lamp_id+2000, 10000999, one_reborn_lamp_kindle, one_reborn_lamp_id+6000, one_reborn_lamp_id+3000);
             DummyPlayCutsceneAndWarpPlayer(one_reborn_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(one_reborn_defeat+12) || EventFlag(one_reborn_defeat-1)) {
@@ -80,16 +99,16 @@ $Event(0, Default, function() {
         SetEventFlag(one_reborn_defeat+12, OFF);
         SetEventFlag(one_reborn_defeat+13, ON);
         SetEventFlag(one_reborn_defeat-1, OFF);
-        SetEventFlag(8900+one_reborn_offset, ON);
-        $InitializeEvent(one_reborn_lamp_offset, 8300, one_reborn_lamp_id+2000, -1, one_reborn_lamp_kindle, one_reborn_lamp_id+6000, one_reborn_lamp_id+3000);
+        SetEventFlag(10008900+one_reborn_offset, ON);
+        $InitializeEvent(one_reborn_lamp_offset, 10008300, one_reborn_lamp_id+2000, -1, one_reborn_lamp_kindle, one_reborn_lamp_id+6000, one_reborn_lamp_id+3000);
     } else {
-        $InitializeEvent(one_reborn_lamp_offset, 8300, one_reborn_lamp_id+2000, -1, one_reborn_lamp_kindle, one_reborn_lamp_id+6000, one_reborn_lamp_id+3000);
+        $InitializeEvent(one_reborn_lamp_offset, 10008300, one_reborn_lamp_id+2000, -1, one_reborn_lamp_kindle, one_reborn_lamp_id+6000, one_reborn_lamp_id+3000);
     }
     
     $InitializeEvent(one_reborn_offset, 12102070, one_reborn_defeat+13, 0, 7458, one_reborn_id1, one_reborn_id2, one_reborn_id3, one_reborn_id4, -1);
     
-    $InitializeEvent(one_reborn_offset, 8900, one_reborn_defeat-1, one_reborn_lamp_id+1000, 0, 0, one_reborn_lamp_id+5000, area_id, block_id);
-    $InitializeEvent(one_reborn_offset, 7700, one_reborn_defeat+11, one_reborn_defeat+12, one_reborn_lamp_id+1000, 828000);
+    $InitializeEvent(one_reborn_offset, 10008900, one_reborn_defeat-1, one_reborn_lamp_id+1000, 0, 0, one_reborn_lamp_id+5000, area_id, block_id);
+    $InitializeEvent(one_reborn_offset, 10007700, one_reborn_defeat+11, one_reborn_defeat+12, one_reborn_lamp_id+1000, 828000);
     
     $InitializeEvent(1800, 12107000, 72111800, 2801950, 2412950);
     $InitializeEvent(1801, 12107000, 72111801, 2801950, 2412951);
@@ -551,11 +570,14 @@ $Event(0, Default, function() {
     RegisterLadder(12800350, 12800351, 2801250);
     $InitializeEvent(60, 7600, 2801999, 2803999);
     $InitializeEvent(61, 7600, 2801998, 2803998);
+    $InitializeEvent(40, 10000100, 2803960, 2803961, 12807810, -1);
     $InitializeEvent(40, 7000, 2800950, 2801950, 999, 12807800, -1);
     
+    $InitializeEvent(41, 10000100, 2803962, 2803963, 12807830, one_reborn_defeat);
     $InitializeEvent(41, 7000, 2800951, 2801951, 12801800, 12807820, one_reborn_defeat+13);
-    $InitializeEvent(one_reborn_offset, 8800, one_reborn_defeat+13, one_reborn_lamp_id-1000, one_reborn_lamp_id, one_reborn_lamp_id+3000);
+    $InitializeEvent(one_reborn_offset, 10008800, one_reborn_defeat+13, one_reborn_lamp_id-1000, one_reborn_lamp_id, one_reborn_lamp_id+3000);
     
+    $InitializeEvent(43, 10000100, 2803966, 2803967, 12807870, -1);
     $InitializeEvent(43, 7000, 2800953, 2801953, 999, 12807860, -1);
     $InitializeEvent(40, 7100, 72800200, 2801950);
     $InitializeEvent(41, 7100, 72800201, 2801951);
@@ -580,6 +602,7 @@ $Event(0, Default, function() {
     
     // gaol lamp
     if (!EventFlag(9802) || EventFlag(12100868)) {
+        $InitializeEvent(42, 10000100, 2803964, 2803965, 12807850, -1);
         $InitializeEvent(42, 7000, 2800952, 2801952, 999, 12807840, -1);
         $InitializeEvent(42, 7100, 72800202, 2801952);
         $InitializeEvent(42, 7200, 72800102, 2801952, 2102952);
@@ -657,6 +680,10 @@ $Event(0, Default, function() {
         $InitializeEvent(27, 12107200, 72100327, 2902957, 9008);
         $InitializeEvent(28, 12107200, 72100328, 2902958, 9009);
         $InitializeEvent(29, 12107200, 72100329, 2902959, 9010);
+    }
+    else {
+        SetMapSoundState(2803964, Disabled);
+        SetMapSoundState(2803965, Disabled);
     }
     $InitializeEvent(0, 12800140);
     $InitializeEvent(8, 9200, 2803900);
@@ -736,11 +763,11 @@ $Event(0, Default, function() {
     DeleteMapSFX(2803920, false);
     DeleteMapSFX(2803921, false);
     
-    $InitializeEvent(1, 8617, 2800910, 12804420, 101161, 101208, 163); // yamamura - c
-    $InitializeEvent(1, 8630, 8631, 8641, 2800910, 12804420, 2803920, 200248, 101208, 200258, 200268);
+    $InitializeEvent(1, 10007400, 2800910, 12804420, 101161, 101208, 163); // yamamura - c
+    $InitializeEvent(1, 10008630, 10008631, 10008641, 2800910, 12804420, 2803920, 200248, 101208, 200258, 200268);
     
-    $InitializeEvent(2, 8617, 2800911, 12804421, 101161, 101162, 233); // antal
-    $InitializeEvent(2, 8630, 8632, 8642, 2800911, 12804421, 2803921, 200247, 101207, 200257, 200267);
+    $InitializeEvent(2, 10007400, 2800911, 12804421, 101161, 101162, 233); // antal
+    $InitializeEvent(2, 10008630, 10008632, 10008642, 2800911, 12804421, 2803921, 200247, 101207, 200257, 200267);
     
     $InitializeEvent(0, 12804400, 12804440, 2803920, 12804420, 12804430, 12801800, 12804421);
     $InitializeEvent(0, 12804401, 12804441, 2803921, 12804421, 12804431, 12801800, 12804420);
@@ -2361,7 +2388,7 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.Armor, 198, PlayLogMultiplayerType.HostOnly);
         if (EventFlag(one_reborn_defeat+13)) {
             AwardItemLot(17020);
-            $InitializeEvent(one_reborn_offset, 7800, one_reborn_lamp_id+1000, 828000);
+            $InitializeEvent(one_reborn_offset, 10007800, one_reborn_lamp_id+1000, 828000, 2);
         }
         EndEvent();
     }

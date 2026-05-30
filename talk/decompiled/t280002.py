@@ -8,7 +8,7 @@ def t280002_0():
 
 def t280002_x0():
     """State 0,1"""
-    SetEventState(8500+42, 0)
+    SetEventState(10008500+42, 0)
     assert t280002_x7(z1=99999, z2=99999, z3=99999, z4=99999)
     """State 2"""
     return 0
@@ -55,7 +55,7 @@ def t280002_x2(actionbutton1=6100, flag3=280, flag4=2, action1=10010715):
             if call.Done():
                 pass
             elif GetDistanceToPlayer() > 3 or HasPlayerBeenAttacked() == 1:
-                SetEventState(8500+42, 0)
+                SetEventState(10008500+42, 0)
                 continue
         """State 1"""
         assert not GetEventStatus(10007810 + flag3 * 10000 + flag4 * 20)
@@ -240,7 +240,7 @@ def t280002_x60(action1=_):
     if not GetEventStatus(280 * 10 + 70000000 + 2 * 1) or GetEventStatus(12100868) == 1:
         if GetEventStatus(12100858) and GetEventStatus(12100861):
             SetEventState(12100761, 1)
-            SetEventState(8500+42, 1)
+            SetEventState(10008500+42, 1)
         else:
             pass
         while True:
@@ -387,17 +387,17 @@ def t280002_x60(action1=_):
                     pass
             # offer insight / kindle
             elif GetTalkListEntryResult() == 11:
-                SetEventState(8100+42, 1)
+                SetEventState(10008100+42, 1)
                 def WhilePaused():
                     SetTalkTime(0.33)
                 assert not IsGenericDialogOpen()
             # rest
             elif GetTalkListEntryResult() == 20:
                 SetEventState(12100761, 1)
-                SetEventState(8500+42, 1)
+                SetEventState(10008500+42, 1)
     else:
         return 0
-    SetEventState(8500+42, 0)
+    SetEventState(10008500+42, 0)
     return 0
 
 
@@ -567,7 +567,7 @@ def t280002_x20(flag2=_, flag3=_, action1=_):
                 SetTalkTime(0.33)
             assert not IsGenericDialogOpen()
             return 1
-    elif GetEventStatus(12100968) and flag2 * 10 + flag3 == 12121: # g
+    elif GetEventStatus(12100968) and flag2 * 10 + flag3 == 12121: # gaol
         if not GetEventStatus(70002802):
             SetEventState(72102802, 1)
             SetEventState(flag2 * 10 + 72100000 + flag3 * 1, 1)
@@ -1162,8 +1162,8 @@ def t280002_x115():
             """State 5"""
             call = t280002_x135(flag1=72100433, flag2=1, actionbutton1=6116, action1=10011120, action2=10011130)
             if call.Get() == 1:
-                SetEventState(1510, 1)
-                SetEventState(8500+42, 0)
+                SetEventState(10001510, 1)
+                SetEventState(10008500+42, 0)
                 ForceCloseMenu()
             elif call.Done():
                 """State 6"""
@@ -1173,8 +1173,8 @@ def t280002_x115():
             """State 7"""
             call = t280002_x135(flag1=72100434, flag2=2, actionbutton1=6117, action1=10011120, action2=10011130)
             if call.Get() == 1:
-                SetEventState(1510, 1)
-                SetEventState(8500+42, 0)
+                SetEventState(10001510, 1)
+                SetEventState(10008500+42, 0)
                 ForceCloseMenu()
             elif call.Done():
                 """State 8"""
@@ -1184,8 +1184,8 @@ def t280002_x115():
             """State 9"""
             call = t280002_x135(flag1=72100435, flag2=3, actionbutton1=6118, action1=10011120, action2=10011130)
             if call.Get() == 1:
-                SetEventState(1510, 1)
-                SetEventState(8500+42, 0)
+                SetEventState(10001510, 1)
+                SetEventState(10008500+42, 0)
                 ForceCloseMenu()
             elif call.Done():
                 """State 10"""
@@ -1195,8 +1195,8 @@ def t280002_x115():
             """State 11"""
             call = t280002_x135(flag1=72100436, flag2=4, actionbutton1=6119, action1=10011120, action2=10011130)
             if call.Get() == 1:
-                SetEventState(1510, 1)
-                SetEventState(8500+42, 0)
+                SetEventState(10001510, 1)
+                SetEventState(10008500+42, 0)
                 ForceCloseMenu()
             elif call.Done():
                 """State 12"""
@@ -1206,8 +1206,8 @@ def t280002_x115():
             """State 13"""
             call = t280002_x135(flag1=72100437, flag2=5, actionbutton1=6120, action1=10011120, action2=10011130)
             if call.Get() == 1:
-                SetEventState(1510, 1)
-                SetEventState(8500+42, 0)
+                SetEventState(10001510, 1)
+                SetEventState(10008500+42, 0)
                 ForceCloseMenu()
             elif call.Done():
                 """State 14"""
@@ -1217,8 +1217,8 @@ def t280002_x115():
             """State 15"""
             call = t280002_x135(flag1=72100438, flag2=6, actionbutton1=6121, action1=10011120, action2=10011130)
             if call.Get() == 1:
-                SetEventState(1510, 1)
-                SetEventState(8500+42, 0)
+                SetEventState(10001510, 1)
+                SetEventState(10008500+42, 0)
                 ForceCloseMenu()
             elif call.Done():
                 """State 16"""
@@ -1226,7 +1226,7 @@ def t280002_x115():
 
 def t280002_x130():
     """State 0,1"""
-    SetEventState(8500+42, 0)
+    SetEventState(10008500+42, 0)
     assert t280002_x131(z2=99999, z3=99999, z4=99999, z5=99999)
     """State 2"""
     return 0
@@ -1427,7 +1427,7 @@ def t280002_x136(flag1=72100421, action1=10011120, action2=10011130, flag2=1):
                     """State 34"""
                     SetEventState(70000231, 0)
                 """State 36"""
-                c1_79()
+                c1_79() # cause of end animation
                 while True:
                     """State 3"""
                     def WhilePaused():
@@ -1879,6 +1879,7 @@ def t280002_x93():
         AddTalkListData(40, 200085, 12101440) # chalices
         AddTalkListData(60, 200109, -1) # fill upgrade materials
         AddTalkListData(61, 200110, -1) # fill chalice materials
+        AddTalkListData(62, 14000050, -1) # gestures
         ShowShopMessage(0, 0, 0)
         def WhilePaused():
             SetTalkTime(0.33)
@@ -1973,6 +1974,103 @@ def t280002_x93():
             def WhilePaused():
                 SetTalkTime(0.33)
             assert not IsGenericDialogOpen()
+        elif GetTalkListEntryResult() == 62: # gestures
+            call = t280002_x89()
+            if call.Get() == 1:
+                ForceCloseMenu()
+            elif call.Done():
+                return 0
+            assert not IsGenericDialogOpen()
+
+# gestures
+def t280002_x89():
+    while True:
+        ClearTalkListData()
+        AddTalkListData(1, 200301, -1) # approval
+        AddTalkListData(2, 200302, -1) # beg for life
+        AddTalkListData(3, 200303, -1) # brush off dust
+        AddTalkListData(4, 200304, -1) # church bow (female)
+        AddTalkListData(5, 200305, -1) # church bow (male)
+        AddTalkListData(6, 200306, -1) # curtsy
+        AddTalkListData(7, 200307, -1) # deep respect
+        AddTalkListData(8, 200308, -1) # league oath
+        AddTalkListData(9, 200309, -1) # make contact
+        AddTalkListData(10, 200310, -1) # pray
+        AddTalkListData(11, 200311, -1) # respect
+        AddTalkListData(12, 200312, -1) # roar
+        AddTalkListData(13, 200313, -1) # shake off cape
+        AddTalkListData(14, 200314, -1) # shh!
+        AddTalkListData(15, 200315, -1) # triumph
+        AddTalkListData(16, 200316, -1) # wait
+        ShowShopMessage(0, 0, 0)
+        def WhilePaused():
+            SetTalkTime(0.33)
+        if not GetTalkListEntryResult() or not IsTalkExclusiveMenuOpen():
+            return 1
+        elif GetTalkListEntryResult() == 1: # approval
+            OpenItemAcquisitionMenu(ItemType.Goods, 814, 1)
+            AcquireGesture(14)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 2: # beg for life 
+            OpenItemAcquisitionMenu(ItemType.Goods, 816, 1)
+            AcquireGesture(16)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 3: # brush off dust
+            OpenItemAcquisitionMenu(ItemType.Goods, 817, 1)
+            AcquireGesture(17)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 4: # church bow (female)
+            OpenItemAcquisitionMenu(ItemType.Goods, 807, 1)
+            AcquireGesture(7)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 5: # church bow (male) 
+            OpenItemAcquisitionMenu(ItemType.Goods, 805, 1)
+            AcquireGesture(5)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 6: # curtsy
+            OpenItemAcquisitionMenu(ItemType.Goods, 806, 1)
+            AcquireGesture(6)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 7: # deep respect
+            OpenItemAcquisitionMenu(ItemType.Goods, 819, 1)
+            AcquireGesture(19)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 8: # league oath
+            OpenItemAcquisitionMenu(ItemType.Goods, 822, 1)
+            AcquireGesture(22)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 9: # make contact
+            OpenItemAcquisitionMenu(ItemType.Goods, 820, 1)
+            AcquireGesture(20)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 10: # pray 
+            OpenItemAcquisitionMenu(ItemType.Goods, 809, 1)
+            AcquireGesture(9)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 11: # respect
+            OpenItemAcquisitionMenu(ItemType.Goods, 818, 1)
+            AcquireGesture(18)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 12: # roar
+            OpenItemAcquisitionMenu(ItemType.Goods, 815, 1)
+            AcquireGesture(15)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 13: # shake off cape
+            OpenItemAcquisitionMenu(ItemType.Goods, 804, 1)
+            AcquireGesture(4)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 14: # shh!
+            OpenItemAcquisitionMenu(ItemType.Goods, 811, 1)
+            AcquireGesture(11)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 15: # triumph
+            OpenItemAcquisitionMenu(ItemType.Goods, 813, 1)
+            AcquireGesture(13)
+            assert not IsMenuOpen(MenuType.Bonfire)
+        elif GetTalkListEntryResult() == 16: # wait
+            OpenItemAcquisitionMenu(ItemType.Goods, 810, 1)
+            AcquireGesture(10)
+            assert not IsMenuOpen(MenuType.Bonfire)
 
 # stump messengers
 def t280002_x92():

@@ -39,27 +39,47 @@ const witches_id2 = 2200801;
 
 // constructor
 $Event(0, Default, function() {
-    SetEventFlag(8900+witches_offset, OFF);
+    // coins
+    const witchesIndex = 3;
+    const coinsBaseFlag = 20;
+    const coinsBaseId = (area_id * 100000) + (block_id * 10000) + 8500;
+    for (let i = 0; i < 20; i++) {
+        if (i == witchesIndex) {
+            $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, witches_defeat, 0);
+        }
+        else {
+            $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, 10000999, 0);
+        }
+    }
     
-    $InitializeEvent(1, 7900, 10000000+witches_return, witches_return, area_id, block_id);
+    // ghosts
+    const ghostsBaseFlag = 20;
+    const ghostsBaseId = (area_id * 100000) + (block_id * 10000) + 8600;
+    for (let i = 0; i < 10; i++) {
+        $InitializeEvent(ghostsBaseFlag+i, 10003500, ghostsBaseId+i);
+    }
     
-    $InitializeEvent(hemwick_lamp_offset, 8500, 8500+hemwick_lamp_offset, hemwick_lamp_id, 72111212);
-    $InitializeEvent(witches_lamp_offset, 8500, 8500+witches_lamp_offset, witches_lamp_id, 72111313);
+    SetEventFlag(10008900+witches_offset, OFF);
     
-    $InitializeEvent(hemwick_lamp_offset, 8100, 8100+hemwick_lamp_offset, hemwick_lamp_kindle);
-    $InitializeEvent(witches_lamp_offset, 8100, 8100+witches_lamp_offset, witches_lamp_kindle);
+    $InitializeEvent(1, 10007900, 10000000+witches_return, witches_return, area_id, block_id);
     
-    $InitializeEvent(hemwick_lamp_offset, 8300, hemwick_lamp_id+2000, -1, hemwick_lamp_kindle, hemwick_lamp_id+6000, hemwick_lamp_id+3000);
+    $InitializeEvent(hemwick_lamp_offset, 10008500, hemwick_lamp_id, 72111212);
+    $InitializeEvent(witches_lamp_offset, 10008500, witches_lamp_id, 72111313);
+    
+    $InitializeEvent(hemwick_lamp_offset, 10008100, 10008100+hemwick_lamp_offset, hemwick_lamp_kindle);
+    $InitializeEvent(witches_lamp_offset, 10008100, 10008100+witches_lamp_offset, witches_lamp_kindle);
+    
+    $InitializeEvent(hemwick_lamp_offset, 10008300, hemwick_lamp_id+2000, -1, hemwick_lamp_kindle, hemwick_lamp_id+6000, hemwick_lamp_id+3000);
     
     if (EventFlag(witches_rematch_cleanup) && !EventFlag(witches_auto_rematch)) {
         SetEventFlag(witches_rematch_cleanup, OFF);
         SetEventFlag(witches_defeat, ON);
         if (EventFlag(12111120)) {
             SetEventFlag(12111120, OFF);
-            $InitializeEvent(witches_lamp_offset, 8300, witches_lamp_id+2000, -1, witches_lamp_kindle, witches_lamp_id+6000, witches_lamp_id+3000);
+            $InitializeEvent(witches_lamp_offset, 10008300, witches_lamp_id+2000, -1, witches_lamp_kindle, witches_lamp_id+6000, witches_lamp_id+3000);
         }
         else {
-            $InitializeEvent(witches_lamp_offset, 8300, witches_lamp_id+2000, 999, witches_lamp_kindle, witches_lamp_id+6000, witches_lamp_id+3000);
+            $InitializeEvent(witches_lamp_offset, 10008300, witches_lamp_id+2000, 10000999, witches_lamp_kindle, witches_lamp_id+6000, witches_lamp_id+3000);
             DummyPlayCutsceneAndWarpPlayer(witches_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(witches_rematch_started) || EventFlag(witches_auto_rematch)) {
@@ -69,16 +89,16 @@ $Event(0, Default, function() {
         SetEventFlag(witches_rematch_started, OFF);
         SetEventFlag(witches_rematch_cleanup, ON);
         SetEventFlag(witches_auto_rematch, OFF);
-        SetEventFlag(8900+witches_offset, ON);
-        $InitializeEvent(witches_lamp_offset, 8300, witches_lamp_id+2000, -1, witches_lamp_kindle, witches_lamp_id+6000, witches_lamp_id+3000);
+        SetEventFlag(10008900+witches_offset, ON);
+        $InitializeEvent(witches_lamp_offset, 10008300, witches_lamp_id+2000, -1, witches_lamp_kindle, witches_lamp_id+6000, witches_lamp_id+3000);
     } else {
-        $InitializeEvent(witches_lamp_offset, 8300, witches_lamp_id+2000, -1, witches_lamp_kindle, witches_lamp_id+6000, witches_lamp_id+3000);
+        $InitializeEvent(witches_lamp_offset, 10008300, witches_lamp_id+2000, -1, witches_lamp_kindle, witches_lamp_id+6000, witches_lamp_id+3000);
     }
     
     $InitializeEvent(witches_offset, 12102070, witches_rematch_cleanup, 0, 7418, witches_id1, witches_id2, -1, -1, -1);
     
-    $InitializeEvent(witches_offset, 8900, witches_auto_rematch, witches_lamp_spawn_point, 0, 0, witches_rematch_start_region, area_id, block_id);
-    $InitializeEvent(witches_offset, 7700, witches_rematch_triggered, witches_rematch_started, witches_lamp_spawn_point, 822000);
+    $InitializeEvent(witches_offset, 10008900, witches_auto_rematch, witches_lamp_spawn_point, 0, 0, witches_rematch_start_region, area_id, block_id);
+    $InitializeEvent(witches_offset, 10007700, witches_rematch_triggered, witches_rematch_started, witches_lamp_spawn_point, 822000);
     
     $InitializeEvent(1200, 12107000, 72111200, 2201950, 2412950);
     $InitializeEvent(1201, 12107000, 72111201, 2201950, 2412951);
@@ -336,13 +356,15 @@ $Event(0, Default, function() {
     $InitializeEvent(18, 12107200, 72100318, 2902958, 9009);
     $InitializeEvent(19, 12107200, 72100319, 2902959, 9010);
     
+    $InitializeEvent(0, 10000100, 2203960, 2203961, 12207810, -1);
     $InitializeEvent(0, 7000, 2200950, 2201950, 999, 12207800, -1);
     
+    $InitializeEvent(1, 10000100, 2413962, 2413963, 12207830, witches_defeat);
     $InitializeEvent(1, 7000, 2200951, 2201951, 12201800, 12207820, witches_defeat+13);
-    $InitializeEvent(witches_offset, 8800, witches_defeat+13, witches_lamp_id-1000, witches_lamp_id, witches_lamp_id+3000);
+    $InitializeEvent(witches_offset, 10008800, witches_defeat+13, witches_lamp_id-1000, witches_lamp_id, witches_lamp_id+3000);
     
-    $InitializeEvent(1, 8617, 2200910, 12204420, 101161, 101162, 163); // henriett
-    $InitializeEvent(1, 8630, 8631, 8641, 2200910, 12204420, 2203910, 200241, 101207, 200252, 200262);
+    $InitializeEvent(1, 10007400, 2200910, 12204420, 101161, 101162, 163); // henriett
+    $InitializeEvent(1, 10008630, 10008631, 10008641, 2200910, 12204420, 2203910, 200241, 101207, 200252, 200262);
     
     $InitializeEvent(0, 12204400, 2203910, 12204420, 12204430);
     $InitializeEvent(0, 12204410, SingleplayerSummonSignType.NormalCoop, 2200910, 2202910, 12204420, 12204430, 10567);
@@ -692,7 +714,7 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.Armor, 52, PlayLogMultiplayerType.HostOnly);
         if (EventFlag(witches_defeat+13)) {
             AwardItemLot(17020);
-            $InitializeEvent(witches_offset, 7800, witches_lamp_id+1000, 822000);
+            $InitializeEvent(witches_offset, 10007800, witches_lamp_id+1000, 822000, 1);
         }
         EndEvent();
     }

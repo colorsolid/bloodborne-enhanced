@@ -34,25 +34,49 @@ const orphan_id2 = 3600801;
 
 // constructor
 $Event(0, Default, function() {
-    SetEventFlag(8900+orphan_offset, OFF);
+    // coins
+    const coinsBaseFlag = 280;
+    const coinsBaseId = (area_id * 100000) + (block_id * 10000) + 8500;
+    const sharksIndex = 3;
+    const orphanIndex = 7;
+    for (let i = 0; i < 20; i++) {
+        if (i == sharksIndex) {
+            $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, 13605764, 0);
+        }
+        else if (i == orphanIndex) {
+            $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, orphan_defeat, 0);
+        }
+        else {
+            $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, 10000999, 0);
+        }
+    }
     
-    $InitializeEvent(1, 7900, 10000000+orphan_return, orphan_return, area_id, block_id);
+    // ghosts
+    const ghostsBaseFlag = 280;
+    const ghostsBaseId = (area_id * 100000) + (block_id * 10000) + 8600;
+    for (let i = 0; i < 10; i++) {
+        $InitializeEvent(ghostsBaseFlag+i, 10003500, ghostsBaseId+i);
+    }
     
-    $InitializeEvent(hamlet_lamp_offset, 8500, 8500+hamlet_lamp_offset, hamlet_lamp_id, 72114141);
-    $InitializeEvent(lighthouse_lamp_offset, 8500, 8500+lighthouse_lamp_offset, lighthouse_lamp_id, 72114242);
-    $InitializeEvent(orphan_lamp_offset, 8500, 8500+orphan_lamp_offset, orphan_lamp_id, 72114343);
+    SetEventFlag(10008900+orphan_offset, OFF);
     
-    $InitializeEvent(hamlet_lamp_offset, 8100, 8100+hamlet_lamp_offset, hamlet_lamp_kindle);
-    $InitializeEvent(lighthouse_lamp_offset, 8100, 8100+lighthouse_lamp_offset, lighthouse_lamp_kindle);
-    $InitializeEvent(orphan_lamp_offset, 8100, 8100+orphan_lamp_offset, orphan_lamp_kindle);
+    $InitializeEvent(1, 10007900, 10000000+orphan_return, orphan_return, area_id, block_id);
     
-    $InitializeEvent(hamlet_lamp_offset, 8300, hamlet_lamp_id+2000, -1, hamlet_lamp_kindle, hamlet_lamp_id+6000, hamlet_lamp_id+3000);
-    $InitializeEvent(lighthouse_lamp_offset, 8300, lighthouse_lamp_id+2000, -1, lighthouse_lamp_kindle, lighthouse_lamp_id+6000, lighthouse_lamp_id+3000);
+    $InitializeEvent(hamlet_lamp_offset, 10008500, hamlet_lamp_id, 72114141);
+    $InitializeEvent(lighthouse_lamp_offset, 10008500, lighthouse_lamp_id, 72114242);
+    $InitializeEvent(orphan_lamp_offset, 10008500, orphan_lamp_id, 72114343);
     
-    SetEventFlag(7799, ON);
+    $InitializeEvent(hamlet_lamp_offset, 10008100, 10008100+hamlet_lamp_offset, hamlet_lamp_kindle);
+    $InitializeEvent(lighthouse_lamp_offset, 10008100, 10008100+lighthouse_lamp_offset, lighthouse_lamp_kindle);
+    $InitializeEvent(orphan_lamp_offset, 10008100, 10008100+orphan_lamp_offset, orphan_lamp_kindle);
+    
+    $InitializeEvent(hamlet_lamp_offset, 10008300, hamlet_lamp_id+2000, -1, hamlet_lamp_kindle, hamlet_lamp_id+6000, hamlet_lamp_id+3000);
+    $InitializeEvent(lighthouse_lamp_offset, 10008300, lighthouse_lamp_id+2000, -1, lighthouse_lamp_kindle, lighthouse_lamp_id+6000, lighthouse_lamp_id+3000);
+    
+    SetEventFlag(10007799, OFF);
     SetEventFlag(orphan_defeat+15, OFF);
     if (EventFlag(orphan_defeat+14)) {
-        SetEventFlag(7799, ON);
+        SetEventFlag(10007799, ON);
         SetEventFlag(orphan_defeat+14, OFF);
         SetEventFlag(orphan_defeat+15, ON);
     }
@@ -63,10 +87,10 @@ $Event(0, Default, function() {
         SetEventFlag(orphan_defeat, ON);
         if (EventFlag(12111120)) {
             SetEventFlag(12111120, OFF);
-            $InitializeEvent(orphan_lamp_offset, 8300, orphan_lamp_id+2000, -1, orphan_lamp_kindle, orphan_lamp_id+6000, orphan_lamp_id+3000);
+            $InitializeEvent(orphan_lamp_offset, 10008300, orphan_lamp_id+2000, -1, orphan_lamp_kindle, orphan_lamp_id+6000, orphan_lamp_id+3000);
         }
         else {
-            $InitializeEvent(orphan_lamp_offset, 8300, orphan_lamp_id+2000, 999, orphan_lamp_kindle, orphan_lamp_id+6000, orphan_lamp_id+3000);
+            $InitializeEvent(orphan_lamp_offset, 10008300, orphan_lamp_id+2000, 10000999, orphan_lamp_kindle, orphan_lamp_id+6000, orphan_lamp_id+3000);
             DummyPlayCutsceneAndWarpPlayer(orphan_lamp_id+4000, area_id, block_id);
         }
     // rematch has started
@@ -77,17 +101,17 @@ $Event(0, Default, function() {
         SetEventFlag(orphan_defeat+12, OFF);
         SetEventFlag(orphan_defeat+13, ON);
         SetEventFlag(orphan_defeat-1, OFF);
-        SetEventFlag(8900+orphan_offset, ON);
-        $InitializeEvent(orphan_lamp_offset, 8300, orphan_lamp_id+2000, -1, orphan_lamp_kindle, orphan_lamp_id+6000, orphan_lamp_id+3000);
+        SetEventFlag(10008900+orphan_offset, ON);
+        $InitializeEvent(orphan_lamp_offset, 10008300, orphan_lamp_id+2000, -1, orphan_lamp_kindle, orphan_lamp_id+6000, orphan_lamp_id+3000);
     } else {
         // normal
-        $InitializeEvent(orphan_lamp_offset, 8300, orphan_lamp_id+2000, -1, orphan_lamp_kindle, orphan_lamp_id+6000, orphan_lamp_id+3000);
+        $InitializeEvent(orphan_lamp_offset, 10008300, orphan_lamp_id+2000, -1, orphan_lamp_kindle, orphan_lamp_id+6000, orphan_lamp_id+3000);
     }
     
     $InitializeEvent(orphan_offset, 12102070, orphan_defeat+13, 0, 7506, orphan_id1, orphan_id2, -1, -1, -1);
     
-    $InitializeEvent(orphan_offset, 8900, orphan_defeat-1, orphan_lamp_id+1000, orphan_defeat+15, orphan_defeat+14, orphan_lamp_id+5000, area_id, block_id);
-    $InitializeEvent(orphan_offset, 7700, orphan_defeat+11, orphan_defeat+12, orphan_lamp_id+1000, 836000);
+    $InitializeEvent(orphan_offset, 10008900, orphan_defeat-1, orphan_lamp_id+1000, orphan_defeat+15, orphan_defeat+14, orphan_lamp_id+5000, area_id, block_id);
+    $InitializeEvent(orphan_offset, 10007700, orphan_defeat+11, orphan_defeat+12, orphan_lamp_id+1000, 836000);
     
     $InitializeEvent(4100, 12107000, 72114100, 3601950, 2412950);
     $InitializeEvent(4101, 12107000, 72114101, 3601950, 2412951);
@@ -473,11 +497,14 @@ $Event(0, Default, function() {
     $InitializeEvent(28, 12107200, 72100328, 2902958, 9009);
     $InitializeEvent(29, 12107200, 72100329, 2902959, 9010);
     
+    $InitializeEvent(65, 10000100, 3503960, 3503961, 13607810, -1);
     $InitializeEvent(65, 7000, 3600950, 3601950, 999, 13607800, -1);
+    $InitializeEvent(66, 10000100, 3503962, 3503963, 13607830, -1);
     $InitializeEvent(66, 7000, 3600951, 3601951, 999, 13607820, -1);
     
+    $InitializeEvent(67, 10000100, 3503964, 3503965, 13607850, orphan_defeat);
     $InitializeEvent(67, 7000, 3600952, 3601952, 13601800, 13607840, orphan_defeat+13);
-    $InitializeEvent(orphan_offset, 8800, orphan_defeat+13, orphan_lamp_id-1000, orphan_lamp_id, orphan_lamp_id+3000);
+    $InitializeEvent(orphan_offset, 10008800, orphan_defeat+13, orphan_lamp_id-1000, orphan_lamp_id, orphan_lamp_id+3000);
     
     $InitializeEvent(65, 7100, 73600200, 3601950);
     $InitializeEvent(66, 7100, 73600201, 3601951);
@@ -698,6 +725,7 @@ $Event(0, Default, function() {
     $InitializeEvent(0, 13605752);
     $InitializeEvent(0, 13605760);
     $InitializeEvent(0, 13605761);
+    $InitializeEvent(0, 13605764); // sharks ghost token
     $InitializeEvent(0, 13605900, 13605950, 13605960, 13605970, 3602900, 0, 13600995);
     $InitializeEvent(1, 13605900, 13605951, 13605961, 13605971, 3602910, 3602911, 6001);
     $InitializeEvent(2, 13605900, 13605952, 13605962, 13605972, 3602920, 0, 6001);
@@ -1235,7 +1263,7 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.Weapon, 12, PlayLogMultiplayerType.HostOnly);
         ParameterOutput(PlayerPlayLogParameter.Armor, 12, PlayLogMultiplayerType.HostOnly);
         if (EventFlag(orphan_defeat+13)) {
-            $InitializeEvent(orphan_offset, 7800, orphan_lamp_id+1000, 836000);
+            $InitializeEvent(orphan_offset, 10007800, orphan_lamp_id+1000, 836000, 3);
         }
         EndEvent();
     }
@@ -2010,6 +2038,13 @@ $Event(13605762, Restart, function() {
     EndIf(!CharacterType(10000, TargetType.Alive));
     WaitFor(CharacterDead(3600302) && CharacterDead(3600303));
     AwardItemsIncludingClients(3601100);
+});
+
+// sharks ghost token
+$Event(13605764, Restart, function() {
+    EndIf(ThisEvent());
+    WaitFor(CharacterDead(3600302) && CharacterDead(3600303));
+    WaitFixedTimeSeconds(0);
 });
 
 // Fishing Village_Hermit Crab Falling_XX

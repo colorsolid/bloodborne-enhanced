@@ -551,7 +551,7 @@ def t210304_x94():
         AddTalkListData(3, 200235, -1) # prime hunter's mark
         AddTalkListData(7, 200174, -1) # balancing
         AddTalkListData(8, 200200, -1) # respec
-        AddTalkListData(9, 200228, 9462) # dream states
+        AddTalkListData(9, 200228, -1) # dream states
         AddTalkListData(10, 200032, -1) # misc settings
         ShowShopMessage(0, 0, 0)
         def WhilePaused():
@@ -671,6 +671,10 @@ def t210304_x95():
             # quick warp to boss
             AddTalkListData(31, 200133, 12100857)
             AddTalkListData(32, 200132, 12100957)
+
+            # lamp music
+            AddTalkListData(33, 200320, 12100891)
+            AddTalkListData(34, 200319, 12100991)
         else:
             pass
 
@@ -769,9 +773,15 @@ def t210304_x95():
         elif GetTalkListEntryResult() == 32: # enable - quick warp to boss
             SetEventState(12100957, 0)
             SetEventState(12100857, 1)
+        elif GetTalkListEntryResult() == 33: # disable - lamp music
+            SetEventState(12100991, 1)
+            SetEventState(12100891, 0)
+        elif GetTalkListEntryResult() == 34: # enable - lamp music
+            SetEventState(12100991, 0)
+            SetEventState(12100891, 1)
         elif GetTalkListEntryResult() == 35: # enable - lamp kindling
             SetEventState(12100951, 0)
-            SetEventState(8413, 1)
+            SetEventState(10008413, 1)
             SetEventState(12100851, 1)
         elif GetTalkListEntryResult() == 36: # disable - lamp kindling
             SetEventState(12100951, 1)
@@ -887,41 +897,59 @@ def t210304_x98():
     while True:
         ClearTalkListData()
 
-        AddTalkListData(1, 200223, 12103900) # fire enabled - switch to no fire
-        AddTalkListData(2, 200224, 12103901) # no fire enabled - switch to fire
+        AddTalkListData(1, 200321, 12103900) # default - switch to always on
+        AddTalkListData(2, 200223, 12103901) # always on - switch to always off
+        AddTalkListData(3, 200224, 12103902) # always off - switch to default
 
-        AddTalkListData(3, 200225, 12103903) # default enabled -  switch to version 1
-        AddTalkListData(4, 200226, 12103904) # version 1 enabled - switch to version 2
-        AddTalkListData(5, 200227, 12103905) # version 2 enabled - switch to default
+        AddTalkListData(4, 200322, 12103904) # default enabled -  switch to version 1
+        AddTalkListData(5, 200226, 12103905) # version 1 enabled - switch to version 2
+        AddTalkListData(6, 200227, 12103906) # version 2 enabled - switch to no music
+        AddTalkListData(7, 200225, 12103907) # no music enabled - switch to default
 
         ShowShopMessage(0, 0, 0)
         def WhilePaused():
             SetTalkTime(0.33)
         if not GetTalkListEntryResult() or not IsTalkExclusiveMenuOpen():
             return 1
-        elif GetTalkListEntryResult() == 1: # fire enabled -  switch to no fire
+        elif GetTalkListEntryResult() == 1: # default - switch to fire
             SetEventState(12103899, 1)
             SetEventState(12103900, 0)
             SetEventState(12103901, 1)
-        elif GetTalkListEntryResult() == 2: # no fire enabled - switch to fire
+            SetEventState(12103902, 0)
+        elif GetTalkListEntryResult() == 2: # fire - switch to no fire
+            SetEventState(12103899, 1)
+            SetEventState(12103900, 0)
+            SetEventState(12103901, 0)
+            SetEventState(12103902, 1)
+        elif GetTalkListEntryResult() == 3: # no fire - switch to default
             SetEventState(12103899, 1)
             SetEventState(12103900, 1)
             SetEventState(12103901, 0)
-        elif GetTalkListEntryResult() == 3: # no music enabled - switch to version 1
-            SetEventState(12103902, 1)
-            SetEventState(12103903, 0)
-            SetEventState(12103904, 1)
-            SetEventState(12103905, 0)
-        elif GetTalkListEntryResult() == 4: # version 1 enabled - switch to version 2
-            SetEventState(12103902, 1)
-            SetEventState(12103903, 0)
+            SetEventState(12103902, 0)
+        elif GetTalkListEntryResult() == 4: # default - switch to version 1
+            SetEventState(12103903, 1)
             SetEventState(12103904, 0)
             SetEventState(12103905, 1)
-        elif GetTalkListEntryResult() == 5: # version 2 enabled - switch to no music
-            SetEventState(12103902, 1)
+            SetEventState(12103906, 0)
+            SetEventState(12103907, 0)
+        elif GetTalkListEntryResult() == 5: # version 1 enabled - switch to version 2
             SetEventState(12103903, 1)
             SetEventState(12103904, 0)
             SetEventState(12103905, 0)
+            SetEventState(12103906, 1)
+            SetEventState(12103907, 0)
+        elif GetTalkListEntryResult() == 6: # version 2 enabled - switch to no music
+            SetEventState(12103903, 1)
+            SetEventState(12103904, 0)
+            SetEventState(12103905, 0)
+            SetEventState(12103906, 0)
+            SetEventState(12103907, 1)
+        elif GetTalkListEntryResult() == 7: # no music - switch to default
+            SetEventState(12103903, 1)
+            SetEventState(12103904, 1)
+            SetEventState(12103905, 0)
+            SetEventState(12103906, 0)
+            SetEventState(12103907, 0)
 
 # misc settings
 def t210304_x99():
@@ -968,8 +996,13 @@ def t210304_x99():
         AddTalkListData(30, 200153, 12102202) # activate all lamps
         AddTalkListData(31, 200155, 12102212) # activate all shortcuts
 
+        # infinite durability
         AddTalkListData(32, 200231, 12100955)
         AddTalkListData(33, 200232, 12100855)
+
+        # ghost shop
+        AddTalkListData(34, 200317, 12100990)
+        AddTalkListData(35, 200318, 12100890)
 
         ShowShopMessage(0, 0, 0)
         def WhilePaused():
@@ -1048,6 +1081,12 @@ def t210304_x99():
         elif GetTalkListEntryResult() == 33: # disable - infinite durability
             SetEventState(12100955, 1)
             SetEventState(12100855, 0)
+        elif GetTalkListEntryResult() == 34: # enable - ghost shop
+            SetEventState(12100990, 0)
+            SetEventState(12100890, 1)
+        elif GetTalkListEntryResult() == 35: # disable - ghost shop
+            SetEventState(12100990, 1)
+            SetEventState(12100890, 0)
 
 # portable lamp settings
 def t210304_x106():
@@ -1286,6 +1325,73 @@ def t210304_x102():
 # respec
 def t210304_x103():
     while True:
+        if GetEventStatus(12301600) == 1:
+            if GetEventStatus(6744) == 1:
+                AcquireGesture(4)
+            else:
+                pass
+            if GetEventStatus(6745) == 1:
+                AcquireGesture(5)
+            else:
+                pass
+            if GetEventStatus(6746) == 1:
+                AcquireGesture(6)
+            else:
+                pass
+            if GetEventStatus(6747) == 1:
+                AcquireGesture(7)
+            else:
+                pass
+            if GetEventStatus(6749) == 1:
+                AcquireGesture(9)
+            else:
+                pass
+            if GetEventStatus(6750) == 1:
+                AcquireGesture(10)
+            else:
+                pass
+            if GetEventStatus(6751) == 1:
+                AcquireGesture(11)
+            else:
+                pass
+            if GetEventStatus(6753) == 1:
+                AcquireGesture(13)
+            else:
+                pass
+            if GetEventStatus(6754) == 1:
+                AcquireGesture(14)
+            else:
+                pass
+            if GetEventStatus(6755) == 1:
+                AcquireGesture(15)
+            else:
+                pass
+            if GetEventStatus(6756) == 1:
+                AcquireGesture(16)
+            else:
+                pass
+            if GetEventStatus(6757) == 1:
+                AcquireGesture(17)
+            else:
+                pass
+            if GetEventStatus(6758) == 1:
+                AcquireGesture(18)
+            else:
+                pass
+            if GetEventStatus(6759) == 1:
+                AcquireGesture(19)
+            else:
+                pass
+            if GetEventStatus(6760) == 1:
+                AcquireGesture(20)
+            else:
+                pass
+            if GetEventStatus(6762) == 1:
+                AcquireGesture(22)
+            else:
+                pass
+        else:
+            pass
         ClearTalkListData()
 
         AddTalkListData(1, 200201, -1) # milquetoast
@@ -1385,6 +1491,7 @@ def t210304_x105(e1=0):
         if GetGenericDialogButtonResult() == 1:
             DebugEvent('OK')
             SetEventState(12308030, 1)
+            SetEventState(12301600, 1)
             SetEventState(e1, 1)
             def WhilePaused():
                 SetTalkTime(0.33)

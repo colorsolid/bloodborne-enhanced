@@ -37,24 +37,43 @@ const rom_id = 3200800;
 
 // constructor
 $Event(0, Default, function() {
+    // coins
+    const coinsBaseFlag = 200;
+    const coinsBaseId = (area_id * 100000) + (block_id * 10000) + 8500;
+    const romIndex = 6;
+    for (let i = 0; i < 20; i++) {
+        if (i == romIndex) {
+            $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, rom_defeat, 0);
+        }
+        else {
+            $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, 10000999, 0);
+        }
+    }
     
-    SetEventFlag(8900+rom_offset, OFF);
+    // ghosts
+    const ghostsBaseFlag = 200;
+    const ghostsBaseId = (area_id * 100000) + (block_id * 10000) + 8600;
+    for (let i = 0; i < 10; i++) {
+        $InitializeEvent(ghostsBaseFlag+i, 10003500, ghostsBaseId+i);
+    }
     
-    $InitializeEvent(0, 7900, 10000000+rom_return, rom_return, area_id, block_id);
+    SetEventFlag(10008900+rom_offset, OFF);
     
-    $InitializeEvent(byrgenwerth_lamp_offset, 8500, 8500+byrgenwerth_lamp_offset, byrgenwerth_lamp_id, 72111616);
-    $InitializeEvent(lecture_hall_1_lamp_offset, 8500, 8500+lecture_hall_1_lamp_offset, lecture_hall_1_lamp_id, 72112626);
-    $InitializeEvent(lecture_hall_2_lamp_offset, 8500, 8500+lecture_hall_2_lamp_offset, lecture_hall_2_lamp_id, 72112727);
-    $InitializeEvent(rom_lamp_offset, 8500, 8500+rom_lamp_offset, rom_lamp_id, 72111717);
+    $InitializeEvent(0, 10007900, 10000000+rom_return, rom_return, area_id, block_id);
     
-    $InitializeEvent(byrgenwerth_lamp_offset, 8100, 8100+byrgenwerth_lamp_offset, byrgenwerth_lamp_kindle);
-    $InitializeEvent(lecture_hall_1_lamp_offset, 8100, 8100+lecture_hall_1_lamp_offset, lecture_hall_1_lamp_kindle);
-    $InitializeEvent(lecture_hall_2_lamp_offset, 8100, 8100+lecture_hall_2_lamp_offset, lecture_hall_2_lamp_kindle);
-    $InitializeEvent(rom_lamp_offset, 8100, 8100+rom_lamp_offset, rom_lamp_kindle);
+    $InitializeEvent(byrgenwerth_lamp_offset, 10008500, byrgenwerth_lamp_id, 72111616);
+    $InitializeEvent(lecture_hall_1_lamp_offset, 10008500, lecture_hall_1_lamp_id, 72112626);
+    $InitializeEvent(lecture_hall_2_lamp_offset, 10008500, lecture_hall_2_lamp_id, 72112727);
+    $InitializeEvent(rom_lamp_offset, 10008500, rom_lamp_id, 72111717);
     
-    $InitializeEvent(byrgenwerth_lamp_offset, 8300, byrgenwerth_lamp_id+2000, -1, byrgenwerth_lamp_kindle, byrgenwerth_lamp_id+6000, byrgenwerth_lamp_id+3000);
-    $InitializeEvent(lecture_hall_1_lamp_offset, 8300, lecture_hall_1_lamp_id+2000, -1, lecture_hall_1_lamp_kindle, lecture_hall_1_lamp_id+6000, lecture_hall_1_lamp_id+3000);
-    $InitializeEvent(lecture_hall_2_lamp_offset, 8300, lecture_hall_2_lamp_id+2000, -1, lecture_hall_2_lamp_kindle, lecture_hall_2_lamp_id+6000, lecture_hall_2_lamp_id+3000);
+    $InitializeEvent(byrgenwerth_lamp_offset, 10008100, 10008100+byrgenwerth_lamp_offset, byrgenwerth_lamp_kindle);
+    $InitializeEvent(lecture_hall_1_lamp_offset, 10008100, 10008100+lecture_hall_1_lamp_offset, lecture_hall_1_lamp_kindle);
+    $InitializeEvent(lecture_hall_2_lamp_offset, 10008100, 10008100+lecture_hall_2_lamp_offset, lecture_hall_2_lamp_kindle);
+    $InitializeEvent(rom_lamp_offset, 10008100, 10008100+rom_lamp_offset, rom_lamp_kindle);
+    
+    $InitializeEvent(byrgenwerth_lamp_offset, 10008300, byrgenwerth_lamp_id+2000, -1, byrgenwerth_lamp_kindle, byrgenwerth_lamp_id+6000, byrgenwerth_lamp_id+3000);
+    $InitializeEvent(lecture_hall_1_lamp_offset, 10008300, lecture_hall_1_lamp_id+2000, -1, lecture_hall_1_lamp_kindle, lecture_hall_1_lamp_id+6000, lecture_hall_1_lamp_id+3000);
+    $InitializeEvent(lecture_hall_2_lamp_offset, 10008300, lecture_hall_2_lamp_id+2000, -1, lecture_hall_2_lamp_kindle, lecture_hall_2_lamp_id+6000, lecture_hall_2_lamp_id+3000);
     
     if (EventFlag(rom_defeat+13) && !EventFlag(rom_defeat-1)) {
         SetEventFlag(rom_defeat+13, OFF);
@@ -62,10 +81,10 @@ $Event(0, Default, function() {
         SetEventFlag(rom_defeat+3, ON);
         if (EventFlag(12111120)) {
             SetEventFlag(12111120, OFF);
-            $InitializeEvent(rom_lamp_offset, 8300, rom_lamp_id+2000, -1, rom_lamp_kindle, rom_lamp_id+6000, rom_lamp_id+3000);
+            $InitializeEvent(rom_lamp_offset, 10008300, rom_lamp_id+2000, -1, rom_lamp_kindle, rom_lamp_id+6000, rom_lamp_id+3000);
         }
         else {
-            $InitializeEvent(rom_lamp_offset, 8300, rom_lamp_id+2000, 999, rom_lamp_kindle, rom_lamp_id+6000, rom_lamp_id+3000);
+            $InitializeEvent(rom_lamp_offset, 10008300, rom_lamp_id+2000, 10000999, rom_lamp_kindle, rom_lamp_id+6000, rom_lamp_id+3000);
             DummyPlayCutsceneAndWarpPlayer(rom_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(rom_defeat+12) || EventFlag(rom_defeat-1)) {
@@ -78,16 +97,16 @@ $Event(0, Default, function() {
         SetEventFlag(rom_defeat+12, OFF);
         SetEventFlag(rom_defeat+13, ON);
         SetEventFlag(rom_defeat-1, OFF);
-        SetEventFlag(8900+rom_offset, ON);
-        $InitializeEvent(rom_lamp_offset, 8300, rom_lamp_id+2000, -1, rom_lamp_kindle, rom_lamp_id+6000, rom_lamp_id+3000);
+        SetEventFlag(10008900+rom_offset, ON);
+        $InitializeEvent(rom_lamp_offset, 10008300, rom_lamp_id+2000, -1, rom_lamp_kindle, rom_lamp_id+6000, rom_lamp_id+3000);
     } else {
-        $InitializeEvent(rom_lamp_offset, 8300, rom_lamp_id+2000, -1, rom_lamp_kindle, rom_lamp_id+6000, rom_lamp_id+3000);
+        $InitializeEvent(rom_lamp_offset, 10008300, rom_lamp_id+2000, -1, rom_lamp_kindle, rom_lamp_id+6000, rom_lamp_id+3000);
     }
     
     $InitializeEvent(rom_offset, 12102070, rom_defeat+13, 0, 7456, rom_id, -1, -1, -1, -1);
     
-    $InitializeEvent(rom_offset, 8900, rom_defeat-1, rom_lamp_id+1000, 0, 0, rom_lamp_id+5000, area_id, block_id);
-    $InitializeEvent(rom_offset, 7700, rom_defeat+11, rom_defeat+12, rom_lamp_id+1000, 832001);
+    $InitializeEvent(rom_offset, 10008900, rom_defeat-1, rom_lamp_id+1000, 0, 0, rom_lamp_id+5000, area_id, block_id);
+    $InitializeEvent(rom_offset, 10007700, rom_defeat+11, rom_defeat+12, rom_lamp_id+1000, 832001);
     
     $InitializeEvent(1600, 12107000, 72111600, 3201950, 2412950);
     $InitializeEvent(1601, 12107000, 72111601, 3201950, 2412951);
@@ -601,12 +620,16 @@ $Event(0, Default, function() {
     $InitializeEvent(38, 12107200, 72100338, 2902958, 9009);
     $InitializeEvent(39, 12107200, 72100339, 2902959, 9010);
     
+    $InitializeEvent(45, 10000100, 3203960, 3203961, 13207810, -1);
     $InitializeEvent(45, 7000, 3200950, 3201950, 999, 13207800, -1);
+    $InitializeEvent(46, 10000100, 3203962, 3203963, 13207830, -1);
     $InitializeEvent(46, 7000, 3200951, 3201951, 999, 13207820, -1);
     
+    $InitializeEvent(47, 10000100, 3203964, 3203965, 13207850, rom_defeat);
     $InitializeEvent(47, 7000, 3200952, 3201952, 13201803, 13207840, rom_defeat+13);
-    $InitializeEvent(rom_offset, 8800, rom_defeat+13, rom_lamp_id-1000, rom_lamp_id, rom_lamp_id+3000);
+    $InitializeEvent(rom_offset, 10008800, rom_defeat+13, rom_lamp_id-1000, rom_lamp_id, rom_lamp_id+3000);
     
+    $InitializeEvent(48, 10000100, 3203966, 3203967, 13207870, -1);
     $InitializeEvent(48, 7000, 3200953, 3201953, 999, 13207860, -1);
     $InitializeEvent(45, 7100, 73200200, 3201950);
     $InitializeEvent(46, 7100, 73200201, 3201951);
@@ -641,14 +664,14 @@ $Event(0, Default, function() {
     DeleteMapSFX(3203911, false);
     DeleteMapSFX(3203912, false);
     
-    $InitializeEvent(0, 8617, 3200910, 13204420, 101161, 101162, 163); // damien
-    $InitializeEvent(0, 8630, 8630, 8640, 3200910, 13204420, 3203910, 200240, 101207, 200251, 200261);
+    $InitializeEvent(0, 10007400, 3200910, 13204420, 101161, 101162, 163); // damien
+    $InitializeEvent(0, 10008630, 10008630, 10008640, 3200910, 13204420, 3203910, 200240, 101207, 200251, 200261);
     
-    $InitializeEvent(1, 8617, 3200911, 13204421, 101161, 101208, 163); // madaras twin - c
-    $InitializeEvent(1, 8630, 8631, 8641, 3200911, 13204421, 3203911, 200243, 101208, 200253, 200263);
+    $InitializeEvent(1, 10007400, 3200911, 13204421, 101161, 101208, 163); // madaras twin - c
+    $InitializeEvent(1, 10008630, 10008631, 10008641, 3200911, 13204421, 3203911, 200243, 101208, 200253, 200263);
     
-    $InitializeEvent(2, 8617, 3200912, 13204422, 101161, 101208, 163); // henryk - c
-    $InitializeEvent(2, 8630, 8632, 8642, 3200912, 13204422, 3203912, 200244, 101208, 200254, 200264);
+    $InitializeEvent(2, 10007400, 3200912, 13204422, 101161, 101208, 163); // henryk - c
+    $InitializeEvent(2, 10008630, 10008632, 10008642, 3200912, 13204422, 3203912, 200244, 101208, 200254, 200264);
     
     $InitializeEvent(0, 13204400, 13204440, 3203910, 13204420, 13204430, 13201800, 6001);
     $InitializeEvent(0, 13204401, 13204441, 3203911, 13204421, 13204431, 13201800, 13204420);
@@ -1308,7 +1331,7 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.Armor, 92, PlayLogMultiplayerType.HostOnly);
         if (EventFlag(rom_defeat+13)) {
             AwardItemLot(17020);
-            $InitializeEvent(rom_offset, 7800, rom_lamp_id+1000, 832001);
+            $InitializeEvent(rom_offset, 10007800, rom_lamp_id+1000, 832001, 2);
         }
         EndEvent();
     }

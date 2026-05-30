@@ -37,32 +37,56 @@ const paarl_id = 2300810;
     
 // constructor
 $Event(0, Default, function() {
+    // coins
+    const coinsBaseFlag = 40;
+    const coinsBaseId = (area_id * 100000) + (block_id * 10000) + 8500;
+    const bsbIndex = 5;
+    const paarlIndex = 6;
+    for (let i = 0; i < 20; i++) {
+        if (i == bsbIndex) {
+            $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, bsb_defeat, 0);
+        }
+        else if (i == paarlIndex) {
+            $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, paarl_defeat, 0);
+        }
+        else {
+            $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, 10000999, 0);
+        }
+    }
+    
+    // ghosts
+    const ghostsBaseFlag = 40;
+    const ghostsBaseId = (area_id * 100000) + (block_id * 10000) + 8600;
+    for (let i = 0; i < 10; i++) {
+        $InitializeEvent(ghostsBaseFlag+i, 10003500, ghostsBaseId+i);
+    }
+    
     $InitializeEvent(0, 12302300);
-    SetEventFlag(8900+bsb_offset, OFF);
-    SetEventFlag(8900+paarl_offset, OFF);
+    SetEventFlag(10008900+bsb_offset, OFF);
+    SetEventFlag(10008900+paarl_offset, OFF);
     
-    $InitializeEvent(3, 7900, 10000000+bsb_return, bsb_return, area_id, block_id);
-    $InitializeEvent(4, 7900, 10000000+paarl_return, paarl_return, area_id, block_id);
+    $InitializeEvent(3, 10007900, 10000000+bsb_return, bsb_return, area_id, block_id);
+    $InitializeEvent(4, 10007900, 10000000+paarl_return, paarl_return, area_id, block_id);
     
-    $InitializeEvent(old_yharnam_lamp_offset, 8500, 8500+old_yharnam_lamp_offset, old_yharnam_lamp_id, 72110909);
-    $InitializeEvent(bsb_lamp_offset, 8500, 8500+bsb_lamp_offset, bsb_lamp_id, 72111010);
-    $InitializeEvent(paarl_lamp_offset, 8500, 8500+paarl_lamp_offset, paarl_lamp_id, 72111111);
+    $InitializeEvent(old_yharnam_lamp_offset, 10008500, old_yharnam_lamp_id, 72110909);
+    $InitializeEvent(bsb_lamp_offset, 10008500, bsb_lamp_id, 72111010);
+    $InitializeEvent(paarl_lamp_offset, 10008500, paarl_lamp_id, 72111111);
     
-    $InitializeEvent(old_yharnam_lamp_offset, 8100, 8100+old_yharnam_lamp_offset, old_yharnam_lamp_kindle);
-    $InitializeEvent(bsb_lamp_offset, 8100, 8100+bsb_lamp_offset, bsb_lamp_kindle);
-    $InitializeEvent(paarl_lamp_offset, 8100, 8100+paarl_lamp_offset, paarl_lamp_kindle);
+    $InitializeEvent(old_yharnam_lamp_offset, 10008100, 10008100+old_yharnam_lamp_offset, old_yharnam_lamp_kindle);
+    $InitializeEvent(bsb_lamp_offset, 10008100, 10008100+bsb_lamp_offset, bsb_lamp_kindle);
+    $InitializeEvent(paarl_lamp_offset, 10008100, 10008100+paarl_lamp_offset, paarl_lamp_kindle);
     
-    $InitializeEvent(old_yharnam_lamp_offset, 8300, old_yharnam_lamp_id+2000, -1, old_yharnam_lamp_kindle, old_yharnam_lamp_id+6000, old_yharnam_lamp_id+3000);
+    $InitializeEvent(old_yharnam_lamp_offset, 10008300, old_yharnam_lamp_id+2000, -1, old_yharnam_lamp_kindle, old_yharnam_lamp_id+6000, old_yharnam_lamp_id+3000);
     
     if (EventFlag(bsb_defeat+13) && !EventFlag(bsb_defeat-1)) {
         SetEventFlag(bsb_defeat+13, OFF);
         SetEventFlag(bsb_defeat, ON);
         if (EventFlag(12111120)) {
             SetEventFlag(12111120, OFF);
-            $InitializeEvent(bsb_lamp_offset, 8300, bsb_lamp_id+2000, -1, bsb_lamp_kindle, bsb_lamp_id+6000, bsb_lamp_id+3000);
+            $InitializeEvent(bsb_lamp_offset, 10008300, bsb_lamp_id+2000, -1, bsb_lamp_kindle, bsb_lamp_id+6000, bsb_lamp_id+3000);
         }
         else {
-            $InitializeEvent(bsb_lamp_offset, 8300, bsb_lamp_id+2000, 999, bsb_lamp_kindle, bsb_lamp_id+6000, bsb_lamp_id+3000);
+            $InitializeEvent(bsb_lamp_offset, 10008300, bsb_lamp_id+2000, 10000999, bsb_lamp_kindle, bsb_lamp_id+6000, bsb_lamp_id+3000);
             DummyPlayCutsceneAndWarpPlayer(bsb_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(bsb_defeat+12) || EventFlag(bsb_defeat-1)) {
@@ -71,10 +95,10 @@ $Event(0, Default, function() {
         SetEventFlag(bsb_defeat+12, OFF);
         SetEventFlag(bsb_defeat+13, ON);
         SetEventFlag(bsb_defeat-1, OFF);
-        SetEventFlag(8900+bsb_offset, ON);
-        $InitializeEvent(bsb_lamp_offset, 8300, bsb_lamp_id+2000, -1, bsb_lamp_kindle, bsb_lamp_id+6000, bsb_lamp_id+3000);
+        SetEventFlag(10008900+bsb_offset, ON);
+        $InitializeEvent(bsb_lamp_offset, 10008300, bsb_lamp_id+2000, -1, bsb_lamp_kindle, bsb_lamp_id+6000, bsb_lamp_id+3000);
     } else {
-        $InitializeEvent(bsb_lamp_offset, 8300, bsb_lamp_id+2000, -1, bsb_lamp_kindle, bsb_lamp_id+6000, bsb_lamp_id+3000);
+        $InitializeEvent(bsb_lamp_offset, 10008300, bsb_lamp_id+2000, -1, bsb_lamp_kindle, bsb_lamp_id+6000, bsb_lamp_id+3000);
     }
     
     if (EventFlag(paarl_defeat+13) && !EventFlag(paarl_defeat-1)) {
@@ -82,10 +106,10 @@ $Event(0, Default, function() {
         SetEventFlag(paarl_defeat, ON);
         if (EventFlag(12111120)) {
             SetEventFlag(12111120, OFF);
-            $InitializeEvent(paarl_lamp_offset, 8300, paarl_lamp_id+2000, -1, paarl_lamp_kindle, paarl_lamp_id+6000, paarl_lamp_id+3000);
+            $InitializeEvent(paarl_lamp_offset, 10008300, paarl_lamp_id+2000, -1, paarl_lamp_kindle, paarl_lamp_id+6000, paarl_lamp_id+3000);
         }
         else {
-            $InitializeEvent(paarl_lamp_offset, 8300, paarl_lamp_id+2000, 999, paarl_lamp_kindle, paarl_lamp_id+6000, paarl_lamp_id+3000);
+            $InitializeEvent(paarl_lamp_offset, 10008300, paarl_lamp_id+2000, 10000999, paarl_lamp_kindle, paarl_lamp_id+6000, paarl_lamp_id+3000);
             DummyPlayCutsceneAndWarpPlayer(paarl_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(paarl_defeat+12) || EventFlag(paarl_defeat-1)) {
@@ -94,20 +118,20 @@ $Event(0, Default, function() {
         SetEventFlag(paarl_defeat+12, OFF);
         SetEventFlag(paarl_defeat+13, ON);
         SetEventFlag(paarl_defeat-1, OFF);
-        SetEventFlag(8900+paarl_offset, ON);
-        $InitializeEvent(paarl_lamp_offset, 8300, paarl_lamp_id+2000, -1, paarl_lamp_kindle, paarl_lamp_id+6000, paarl_lamp_id+3000);
+        SetEventFlag(10008900+paarl_offset, ON);
+        $InitializeEvent(paarl_lamp_offset, 10008300, paarl_lamp_id+2000, -1, paarl_lamp_kindle, paarl_lamp_id+6000, paarl_lamp_id+3000);
     } else {
-        $InitializeEvent(paarl_lamp_offset, 8300, paarl_lamp_id+2000, -1, paarl_lamp_kindle, paarl_lamp_id+6000, paarl_lamp_id+3000);
+        $InitializeEvent(paarl_lamp_offset, 10008300, paarl_lamp_id+2000, -1, paarl_lamp_kindle, paarl_lamp_id+6000, paarl_lamp_id+3000);
     }
     
     $InitializeEvent(bsb_offset, 12102070, bsb_defeat+13, 0, 7416, bsb_id, -1, -1, -1, -1);
     $InitializeEvent(paarl_offset, 12102070, paarl_defeat+13, 0, 7449, paarl_id, -1, -1, -1, -1);
     
-    $InitializeEvent(bsb_offset, 8900, bsb_defeat-1, bsb_lamp_id+1000, 0, 0, bsb_lamp_id+5000, area_id, block_id);
-    $InitializeEvent(paarl_offset, 8900, paarl_defeat-1, paarl_lamp_id+1000, 0, 0, paarl_lamp_id+5000, area_id, block_id);
+    $InitializeEvent(bsb_offset, 10008900, bsb_defeat-1, bsb_lamp_id+1000, 0, 0, bsb_lamp_id+5000, area_id, block_id);
+    $InitializeEvent(paarl_offset, 10008900, paarl_defeat-1, paarl_lamp_id+1000, 0, 0, paarl_lamp_id+5000, area_id, block_id);
     
-    $InitializeEvent(bsb_offset, 7700, bsb_defeat+11, bsb_defeat+12, bsb_lamp_id+1000, 823000);
-    $InitializeEvent(paarl_offset, 7700, paarl_defeat+11, paarl_defeat+12, paarl_lamp_id+1000, 823001);
+    $InitializeEvent(bsb_offset, 10007700, bsb_defeat+11, bsb_defeat+12, bsb_lamp_id+1000, 823000);
+    $InitializeEvent(paarl_offset, 10007700, paarl_defeat+11, paarl_defeat+12, paarl_lamp_id+1000, 823001);
     
     $InitializeEvent(900, 12107000, 72110900, 2301950, 2412950);
     $InitializeEvent(901, 12107000, 72110901, 2301950, 2412951);
@@ -493,13 +517,16 @@ $Event(0, Default, function() {
     $InitializeEvent(28, 12107200, 72100328, 2902958, 9009);
     $InitializeEvent(29, 12107200, 72100329, 2902959, 9010);
     
+    $InitializeEvent(5, 10000100, 2303960, 2303961, 12307810, -1);
     $InitializeEvent(5, 7000, 2300950, 2301950, 999, 12307800, -1);
     
+    $InitializeEvent(6, 10000100, 2303962, 2303963, 12307830, bsb_defeat);
     $InitializeEvent(6, 7000, 2300951, 2301951, 12301800, 12307820, bsb_defeat+13);
-    $InitializeEvent(bsb_offset, 8800, bsb_defeat+13, bsb_lamp_id-1000, bsb_lamp_id, bsb_lamp_id+3000);
+    $InitializeEvent(bsb_offset, 10008800, bsb_defeat+13, bsb_lamp_id-1000, bsb_lamp_id, bsb_lamp_id+3000);
     
+    $InitializeEvent(6, 10000100, 2303964, 2303965, 12307850, paarl_defeat);
     $InitializeEvent(7, 7000, 2300952, 2301952, 12301700, 12307840, paarl_defeat+13);
-    $InitializeEvent(paarl_offset, 8800, paarl_defeat+13, paarl_lamp_id-1000, paarl_lamp_id, paarl_lamp_id+3000);
+    $InitializeEvent(paarl_offset, 10008800, paarl_defeat+13, paarl_lamp_id-1000, paarl_lamp_id, paarl_lamp_id+3000);
     
     $InitializeEvent(5, 7100, 72300200, 2301950);
     $InitializeEvent(6, 7100, 72300201, 2301951);
@@ -520,14 +547,14 @@ $Event(0, Default, function() {
     DeleteMapSFX(2303910, false);
     DeleteMapSFX(2303911, false);
     
-    $InitializeEvent(3, 8617, 2300740, 12304420, 101161, 101162, 233); // alfred
-    $InitializeEvent(3, 8630, 8633, 8643, 2300740, 12304420, 2303400, 200245, 101207, 200255, 200265);
+    $InitializeEvent(3, 10007400, 2300740, 12304420, 101161, 101162, 233); // alfred
+    $InitializeEvent(3, 10008630, 10008633, 10008643, 2300740, 12304420, 2303400, 200245, 101207, 200255, 200265);
     
-    $InitializeEvent(4, 8617, 2300930, 12304421, 101161, 101162, 163); // antal
-    $InitializeEvent(4, 8630, 8634, 8644, 2300930, 12304421, 2303910, 200247, 101207, 200257, 200267);
+    $InitializeEvent(4, 10007400, 2300930, 12304421, 101161, 101162, 163); // antal
+    $InitializeEvent(4, 10008630, 10008634, 10008644, 2300930, 12304421, 2303910, 200247, 101207, 200257, 200267);
     
-    $InitializeEvent(5, 8617, 2300931, 12304422, 101161, 101208, 183); // yamamura - c
-    $InitializeEvent(5, 8630, 8635, 8645, 2300931, 12304422, 2303911, 200248, 101208, 200258, 200268);
+    $InitializeEvent(5, 10007400, 2300931, 12304422, 101161, 101208, 183); // yamamura - c
+    $InitializeEvent(5, 10008630, 10008635, 10008645, 2300931, 12304422, 2303911, 200248, 101208, 200258, 200268);
     
     $InitializeEvent(0, 12304400, 12304440, 2303400, 12304420, 12304430, 12301800, 6001);
     $InitializeEvent(0, 12304401, 12304441, 2303910, 12304421, 12304431, 12301700, 12304422);
@@ -1054,7 +1081,7 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.Armor, 52, PlayLogMultiplayerType.HostOnly);
         if (EventFlag(bsb_defeat+13)) {
             AwardItemLot(17020);
-            $InitializeEvent(bsb_offset, 7800, bsb_lamp_id+1000, 823000);
+            $InitializeEvent(bsb_offset, 10007800, bsb_lamp_id+1000, 823000, 1);
         }
         EndEvent();
     }
@@ -1062,7 +1089,6 @@ L1:
     WaitFor(CharacterType(10000, TargetType.WhitePhantom));
     WaitFixedTimeSeconds(0);
 });
-
 // Boss attack SE play_Bloodthirsty beast
 $Event(12301801, Default, function() {
     SetNetworkSyncState(Disabled);
@@ -1338,7 +1364,7 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.Armor, 120, PlayLogMultiplayerType.HostOnly);
         if (EventFlag(paarl_defeat+13)) {
             AwardItemLot(17020);
-            $InitializeEvent(paarl_offset, 7800, paarl_lamp_id+1000, 823001);
+            $InitializeEvent(paarl_offset, 10007800, paarl_lamp_id+1000, 823001, 1);
         }
         EndEvent();
     }

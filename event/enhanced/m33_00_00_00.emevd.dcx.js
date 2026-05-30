@@ -35,27 +35,47 @@ const amygdala_id = 3300800;
 
 // constructor
 $Event(0, Default, function() {
-    SetEventFlag(8900+amygdala_offset, OFF);
+    // coins
+    const coinsBaseFlag = 220;
+    const coinsBaseId = (area_id * 100000) + (block_id * 10000) + 8500;
+    const amygdalaIndex = 6;
+    for (let i = 0; i < 20; i++) {
+        if (i == amygdalaIndex) {
+            $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, amygdala_defeat, 0);
+        }
+        else {
+            $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, 10000999, 0);
+        }
+    }
     
-    $InitializeEvent(0, 7900, 10000000+amygdala_return, amygdala_return, area_id, block_id);
+    // ghosts
+    const ghostsBaseFlag = 220;
+    const ghostsBaseId = (area_id * 100000) + (block_id * 10000) + 8600;
+    for (let i = 0; i < 10; i++) {
+        $InitializeEvent(ghostsBaseFlag+i, 10003500, ghostsBaseId+i);
+    }
     
-    $InitializeEvent(frontier_lamp_offset, 8500, 8500+frontier_lamp_offset, frontier_lamp_id, 72112828);
-    $InitializeEvent(amygdala_lamp_offset, 8500, 8500+amygdala_lamp_offset, amygdala_lamp_id, 72112929);
+    SetEventFlag(10008900+amygdala_offset, OFF);
     
-    $InitializeEvent(frontier_lamp_offset, 8100, 8100+frontier_lamp_offset, frontier_lamp_kindle);
-    $InitializeEvent(amygdala_lamp_offset, 8100, 8100+amygdala_lamp_offset, amygdala_lamp_kindle);
+    $InitializeEvent(0, 10007900, 10000000+amygdala_return, amygdala_return, area_id, block_id);
     
-    $InitializeEvent(frontier_lamp_offset, 8300, frontier_lamp_id+2000, -1, frontier_lamp_kindle, frontier_lamp_id+6000, frontier_lamp_id+3000);
+    $InitializeEvent(frontier_lamp_offset, 10008500, frontier_lamp_id, 72112828);
+    $InitializeEvent(amygdala_lamp_offset, 10008500, amygdala_lamp_id, 72112929);
+    
+    $InitializeEvent(frontier_lamp_offset, 10008100, 10008100+frontier_lamp_offset, frontier_lamp_kindle);
+    $InitializeEvent(amygdala_lamp_offset, 10008100, 10008100+amygdala_lamp_offset, amygdala_lamp_kindle);
+    
+    $InitializeEvent(frontier_lamp_offset, 10008300, frontier_lamp_id+2000, -1, frontier_lamp_kindle, frontier_lamp_id+6000, frontier_lamp_id+3000);
     
     if (EventFlag(amygdala_defeat+13) && !EventFlag(amygdala_defeat-1)) {
         SetEventFlag(amygdala_defeat+13, OFF);
         SetEventFlag(amygdala_defeat, ON);
         if (EventFlag(12111120)) {
             SetEventFlag(12111120, OFF);
-            $InitializeEvent(amygdala_lamp_offset, 8300, amygdala_lamp_id+2000, -1, amygdala_lamp_kindle, amygdala_lamp_id+6000, amygdala_lamp_id+3000);
+            $InitializeEvent(amygdala_lamp_offset, 10008300, amygdala_lamp_id+2000, -1, amygdala_lamp_kindle, amygdala_lamp_id+6000, amygdala_lamp_id+3000);
         }
         else {
-            $InitializeEvent(amygdala_lamp_offset, 8300, amygdala_lamp_id+2000, 999, amygdala_lamp_kindle, amygdala_lamp_id+6000, amygdala_lamp_id+3000);
+            $InitializeEvent(amygdala_lamp_offset, 10008300, amygdala_lamp_id+2000, 10000999, amygdala_lamp_kindle, amygdala_lamp_id+6000, amygdala_lamp_id+3000);
             DummyPlayCutsceneAndWarpPlayer(amygdala_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(amygdala_defeat+12) || EventFlag(amygdala_defeat-1)) {
@@ -64,16 +84,16 @@ $Event(0, Default, function() {
         SetEventFlag(amygdala_defeat+12, OFF);
         SetEventFlag(amygdala_defeat+13, ON);
         SetEventFlag(amygdala_defeat-1, OFF);
-        SetEventFlag(8900+amygdala_offset, ON);
-        $InitializeEvent(amygdala_lamp_offset, 8300, amygdala_lamp_id+2000, -1, amygdala_lamp_kindle, amygdala_lamp_id+6000, amygdala_lamp_id+3000);
+        SetEventFlag(10008900+amygdala_offset, ON);
+        $InitializeEvent(amygdala_lamp_offset, 10008300, amygdala_lamp_id+2000, -1, amygdala_lamp_kindle, amygdala_lamp_id+6000, amygdala_lamp_id+3000);
     } else {
-        $InitializeEvent(amygdala_lamp_offset, 8300, amygdala_lamp_id+2000, -1, amygdala_lamp_kindle, amygdala_lamp_id+6000, amygdala_lamp_id+3000);
+        $InitializeEvent(amygdala_lamp_offset, 10008300, amygdala_lamp_id+2000, -1, amygdala_lamp_kindle, amygdala_lamp_id+6000, amygdala_lamp_id+3000);
     }
     
     $InitializeEvent(amygdala_offset, 12102070, amygdala_defeat+13, 0, 7446, amygdala_id, -1, -1, -1, -1);
     
-    $InitializeEvent(amygdala_offset, 8900, amygdala_defeat-1, amygdala_lamp_id+1000, 0, 0, amygdala_lamp_id+5000, area_id, block_id);
-    $InitializeEvent(amygdala_offset, 7700, amygdala_defeat+11, amygdala_defeat+12, amygdala_lamp_id+1000, 833000);
+    $InitializeEvent(amygdala_offset, 10008900, amygdala_defeat-1, amygdala_lamp_id+1000, 0, 0, amygdala_lamp_id+5000, area_id, block_id);
+    $InitializeEvent(amygdala_offset, 10007700, amygdala_defeat+11, amygdala_defeat+12, amygdala_lamp_id+1000, 833000);
     
     $InitializeEvent(2800, 12107000, 72112800, 3301950, 2412950);
     $InitializeEvent(2801, 12107000, 72112801, 3301950, 2412951);
@@ -331,10 +351,12 @@ $Event(0, Default, function() {
     $InitializeEvent(18, 12107200, 72100318, 2902958, 9009);
     $InitializeEvent(19, 12107200, 72100319, 2902959, 9010);
     
+    $InitializeEvent(50, 10000100, 3303960, 3303961, 13307810, -1);
     $InitializeEvent(50, 7000, 3300950, 3301950, 999, 13307800, -1);
     
+    $InitializeEvent(51, 10000100, 3303962, 3303963, 13307830, amygdala_defeat);
     $InitializeEvent(51, 7000, 3300951, 3301951, 13301800, 13307820, amygdala_defeat+13);
-    $InitializeEvent(amygdala_offset, 8800, amygdala_defeat+13, amygdala_lamp_id-1000, amygdala_lamp_id, amygdala_lamp_id+3000);
+    $InitializeEvent(amygdala_offset, 10008800, amygdala_defeat+13, amygdala_lamp_id-1000, amygdala_lamp_id, amygdala_lamp_id+3000);
     
     $InitializeEvent(50, 7100, 73300200, 3301950);
     $InitializeEvent(51, 7100, 73300201, 3301951);
@@ -672,7 +694,7 @@ L0:
     ParameterOutput(PlayerPlayLogParameter.Armor, 52, PlayLogMultiplayerType.HostOnly);
     if (EventFlag(amygdala_defeat+13)) {
         AwardItemLot(17020);
-        $InitializeEvent(amygdala_offset, 7800, amygdala_lamp_id+1000, 833000);
+        $InitializeEvent(amygdala_offset, 10007800, amygdala_lamp_id+1000, 833000, 2);
     }
 });
 

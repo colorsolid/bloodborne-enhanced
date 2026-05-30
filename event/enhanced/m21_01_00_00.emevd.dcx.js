@@ -15,9 +15,23 @@ const lamp_kindle = 12110000 + (area_id * 100) + (block_id * 10);
 
 // constructor
 $Event(0, Default, function() {
-    $InitializeEvent(lamp_offset, 8300, lamp_id+2000, -1, lamp_kindle, lamp_id+6000, lamp_id+3000);
-    $InitializeEvent(lamp_offset, 8500, 8500+lamp_offset, lamp_id, 72112525);
-    $InitializeEvent(lamp_offset, 8100, 8100+lamp_offset, 12102110);
+    // coins
+    const coinsBaseFlag = 10;
+    const coinsBaseId = (area_id * 100000) + (block_id * 10000) + 8500;
+    for (let i = 0; i < 10; i++) {
+        $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, 10000999, 0);
+    }
+    
+    // ghosts
+    const ghostsBaseFlag = 10;
+    const ghostsBaseId = (area_id * 100000) + (block_id * 10000) + 8600;
+    for (let i = 0; i < 10; i++) {
+        $InitializeEvent(ghostsBaseFlag+i, 10003500, ghostsBaseId+i);
+    }
+    
+    $InitializeEvent(lamp_offset, 10008300, lamp_id+2000, -1, lamp_kindle, lamp_id+6000, lamp_id+3000);
+    $InitializeEvent(lamp_offset, 10008500, lamp_id, 72112525);
+    $InitializeEvent(lamp_offset, 10008100, 10008100+lamp_offset, 12102110);
     
     $InitializeEvent(2500, 12107000, 72112500, 2111950, 2412950);
     $InitializeEvent(2501, 12107000, 72112501, 2111950, 2412951);
@@ -154,6 +168,8 @@ $Event(0, Default, function() {
     $InitializeEvent(0, 12110300);
     $InitializeEvent(0, 12110301);
     $InitializeEvent(0, 12110302);
+    
+    $InitializeEvent(52, 10000100, 2113960, 2113961, 12117810, -1);
     $InitializeEvent(52, 7000, 2110950, 2111950, 999, 12117800, -1);
     $InitializeEvent(52, 7100, 72110200, 2111950);
     $InitializeEvent(52, 7200, 72110100, 2111950, 2102952);

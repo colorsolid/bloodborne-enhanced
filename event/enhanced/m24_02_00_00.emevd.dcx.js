@@ -37,32 +37,63 @@ const ebrietas_id = 2420800;
 
 // constructor
 $Event(0, Default, function() {
+    // coins
+    const coinsBaseFlag = 100;
+    const coinsBaseId = (area_id * 100000) + (block_id * 10000) + 8500;
+    const chandalierDummyIndex = 1;
+    const chandalierIndex = 2;
+    const celestIndex = 3;
+    const ebrietasIndex = 4;
+    for (let i = 0; i < 20; i++) {
+        if (i == chandalierDummyIndex) {
+            $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, 12420321, 0);
+        }
+        else if (i == chandalierIndex) {
+            $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, 12420322, 0);
+        }
+        else if (i == celestIndex) {
+            $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, celestial_emissary_defeat, 0);
+        }
+        else if (i == ebrietasIndex) {
+            $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, ebrietas_defeat, 0);
+        }
+        else {
+            $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, 10000999, 0);
+        }
+    }
     
-    SetEventFlag(8900+celestial_emissary_offset, OFF);
-    SetEventFlag(8900+ebrietas_offset, OFF);
+    // ghosts
+    const ghostsBaseFlag = 100;
+    const ghostsBaseId = (area_id * 100000) + (block_id * 10000) + 8600;
+    for (let i = 0; i < 10; i++) {
+        $InitializeEvent(ghostsBaseFlag+i, 10003500, ghostsBaseId+i);
+    }
     
-    $InitializeEvent(1, 7900, 10000000+celestial_emissary_return, celestial_emissary_return, area_id, block_id);
-    $InitializeEvent(2, 7900, 10000000+ebrietas_return, ebrietas_return, area_id, block_id);
+    SetEventFlag(10008900+celestial_emissary_offset, OFF);
+    SetEventFlag(10008900+ebrietas_offset, OFF);
     
-    $InitializeEvent(upper_ward_lamp_offset, 8500, 8500+upper_ward_lamp_offset, upper_ward_lamp_id, 72110606);
-    $InitializeEvent(celestial_emissary_lamp_offset, 8500, 8500+celestial_emissary_lamp_offset, celestial_emissary_lamp_id, 72110707);
-    $InitializeEvent(ebrietas_lamp_offset, 8500, 8500+ebrietas_lamp_offset, ebrietas_lamp_id, 72110808);
+    $InitializeEvent(1, 10007900, 10000000+celestial_emissary_return, celestial_emissary_return, area_id, block_id);
+    $InitializeEvent(2, 10007900, 10000000+ebrietas_return, ebrietas_return, area_id, block_id);
     
-    $InitializeEvent(upper_ward_lamp_offset, 8100, 8100+upper_ward_lamp_offset, upper_ward_lamp_kindle);
-    $InitializeEvent(celestial_emissary_lamp_offset, 8100, 8100+celestial_emissary_lamp_offset, celestial_emissary_lamp_kindle);
-    $InitializeEvent(ebrietas_lamp_offset, 8100, 8100+ebrietas_lamp_offset, ebrietas_lamp_kindle);
+    $InitializeEvent(upper_ward_lamp_offset, 10008500, upper_ward_lamp_id, 72110606);
+    $InitializeEvent(celestial_emissary_lamp_offset, 10008500, celestial_emissary_lamp_id, 72110707);
+    $InitializeEvent(ebrietas_lamp_offset, 10008500, ebrietas_lamp_id, 72110808);
     
-    $InitializeEvent(upper_ward_lamp_offset, 8300, upper_ward_lamp_id+2000, -1, upper_ward_lamp_kindle, upper_ward_lamp_id+6000, upper_ward_lamp_id+3000);
+    $InitializeEvent(upper_ward_lamp_offset, 10008100, 10008100+upper_ward_lamp_offset, upper_ward_lamp_kindle);
+    $InitializeEvent(celestial_emissary_lamp_offset, 10008100, 10008100+celestial_emissary_lamp_offset, celestial_emissary_lamp_kindle);
+    $InitializeEvent(ebrietas_lamp_offset, 10008100, 10008100+ebrietas_lamp_offset, ebrietas_lamp_kindle);
+    
+    $InitializeEvent(upper_ward_lamp_offset, 10008300, upper_ward_lamp_id+2000, -1, upper_ward_lamp_kindle, upper_ward_lamp_id+6000, upper_ward_lamp_id+3000);
     
     if (EventFlag(celestial_emissary_defeat+13) && !EventFlag(celestial_emissary_defeat-1)) {
         SetEventFlag(celestial_emissary_defeat+13, OFF);
         SetEventFlag(celestial_emissary_defeat, ON);
         if (EventFlag(12111120)) {
             SetEventFlag(12111120, OFF);
-            $InitializeEvent(celestial_emissary_lamp_offset, 8300, celestial_emissary_lamp_id+2000, -1, celestial_emissary_lamp_kindle, celestial_emissary_lamp_id+6000, celestial_emissary_lamp_id+3000);
+            $InitializeEvent(celestial_emissary_lamp_offset, 10008300, celestial_emissary_lamp_id+2000, -1, celestial_emissary_lamp_kindle, celestial_emissary_lamp_id+6000, celestial_emissary_lamp_id+3000);
         }
         else {
-            $InitializeEvent(celestial_emissary_lamp_offset, 8300, celestial_emissary_lamp_id+2000, 999, celestial_emissary_lamp_kindle, celestial_emissary_lamp_id+6000, celestial_emissary_lamp_id+3000);
+            $InitializeEvent(celestial_emissary_lamp_offset, 10008300, celestial_emissary_lamp_id+2000, 10000999, celestial_emissary_lamp_kindle, celestial_emissary_lamp_id+6000, celestial_emissary_lamp_id+3000);
             DummyPlayCutsceneAndWarpPlayer(celestial_emissary_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(celestial_emissary_defeat+12) || EventFlag(celestial_emissary_defeat-1)) {
@@ -71,16 +102,16 @@ $Event(0, Default, function() {
         SetEventFlag(celestial_emissary_defeat+12, OFF);
         SetEventFlag(celestial_emissary_defeat+13, ON);
         SetEventFlag(celestial_emissary_defeat-1, OFF);
-        SetEventFlag(8900+celestial_emissary_offset, ON);
-        $InitializeEvent(celestial_emissary_lamp_offset, 8300, celestial_emissary_lamp_id+2000, -1, celestial_emissary_lamp_kindle, celestial_emissary_lamp_id+6000, celestial_emissary_lamp_id+3000);
+        SetEventFlag(10008900+celestial_emissary_offset, ON);
+        $InitializeEvent(celestial_emissary_lamp_offset, 10008300, celestial_emissary_lamp_id+2000, -1, celestial_emissary_lamp_kindle, celestial_emissary_lamp_id+6000, celestial_emissary_lamp_id+3000);
     } else {
-        $InitializeEvent(celestial_emissary_lamp_offset, 8300, celestial_emissary_lamp_id+2000, -1, celestial_emissary_lamp_kindle, celestial_emissary_lamp_id+6000, celestial_emissary_lamp_id+3000);
+        $InitializeEvent(celestial_emissary_lamp_offset, 10008300, celestial_emissary_lamp_id+2000, -1, celestial_emissary_lamp_kindle, celestial_emissary_lamp_id+6000, celestial_emissary_lamp_id+3000);
     }
     
     if (EventFlag(ebrietas_defeat+13) && !EventFlag(ebrietas_defeat-1)) {
         SetEventFlag(ebrietas_defeat+13, OFF);
         SetEventFlag(ebrietas_defeat, ON);
-        $InitializeEvent(ebrietas_lamp_offset, 8300, ebrietas_lamp_id+2000, 999, ebrietas_lamp_kindle, ebrietas_lamp_id+6000, ebrietas_lamp_id+3000);
+        $InitializeEvent(ebrietas_lamp_offset, 10008300, ebrietas_lamp_id+2000, 10000999, ebrietas_lamp_kindle, ebrietas_lamp_id+6000, ebrietas_lamp_id+3000);
         if (EventFlag(12111120)) {
             SetEventFlag(12111120, OFF);
         }
@@ -95,20 +126,20 @@ $Event(0, Default, function() {
         SetEventFlag(ebrietas_defeat+12, OFF);
         SetEventFlag(ebrietas_defeat+13, ON);
         SetEventFlag(ebrietas_defeat-1, OFF);
-        SetEventFlag(8900+ebrietas_offset, ON);
-        $InitializeEvent(ebrietas_lamp_offset, 8300, ebrietas_lamp_id+2000, -1, ebrietas_lamp_kindle, ebrietas_lamp_id+6000, ebrietas_lamp_id+3000);
+        SetEventFlag(10008900+ebrietas_offset, ON);
+        $InitializeEvent(ebrietas_lamp_offset, 10008300, ebrietas_lamp_id+2000, -1, ebrietas_lamp_kindle, ebrietas_lamp_id+6000, ebrietas_lamp_id+3000);
     } else {
-        $InitializeEvent(ebrietas_lamp_offset, 8300, ebrietas_lamp_id+2000, -1, ebrietas_lamp_kindle, ebrietas_lamp_id+6000, ebrietas_lamp_id+3000);
+        $InitializeEvent(ebrietas_lamp_offset, 10008300, ebrietas_lamp_id+2000, -1, ebrietas_lamp_kindle, ebrietas_lamp_id+6000, ebrietas_lamp_id+3000);
     }
     
     $InitializeEvent(celestial_emissary_offset, 12102070, celestial_emissary_defeat+13, 0, 7459, celestial_emissary_id, -1, -1, -1, -1);
     $InitializeEvent(ebrietas_offset, 12102070, ebrietas_defeat+13, 0, 7462, ebrietas_id, -1, -1, -1, -1);
     
-    $InitializeEvent(celestial_emissary_offset, 8900, celestial_emissary_defeat-1, celestial_emissary_lamp_id+1000, 0, 0, celestial_emissary_lamp_id+5000, area_id, block_id);
-    $InitializeEvent(ebrietas_offset, 8900, ebrietas_defeat-1, ebrietas_lamp_id+1000, 0, 0, ebrietas_lamp_id+5000, area_id, block_id);
+    $InitializeEvent(celestial_emissary_offset, 10008900, celestial_emissary_defeat-1, celestial_emissary_lamp_id+1000, 0, 0, celestial_emissary_lamp_id+5000, area_id, block_id);
+    $InitializeEvent(ebrietas_offset, 10008900, ebrietas_defeat-1, ebrietas_lamp_id+1000, 0, 0, ebrietas_lamp_id+5000, area_id, block_id);
     
-    $InitializeEvent(celestial_emissary_offset, 7700, celestial_emissary_defeat+11, celestial_emissary_defeat+12, celestial_emissary_lamp_id+1000, 824200);
-    $InitializeEvent(ebrietas_offset, 7700, ebrietas_defeat+11, ebrietas_defeat+12, ebrietas_lamp_id+1000, 824201);
+    $InitializeEvent(celestial_emissary_offset, 10007700, celestial_emissary_defeat+11, celestial_emissary_defeat+12, celestial_emissary_lamp_id+1000, 824200);
+    $InitializeEvent(ebrietas_offset, 10007700, ebrietas_defeat+11, ebrietas_defeat+12, ebrietas_lamp_id+1000, 824201);
     
     $InitializeEvent(600, 12107000, 72110600, 2421950, 2412950);
     $InitializeEvent(601, 12107000, 72110601, 2421950, 2412951);
@@ -494,13 +525,16 @@ $Event(0, Default, function() {
     $InitializeEvent(28, 12107200, 72100328, 2902958, 9009);
     $InitializeEvent(29, 12107200, 72100329, 2902959, 9010);
     
+    $InitializeEvent(20, 10000100, 2423960, 2423961, 12427810, -1);
     $InitializeEvent(20, 7000, 2420950, 2421950, 999, 12427800, -1);
     
+    $InitializeEvent(21, 10000100, 2423962, 2423963, 12427830, ebrietas_defeat);
     $InitializeEvent(21, 7000, 2420951, 2421951, 12421800, 12427820, ebrietas_defeat+13);
-    $InitializeEvent(ebrietas_offset, 8800, ebrietas_defeat+13, ebrietas_lamp_id-1000, ebrietas_lamp_id, ebrietas_lamp_id+3000);
+    $InitializeEvent(ebrietas_offset, 10008800, ebrietas_defeat+13, ebrietas_lamp_id-1000, ebrietas_lamp_id, ebrietas_lamp_id+3000);
     
+    $InitializeEvent(22, 10000100, 2423964, 2423965, 12427850, celestial_emissary_defeat);
     $InitializeEvent(22, 7000, 2420952, 2421952, 12421700, 12427840, celestial_emissary_defeat+13);
-    $InitializeEvent(celestial_emissary_offset, 8800, celestial_emissary_defeat+13, celestial_emissary_lamp_id-1000, celestial_emissary_lamp_id, celestial_emissary_lamp_id+3000);
+    $InitializeEvent(celestial_emissary_offset, 10008800, celestial_emissary_defeat+13, celestial_emissary_lamp_id-1000, celestial_emissary_lamp_id, celestial_emissary_lamp_id+3000);
     
     $InitializeEvent(20, 7100, 72420200, 2421950);
     $InitializeEvent(21, 7100, 72420201, 2421951);
@@ -513,8 +547,8 @@ $Event(0, Default, function() {
     $InitializeEvent(22, 7300, 72102422, 2421952);
     DeleteMapSFX(2423910, false);
     
-    $InitializeEvent(1, 8617, 2420910, 12424420, 101161, 101162, 163); // damien
-    $InitializeEvent(1, 8630, 8631, 8641, 2420910, 12424420, 2423910, 200240, 101207, 200251, 200261);
+    $InitializeEvent(1, 10007400, 2420910, 12424420, 101161, 101162, 163); // damien
+    $InitializeEvent(1, 10008630, 10008631, 10008641, 2420910, 12424420, 2423910, 200240, 101207, 200251, 200261);
     
     $InitializeEvent(0, 12424400, 12424440, 2423910, 12424420, 12424430, 12421800, 6001);
     $InitializeEvent(0, 12424410, SingleplayerSummonSignType.NormalCoop, 2420910, 2422910, 12424420, 12424430, 12424440, 12421800, 10566);
@@ -785,7 +819,7 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.Armor, 70, PlayLogMultiplayerType.HostOnly);
         if (EventFlag(ebrietas_defeat+13)) {
             AwardItemLot(17020);
-            $InitializeEvent(ebrietas_offset, 7800, ebrietas_lamp_id+1000, 824201);
+            $InitializeEvent(ebrietas_offset, 10007800, ebrietas_lamp_id+1000, 824201, 3);
         }
         EndEvent();
     }
@@ -1139,7 +1173,7 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.Weapon, 120, PlayLogMultiplayerType.HostOnly);
         ParameterOutput(PlayerPlayLogParameter.Armor, 120, PlayLogMultiplayerType.HostOnly);
         if (EventFlag(celestial_emissary_defeat+13)) {
-            $InitializeEvent(celestial_emissary_offset, 7800, celestial_emissary_lamp_id+1000, 824200);
+            $InitializeEvent(celestial_emissary_offset, 10007800, celestial_emissary_lamp_id+1000, 824200, 1);
         }
         EndEvent();
     }
@@ -1804,6 +1838,8 @@ $Event(12420310, Restart, function() {
 // chandelier falls
 $Event(12420320, Restart, function() {
     if (ThisEvent()) {
+        SetEventFlag(12420321, OFF);
+        SetEventFlag(12420322, ON);
         DeactivateObject(2421300, Disabled);
         WarpCharacterAndSetFloor(2420200, TargetEntityType.Area, 2422200, -1, 2420203);
         WarpCharacterAndSetFloor(2420201, TargetEntityType.Area, 2422201, -1, 2420203);
@@ -1815,6 +1851,8 @@ $Event(12420320, Restart, function() {
         EndEvent();
     }
 L0:
+    SetEventFlag(12420321, ON);
+    SetEventFlag(12420322, OFF);
     DeactivateObject(2421301, Disabled);
     ChangeCharacterEnableState(2420200, Disabled);
     SetCharacterAIState(2420200, Disabled);
@@ -1870,6 +1908,7 @@ L0:
         InArea(10000, 2422653)
             && (CharacterType(10000, TargetType.Alive)
                 || CharacterType(10000, TargetType.WhitePhantom)));
+    SetEventFlag(12420321, OFF);
     ChangeCharacterEnableState(2420200, Enabled);
     ForceAnimationPlayback(2420200, 7007, false, false, false);
     ForceAnimationPlayback(2420201, 7008, false, false, false);
@@ -1892,6 +1931,7 @@ L0:
     SetCharacterAIState(2420202, Enabled);
     SetCharacterGravity(2420202, Enabled);
     SetCharacterHome(2420202, 2422202);
+    SetEventFlag(12420322, ON);
     WaitFixedTimeSeconds(10);
     SetCharacterAIId(2420200, 100000);
     SetCharacterAIId(2420201, 100000);

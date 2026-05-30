@@ -178,7 +178,37 @@ const orphan_rematch_spawn_point = orphan_lamp_id + 1000;
 
 // constructor
 $Event(0, Default, function() {
+    // coins
+    const coinsBaseFlag = 0;
+    const coinsBaseId = (area_id * 100000) + (block_id * 10000) + 8500;
+    const gehrmanIndex = 3;
+    const moonPresenceIndex = 2;
+    for (let i = 0; i < 10; i++) {
+        if (i == gehrmanIndex) {
+            $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, gehrman_defeat, 0);
+        }
+        else if (i == moonPresenceIndex) {
+            $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, moon_presence_defeat, 0);
+        }
+        else {
+            $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, 10000999, 0);
+        }
+    }
+    
+    // ghosts
+    const ghostsBaseFlag = 0;
+    const ghostsBaseId = (area_id * 100000) + (block_id * 10000) + 8600;
+    for (let i = 0; i < 10; i++) {
+        $InitializeEvent(ghostsBaseFlag+i, 10003500, ghostsBaseId+i);
+    }
+    
+    SetEventFlag(7500, OFF); // prevent level up effect when returning to dream
+    
     $InitializeEvent(0, 12100005); // shop display fix
+    
+    $InitializeEvent(0, 12103000); // ghost shop check
+    
+    $InitializeEvent(0, 12103100);
     
     $InitializeEvent(0, 8701); // broken lamp enable/disable
     
@@ -187,15 +217,15 @@ $Event(0, Default, function() {
     } else {
         EventValueOperation(auto_kindle, 2, 1, 0, 0, CalculationType.Assign);
     }
-    $InitializeEvent(0, 12101602, 2102802, 2211001);
+    $InitializeEvent(0, 12101602, 2102801, 2211001);
     
-    SetEventFlag(8900+gehrman_offset, OFF);
-    SetEventFlag(8900+moon_presence_offset, OFF);
+    SetEventFlag(10008900+gehrman_offset, OFF);
+    SetEventFlag(10008900+moon_presence_offset, OFF);
     
-    SetEventFlag(7799, OFF);
+    SetEventFlag(10007799, OFF);
     SetEventFlag(distorted_rematch_played, OFF);
     if (EventFlag(distorted_rematch_started)) {
-        SetEventFlag(7799, ON);
+        SetEventFlag(10007799, ON);
         SetEventFlag(distorted_rematch_started, OFF);
         SetEventFlag(distorted_rematch_played, ON);
     }
@@ -209,7 +239,7 @@ $Event(0, Default, function() {
             SetEventFlag(12111120, OFF);
         }
         else {
-            $InitializeEvent(gehrman_offset, 8300, 2102968, 999, auto_kindle, 2102328, 2102308);
+            $InitializeEvent(gehrman_offset, 10008300, 2102968, 10000999, auto_kindle, 2102328, 2102308);
             DummyPlayCutsceneAndWarpPlayer(2102967, area_id, block_id);
         }
     // rematch has started
@@ -221,9 +251,9 @@ $Event(0, Default, function() {
         SetEventFlag(gehrman_rematch_started, OFF);
         SetEventFlag(gehrman_rematch_played, ON);
         SetEventFlag(gehrman_auto_rematch_trigger, OFF);
-        SetEventFlag(8900+gehrman_offset, ON);
+        SetEventFlag(10008900+gehrman_offset, ON);
         if (!EventFlag(distorted_rematch_played)) {
-            $InitializeEvent(gehrman_offset, 8300, 2102968, -1, auto_kindle, 2102328, 2102308);
+            $InitializeEvent(gehrman_offset, 10008300, 2102968, -1, auto_kindle, 2102328, 2102308);
         }
     }
     
@@ -236,7 +266,7 @@ $Event(0, Default, function() {
             SetEventFlag(12111120, OFF);
         }
         else {
-            $InitializeEvent(moon_presence_offset, 8300, 2102968, 999, auto_kindle, 2102328, 2102308);
+            $InitializeEvent(moon_presence_offset, 10008300, 2102968, 10000999, auto_kindle, 2102328, 2102308);
             DummyPlayCutsceneAndWarpPlayer(2102967, area_id, block_id);
         }
     // rematch has started
@@ -248,22 +278,22 @@ $Event(0, Default, function() {
         SetEventFlag(moon_presence_rematch_started, OFF);
         SetEventFlag(moon_presence_rematch_played, ON);
         SetEventFlag(moon_presence_auto_rematch_trigger, OFF);
-        SetEventFlag(8900+moon_presence_offset, ON);
-        $InitializeEvent(moon_presence_offset, 8300, 2102968, -1, auto_kindle, 2102328, 2102308);
+        SetEventFlag(10008900+moon_presence_offset, ON);
+        $InitializeEvent(moon_presence_offset, 10008300, 2102968, -1, auto_kindle, 2102328, 2102308);
     }
     
-    $InitializeEvent(31, 8300, 2102968, -1, auto_kindle, 2102328, 2102308); // broken lamp
-    $InitializeEvent(30, 8300, 2102318, -1, auto_kindle, 2102328, 2102308); // main spawn
-    
-    if (!EventFlag(distorted_rematch_played)) {
-        $InitializeEvent(gehrman_offset, 7700, gehrman_rematch_triggered, gehrman_rematch_started, 2102969, 821000);
-    }
-    $InitializeEvent(moon_presence_offset, 7700, moon_presence_rematch_triggered, moon_presence_rematch_started, 2102969, 821000);
+    $InitializeEvent(31, 10008300, 2102968, -1, auto_kindle, 2102328, 2102308); // broken lamp
+    $InitializeEvent(30, 10008300, 2102318, -1, auto_kindle, 2102328, 2102308); // main spawn
     
     if (!EventFlag(distorted_rematch_played)) {
-        $InitializeEvent(gehrman_offset, 8900, gehrman_auto_rematch_trigger, 2102969, 0, 0, gehrman_trigger_short_warp, area_id, block_id);
+        $InitializeEvent(gehrman_offset, 10007700, gehrman_rematch_triggered, gehrman_rematch_started, 2102969, 821000);
     }
-    $InitializeEvent(moon_presence_offset, 8900, moon_presence_auto_rematch_trigger, 2102969, distorted_rematch_played, distorted_rematch_played, moon_presence_trigger_short_warp, area_id, block_id);
+    $InitializeEvent(moon_presence_offset, 10007700, moon_presence_rematch_triggered, moon_presence_rematch_started, 2102969, 821000);
+    
+    if (!EventFlag(distorted_rematch_played)) {
+        $InitializeEvent(gehrman_offset, 10008900, gehrman_auto_rematch_trigger, 2102969, 0, 0, gehrman_trigger_short_warp, area_id, block_id);
+    }
+    $InitializeEvent(moon_presence_offset, 10008900, moon_presence_auto_rematch_trigger, 2102969, distorted_rematch_played, distorted_rematch_played, moon_presence_trigger_short_warp, area_id, block_id);
     
     $InitializeEvent(0, 12102000); // reset rematch flags
     
@@ -284,26 +314,26 @@ $Event(0, Default, function() {
     
     SetEventFlag(12100998, OFF);
     
-    $InitializeEvent(cleric_beast_offset, 7700, cleric_beast_rematch_triggered, cleric_beast_rematch_started, cleric_beast_rematch_spawn_point, 821000);
-    $InitializeEvent(gascoigne_offset, 7700, gascoigne_rematch_triggered, gascoigne_rematch_started, gascoigne_rematch_spawn_point, 821000);
-    $InitializeEvent(amelia_offset, 7700, amelia_rematch_triggered, amelia_rematch_started, amelia_rematch_spawn_point, 821000);
-    $InitializeEvent(bsb_offset, 7700, bsb_rematch_triggered, bsb_rematch_started, bsb_rematch_spawn_point, 821000);
-    $InitializeEvent(witches_offset, 7700, witches_rematch_triggered, witches_rematch_started, witches_rematch_spawn_point, 821000);
-    $InitializeEvent(shadows_offset, 7700, shadows_rematch_triggered, shadows_rematch_started, shadows_rematch_spawn_point, 821000);
-    $InitializeEvent(rom_offset, 7700, rom_rematch_triggered, rom_rematch_started, rom_rematch_spawn_point, 821000);
-    $InitializeEvent(paarl_offset, 7700, paarl_rematch_triggered, paarl_rematch_started, paarl_rematch_spawn_point, 821000);
-    $InitializeEvent(one_reborn_offset, 7700, one_reborn_rematch_triggered, one_reborn_rematch_started, one_reborn_rematch_spawn_point, 821000);
-    $InitializeEvent(amygdala_offset, 7700, amygdala_rematch_triggered, amygdala_rematch_started, amygdala_rematch_spawn_point, 821000);
-    $InitializeEvent(micolash_offset, 7700, micolash_rematch_triggered, micolash_rematch_started, micolash_rematch_spawn_point, 821000);
-    $InitializeEvent(wet_nurse_offset, 7700, wet_nurse_rematch_triggered, wet_nurse_rematch_started, wet_nurse_rematch_spawn_point, 821000);
-    $InitializeEvent(celestial_emissary_offset, 7700, celestial_emissary_rematch_triggered, celestial_emissary_rematch_started, celestial_emissary_rematch_spawn_point, 821000);
-    $InitializeEvent(ebrietas_offset, 7700, ebrietas_rematch_triggered, ebrietas_rematch_started, ebrietas_rematch_spawn_point, 821000);
-    $InitializeEvent(logarius_offset, 7700, logarius_rematch_triggered, logarius_rematch_started, logarius_rematch_spawn_point, 821000);
-    $InitializeEvent(ludwig_offset, 7700, ludwig_rematch_triggered, ludwig_rematch_started, ludwig_rematch_spawn_point, 821000);
-    $InitializeEvent(laurence_offset, 7700, laurence_rematch_triggered, laurence_rematch_started, laurence_rematch_spawn_point, 821000);
-    $InitializeEvent(living_failures_offset, 7700, living_failures_rematch_triggered, living_failures_rematch_started, living_failures_rematch_spawn_point, 821000);
-    $InitializeEvent(maria_offset, 7700, maria_rematch_triggered, maria_rematch_started, maria_rematch_spawn_point, 821000);
-    $InitializeEvent(orphan_offset, 7700, orphan_rematch_triggered, orphan_rematch_started, orphan_rematch_spawn_point, 821000);
+    $InitializeEvent(cleric_beast_offset, 10007700, cleric_beast_rematch_triggered, cleric_beast_rematch_started, cleric_beast_rematch_spawn_point, 821000);
+    $InitializeEvent(gascoigne_offset, 10007700, gascoigne_rematch_triggered, gascoigne_rematch_started, gascoigne_rematch_spawn_point, 821000);
+    $InitializeEvent(amelia_offset, 10007700, amelia_rematch_triggered, amelia_rematch_started, amelia_rematch_spawn_point, 821000);
+    $InitializeEvent(bsb_offset, 10007700, bsb_rematch_triggered, bsb_rematch_started, bsb_rematch_spawn_point, 821000);
+    $InitializeEvent(witches_offset, 10007700, witches_rematch_triggered, witches_rematch_started, witches_rematch_spawn_point, 821000);
+    $InitializeEvent(shadows_offset, 10007700, shadows_rematch_triggered, shadows_rematch_started, shadows_rematch_spawn_point, 821000);
+    $InitializeEvent(rom_offset, 10007700, rom_rematch_triggered, rom_rematch_started, rom_rematch_spawn_point, 821000);
+    $InitializeEvent(paarl_offset, 10007700, paarl_rematch_triggered, paarl_rematch_started, paarl_rematch_spawn_point, 821000);
+    $InitializeEvent(one_reborn_offset, 10007700, one_reborn_rematch_triggered, one_reborn_rematch_started, one_reborn_rematch_spawn_point, 821000);
+    $InitializeEvent(amygdala_offset, 10007700, amygdala_rematch_triggered, amygdala_rematch_started, amygdala_rematch_spawn_point, 821000);
+    $InitializeEvent(micolash_offset, 10007700, micolash_rematch_triggered, micolash_rematch_started, micolash_rematch_spawn_point, 821000);
+    $InitializeEvent(wet_nurse_offset, 10007700, wet_nurse_rematch_triggered, wet_nurse_rematch_started, wet_nurse_rematch_spawn_point, 821000);
+    $InitializeEvent(celestial_emissary_offset, 10007700, celestial_emissary_rematch_triggered, celestial_emissary_rematch_started, celestial_emissary_rematch_spawn_point, 821000);
+    $InitializeEvent(ebrietas_offset, 10007700, ebrietas_rematch_triggered, ebrietas_rematch_started, ebrietas_rematch_spawn_point, 821000);
+    $InitializeEvent(logarius_offset, 10007700, logarius_rematch_triggered, logarius_rematch_started, logarius_rematch_spawn_point, 821000);
+    $InitializeEvent(ludwig_offset, 10007700, ludwig_rematch_triggered, ludwig_rematch_started, ludwig_rematch_spawn_point, 821000);
+    $InitializeEvent(laurence_offset, 10007700, laurence_rematch_triggered, laurence_rematch_started, laurence_rematch_spawn_point, 821000);
+    $InitializeEvent(living_failures_offset, 10007700, living_failures_rematch_triggered, living_failures_rematch_started, living_failures_rematch_spawn_point, 821000);
+    $InitializeEvent(maria_offset, 10007700, maria_rematch_triggered, maria_rematch_started, maria_rematch_spawn_point, 821000);
+    $InitializeEvent(orphan_offset, 10007700, orphan_rematch_triggered, orphan_rematch_started, orphan_rematch_spawn_point, 821000);
     
     $InitializeEvent(0, 12100010);
     if (EventFlag(9400)) {
@@ -563,9 +593,6 @@ $Event(50, Default, function() {
     if (!AnyBatchEventFlags(12103900, 12103901)) {
         SetEventFlag(12103900, ON);
     }
-    if (!AnyBatchEventFlags(12103903, 12103905)) {
-        SetEventFlag(12103903, ON);
-    }
     if (EventFlag(12101020)) {
         SetCharacterBackreadState(2100215, true);
         SetCharacterBackreadState(2100220, true);
@@ -696,6 +723,83 @@ L0:
         SetCharacterBackreadState(2100800, true);
         SetCharacterBackreadState(2100810, true);
     }
+});
+
+// 12103016 - lower purchase happend
+// 12103018 - mid purchase
+// 12103020 - upper purchase
+
+// 12103010 - lower shop disabled
+// 12103011 - mid shop disabled
+// 12103012 - upper shop disabled
+
+// ghost shop check
+$Event(12103000, Default, function() {
+    const lowerCost = 3;
+    const midCost = 5;
+    const upperCost = 8;
+    BatchSetEventFlags(12103016, 12103021, OFF);
+    StoreItemAmountHeldInEventValue(3, 1596, 12103030, 16);
+    if (EventValue(12103030, 16) >= upperCost) {
+        SetEventFlag(12103010, OFF);
+        SetEventFlag(12103011, OFF);
+        SetEventFlag(12103012, OFF);
+    }
+    else if (EventValue(12103030, 16) >= midCost) {
+        SetEventFlag(12103010, OFF);
+        SetEventFlag(12103011, OFF);
+        SetEventFlag(12103012, ON);
+    }
+    else if (EventValue(12103030, 16) >= lowerCost) {
+        SetEventFlag(12103010, OFF);
+        SetEventFlag(12103011, ON);
+        SetEventFlag(12103012, ON);
+    }
+    else {
+        SetEventFlag(12103010, ON);
+        SetEventFlag(12103011, ON);
+        SetEventFlag(12103012, ON);
+    }
+    lowerPurchase = EventFlagState(CHANGE, TargetEventFlagType.EventFlag, 12103016);
+    midPurchase = EventFlagState(CHANGE, TargetEventFlagType.EventFlag, 12103018);
+    upperPurchase = EventFlagState(CHANGE, TargetEventFlagType.EventFlag, 12103020);
+    WaitFor(lowerPurchase || midPurchase || upperPurchase); // purchase made
+    StoreItemAmountHeldInEventValue(3, 1596, 12103030, 16);
+    RemoveItemFromPlayer(ItemType.Goods, 1596, 1);
+    if (lowerPurchase.Passed) {
+        EventValueOperation(12103030, 16, lowerCost, 0, 0, CalculationType.Sub);
+    }
+    else if (midPurchase.Passed) {
+        EventValueOperation(12103030, 16, midCost, 0, 0, CalculationType.Sub);
+    }
+    else if (upperPurchase.Passed) {
+        EventValueOperation(12103030, 16, upperCost, 0, 0, CalculationType.Sub);
+    }
+    WaitFixedTimeFrames(1);
+    DirectlyGivePlayerItem(3, 1596, 12103030, 16);
+    RestartEvent();
+});
+
+// ghost shop display
+$Event(12103100, Default, function() {
+    if (EventFlag(12100990)) {
+        DeleteMapSFX(2100509, true);
+        SetCharacterBackreadState(2100501, true);
+        WaitFor(EventFlag(12100890));
+        SetCharacterBackreadState(2100501, false);
+    }
+    SpawnMapSFX(2100509);
+    SetCharacterGravity(2100501, Disabled);
+    ChangeCharacterEnableState(2100501, Disabled);
+    WaitFor(InArea(10000, 2212599));
+    DeleteMapSFX(2100509, true);
+    ChangeCharacterEnableState(2100501, Enabled);
+    ForceAnimationPlayback(2100501, 101162, false, false, false);
+    WaitFor(!InArea(10000, 2212599));
+    ForceAnimationPlayback(2100501, 101161, false, false, false);
+    WaitFixedTimeSeconds(2);
+    ChangeCharacterEnableState(2100501, Disabled);
+    RestartEvent();
 });
 
 // shop display fix
@@ -1544,90 +1648,27 @@ L1:
 
 // time zone change
 $Event(12100300, Default, function() {
-    DeactivateObject(2101310, Disabled);
-    DeactivateObject(2101311, Disabled);
-    DeactivateObject(2101300, Disabled);
-    DeactivateObject(2101301, Disabled);
-    WaitFor(EventFlag(9401));
+    WaitFor(EventFlag(9401)); // prevent overlapping sky during first cutscene
     if (EventFlag(12100856)) {
         BatchSetEventFlags(12105000, 12105001, OFF);
         RandomlySetEventFlagInRange(12105000, 12105001, ON);
+        GotoIf(L0, EventFlag(12105000));
+        Goto(L1);
     }
-    if (!EventFlag(12101852)) {
-        if (!EventFlag(9462)) {
-            if (!EventFlag(9802)) {
-                if (!EventFlag(9801)) {
-                    if (!EventFlag(9800)) {
-                        if (EventFlag(9800)) {
-                        }
+    GotoIf(L0, !EventFlag(12101852));
+    Goto(L1);
 L0:
-                        NoOp();
-                    }
-L1:
-                    NoOp();
-                }
+    DeactivateObject(2101310, Enabled);
+    DeactivateObject(2101311, Disabled);
+    DeactivateObject(2101300, Enabled);
+    DeactivateObject(2101301, Disabled);
+    Goto(L2);
+L1:    
+    DeactivateObject(2101310, Disabled);
+    DeactivateObject(2101311, Enabled);
+    DeactivateObject(2101300, Disabled);
+    DeactivateObject(2101301, Enabled);
 L2:
-                NoOp();
-            }
-L3:
-            if (EventFlag(12100956)) {
-                DeactivateObject(2101310, Enabled);
-                DeactivateObject(2101311, Disabled);
-                DeactivateObject(2101300, Enabled);
-                DeactivateObject(2101301, Disabled);
-            } else if (EventFlag(12105000)) {
-                DeactivateObject(2101310, Enabled);
-                DeactivateObject(2101311, Disabled);
-                DeactivateObject(2101300, Enabled);
-                DeactivateObject(2101301, Disabled);
-            } else {
-                DeactivateObject(2101310, Disabled);
-                DeactivateObject(2101311, Enabled);
-                DeactivateObject(2101300, Disabled);
-                DeactivateObject(2101301, Enabled);
-            }
-            WaitFor(EventFlag(12102065));
-            WaitFixedTimeSeconds(5);
-            RestartEvent();
-        }
-L4:
-        if (EventFlag(12100956)) {
-            DeactivateObject(2101310, Enabled);
-            DeactivateObject(2101311, Disabled);
-            DeactivateObject(2101300, Enabled);
-            DeactivateObject(2101301, Disabled);
-        } else if (EventFlag(12105000)) {
-            DeactivateObject(2101310, Enabled);
-            DeactivateObject(2101311, Disabled);
-            DeactivateObject(2101300, Enabled);
-            DeactivateObject(2101301, Disabled);
-        } else {
-            DeactivateObject(2101310, Disabled);
-            DeactivateObject(2101311, Enabled);
-            DeactivateObject(2101300, Disabled);
-            DeactivateObject(2101301, Enabled);
-        }
-        WaitFor(EventFlag(12102065));
-        WaitFixedTimeSeconds(5);
-        RestartEvent();
-    }
-L5:
-    if (EventFlag(12100956)) {
-        DeactivateObject(2101310, Disabled);
-        DeactivateObject(2101311, Enabled);
-        DeactivateObject(2101300, Disabled);
-        DeactivateObject(2101301, Enabled);
-    } else if (EventFlag(12105000)) {
-        DeactivateObject(2101310, Enabled);
-        DeactivateObject(2101311, Disabled);
-        DeactivateObject(2101300, Enabled);
-        DeactivateObject(2101301, Disabled);
-    } else {
-        DeactivateObject(2101310, Disabled);
-        DeactivateObject(2101311, Enabled);
-        DeactivateObject(2101300, Disabled);
-        DeactivateObject(2101301, Enabled);
-    }
     WaitFor(EventFlag(12102065));
     WaitFixedTimeSeconds(5);
     RestartEvent();
@@ -1636,6 +1677,30 @@ L5:
 // workshop fire
 $Event(12100305, Default, function() {
     SetEventFlag(12103899, OFF);
+    if (!AnyBatchEventFlags(12103900, 12103902)) {
+        SetEventFlag(12103900, ON);
+    }
+    GotoIf(L0, EventFlag(12103900)); // default
+    GotoIf(L1, EventFlag(12103901)); // fire
+    GotoIf(L2, EventFlag(12103902)); // no fire
+L0:
+    if (!EventFlag(12101852)) { // mp not met
+        if (!EventFlag(9462)) { // nurse not defeated
+            Goto(L2);
+        }
+    }
+L1:
+    SpawnMapSFX(2103300);
+    SpawnMapSFX(2103500);
+    SpawnMapSFX(2103501);
+    SpawnMapSFX(2103502);
+    SpawnMapSFX(2103503);
+    SpawnMapSFX(2103504);
+    SpawnMapSFX(2103505);
+    SpawnMapSFX(2103506);
+    SpawnMapSFX(2103507);
+    Goto(L3);
+L2:
     DeleteMapSFX(2103300, false);
     DeleteMapSFX(2103500, false);
     DeleteMapSFX(2103501, false);
@@ -1644,57 +1709,8 @@ $Event(12100305, Default, function() {
     DeleteMapSFX(2103504, false);
     DeleteMapSFX(2103505, false);
     DeleteMapSFX(2103506, false);
-    DeleteMapSFX(2103507, false);
-    WaitFor(EventFlag(9401)); // first visit to dream
-    if (!EventFlag(12101852)) { // not initiated fight with moon presence
-        if (!EventFlag(9462)) {
-            if (!EventFlag(9802)) {
-                if (!EventFlag(9801)) {
-                    if (!EventFlag(9800)) {
-                        if (EventFlag(9800)) {
-                        }
-L0:
-                        NoOp();
-                    }
-L1:
-                    NoOp();
-                }
-L2:
-                NoOp();
-            }
+    DeleteMapSFX(2103507, false);    
 L3:
-            WaitFor(EventFlag(12103899));
-            WaitFixedTimeFrames(1);
-            RestartEvent();
-        }
-L4:
-        if (EventFlag(12103900)) {
-            SpawnMapSFX(2103300);
-            SpawnMapSFX(2103500);
-            SpawnMapSFX(2103501);
-            SpawnMapSFX(2103502);
-            SpawnMapSFX(2103503);
-            SpawnMapSFX(2103504);
-            SpawnMapSFX(2103505);
-            SpawnMapSFX(2103506);
-            SpawnMapSFX(2103507);
-        }
-        WaitFor(EventFlag(12103899));
-        WaitFixedTimeFrames(1);
-        RestartEvent();
-    }
-L5:
-    if (EventFlag(12103900)) {
-        SpawnMapSFX(2103300);
-        SpawnMapSFX(2103500);
-        SpawnMapSFX(2103501);
-        SpawnMapSFX(2103502);
-        SpawnMapSFX(2103503);
-        SpawnMapSFX(2103504);
-        SpawnMapSFX(2103505);
-        SpawnMapSFX(2103506);
-        SpawnMapSFX(2103507);
-    }
     WaitFor(EventFlag(12103899));
     WaitFixedTimeFrames(1);
     RestartEvent();
@@ -1702,30 +1718,36 @@ L5:
 
 // Base BGM change
 $Event(12100310, Default, function() {
+    SetEventFlag(12103903, OFF);
+    if (!AnyBatchEventFlags(12103904, 12103907)) {
+        SetEventFlag(12103904, ON);
+    }
+    GotoIf(L0, EventFlag(12103904)); // default
+    GotoIf(L1, EventFlag(12103905)); // music 1
+    GotoIf(L2, EventFlag(12103906)); // music 2
+    GotoIf(L3, EventFlag(12103907)); // no music
+L0:
     if (!EventFlag(9462)) {
         if (!(PlayerInsightAmount() >= 50 || EventFlag(9802))) {
-            SetMapSoundState(2103900, Enabled);
-            SetMapSoundState(2103901, Disabled);
-            EndEvent();
+            Goto(L1);
         }
-L0:
-        SetMapSoundState(2103900, Disabled);
-        SetMapSoundState(2103901, Enabled);
-        EndEvent();
+        Goto(L2);
     }
+    Goto(L3);
 L1:
-    if (EventFlag(12103903)) {
-        SetMapSoundState(2103900, Disabled);
-        SetMapSoundState(2103901, Disabled);
-    } else if (EventFlag(12103904)) {
-        SetMapSoundState(2103900, Enabled);
-        SetMapSoundState(2103901, Disabled);
-    } else if (EventFlag(12103905)) {
-        SetMapSoundState(2103900, Disabled);
-        SetMapSoundState(2103901, Enabled);
-    }
-    WaitFor(EventFlag(12103902));
-    SetEventFlag(12103902, OFF);
+    SetMapSoundState(2103900, Enabled);
+    SetMapSoundState(2103901, Disabled);
+    Goto(L4);
+L2:
+    SetMapSoundState(2103900, Disabled);
+    SetMapSoundState(2103901, Enabled);
+    Goto(L4);
+L3:
+    SetMapSoundState(2103900, Disabled);
+    SetMapSoundState(2103901, Disabled);
+    Goto(L4);
+L4:
+    WaitFor(EventFlag(12103903));
     WaitFixedTimeFrames(1);
     RestartEvent();
 });
@@ -2048,7 +2070,7 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.Armor, 34, PlayLogMultiplayerType.HostOnly);
         if (EventFlag(gehrman_rematch_played)) {
             AwardItemLot(17020);
-            $InitializeEvent(gehrman_offset, 7800, 2102962, 821000);
+            $InitializeEvent(gehrman_offset, 10007800, 2102962, 821000, 3);
         }
         EndEvent();
     }
@@ -2304,7 +2326,7 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.Weapon, 96, PlayLogMultiplayerType.HostOnly);
         ParameterOutput(PlayerPlayLogParameter.Armor, 96, PlayLogMultiplayerType.HostOnly);
         if (EventFlag(moon_presence_rematch_played)) {
-            $InitializeEvent(moon_presence_offset, 7800, 2102962, 821000);
+            $InitializeEvent(moon_presence_offset, 10007800, 2102962, 821000, 3);
         }
         EndEvent();
     }

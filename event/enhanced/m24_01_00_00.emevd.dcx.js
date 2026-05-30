@@ -46,33 +46,58 @@ const gascoigne_id2 = 2410811;
 
 // constructor
 $Event(0, Default, function() {
+    // coins
+    const coinsBaseFlag = 80;
+    const coinsBaseId = (area_id * 100000) + (block_id * 10000) + 8500;
+    const gascoigneIndex = 5;
+    const clericBeastIndex = 7;
+    for (let i = 0; i < 20; i++) {
+        if (i == gascoigneIndex) {
+            $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, gascoigne_defeat, 0);
+        }
+        else if (i == clericBeastIndex) {
+            $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, cleric_beast_defeat, 0);
+        }
+        else {
+            $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, 10000999, 0);
+        }
+    }
+    
+    // ghosts
+    const ghostsBaseFlag = 80;
+    const ghostsBaseId = (area_id * 100000) + (block_id * 10000) + 8600;
+    for (let i = 0; i < 10; i++) {
+        $InitializeEvent(ghostsBaseFlag+i, 10003500, ghostsBaseId+i);
+    }
+    
     //InitializeEvent(0, 12411500, 0);
     //InitializeEvent(0, 12410815, 0);
     //SetEventFlag(62411319, OFF);
-    SetEventFlag(8900+cleric_beast_offset, OFF);
-    SetEventFlag(8900+gascoigne_offset, OFF);
-    
-    $InitializeEvent(1, 7900, 10000000+cleric_beast_return, cleric_beast_return, area_id, block_id);
-    $InitializeEvent(2, 7900, 10000000+gascoigne_return, gascoigne_return, area_id, block_id);
-    
-    $InitializeEvent(iosefka_lamp_offset, 8500, 8500+iosefka_lamp_offset, iosefka_lamp_id, 72110000);
-    $InitializeEvent(central_lamp_offset, 8500, 8500+central_lamp_offset, central_lamp_id, 72110101);
-    $InitializeEvent(cleric_beast_lamp_offset, 8500, 8500+cleric_beast_lamp_offset, cleric_beast_lamp_id, 72110202);
-    $InitializeEvent(gascoigne_lamp_offset, 8500, 8500+gascoigne_lamp_offset, gascoigne_lamp_id, 72110303);
-    
-    $InitializeEvent(iosefka_lamp_offset, 8100, 8100+iosefka_lamp_offset, iosefka_lamp_kindle);
-    $InitializeEvent(central_lamp_offset, 8100, 8100+central_lamp_offset, central_lamp_kindle);
-    $InitializeEvent(cleric_beast_lamp_offset, 8100, 8100+cleric_beast_lamp_offset, cleric_beast_kindle);
-    $InitializeEvent(gascoigne_lamp_offset, 8100, 8100+gascoigne_lamp_offset, gascoigne_lamp_kindle);
-    
-    $InitializeEvent(iosefka_lamp_offset, 8300, iosefka_lamp_id+2000, -1, iosefka_lamp_kindle, iosefka_lamp_id+6000, iosefka_lamp_id+3000);
-    $InitializeEvent(central_lamp_offset, 8300, central_lamp_id+2000, -1, central_lamp_kindle, central_lamp_id+6000, central_lamp_id+3000);
+    SetEventFlag(10008900+cleric_beast_offset, OFF);
+    SetEventFlag(10008900+gascoigne_offset, OFF);
     
     
-    SetEventFlag(7799, OFF);
+    $InitializeEvent(1, 10007900, 10000000+cleric_beast_return, cleric_beast_return, area_id, block_id);
+    $InitializeEvent(2, 10007900, 10000000+gascoigne_return, gascoigne_return, area_id, block_id);
+    
+    $InitializeEvent(iosefka_lamp_offset, 10008500, iosefka_lamp_id, 72110000);
+    $InitializeEvent(central_lamp_offset, 10008500, central_lamp_id, 72110101);
+    $InitializeEvent(cleric_beast_lamp_offset, 10008500, cleric_beast_lamp_id, 72110202);
+    $InitializeEvent(gascoigne_lamp_offset, 10008500, gascoigne_lamp_id, 72110303);
+    
+    $InitializeEvent(iosefka_lamp_offset, 10008100, 10008100+iosefka_lamp_offset, iosefka_lamp_kindle);
+    $InitializeEvent(central_lamp_offset, 10008100, 10008100+central_lamp_offset, central_lamp_kindle);
+    $InitializeEvent(cleric_beast_lamp_offset, 10008100, 10008100+cleric_beast_lamp_offset, cleric_beast_kindle);
+    $InitializeEvent(gascoigne_lamp_offset, 10008100, 10008100+gascoigne_lamp_offset, gascoigne_lamp_kindle);
+    
+    $InitializeEvent(iosefka_lamp_offset, 10008300, iosefka_lamp_id+2000, -1, iosefka_lamp_kindle, iosefka_lamp_id+6000, iosefka_lamp_id+3000);
+    $InitializeEvent(central_lamp_offset, 10008300, central_lamp_id+2000, -1, central_lamp_kindle, central_lamp_id+6000, central_lamp_id+3000);
+    
+    
+    SetEventFlag(10007799, OFF);
     SetEventFlag(gascoigne_defeat+15, OFF);
     if (EventFlag(gascoigne_defeat+14)) {
-        SetEventFlag(7799, ON);
+        SetEventFlag(10007799, ON);
         SetEventFlag(gascoigne_defeat+14, OFF);
         SetEventFlag(gascoigne_defeat+15, ON);
     }
@@ -83,10 +108,10 @@ $Event(0, Default, function() {
         SetEventFlag(cleric_beast_defeat, ON);
         if (EventFlag(12111120)) {
             SetEventFlag(12111120, OFF);
-            $InitializeEvent(cleric_beast_lamp_offset, 8300, cleric_beast_lamp_id+2000, -1, cleric_beast_kindle, cleric_beast_lamp_id+6000, cleric_beast_lamp_id+3000);
+            $InitializeEvent(cleric_beast_lamp_offset, 10008300, cleric_beast_lamp_id+2000, -1, cleric_beast_kindle, cleric_beast_lamp_id+6000, cleric_beast_lamp_id+3000);
         }
         else {
-            $InitializeEvent(cleric_beast_lamp_offset, 8300, cleric_beast_lamp_id+2000, 999, cleric_beast_kindle, cleric_beast_lamp_id+6000, cleric_beast_lamp_id+3000);
+            $InitializeEvent(cleric_beast_lamp_offset, 10008300, cleric_beast_lamp_id+2000, 10000999, cleric_beast_kindle, cleric_beast_lamp_id+6000, cleric_beast_lamp_id+3000);
             DummyPlayCutsceneAndWarpPlayer(cleric_beast_lamp_id+4000, area_id, block_id);
         }
     // rematch has started
@@ -96,10 +121,10 @@ $Event(0, Default, function() {
         SetEventFlag(cleric_beast_defeat+12, OFF);
         SetEventFlag(cleric_beast_defeat+13, ON);
         SetEventFlag(cleric_beast_defeat-1, OFF);
-        SetEventFlag(8900+cleric_beast_offset, ON);
-        $InitializeEvent(cleric_beast_lamp_offset, 8300, cleric_beast_lamp_id+2000, -1, cleric_beast_kindle, cleric_beast_lamp_id+6000, cleric_beast_lamp_id+3000);
+        SetEventFlag(10008900+cleric_beast_offset, ON);
+        $InitializeEvent(cleric_beast_lamp_offset, 10008300, cleric_beast_lamp_id+2000, -1, cleric_beast_kindle, cleric_beast_lamp_id+6000, cleric_beast_lamp_id+3000);
     } else {
-        $InitializeEvent(cleric_beast_lamp_offset, 8300, cleric_beast_lamp_id+2000, -1, cleric_beast_kindle, cleric_beast_lamp_id+6000, cleric_beast_lamp_id+3000);
+        $InitializeEvent(cleric_beast_lamp_offset, 10008300, cleric_beast_lamp_id+2000, -1, cleric_beast_kindle, cleric_beast_lamp_id+6000, cleric_beast_lamp_id+3000);
     }
     
     if (EventFlag(gascoigne_defeat+13) && !EventFlag(gascoigne_defeat-1)) {
@@ -108,10 +133,10 @@ $Event(0, Default, function() {
         
         if (EventFlag(12111120)) {
             SetEventFlag(12111120, OFF);
-            $InitializeEvent(gascoigne_lamp_offset, 8300, gascoigne_lamp_id+2000, -1, gascoigne_lamp_kindle, gascoigne_lamp_id+6000, gascoigne_lamp_id+3000);
+            $InitializeEvent(gascoigne_lamp_offset, 10008300, gascoigne_lamp_id+2000, -1, gascoigne_lamp_kindle, gascoigne_lamp_id+6000, gascoigne_lamp_id+3000);
         }
         else {
-            $InitializeEvent(gascoigne_lamp_offset, 8300, gascoigne_lamp_id+2000, 999, gascoigne_lamp_kindle, gascoigne_lamp_id+6000, gascoigne_lamp_id+3000);
+            $InitializeEvent(gascoigne_lamp_offset, 10008300, gascoigne_lamp_id+2000, 10000999, gascoigne_lamp_kindle, gascoigne_lamp_id+6000, gascoigne_lamp_id+3000);
             DummyPlayCutsceneAndWarpPlayer(gascoigne_lamp_id+4000, area_id, block_id);
         }
         
@@ -127,22 +152,20 @@ $Event(0, Default, function() {
         SetEventFlag(gascoigne_defeat+12, OFF);
         SetEventFlag(gascoigne_defeat+13, ON);
         SetEventFlag(gascoigne_defeat-1, OFF);
-        SetEventFlag(8900+gascoigne_offset, ON);
-        $InitializeEvent(gascoigne_lamp_offset, 8300, gascoigne_lamp_id+2000, -1, gascoigne_lamp_kindle, gascoigne_lamp_id+6000, gascoigne_lamp_id+3000);
+        SetEventFlag(10008900+gascoigne_offset, ON);
+        $InitializeEvent(gascoigne_lamp_offset, 10008300, gascoigne_lamp_id+2000, -1, gascoigne_lamp_kindle, gascoigne_lamp_id+6000, gascoigne_lamp_id+3000);
     } else {
-        $InitializeEvent(gascoigne_lamp_offset, 8300, gascoigne_lamp_id+2000, -1, gascoigne_lamp_kindle, gascoigne_lamp_id+6000, gascoigne_lamp_id+3000);
+        $InitializeEvent(gascoigne_lamp_offset, 10008300, gascoigne_lamp_id+2000, -1, gascoigne_lamp_kindle, gascoigne_lamp_id+6000, gascoigne_lamp_id+3000);
     }
     
     $InitializeEvent(cleric_beast_offset, 12102070, cleric_beast_defeat+13, 0, 7447, cleric_beast_id, -1, -1, -1, -1);
     $InitializeEvent(gascoigne_offset, 12102070, gascoigne_defeat+13, gascoigne_defeat+15, 7448, gascoigne_id1, gascoigne_id2, -1, -1, -1);
     
-    $InitializeEvent(cleric_beast_offset, 8900, cleric_beast_defeat-1, cleric_beast_lamp_id+1000, 0, 0, cleric_beast_lamp_id+5000, area_id, block_id);
-    $InitializeEvent(gascoigne_offset, 8900, gascoigne_defeat-1, gascoigne_lamp_id+1000, gascoigne_defeat+15, gascoigne_defeat+14, gascoigne_lamp_id+5000, area_id, block_id);
+    $InitializeEvent(cleric_beast_offset, 10008900, cleric_beast_defeat-1, cleric_beast_lamp_id+1000, 0, 0, cleric_beast_lamp_id+5000, area_id, block_id);
+    $InitializeEvent(gascoigne_offset, 10008900, gascoigne_defeat-1, gascoigne_lamp_id+1000, gascoigne_defeat+15, gascoigne_defeat+14, gascoigne_lamp_id+5000, area_id, block_id);
     
-    $InitializeEvent(cleric_beast_offset, 7700, cleric_beast_defeat+11, cleric_beast_defeat+12, cleric_beast_lamp_id+1000, 824100);
-    $InitializeEvent(gascoigne_offset, 7700, gascoigne_defeat+11, gascoigne_defeat+12, gascoigne_lamp_id+1000, 824102);
-    
-    $InitializeEvent(0, 12410818);
+    $InitializeEvent(cleric_beast_offset, 10007700, cleric_beast_defeat+11, cleric_beast_defeat+12, cleric_beast_lamp_id+1000, 824100);
+    $InitializeEvent(gascoigne_offset, 10007700, gascoigne_defeat+11, gascoigne_defeat+12, gascoigne_lamp_id+1000, 824102);
     
     $InitializeEvent(0, 12107000, 72110000, 2411950, 2412950);
     $InitializeEvent(1, 12107000, 72110001, 2411950, 2412951);
@@ -658,13 +681,18 @@ $Event(0, Default, function() {
     
     $InitializeEvent(0, 12410720);
     
+    // lamp music
+    
+    $InitializeEvent(16, 10000100, 2413962, 2413963, 12417830, -1);
     $InitializeEvent(16, 7000, 2410951, 2411951, 999, 12417820, -1);
     
+    $InitializeEvent(17, 10000100, 2413964, 2413965, 12417850, cleric_beast_defeat);
     $InitializeEvent(17, 7000, 2410952, 2411952, cleric_beast_defeat, 12417840, cleric_beast_defeat+13);
-    $InitializeEvent(cleric_beast_offset, 8800, cleric_beast_defeat+13, cleric_beast_lamp_id-1000, cleric_beast_lamp_id, cleric_beast_lamp_id+3000);
+    $InitializeEvent(cleric_beast_offset, 10008800, cleric_beast_defeat+13, cleric_beast_lamp_id-1000, cleric_beast_lamp_id, cleric_beast_lamp_id+3000);
     
+    $InitializeEvent(18, 10000100, 2413966, 2413967, 12417870, gascoigne_defeat);
     $InitializeEvent(18, 7000, 2410953, 2411953, gascoigne_defeat, 12417860, gascoigne_defeat+13);
-    $InitializeEvent(gascoigne_offset, 8800, gascoigne_defeat+13, gascoigne_lamp_id-1000, gascoigne_lamp_id, gascoigne_lamp_id+3000);
+    $InitializeEvent(gascoigne_offset, 10008800, gascoigne_defeat+13, gascoigne_lamp_id-1000, gascoigne_lamp_id, gascoigne_lamp_id+3000);
     
     $InitializeEvent(0, 12411010);
     $InitializeEvent(15, 7100, 72410200, 2411950);
@@ -695,11 +723,11 @@ $Event(0, Default, function() {
     // summon stuff
     
     // gather summons
-    $InitializeEvent(1, 8617, 2410158, 12414420, 7012, 7010, 233);
-    $InitializeEvent(1, 8630, 8631, 8641, 2410158, 12414420, 2413230, 200246, 7010, 200256, 200266); // gascoigne
+    $InitializeEvent(1, 10007400, 2410158, 12414420, 7012, 7010, 233);
+    $InitializeEvent(1, 10008630, 10008631, 10008641, 2410158, 12414420, 2413230, 200246, 7010, 200256, 200266); // gascoigne
     
-    $InitializeEvent(2, 8617, 2410740, 12414421, 101161, 101162, 163); // alfred
-    $InitializeEvent(2, 8630, 8632, 8642, 2410740, 12414421, 2413233, 200245, 101207, 200255, 200265);
+    $InitializeEvent(2, 10007400, 2410740, 12414421, 101161, 101162, 163); // alfred
+    $InitializeEvent(2, 10008630, 10008632, 10008642, 2410740, 12414421, 2413233, 200245, 101207, 200255, 200265);
     
     // summon signs
     $InitializeEvent(0, 12414400, 12414440, 2413230, 12414420, 12414430, 12411700, 6001);
@@ -1193,23 +1221,9 @@ $Event(12410720, Default, function() {
     if (EventFlag(12100953)) {
         $InitializeEvent(15, 7000, 2410950, 2411950, 9401, 12417800, -1);
     } else {
-        $InitializeEvent(70, 7000, 2410950, 2411950, 999, 12417800, -1);
+        $InitializeEvent(15, 7000, 2410950, 2411950, 10000999, 12417800, -1);
     }
-});
-
-// super pistol
-$Event(12410818, Default, function() {
-    SetEventFlag(12410819, OFF);
-    WaitFor(InArea(10000, 2410948));
-    WaitFixedTimeSeconds(5);
-    if (InArea(10000, 2410948)) {
-        WaitFor(InArea(10000, 2410949));
-        WaitFixedTimeSeconds(5);
-        if (InArea(10000, 2410949)) {
-            DisplayMessage(10010152, 0);
-            SetEventFlag(12410819, ON);
-        }
-    }
+    $InitializeEvent(15, 10000100, 2413960, 2413961, 12417810, -1);
 });
 
 // ng+ only enemy test
@@ -1807,7 +1821,7 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.Armor, 52, PlayLogMultiplayerType.HostOnly);
         if (EventFlag(cleric_beast_defeat+13)) {
             AwardItemLot(17020);
-            $InitializeEvent(cleric_beast_offset, 7800, cleric_beast_lamp_id+1000, 824100);
+            $InitializeEvent(cleric_beast_offset, 10007800, cleric_beast_lamp_id+1000, 824100, 1);
         }
         EndEvent();
     }
@@ -1988,7 +2002,7 @@ $Event(12414703, Default, function() {
         }
         flagArea &= InArea(10000, 2412801);
         WaitFor(flagArea);
-        EnableBossMapSound(2413802, Enabled);
+        //EnableBossMapSound(2413802, Enabled);
         chrFlagArea &= CharacterHasEventMessage(2410800, 100);
     }
 L0:
@@ -2000,7 +2014,7 @@ L0:
     WaitFor(chrFlagArea);
     EnableBossMapSound(2413802, Disabled);
     WaitFixedTimeFrames(0);
-    EnableBossMapSound(2413803, Enabled);
+    //EnableBossMapSound(2413803, Enabled);
 });
 
 // Boss Camera_Parish
@@ -2146,7 +2160,7 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.Weapon, 114, PlayLogMultiplayerType.HostOnly);
         ParameterOutput(PlayerPlayLogParameter.Armor, 114, PlayLogMultiplayerType.HostOnly);
         if (EventFlag(gascoigne_defeat+13)) {
-            $InitializeEvent(gascoigne_offset, 7800, gascoigne_lamp_id+1000, 824102);
+            $InitializeEvent(gascoigne_offset, 10007800, gascoigne_lamp_id+1000, 824102, 1);
         }
         EndEvent();
     }
