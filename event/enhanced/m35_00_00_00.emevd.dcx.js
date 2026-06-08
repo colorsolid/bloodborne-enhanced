@@ -103,6 +103,7 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(living_failures_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(living_failures_defeat+12) || EventFlag(living_failures_defeat-1)) {
+        SetSpEffect(10000, 1990, false);
         SetEventFlag(living_failures_defeat, OFF);
         SetEventFlag(living_failures_defeat+1, OFF);
         SetEventFlag(living_failures_defeat+12, OFF);
@@ -126,6 +127,7 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(maria_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(maria_defeat+12) || EventFlag(maria_defeat-1)) {
+        SetSpEffect(10000, 1990, false);
         SetEventFlag(maria_defeat, OFF);
         SetEventFlag(maria_defeat+1, OFF);
         SetEventFlag(maria_defeat+12, OFF);
@@ -136,6 +138,8 @@ $Event(0, Default, function() {
     } else {
         $InitializeEvent(maria_lamp_offset, 10008300, maria_lamp_id+2000, -1, maria_lamp_kindle, maria_lamp_id+6000, maria_lamp_id+3000);
     }
+    
+    $InitializeEvent(living_failures_offset, 10001030, 13504852, living_failures_defeat);
     
     $InitializeEvent(living_failures_offset, 12102070, living_failures_defeat+13, 0, 7504, living_failures_id1, living_failures_id2, living_failures_id3, living_failures_id4, living_failures_id5);
     $InitializeEvent(maria_offset, 12102070, maria_defeat+13, 0, 7505, maria_id, -1, -1, -1, -1);

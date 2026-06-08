@@ -105,6 +105,7 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(micolash_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(micolash_defeat+12) || EventFlag(micolash_defeat-1)) {
+        SetSpEffect(10000, 1990, false);
         SetEventFlag(1082, OFF);
         SetEventFlag(micolash_defeat, OFF);
         SetEventFlag(micolash_defeat+2, OFF);
@@ -129,6 +130,7 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(wet_nurse_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(wet_nurse_defeat+12) || EventFlag(wet_nurse_defeat-1)) {
+        SetSpEffect(10000, 1990, false);
         SetEventFlag(wet_nurse_defeat, OFF);
         SetEventFlag(wet_nurse_defeat+2, OFF);
         SetEventFlag(wet_nurse_defeat+3000, ON);
@@ -141,6 +143,9 @@ $Event(0, Default, function() {
     } else {
         $InitializeEvent(wet_nurse_lamp_offset, 10008300, wet_nurse_lamp_id+2000, -1, wet_nurse_lamp_kindle, wet_nurse_lamp_id+6000, wet_nurse_lamp_id+3000);
     }
+    
+    $InitializeEvent(micolash_offset, 10001030, 12604852, micolash_defeat);
+    $InitializeEvent(wet_nurse_offset, 10001030, 12604802, wet_nurse_defeat);
     
     $InitializeEvent(micolash_offset, 12102070, micolash_defeat+13, 0, 7460, micolash_id, -1, -1, -1, -1);
     $InitializeEvent(wet_nurse_offset, 12102070, wet_nurse_defeat+13, 0, 7461, wet_nurse_id, wet_nurse_id2, -1, -1, -1);

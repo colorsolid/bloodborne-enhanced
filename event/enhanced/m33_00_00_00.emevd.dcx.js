@@ -79,6 +79,7 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(amygdala_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(amygdala_defeat+12) || EventFlag(amygdala_defeat-1)) {
+        SetSpEffect(10000, 1990, false);
         SetEventFlag(amygdala_defeat, OFF);
         SetEventFlag(amygdala_defeat+2, OFF);
         SetEventFlag(amygdala_defeat+12, OFF);
@@ -89,6 +90,8 @@ $Event(0, Default, function() {
     } else {
         $InitializeEvent(amygdala_lamp_offset, 10008300, amygdala_lamp_id+2000, -1, amygdala_lamp_kindle, amygdala_lamp_id+6000, amygdala_lamp_id+3000);
     }
+    
+    $InitializeEvent(amygdala_offset, 10001030, 13304800, amygdala_defeat);
     
     $InitializeEvent(amygdala_offset, 12102070, amygdala_defeat+13, 0, 7446, amygdala_id, -1, -1, -1, -1);
     

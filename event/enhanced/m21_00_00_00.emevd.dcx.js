@@ -210,7 +210,7 @@ $Event(0, Default, function() {
     
     $InitializeEvent(0, 12103100);
     
-    $InitializeEvent(0, 8701); // broken lamp enable/disable
+    $InitializeEvent(0, 10008701); // broken lamp enable/disable
     
     if (PlayerHasItem(ItemType.Goods, 4002)) { // rite of kindling, dream now fills max
         EventValueOperation(auto_kindle, 2, 3, 0, 0, CalculationType.Assign);
@@ -246,6 +246,7 @@ $Event(0, Default, function() {
     } else if (EventFlag(gehrman_rematch_started)
         || EventFlag(gehrman_auto_rematch_trigger)
         || EventFlag(distorted_rematch_played)) {
+        SetSpEffect(10000, 1990, false);
         SetEventFlag(gehrman_defeat, OFF);
         SetEventFlag(gehrman_encountered, OFF);
         SetEventFlag(gehrman_rematch_started, OFF);
@@ -273,6 +274,7 @@ $Event(0, Default, function() {
     } else if (EventFlag(moon_presence_rematch_started)
         || EventFlag(moon_presence_auto_rematch_trigger)
         || EventFlag(distorted_rematch_played)) {
+        SetSpEffect(10000, 1990, false);
         SetEventFlag(moon_presence_defeat, OFF);
         SetEventFlag(moon_presence_defeat+2, OFF);
         SetEventFlag(moon_presence_rematch_started, OFF);
@@ -590,8 +592,9 @@ $Event(0, Default, function() {
 
 // pre-constructor
 $Event(50, Default, function() {
-    if (!AnyBatchEventFlags(12103900, 12103901)) {
-        SetEventFlag(12103900, ON);
+    if (EventFlag(12100892)) {
+        SetCharacterBackreadState(2100216, true);
+        SetCharacterBackreadState(2100221, true);
     }
     if (EventFlag(12101020)) {
         SetCharacterBackreadState(2100215, true);
@@ -782,14 +785,15 @@ $Event(12103000, Default, function() {
 
 // ghost shop display
 $Event(12103100, Default, function() {
-    if (EventFlag(12100990)) {
+    if (EventFlag(14000990)) {
         DeleteMapSFX(2100509, true);
         SetCharacterBackreadState(2100501, true);
-        WaitFor(EventFlag(12100890));
+        WaitFor(EventFlag(14000890));
         SetCharacterBackreadState(2100501, false);
     }
     SpawnMapSFX(2100509);
     SetCharacterGravity(2100501, Disabled);
+    SetCharacterMaphits(2100501, true);
     ChangeCharacterEnableState(2100501, Disabled);
     WaitFor(InArea(10000, 2212599));
     DeleteMapSFX(2100509, true);
@@ -838,12 +842,6 @@ $Event(12102000, Default, function() {
     if (EventFlag(gascoigne_defeat+13)) {
         SetEventFlag(gascoigne_defeat+13, OFF);
         SetEventFlag(gascoigne_defeat, ON);
-        
-        // Oedon Tomb Key
-        if (!PlayerHasItem(ItemType.Goods, 4000)) {
-            EventValueOperation(12411819, 1, 1, 0, 1, CalculationType.Assign);
-            DirectlyGivePlayerItem(ItemType.Goods, 4000, 12411819, 1);
-        }
     }
     
     SetEventFlag(gascoigne_defeat+15, OFF);
@@ -950,8 +948,7 @@ $Event(12102000, Default, function() {
 });
 
 // Toggle broken lamp
-$Event(8701, Default, function() {
-    GotoIf(S0, !EventFlag(12100965)); // hidden
+$Event(10008701, Default, function() {
     ChangeCharacterEnableState(2100500, Disabled);
     DeactivateObject(2105099, Disabled);
     SetCharacterBackreadState(2100250, true);
@@ -961,20 +958,20 @@ $Event(8701, Default, function() {
     if (EventFlag(12102042)) {
         SetCharacterBackreadState(2100250, false);
     }
+    WaitFor(!EventFlag(12100865));
     RestartEvent();
-    Goto(S1);
-    // active
-S0:
-    if (!EventFlag(12102042)) {
-        SetCharacterBackreadState(2100250, true);
-    }
-    WaitFor(EventFlag(12100965));
-    SetCharacterBackreadState(2100250, true);
-    ChangeCharacterEnableState(2100500, Disabled);
-    DeactivateObject(2105099, Disabled);
-    RestartEvent();
-S1:
-    NoOp();
+});
+
+// boss rush
+$Event(10008710, Default, function() {
+    SetEventFlag(10008710, OFF);
+    GotoIf(L0, CharacterHasSpEffect(10000, 1992));
+    WaitFor(ThisEvent());
+    EventValueOperation(10008720, 5, 0, -1, 0, CalculationType.Assign);
+    SetSpEffect(10000, 1992, false);
+L0:
+    WaitFor(ThisEvent());
+    
 });
 
 // The police drama that came to the base with the first death

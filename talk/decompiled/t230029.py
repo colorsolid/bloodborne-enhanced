@@ -83,6 +83,14 @@ def t230029_x3():
                     pass
                 elif HasPlayerBeenAttacked() == 1:
                     assert t230029_x0()
+        elif GetEventStatus(12421905) == 1 and GetEventStatus(10008682) == 1: # boss quick warp prompt
+            ClearPlayerDamageInfo()
+            SetTalkTime(0.33)
+            call = t230029_x48()
+            if call.Done():
+                pass
+            elif GetDistanceToPlayer() > 3 or HasPlayerBeenAttacked() == 1:
+                assert t230029_x0()
     """Unused"""
     """State 9"""
     return 0
@@ -502,7 +510,7 @@ def t230029_x21(flag1=10000999, flag2=10000999, flag3=10000999, flag4=10000999, 
                 SetTalkTime(0.33)
             assert not IsGenericDialogOpen()
             return 1
-    elif flag1 == 10008607 and flag2 == 10008608 and flag3 == 10000999 and flag4 == 10000999 and flag5 == 10000999:
+    elif GetEventStatus(12100968) and flag1 == 10008607 and flag2 == 10008608 and flag3 == 10000999 and flag4 == 10000999 and flag5 == 10000999:
         if not GetEventStatus(70002401):
             SetEventState(72102401, 1)
         else:
@@ -511,7 +519,7 @@ def t230029_x21(flag1=10000999, flag2=10000999, flag3=10000999, flag4=10000999, 
                 SetTalkTime(0.33)
             assert not IsGenericDialogOpen()
             return 1
-    elif flag1 == 10008605 and flag2 == 10008607 and flag3 == 10008608 and flag4 == 10000999 and flag5 == 10000999:
+    elif GetEventStatus(12100968) and flag1 == 10008605 and flag2 == 10008607 and flag3 == 10008608 and flag4 == 10000999 and flag5 == 10000999:
         if not GetEventStatus(70002802):
             SetEventState(72102802, 1)
         else:
@@ -2232,6 +2240,10 @@ def t230029_x95():
             AddTalkListData(31, 200133, 12100857)
             AddTalkListData(32, 200132, 12100957)
 
+            # quick warp to boss prompt
+            AddTalkListData(37, 200324, 12100893)
+            AddTalkListData(38, 200323, 12100993)
+
             # lamp music
             AddTalkListData(33, 200320, 12100891)
             AddTalkListData(34, 200319, 12100991)
@@ -2333,6 +2345,12 @@ def t230029_x95():
         elif GetTalkListEntryResult() == 32: # enable - quick warp to boss
             SetEventState(12100957, 0)
             SetEventState(12100857, 1)
+        elif GetTalkListEntryResult() == 37: # disable - quick warp to boss prompt
+            SetEventState(12100993, 1)
+            SetEventState(12100893, 0)
+        elif GetTalkListEntryResult() == 38: # enable - quick warp to boss prompt
+            SetEventState(12100993, 0)
+            SetEventState(12100893, 1)
         elif GetTalkListEntryResult() == 33: # disable - lamp music
             SetEventState(12100991, 1)
             SetEventState(12100891, 0)
@@ -2561,8 +2579,8 @@ def t230029_x99():
         AddTalkListData(33, 200232, 12100855)
 
         # ghost shop
-        AddTalkListData(34, 200317, 12100990)
-        AddTalkListData(35, 200318, 12100890)
+        AddTalkListData(34, 200317, 14000990)
+        AddTalkListData(35, 200318, 14000890)
 
         ShowShopMessage(0, 0, 0)
         def WhilePaused():
@@ -2642,11 +2660,11 @@ def t230029_x99():
             SetEventState(12100955, 1)
             SetEventState(12100855, 0)
         elif GetTalkListEntryResult() == 34: # enable - ghost shop
-            SetEventState(12100990, 0)
-            SetEventState(12100890, 1)
+            SetEventState(14000990, 0)
+            SetEventState(14000890, 1)
         elif GetTalkListEntryResult() == 35: # disable - ghost shop
-            SetEventState(12100990, 1)
-            SetEventState(12100890, 0)
+            SetEventState(14000990, 1)
+            SetEventState(14000890, 0)
 
 # portable lamp settings
 def t230029_x106():

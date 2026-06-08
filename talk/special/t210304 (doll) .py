@@ -672,6 +672,10 @@ def t210304_x95():
             AddTalkListData(31, 200133, 12100857)
             AddTalkListData(32, 200132, 12100957)
 
+            # quick warp to boss prompt
+            AddTalkListData(37, 200324, 12100893)
+            AddTalkListData(38, 200323, 12100993)
+
             # lamp music
             AddTalkListData(33, 200320, 12100891)
             AddTalkListData(34, 200319, 12100991)
@@ -773,6 +777,12 @@ def t210304_x95():
         elif GetTalkListEntryResult() == 32: # enable - quick warp to boss
             SetEventState(12100957, 0)
             SetEventState(12100857, 1)
+        elif GetTalkListEntryResult() == 37: # disable - quick warp to boss prompt
+            SetEventState(12100993, 1)
+            SetEventState(12100893, 0)
+        elif GetTalkListEntryResult() == 38: # enable - quick warp to boss prompt
+            SetEventState(12100993, 0)
+            SetEventState(12100893, 1)
         elif GetTalkListEntryResult() == 33: # disable - lamp music
             SetEventState(12100991, 1)
             SetEventState(12100891, 0)
@@ -963,6 +973,7 @@ def t210304_x99():
         AddTalkListData(3, 200033, 12100971)
         AddTalkListData(4, 200034, 12100871)
 
+        # shops+
         AddTalkListData(5, 200229, 12100948)
         AddTalkListData(6, 200230, 12100848)
 
@@ -1001,8 +1012,8 @@ def t210304_x99():
         AddTalkListData(33, 200232, 12100855)
 
         # ghost shop
-        AddTalkListData(34, 200317, 12100990)
-        AddTalkListData(35, 200318, 12100890)
+        AddTalkListData(34, 200317, 14000990)
+        AddTalkListData(35, 200318, 14000890)
 
         ShowShopMessage(0, 0, 0)
         def WhilePaused():
@@ -1021,10 +1032,10 @@ def t210304_x99():
         elif GetTalkListEntryResult() == 4: # disable - stocked shop
             SetEventState(12100971, 1)
             SetEventState(12100871, 0)
-        elif GetTalkListEntryResult() == 5: # enable - coldblood in shop
+        elif GetTalkListEntryResult() == 5: # enable - shops+
             SetEventState(12100948, 0)
             SetEventState(12100848, 1)
-        elif GetTalkListEntryResult() == 6: # disable - coldblood in shop
+        elif GetTalkListEntryResult() == 6: # disable - shops+
             SetEventState(12100948, 1)
             SetEventState(12100848, 0)
         elif GetTalkListEntryResult() == 7: # enable - restart fight on death
@@ -1082,11 +1093,11 @@ def t210304_x99():
             SetEventState(12100955, 1)
             SetEventState(12100855, 0)
         elif GetTalkListEntryResult() == 34: # enable - ghost shop
-            SetEventState(12100990, 0)
-            SetEventState(12100890, 1)
+            SetEventState(14000990, 0)
+            SetEventState(14000890, 1)
         elif GetTalkListEntryResult() == 35: # disable - ghost shop
-            SetEventState(12100990, 1)
-            SetEventState(12100890, 0)
+            SetEventState(14000990, 1)
+            SetEventState(14000890, 0)
 
 # portable lamp settings
 def t210304_x106():

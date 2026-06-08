@@ -90,6 +90,7 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(bsb_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(bsb_defeat+12) || EventFlag(bsb_defeat-1)) {
+        SetSpEffect(10000, 1990, false);
         SetEventFlag(bsb_defeat, OFF);
         SetEventFlag(bsb_defeat+2, OFF);
         SetEventFlag(bsb_defeat+12, OFF);
@@ -113,6 +114,7 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(paarl_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(paarl_defeat+12) || EventFlag(paarl_defeat-1)) {
+        SetSpEffect(10000, 1990, false);
         SetEventFlag(paarl_defeat, OFF);
         SetEventFlag(paarl_defeat+2, OFF);
         SetEventFlag(paarl_defeat+12, OFF);
@@ -123,6 +125,9 @@ $Event(0, Default, function() {
     } else {
         $InitializeEvent(paarl_lamp_offset, 10008300, paarl_lamp_id+2000, -1, paarl_lamp_kindle, paarl_lamp_id+6000, paarl_lamp_id+3000);
     }
+    
+    $InitializeEvent(bsb_offset, 10001030, 12304802, bsb_defeat);
+    $InitializeEvent(paarl_offset, 10001030, 12304702, paarl_defeat);
     
     $InitializeEvent(bsb_offset, 12102070, bsb_defeat+13, 0, 7416, bsb_id, -1, -1, -1, -1);
     $InitializeEvent(paarl_offset, 12102070, paarl_defeat+13, 0, 7449, paarl_id, -1, -1, -1, -1);

@@ -83,6 +83,7 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(witches_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(witches_rematch_started) || EventFlag(witches_auto_rematch)) {
+        SetSpEffect(10000, 1990, false);
         SetEventFlag(witches_defeat, OFF);
         SetEventFlag(witches_defeat+2, OFF);
         SetEventFlag(witches_defeat+3, OFF);
@@ -94,6 +95,8 @@ $Event(0, Default, function() {
     } else {
         $InitializeEvent(witches_lamp_offset, 10008300, witches_lamp_id+2000, -1, witches_lamp_kindle, witches_lamp_id+6000, witches_lamp_id+3000);
     }
+    
+    $InitializeEvent(witches_offset, 10001030, 12204802, witches_defeat);
     
     $InitializeEvent(witches_offset, 12102070, witches_rematch_cleanup, 0, 7418, witches_id1, witches_id2, -1, -1, -1);
     

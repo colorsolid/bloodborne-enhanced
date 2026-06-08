@@ -88,6 +88,7 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(rom_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(rom_defeat+12) || EventFlag(rom_defeat-1)) {
+        SetSpEffect(10000, 1990, false);
         SetEventFlag(rom_defeat, OFF);
         SetEventFlag(rom_defeat+2, ON);
         SetEventFlag(rom_defeat+3, OFF);
@@ -102,6 +103,8 @@ $Event(0, Default, function() {
     } else {
         $InitializeEvent(rom_lamp_offset, 10008300, rom_lamp_id+2000, -1, rom_lamp_kindle, rom_lamp_id+6000, rom_lamp_id+3000);
     }
+    
+    $InitializeEvent(rom_offset, 10001030, 13204800, rom_defeat);
     
     $InitializeEvent(rom_offset, 12102070, rom_defeat+13, 0, 7456, rom_id, -1, -1, -1, -1);
     

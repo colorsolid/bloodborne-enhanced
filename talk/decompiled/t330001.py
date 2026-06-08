@@ -479,7 +479,9 @@ def t330001_x50():
                 ForceCloseGenericDialog()
                 pass
         
-
+# quick warp to boss dummy
+def t330001_x48():
+    return 0
 # awaken above ground
 def t330001_x49():
     while True:

@@ -86,6 +86,7 @@ $Event(0, Default, function() {
         }
     // rematch mode started, warp player to boss trigger point
     } else if (EventFlag(logarius_defeat+12) || EventFlag(logarius_defeat-1)) {
+        SetSpEffect(10000, 1990, false);
         if (EventFlag(12500810)) {
             SetEventFlag(12500810, OFF);
             SetEventFlag(12500819, ON);
@@ -102,6 +103,8 @@ $Event(0, Default, function() {
     } else {
         $InitializeEvent(logarius_lamp_offset, 10008300, logarius_lamp_id+2000, -1, logarius_lamp_kindle, logarius_lamp_id+6000, logarius_lamp_id+3000);
     }
+    
+    $InitializeEvent(logarius_offset, 10001030, 12504802, logarius_defeat);
     
     $InitializeEvent(logarius_offset, 12102070, logarius_defeat+13, 0, 7457, logarius_id, -1, -1, -1, -1);
     

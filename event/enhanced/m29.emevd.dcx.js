@@ -128,6 +128,7 @@ $Event(0, Default, function() {
         $InitializeEvent(boss_1_lamp_offset, 10008300, boss_1_lamp_id+2000, 10000999, boss_1_lamp_kindle, boss_1_lamp_id+6000, boss_1_lamp_id+3000);
         DummyPlayCutsceneAndWarpPlayer(boss_1_lamp_id+4000, area_id, block_id);
     } else if (EventFlag(boss_1_defeat+2012) || EventFlag(boss_1_defeat+1099)) {
+        SetSpEffect(10000, 1990, false);
         SetEventFlag(boss_1_defeat, OFF);
         SetEventFlag(boss_1_defeat+2012, OFF);
         SetEventFlag(boss_1_defeat+1013, ON);
@@ -144,6 +145,7 @@ $Event(0, Default, function() {
         $InitializeEvent(boss_2_lamp_offset, 10008300, boss_2_lamp_id+2000, 10000999, boss_2_lamp_kindle, boss_2_lamp_id+6000, boss_2_lamp_id+3000);
         DummyPlayCutsceneAndWarpPlayer(boss_2_lamp_id+4000, area_id, block_id);
     } else if (EventFlag(boss_2_defeat+2022) || EventFlag(boss_2_defeat+1089)) {
+        SetSpEffect(10000, 1990, false);
         SetEventFlag(boss_2_defeat, OFF);
         SetEventFlag(boss_2_defeat+2022, OFF);
         SetEventFlag(boss_2_defeat+1023, ON);
@@ -160,6 +162,7 @@ $Event(0, Default, function() {
         $InitializeEvent(boss_3_lamp_offset, 10008300, boss_3_lamp_id+2000, 10000999, boss_3_lamp_kindle, boss_3_lamp_id+6000, boss_3_lamp_id+3000);
         DummyPlayCutsceneAndWarpPlayer(boss_3_lamp_id+4000, area_id, block_id);
     } else if (EventFlag(boss_3_defeat+2032) || EventFlag(boss_3_defeat+1079)) {
+        SetSpEffect(10000, 1990, false);
         SetEventFlag(boss_3_defeat, OFF);
         SetEventFlag(boss_3_defeat+2032, OFF);
         SetEventFlag(boss_3_defeat+1033, ON);
@@ -176,6 +179,7 @@ $Event(0, Default, function() {
         $InitializeEvent(boss_4_lamp_offset, 10008300, boss_4_lamp_id+2000, 10000999, boss_4_lamp_kindle, boss_4_lamp_id+6000, boss_4_lamp_id+3000);
         DummyPlayCutsceneAndWarpPlayer(boss_4_lamp_id+4000, area_id, block_id);
     } else if (EventFlag(boss_4_defeat+2042) || EventFlag(boss_4_defeat+1069)) {
+        SetSpEffect(10000, 1990, false);
         SetEventFlag(boss_4_defeat, OFF);
         SetEventFlag(boss_4_defeat+2042, OFF);
         SetEventFlag(boss_4_defeat+1043, ON);

@@ -95,6 +95,7 @@ $Event(0, Default, function() {
         }
     // rematch has started
     } else if (EventFlag(orphan_defeat+12) || EventFlag(orphan_defeat-1)) {
+        SetSpEffect(10000, 1990, false);
         SetEventFlag(orphan_defeat, OFF);
         SetEventFlag(orphan_defeat+1, OFF);
         SetEventFlag(orphan_defeat+3011, OFF);
@@ -107,6 +108,8 @@ $Event(0, Default, function() {
         // normal
         $InitializeEvent(orphan_lamp_offset, 10008300, orphan_lamp_id+2000, -1, orphan_lamp_kindle, orphan_lamp_id+6000, orphan_lamp_id+3000);
     }
+    
+    $InitializeEvent(orphan_offset, 10001030, 13604802, orphan_defeat);
     
     $InitializeEvent(orphan_offset, 12102070, orphan_defeat+13, 0, 7506, orphan_id1, orphan_id2, -1, -1, -1);
     

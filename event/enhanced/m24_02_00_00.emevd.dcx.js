@@ -97,6 +97,7 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(celestial_emissary_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(celestial_emissary_defeat+12) || EventFlag(celestial_emissary_defeat-1)) {
+        SetSpEffect(10000, 1990, false);
         SetEventFlag(celestial_emissary_defeat, OFF);
         SetEventFlag(celestial_emissary_defeat+2, OFF);
         SetEventFlag(celestial_emissary_defeat+12, OFF);
@@ -119,6 +120,7 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(ebrietas_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(ebrietas_defeat+12) || EventFlag(ebrietas_defeat-1)) {
+        SetSpEffect(10000, 1990, false);
         SetEventFlag(ebrietas_defeat, OFF);
         SetEventFlag(ebrietas_defeat+2, ON);
         SetEventFlag(ebrietas_defeat+3000, ON);
@@ -131,6 +133,9 @@ $Event(0, Default, function() {
     } else {
         $InitializeEvent(ebrietas_lamp_offset, 10008300, ebrietas_lamp_id+2000, -1, ebrietas_lamp_kindle, ebrietas_lamp_id+6000, ebrietas_lamp_id+3000);
     }
+    
+    $InitializeEvent(celestial_emissary_offset, 10001030, 12424702, celestial_emissary_defeat);
+    $InitializeEvent(ebrietas_offset, 10001030, 12424802, ebrietas_defeat);
     
     $InitializeEvent(celestial_emissary_offset, 12102070, celestial_emissary_defeat+13, 0, 7459, celestial_emissary_id, -1, -1, -1, -1);
     $InitializeEvent(ebrietas_offset, 12102070, ebrietas_defeat+13, 0, 7462, ebrietas_id, -1, -1, -1, -1);

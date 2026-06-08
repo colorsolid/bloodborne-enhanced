@@ -99,6 +99,7 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(amelia_lamp_spawn_region, area_id, block_id);
         }
     } else if (EventFlag(amelia_rematch_started) || EventFlag(amelia_auto_rematch_trigger)) {
+        SetSpEffect(10000, 1990, false);
         SetEventFlag(amelia_defeat, OFF);
         SetEventFlag(amelia_encountered, OFF);
         SetEventFlag(amelia_rematch_started, OFF);
@@ -109,6 +110,8 @@ $Event(0, Default, function() {
     } else {
         $InitializeEvent(amelia_lamp_offset, 10008300, amelia_lamp_spawn_checker, -1, amelia_lamp_kindle_state, amelia_lamp_hidden_region, amelia_lamp_temp_region);
     }
+    
+    $InitializeEvent(amelia_offset, 10001030, 12402802, amelia_defeat);
     
     $InitializeEvent(amelia_offset, 12102070, amelia_rematch_played, 0, 7417, amelia_id, -1, -1, -1, -1);
     

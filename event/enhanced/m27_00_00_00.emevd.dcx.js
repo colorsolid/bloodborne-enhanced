@@ -77,6 +77,7 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(shadows_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(shadows_defeat+12) || EventFlag(shadows_defeat-1)) {
+        SetSpEffect(10000, 1990, false);
         SetEventFlag(shadows_defeat, OFF);
         SetEventFlag(shadows_defeat+2, OFF);
         SetEventFlag(shadows_defeat+12, OFF);
@@ -87,6 +88,8 @@ $Event(0, Default, function() {
     } else {
         $InitializeEvent(shadows_lamp_offset, 10008300, shadows_lamp_id+2000, -1, shadows_lamp_kindle, shadows_lamp_id+6000, shadows_lamp_id+3000);
     }
+    
+    $InitializeEvent(shadows_offset, 10001030, 12704802, shadows_defeat);
     
     $InitializeEvent(shadows_offset, 12102070, shadows_defeat+13, 0, 7419, shadows_id1, shadows_id2, shadows_id3, -1, -1);
     

@@ -116,6 +116,7 @@ $Event(0, Default, function() {
         }
     // rematch has started
     } else if (EventFlag(cleric_beast_defeat+12) || EventFlag(cleric_beast_defeat-1)) {
+        SetSpEffect(10000, 1990, false);
         SetEventFlag(cleric_beast_defeat, OFF);
         SetEventFlag(cleric_beast_defeat+2, OFF);
         SetEventFlag(cleric_beast_defeat+12, OFF);
@@ -130,7 +131,6 @@ $Event(0, Default, function() {
     if (EventFlag(gascoigne_defeat+13) && !EventFlag(gascoigne_defeat-1)) {
         SetEventFlag(gascoigne_defeat+13, OFF);
         SetEventFlag(gascoigne_defeat, ON);
-        
         if (EventFlag(12111120)) {
             SetEventFlag(12111120, OFF);
             $InitializeEvent(gascoigne_lamp_offset, 10008300, gascoigne_lamp_id+2000, -1, gascoigne_lamp_kindle, gascoigne_lamp_id+6000, gascoigne_lamp_id+3000);
@@ -139,14 +139,9 @@ $Event(0, Default, function() {
             $InitializeEvent(gascoigne_lamp_offset, 10008300, gascoigne_lamp_id+2000, 10000999, gascoigne_lamp_kindle, gascoigne_lamp_id+6000, gascoigne_lamp_id+3000);
             DummyPlayCutsceneAndWarpPlayer(gascoigne_lamp_id+4000, area_id, block_id);
         }
-        
-        // Oedon Tomb Key
-        if (!PlayerHasItem(ItemType.Goods, 4000)) {
-            EventValueOperation(12411819, 8, 1, 0, 1, CalculationType.Assign);
-            DirectlyGivePlayerItem(ItemType.Goods, 4000, 12411819, 8);
-        }
     } else if (EventFlag(gascoigne_defeat+12) || EventFlag(gascoigne_defeat-1)) {
-        RemoveItemFromPlayer(ItemType.Goods, 4000, 1);
+        SetSpEffect(10000, 1990, false);
+        SetObjactState(2411304, 2410080, Disabled); // disable gate
         SetEventFlag(gascoigne_defeat, OFF);
         SetEventFlag(gascoigne_defeat+2, OFF);
         SetEventFlag(gascoigne_defeat+12, OFF);
@@ -157,6 +152,9 @@ $Event(0, Default, function() {
     } else {
         $InitializeEvent(gascoigne_lamp_offset, 10008300, gascoigne_lamp_id+2000, -1, gascoigne_lamp_kindle, gascoigne_lamp_id+6000, gascoigne_lamp_id+3000);
     }
+    
+    $InitializeEvent(cleric_beast_offset, 10001030, 12414702, cleric_beast_defeat);
+    $InitializeEvent(gascoigne_offset, 10001030, 12414802, gascoigne_defeat);
     
     $InitializeEvent(cleric_beast_offset, 12102070, cleric_beast_defeat+13, 0, 7447, cleric_beast_id, -1, -1, -1, -1);
     $InitializeEvent(gascoigne_offset, 12102070, gascoigne_defeat+13, gascoigne_defeat+15, 7448, gascoigne_id1, gascoigne_id2, -1, -1, -1);
@@ -2002,7 +2000,7 @@ $Event(12414703, Default, function() {
         }
         flagArea &= InArea(10000, 2412801);
         WaitFor(flagArea);
-        //EnableBossMapSound(2413802, Enabled);
+        EnableBossMapSound(2413802, Enabled);
         chrFlagArea &= CharacterHasEventMessage(2410800, 100);
     }
 L0:
@@ -2014,7 +2012,7 @@ L0:
     WaitFor(chrFlagArea);
     EnableBossMapSound(2413802, Disabled);
     WaitFixedTimeFrames(0);
-    //EnableBossMapSound(2413803, Enabled);
+    EnableBossMapSound(2413803, Enabled);
 });
 
 // Boss Camera_Parish

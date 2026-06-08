@@ -21,7 +21,17 @@
 // constructor
 $Event(0, Default, function() {
     BatchSetEventFlags(10008500, 10008599, OFF); // force resting off when awakening
-     //$InitializeEvent(0, 8890); // test
+    $InitializeEvent(0, 10008890); // test
+     
+    if (EventFlag(12100892) && EventFlag(9401) && !PlayerInMap(21, 0)) { // temp shop enabled, visited dream, no longer in dream
+        BatchSetEventFlags(12101020, 12101021, ON); // remove starting weapon messengers in dream
+    }
+    if (EventFlag(10001060)) {
+        SetEventFlag(10001060, OFF);
+        if (!PlayerInMap(21, 0)) {
+            SetSpEffect(10000, 1991, false);
+        }
+    }
     
     $InitializeEvent(0, 10000999);
     
@@ -40,7 +50,8 @@ $Event(0, Default, function() {
     $InitializeEvent(6, 12104200, 1819, 2607); // green smoke
     $InitializeEvent(7, 12104200, 1820, 2609); // bluish smoke
     $InitializeEvent(8, 12104200, 1821, 2605); // yellow smoke
-    $InitializeEvent(9, 12104200, 1822, 2606); // purple smoke
+    $InitializeEvent(9, 12104200, 1822, 2611); // purple smoke
+    $InitializeEvent(35, 12104200, 1835, 2613); // black smoke
     
     $InitializeEvent(10, 12104200, 1802, 2302); // made of money
     $InitializeEvent(11, 12104200, 1818, 2322); // binding magic
@@ -87,6 +98,7 @@ $Event(0, Default, function() {
     $InitializeEvent(0, 10008619); // double tap init
     $InitializeEvent(0, 10008620, 2111); // portable lamp
     $InitializeEvent(1, 10008620, 2108); // summons menu
+    $InitializeEvent(2, 10008620, 1991); // boss quick warp
     $InitializeEvent(0, 10008603); // portable lamp warping
     $InitializeEvent(0, 10008604); // portable lamp warping to chalice
     $InitializeEvent(0, 10008615); // portable lamp reawaken
@@ -485,6 +497,7 @@ S1:
 
 // pre-constructor
 $Event(50, Default, function() {
+    ClearSpEffect(10000, 1990); // clear rematch-active (will be reset by map script if active)
     if (!AnyBatchEventFlags(12103903, 12103905)) {
         SetEventFlag(12103903, ON);
     }
@@ -881,6 +894,14 @@ $Event(10008400, Default, function() {
         }
     }
     
+    // quick warp to boss prompt
+    // on: 12100893, off: 12100993
+    if (!EventFlag(12100993)) {
+        if (!EventFlag(12100893)) {
+            SetEventFlag(12100893, ON);
+        }
+    }
+    
     // enable Iosefka lamp from start
     // on: 12100853, off: 12100953
     if (!EventFlag(12100953)) {
@@ -1073,6 +1094,14 @@ $Event(10008400, Default, function() {
         }
     }
     
+    // temp stocked shop
+    // on: 12100892, off: 12100992
+    if (!EventFlag(12100992)) {
+        if (!EventFlag(12100892)) {
+            SetEventFlag(12100892, ON);
+        }
+    }
+    
     // shops+
     // on 12100848, off: 12100948
     if (!EventFlag(12100948)) {
@@ -1144,10 +1173,10 @@ $Event(10008400, Default, function() {
     }
     
     // ghost shop
-    // on: 12100890, off: 12100990
-    if (!EventFlag(12100990)) {
-        if (!EventFlag(12100890)) {
-            SetEventFlag(12100990, ON);
+    // on: 14000890, off: 14000990
+    if (!EventFlag(14000990)) {
+        if (!EventFlag(14000890)) {
+            SetEventFlag(14000990, ON);
         }
     }
     
@@ -3941,8 +3970,11 @@ $Event(10008619, Default, function() {
 
 // summon portable menu npc and trigger action
 $Event(10008620, Default, function(spEffectId) {
-    BatchSetEventFlags(12421900, 12421904, OFF); // controls which menu to open
+    BatchSetEventFlags(12421900, 12421905, OFF); // controls which menu to open
     WaitFor(CharacterHasSpEffect(10000, spEffectId));
+    if (spEffectId == 1991) {
+        WaitFixedTimeSeconds(2);
+    }
     
     // summon correct npc
     if ((PlayerInMap(23, 0) || PlayerInMap(27, 0)) 
@@ -4007,6 +4039,9 @@ $Event(10008620, Default, function(spEffectId) {
                 SetEventFlag(12421901, ON); // summon menu
             }
         }
+    }
+    if (spEffectId == 1991) {
+        SetEventFlag(12421905, ON);
     }
 L0:
     WaitFor(!CharacterHasSpEffect(10000, spEffectId));
@@ -4100,7 +4135,7 @@ $Event(10008616, Default, function() {
 });
 
 // test
-$Event(8890, Default, function() {
+$Event(10008890, Default, function() {
     
 });
 
@@ -4256,8 +4291,8 @@ $Event(10003000, Default, function(objectId, waitFlag, unusedspawnDelay) {
     //BatchSetEventFlags(10003000, 10003300, OFF); // debug
     DeleteObjectfollowingSFX(objectId, true);
     EndIf(ThisEventSlot());
-    if (EventFlag(12100990)) {
-        WaitFor(EventFlag(12100990) && EventFlag(12100890)); // don't activate until reload
+    if (EventFlag(14000990)) {
+        WaitFor(EventFlag(14000990) && EventFlag(14000890)); // don't activate until reload
     }
     WaitFor(EventFlag(waitFlag));
     CreateObjectfollowingSFX(objectId, 200, 900210);
@@ -4288,8 +4323,8 @@ $Event(10003500, Default, function(charId) {
     //BatchSetEventFlags(10003500, 10003800, OFF); // debug
     SetCharacterBackreadState(charId, true);
     EndIf(ThisEventSlot());
-    if (EventFlag(12100990)) {
-        WaitFor(EventFlag(12100990) && EventFlag(12100890)); // don't activate until reload
+    if (EventFlag(14000990)) {
+        WaitFor(EventFlag(14000990) && EventFlag(14000890)); // don't activate until reload
     }
     SetCharacterBackreadState(charId, false);
     SetCharacterGravity(charId, Disabled);
@@ -4355,8 +4390,8 @@ $Event(10008900, Default, function(autoRematchFlag, lampSpawnPoint, distortedAct
     SetSpEffect(10000, 1934, false);
     DummyPlayCutsceneAndWarpPlayer(rematchStartRegion, areaId, blockId);
     WaitFor(HPRatio(10000) <= 0);
-    SetEventFlag(autoRematchFlag, ON); // used for moving bloodstain
     if (EventFlag(12100864)) { // auto rematch enabled
+        SetEventFlag(autoRematchFlag, ON);
         if (distortedActive != 0 && EventFlag(distortedActive)) { // if distorted memory
             SetEventFlag(distortedTrigger, ON);
         }
@@ -5174,7 +5209,7 @@ $Event(10001010, Default, function(triggerEffect, addonEffect) {
 
 // rematch ghost token rewards
 $Event(10001020, Default, function(guaranteed) {
-    EndIf(!EventFlag(12100890));
+    EndIf(!EventFlag(14000890));
     if (guaranteed == 1) {
         AwardItemLot(17040); // guaranteed ghost token
     }
@@ -5187,4 +5222,13 @@ $Event(10001020, Default, function(guaranteed) {
     else if (EventValue(10001021, 2) == 1) {
         AwardItemLot(17050); // 25% ghost token
     }
+});
+
+// boss death watcher
+$Event(10001030, Default, function(bossActiveFlag, bossDefeatFlag) {
+    SetEventFlag(10001060, OFF);
+    EndIf(!EventFlag(12100893) || EventFlag(bossDefeatFlag) || CharacterHasSpEffect(10000, 1990));
+    WaitFor(EventFlag(bossActiveFlag));
+    WaitFor(HPRatio(10000) <= 0 && !EventFlag(bossDefeatFlag));
+    SetEventFlag(10001060, ON);
 });

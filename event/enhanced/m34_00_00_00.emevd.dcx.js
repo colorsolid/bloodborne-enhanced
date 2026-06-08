@@ -111,6 +111,7 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(ludwig_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(ludwig_defeat+12) || EventFlag(ludwig_defeat-1)) {
+        SetSpEffect(10000, 1990, false);
         SetEventFlag(9471, OFF);
         SetEventFlag(ludwig_defeat, OFF);
         SetEventFlag(ludwig_defeat+1, OFF);
@@ -138,6 +139,7 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(laurence_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(laurence_defeat+12) || EventFlag(laurence_defeat-1)) {
+        SetSpEffect(10000, 1990, false);
         SetEventFlag(laurence_defeat, OFF);
         SetEventFlag(laurence_defeat+1, OFF);
         SetEventFlag(laurence_defeat+3011, OFF);
@@ -149,6 +151,9 @@ $Event(0, Default, function() {
     } else {
         $InitializeEvent(laurence_lamp_offset, 10008300, laurence_lamp_id+2000, -1, laurence_lamp_kindle, laurence_lamp_id+6000, laurence_lamp_id+3000);
     }
+    
+    $InitializeEvent(laurence_offset, 10001030, 13404802, laurence_defeat);
+    $InitializeEvent(ludwig_offset, 10001030, 13404852, ludwig_defeat);
     
     $InitializeEvent(laurence_offset, 12102070, laurence_defeat+13, 0, 7499, laurence_id, -1, -1, -1, -1);
     $InitializeEvent(ludwig_offset, 12102070, ludwig_defeat+13, 0, 7498, ludwig_id1, ludwig_id2, -1, -1, -1);
