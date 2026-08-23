@@ -1218,10 +1218,11 @@ $Event(12410720, Default, function() {
     WaitFixedTimeSeconds(0.1);
     if (EventFlag(12100953)) {
         $InitializeEvent(15, 7000, 2410950, 2411950, 9401, 12417800, -1);
+        $InitializeEvent(15, 10000100, 2413960, 2413961, 9401, -1);
     } else {
         $InitializeEvent(15, 7000, 2410950, 2411950, 10000999, 12417800, -1);
+        $InitializeEvent(15, 10000100, 2413960, 2413961, 10000999, -1);
     }
-    $InitializeEvent(15, 10000100, 2413960, 2413961, 12417810, -1);
 });
 
 // ng+ only enemy test

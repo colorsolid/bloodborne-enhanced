@@ -374,6 +374,7 @@ $Event(0, Default, function() {
     $InitializeEvent(0, 12204450, 2200910, 2202911, 12204420, 12204430, 12204800);
     $InitializeEvent(0, 12204460, 2200910, 2202911, 2202804, 2202804, 101130, 12204450, 2202804);
     $InitializeEvent(0, 12204470);
+    $InitializeEvent(0, 12204490);
     
     $InitializeEvent(0, 7100, 72200200, 2201950);
     $InitializeEvent(1, 7100, 72200201, 2201951);
@@ -2280,7 +2281,6 @@ $Event(12204410, Restart, function(signType, entityId, areaEntityId, eventFlagId
     DisplayMessage(100051, 0);
     WaitFixedTimeSeconds(5);
     WarpCharacterAndCopyFloor(entityId, TargetEntityType.Area, areaEntityId, -1, areaEntityId);
-    ActivateHit(2404120, Disabled);
 });
 
 // Hemwick_New NPC summons_Aim for the boss room_XX

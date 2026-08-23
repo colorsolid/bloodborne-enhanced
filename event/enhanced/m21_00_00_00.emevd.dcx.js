@@ -763,19 +763,22 @@ $Event(12103000, Default, function() {
         SetEventFlag(12103011, ON);
         SetEventFlag(12103012, ON);
     }
-    lowerPurchase = EventFlagState(CHANGE, TargetEventFlagType.EventFlag, 12103016);
-    midPurchase = EventFlagState(CHANGE, TargetEventFlagType.EventFlag, 12103018);
-    upperPurchase = EventFlagState(CHANGE, TargetEventFlagType.EventFlag, 12103020);
+    lowerPurchase = EventFlagState(CHANGE, TargetEventFlagType.EventFlag, 12103016) || EventFlagState(CHANGE, TargetEventFlagType.EventFlag, 12103017);
+    midPurchase = EventFlagState(CHANGE, TargetEventFlagType.EventFlag, 12103018) || EventFlagState(CHANGE, TargetEventFlagType.EventFlag, 12103019);
+    upperPurchase = EventFlagState(CHANGE, TargetEventFlagType.EventFlag, 12103020) || EventFlagState(CHANGE, TargetEventFlagType.EventFlag, 12103021);
     WaitFor(lowerPurchase || midPurchase || upperPurchase); // purchase made
     StoreItemAmountHeldInEventValue(3, 1596, 12103030, 16);
     RemoveItemFromPlayer(ItemType.Goods, 1596, 1);
     if (lowerPurchase.Passed) {
+        SetSpEffect(10000, 128, false);
         EventValueOperation(12103030, 16, lowerCost, 0, 0, CalculationType.Sub);
     }
     else if (midPurchase.Passed) {
+        SetSpEffect(10000, 129, false);
         EventValueOperation(12103030, 16, midCost, 0, 0, CalculationType.Sub);
     }
     else if (upperPurchase.Passed) {
+        SetSpEffect(10000, 130, false);
         EventValueOperation(12103030, 16, upperCost, 0, 0, CalculationType.Sub);
     }
     WaitFixedTimeFrames(1);

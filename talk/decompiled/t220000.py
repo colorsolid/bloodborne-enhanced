@@ -2003,67 +2003,99 @@ def t220000_x89():
         elif GetTalkListEntryResult() == 1: # approval
             OpenItemAcquisitionMenu(ItemType.Goods, 814, 1)
             AcquireGesture(14)
-            assert not IsMenuOpen(MenuType.Bonfire)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
         elif GetTalkListEntryResult() == 2: # beg for life 
             OpenItemAcquisitionMenu(ItemType.Goods, 816, 1)
             AcquireGesture(16)
-            assert not IsMenuOpen(MenuType.Bonfire)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
         elif GetTalkListEntryResult() == 3: # brush off dust
             OpenItemAcquisitionMenu(ItemType.Goods, 817, 1)
             AcquireGesture(17)
-            assert not IsMenuOpen(MenuType.Bonfire)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
         elif GetTalkListEntryResult() == 4: # church bow (female)
             OpenItemAcquisitionMenu(ItemType.Goods, 807, 1)
             AcquireGesture(7)
-            assert not IsMenuOpen(MenuType.Bonfire)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
         elif GetTalkListEntryResult() == 5: # church bow (male) 
             OpenItemAcquisitionMenu(ItemType.Goods, 805, 1)
             AcquireGesture(5)
-            assert not IsMenuOpen(MenuType.Bonfire)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
         elif GetTalkListEntryResult() == 6: # curtsy
             OpenItemAcquisitionMenu(ItemType.Goods, 806, 1)
             AcquireGesture(6)
-            assert not IsMenuOpen(MenuType.Bonfire)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
         elif GetTalkListEntryResult() == 7: # deep respect
             OpenItemAcquisitionMenu(ItemType.Goods, 819, 1)
             AcquireGesture(19)
-            assert not IsMenuOpen(MenuType.Bonfire)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
         elif GetTalkListEntryResult() == 8: # league oath
             OpenItemAcquisitionMenu(ItemType.Goods, 822, 1)
             AcquireGesture(22)
-            assert not IsMenuOpen(MenuType.Bonfire)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
         elif GetTalkListEntryResult() == 9: # make contact
             OpenItemAcquisitionMenu(ItemType.Goods, 820, 1)
             AcquireGesture(20)
-            assert not IsMenuOpen(MenuType.Bonfire)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
         elif GetTalkListEntryResult() == 10: # pray 
             OpenItemAcquisitionMenu(ItemType.Goods, 809, 1)
             AcquireGesture(9)
-            assert not IsMenuOpen(MenuType.Bonfire)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
         elif GetTalkListEntryResult() == 11: # respect
             OpenItemAcquisitionMenu(ItemType.Goods, 818, 1)
             AcquireGesture(18)
-            assert not IsMenuOpen(MenuType.Bonfire)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
         elif GetTalkListEntryResult() == 12: # roar
             OpenItemAcquisitionMenu(ItemType.Goods, 815, 1)
             AcquireGesture(15)
-            assert not IsMenuOpen(MenuType.Bonfire)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
         elif GetTalkListEntryResult() == 13: # shake off cape
             OpenItemAcquisitionMenu(ItemType.Goods, 804, 1)
             AcquireGesture(4)
-            assert not IsMenuOpen(MenuType.Bonfire)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
         elif GetTalkListEntryResult() == 14: # shh!
             OpenItemAcquisitionMenu(ItemType.Goods, 811, 1)
             AcquireGesture(11)
-            assert not IsMenuOpen(MenuType.Bonfire)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
         elif GetTalkListEntryResult() == 15: # triumph
             OpenItemAcquisitionMenu(ItemType.Goods, 813, 1)
             AcquireGesture(13)
-            assert not IsMenuOpen(MenuType.Bonfire)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
         elif GetTalkListEntryResult() == 16: # wait
             OpenItemAcquisitionMenu(ItemType.Goods, 810, 1)
             AcquireGesture(10)
-            assert not IsMenuOpen(MenuType.Bonfire)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
 
 # stump messengers
 def t220000_x92():

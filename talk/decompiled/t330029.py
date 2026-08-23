@@ -67,15 +67,22 @@ def t330029_x3():
             """State 7"""
             ClearPlayerDamageInfo()
             SetTalkTime(0.33)
-            OpenGenericDialog(1, 200238, 1, 0, 1)
-            def WhilePaused():
-                SetTalkTime(0.33)
-            if GetGenericDialogButtonResult() == 1:
-                DebugEvent('OK')
-                pass
-            elif not IsGenericDialogOpen():
-                DebugEvent('CANCEL')
-                pass
+            if GetEventStatus(10008630) == 0 and GetEventStatus(10008640) == 0:
+                OpenGenericDialog(1, 200238, 1, 0, 1)
+                def WhilePaused():
+                    SetTalkTime(0.33)
+                if GetGenericDialogButtonResult() == 1:
+                    DebugEvent('OK')
+                    pass
+                elif not IsGenericDialogOpen():
+                    DebugEvent('CANCEL')
+                    pass
+            else:
+                call = t330029_x41()
+                if call.Done():
+                    pass
+                elif HasPlayerBeenAttacked() == 1:
+                    assert t330029_x0()
         elif GetEventStatus(12421905) == 1 and GetEventStatus(10008680) == 1: # boss quick warp prompt
             ClearPlayerDamageInfo()
             SetTalkTime(0.33)
@@ -163,6 +170,33 @@ def t330029_x7(z1=99999, z2=99999, z3=99999, z4=99999):
 # 12100970 - beast's embrace
 # 12100969 - milkweed rune
 # 12100968 - lamp cheat
+
+# summons menu
+def t330029_x41():
+    while True:
+        ClearTalkListData()
+        AddTalkListData(2, 10010561, 10008640) # summon henryk
+        AddTalkListData(3, 10010577, 10008630) # dismiss henryk
+        if (GetEventStatus(10008630) == 1 or GetEventStatus(10008631) == 1 or GetEventStatus(10008632) == 1 or GetEventStatus(10008633) == 1
+                or GetEventStatus(10008634) == 1 or GetEventStatus(10008635) == 1 or GetEventStatus(10008636) == 1
+                or GetEventStatus(10008637) == 1 or GetEventStatus(10008638) == 1 or GetEventStatus(10008639) == 1):
+            AddTalkListData(1, 200236, -1) # gather summons
+        else:
+            pass
+        ShowShopMessage(0, 0, 0)
+        def WhilePaused():
+            SetTalkTime(0.33)
+        if not GetTalkListEntryResult() or not IsTalkExclusiveMenuOpen():
+            return 1
+        elif GetTalkListEntryResult() == 1: # gather summons
+            SetEventState(12106500, 1)
+            return 1
+        elif GetTalkListEntryResult() == 2: # summon henryk
+            SetEventState(10008630, 1)
+            return 1
+        elif GetTalkListEntryResult() == 3: # dismiss henryk
+            SetEventState(10008630, 0)
+            return 1
 
 # top level
 def t330029_x60():
@@ -1871,67 +1905,99 @@ def t330029_x89():
         elif GetTalkListEntryResult() == 1: # approval
             OpenItemAcquisitionMenu(ItemType.Goods, 814, 1)
             AcquireGesture(14)
-            assert not IsMenuOpen(MenuType.Bonfire)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
         elif GetTalkListEntryResult() == 2: # beg for life 
             OpenItemAcquisitionMenu(ItemType.Goods, 816, 1)
             AcquireGesture(16)
-            assert not IsMenuOpen(MenuType.Bonfire)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
         elif GetTalkListEntryResult() == 3: # brush off dust
             OpenItemAcquisitionMenu(ItemType.Goods, 817, 1)
             AcquireGesture(17)
-            assert not IsMenuOpen(MenuType.Bonfire)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
         elif GetTalkListEntryResult() == 4: # church bow (female)
             OpenItemAcquisitionMenu(ItemType.Goods, 807, 1)
             AcquireGesture(7)
-            assert not IsMenuOpen(MenuType.Bonfire)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
         elif GetTalkListEntryResult() == 5: # church bow (male) 
             OpenItemAcquisitionMenu(ItemType.Goods, 805, 1)
             AcquireGesture(5)
-            assert not IsMenuOpen(MenuType.Bonfire)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
         elif GetTalkListEntryResult() == 6: # curtsy
             OpenItemAcquisitionMenu(ItemType.Goods, 806, 1)
             AcquireGesture(6)
-            assert not IsMenuOpen(MenuType.Bonfire)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
         elif GetTalkListEntryResult() == 7: # deep respect
             OpenItemAcquisitionMenu(ItemType.Goods, 819, 1)
             AcquireGesture(19)
-            assert not IsMenuOpen(MenuType.Bonfire)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
         elif GetTalkListEntryResult() == 8: # league oath
             OpenItemAcquisitionMenu(ItemType.Goods, 822, 1)
             AcquireGesture(22)
-            assert not IsMenuOpen(MenuType.Bonfire)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
         elif GetTalkListEntryResult() == 9: # make contact
             OpenItemAcquisitionMenu(ItemType.Goods, 820, 1)
             AcquireGesture(20)
-            assert not IsMenuOpen(MenuType.Bonfire)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
         elif GetTalkListEntryResult() == 10: # pray 
             OpenItemAcquisitionMenu(ItemType.Goods, 809, 1)
             AcquireGesture(9)
-            assert not IsMenuOpen(MenuType.Bonfire)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
         elif GetTalkListEntryResult() == 11: # respect
             OpenItemAcquisitionMenu(ItemType.Goods, 818, 1)
             AcquireGesture(18)
-            assert not IsMenuOpen(MenuType.Bonfire)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
         elif GetTalkListEntryResult() == 12: # roar
             OpenItemAcquisitionMenu(ItemType.Goods, 815, 1)
             AcquireGesture(15)
-            assert not IsMenuOpen(MenuType.Bonfire)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
         elif GetTalkListEntryResult() == 13: # shake off cape
             OpenItemAcquisitionMenu(ItemType.Goods, 804, 1)
             AcquireGesture(4)
-            assert not IsMenuOpen(MenuType.Bonfire)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
         elif GetTalkListEntryResult() == 14: # shh!
             OpenItemAcquisitionMenu(ItemType.Goods, 811, 1)
             AcquireGesture(11)
-            assert not IsMenuOpen(MenuType.Bonfire)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
         elif GetTalkListEntryResult() == 15: # triumph
             OpenItemAcquisitionMenu(ItemType.Goods, 813, 1)
             AcquireGesture(13)
-            assert not IsMenuOpen(MenuType.Bonfire)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
         elif GetTalkListEntryResult() == 16: # wait
             OpenItemAcquisitionMenu(ItemType.Goods, 810, 1)
             AcquireGesture(10)
-            assert not IsMenuOpen(MenuType.Bonfire)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
 
 # stump messengers
 def t330029_x92():
@@ -2188,8 +2254,8 @@ def t330029_x95():
             AddTalkListData(38, 200323, 12100993)
 
             # lamp music
-            AddTalkListData(33, 200320, 12100891)
-            AddTalkListData(34, 200319, 12100991)
+            # AddTalkListData(33, 200320, 12100891)
+            # AddTalkListData(34, 200319, 12100991)
         else:
             pass
 

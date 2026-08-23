@@ -98,6 +98,16 @@ $Event(0, Default, function() {
     $InitializeEvent(amygdala_offset, 10008900, amygdala_defeat-1, amygdala_lamp_id+1000, 0, 0, amygdala_lamp_id+5000, area_id, block_id);
     $InitializeEvent(amygdala_offset, 10007700, amygdala_defeat+11, amygdala_defeat+12, amygdala_lamp_id+1000, 833000);
     
+    $InitializeEvent(0, 10007400, 3300910, 13304420, 101161, 101208, 163); // henryk - c
+    $InitializeEvent(0, 10008630, 10008630, 10008640, 3300910, 13304420, 3303910, 200244, 101208, 200254, 200264);
+    
+    $InitializeEvent(0, 13304400, 3303910, 13304420, 13304430);
+    $InitializeEvent(0, 13304410, 5, 3300910, 3302910, 13304420, 13304430, 10561);
+    $InitializeEvent(0, 13304450, 3300910, 3302911, 13304420, 13304430, 13304800);
+    $InitializeEvent(0, 13304460, 3300910, 3302911, 3302804, 3302804, 101130, 13304450, 3302804);
+    $InitializeEvent(0, 13304470);
+    $InitializeEvent(0, 13304490);
+    
     $InitializeEvent(2800, 12107000, 72112800, 3301950, 2412950);
     $InitializeEvent(2801, 12107000, 72112801, 3301950, 2412951);
     $InitializeEvent(2802, 12107000, 72112802, 3301950, 2412952);
@@ -1353,4 +1363,84 @@ $Event(13300990, Default, function() {
     ParameterOutput(PlayerPlayLogParameter.Weapon, 140, PlayLogMultiplayerType.HostOnly);
     ParameterOutput(PlayerPlayLogParameter.Armor, 140, PlayLogMultiplayerType.HostOnly);
     $InitializeEvent(0, 9350, 2);
+});
+
+// Frontier_New NPC Summoning_Summoning Judgment
+$Event(13304400, Restart, function(entityId, eventFlagId2, eventFlagId3) {
+    DeleteMapSFX(entityId, true);
+    EndIf(!EventFlag(12100889));
+    SetEventFlag(eventFlagId2, OFF);
+    SetEventFlag(eventFlagId3, OFF);
+    SpawnMapSFX(entityId);
+    WaitFor(EventFlag(eventFlagId2));
+    DeleteMapSFX(entityId, true);
+});
+
+// Frontier_New NPC Summon_Participate_XX
+$Event(13304410, Restart, function(signType, entityId, areaEntityId, eventFlagId, eventFlagId2, actionButtonParameterId) {
+    ChangeCharacterEnableState(entityId, Disabled);
+    EndIf(!EventFlag(12100889));
+    WaitFor(!EventFlag(eventFlagId) && ActionButtonInArea(actionButtonParameterId, entityId));
+    WarpCharacterAndCopyFloor(entityId, TargetEntityType.Character, 10000, 236, 10000);
+    SetEventFlag(3300, OFF);
+    WaitFixedTimeFrames(1);
+    ForceAnimationPlayback(10000, 100111, false, false, false);
+    SetSpEffect(10000, 4682, false);
+    SummonNPC(signType, entityId, areaEntityId, eventFlagId, eventFlagId2);
+    ClearSpEffect(10000, 9005);
+    ClearSpEffect(10000, 9025);
+    WaitFixedTimeSeconds(5);
+    DisplayMessage(100051, 0);
+    WaitFixedTimeSeconds(5);
+    WarpCharacterAndCopyFloor(entityId, TargetEntityType.Area, areaEntityId, -1, areaEntityId);
+});
+
+// Frontier_New NPC summons_Aim for the boss room_XX
+$Event(13304450, Restart, function(chrEntityId, entityId, eventFlagId, eventFlagId2, eventFlagId3) {
+    EndIf(ThisEventSlot());
+    EndIf(HasMultiplayerState(MultiplayerState.Client));
+    WaitFor(EventFlag(eventFlagId) && !EventFlag(eventFlagId2) && EventFlag(eventFlagId3));
+    SetEventPoint(chrEntityId, entityId, 1);
+    RequestCharacterAICommand(chrEntityId, 990, 0);
+    RequestCharacterAIReplan(chrEntityId);
+});
+
+// Frontier_New NPC summons_Enter boss room_XX
+$Event(13304460, Restart, function(chrEntityId, areaEntityId, entityId, areaEntityId2, playAnimationId, eventFlagId, areaEntityId3) {
+    EndIf(HasMultiplayerState(MultiplayerState.Client));
+    WaitFor(EventFlag(eventFlagId) && InArea(chrEntityId, areaEntityId));
+    RequestCharacterAnimationReset(chrEntityId, Interpolation.Interpolated);
+    RotateCharacter(chrEntityId, entityId, playAnimationId, true);
+    RestartIf(!InArea(chrEntityId, areaEntityId2));
+    SetEventPoint(chrEntityId, entityId, 1);
+    RequestCharacterAICommand(chrEntityId, 990, 0);
+    RequestCharacterAIReplan(chrEntityId);
+    SetCharacterGravity(chrEntityId, Disabled);
+    SetCharacterMaphits(chrEntityId, true);
+    WaitFor(InArea(chrEntityId, areaEntityId3));
+    SetCharacterGravity(chrEntityId, Enabled);
+    SetCharacterMaphits(chrEntityId, false);
+    RequestCharacterAICommand(chrEntityId, -1, 0);
+    RequestCharacterAIReplan(chrEntityId);
+});
+
+// heal npcs
+$Event(13304470, Default, function() {
+    WaitFor(CharacterHasSpEffect(10000, 3010));
+    SetSpEffect(3300910, 3012, false);
+    WaitFixedTimeFrames(1);
+    RestartEvent();
+});
+
+// Frontier_New NPC summons_Disable throw during boss battle
+$Event(13304490, Restart, function() {
+    SetNetworkSyncState(Disabled);
+    WaitFor(
+        HasMultiplayerState(MultiplayerState.Host)
+        && EventFlag(12204420)
+        && !EventFlag(12204430)
+        && EventFlag(12204800));
+        SetSpEffectAndUnknown200455(3300910, 35, false);
+    WaitFixedTimeFrames(1);
+    RestartEvent();
 });

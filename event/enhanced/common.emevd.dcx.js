@@ -33,6 +33,8 @@ $Event(0, Default, function() {
         }
     }
     
+    SetEventFlag(10000200, OFF); // lamp music interrupt flag
+    
     $InitializeEvent(0, 10000999);
     
     $InitializeEvent(0, 10001010, 2200, 6036); // hands - fire
@@ -40,7 +42,7 @@ $Event(0, Default, function() {
     $InitializeEvent(2, 10001010, 2220, 6038); // hands - phantasm
     
     // visual effects
-    $InitializeEvent(0, 12104200, 1800, 2299); // test
+    $InitializeEvent(0, 12104200, 1800, 2298); // test
     
     $InitializeEvent(1, 12104200, 1814, 2813); // sparklers
     $InitializeEvent(2, 12104200, 1815, 2711); // flaming head
@@ -79,7 +81,8 @@ $Event(0, Default, function() {
     $InitializeEvent(28, 12104200, 1827, 2906); // falling snow: light
     $InitializeEvent(31, 12104200, 1831, 2911); // falling snow: moderate
     $InitializeEvent(32, 12104200, 1832, 2912); // falling snow: heavy
-    $InitializeEvent(34, 12104200, 1834, 2914); // rain 1
+    $InitializeEvent(34, 12104200, 1834, 2914); // rain & heavy fog
+    $InitializeEvent(36, 12104200, 1836, 2916); // rain & light fog
     $InitializeEvent(29, 12104200, 1829, 2907); // falling petals
     $InitializeEvent(33, 12104200, 1833, 2913); // red embers
     
@@ -4173,7 +4176,8 @@ $Event(10008630, Default, function(entryTriggeredFlag, entryEnabledFlag, npcId, 
     SetSpEffect(10000, 2107, false);
     SetEventFlag(entryEnabledFlag, OFF);
     if (EventFlag(summonedFlag)) {
-        EndEvent();
+        SetEventFlag(entryTriggeredFlag, ON);
+        Goto(L0);
     }
     ForceAnimationPlayback(10000, 100111, false, false, false);
     SetEventFlag(summonedFlag, ON);
@@ -4193,12 +4197,20 @@ $Event(10008630, Default, function(entryTriggeredFlag, entryEnabledFlag, npcId, 
     SetSpEffect(npcId, 9006, false); // summon debuff
     WaitFixedTimeSeconds(3);
     RotateCharacter(npcId, 10000, 104081, false);
+    Goto(L1);
+L0:
+    WaitFor(!ThisEventSlot() || CharacterDead(npcId));
+    if (!CharacterDead(npcId)) {
+        Goto(L2);
+    }
+L1:
     WaitFor(!ThisEventSlot() || CharacterDead(npcId));
     if (CharacterDead(npcId)) {
         SetEventFlag(entryTriggeredFlag, OFF);
         DisplayMessage(deadMessage, 0);
     }
     else {
+L2:
         if (!AnyBatchEventFlags(10008500, 10008599) && !EventFlag(10008650)) { // triggered manually, not by resting or map transition
             ForceAnimationPlayback(10000, 101222, false, false, false); // snap animation
         }
@@ -5160,7 +5172,7 @@ $Event(9910, Default, function() {
 $Event(10000100, Default, function(soundState1, soundState2, lampActiveFlag, bossDefeatFlag) {
     SetMapSoundState(soundState1, Disabled);
     SetMapSoundState(soundState2, Disabled);
-    WaitFor(EventFlag(12100891) && EventFlag(lampActiveFlag));
+    WaitFor(EventFlag(12100891) && EventFlag(lampActiveFlag) && !EventFlag(10000200));
     if (bossDefeatFlag != -1) {
         WaitFor(EventFlag(bossDefeatFlag));
     }

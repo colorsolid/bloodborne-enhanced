@@ -505,7 +505,9 @@ $Event(0, Default, function() {
     $InitializeEvent(66, 10000100, 3503962, 3503963, 13607830, -1);
     $InitializeEvent(66, 7000, 3600951, 3601951, 999, 13607820, -1);
     
-    $InitializeEvent(67, 10000100, 3503964, 3503965, 13607850, orphan_defeat);
+    //$InitializeEvent(67, 10000100, 3503964, 3503965, 13607850, orphan_defeat);
+    SetMapSoundState(3503960, Disabled);
+    SetMapSoundState(3503961, Disabled);
     $InitializeEvent(67, 7000, 3600952, 3601952, 13601800, 13607840, orphan_defeat+13);
     $InitializeEvent(orphan_offset, 10008800, orphan_defeat+13, orphan_lamp_id-1000, orphan_lamp_id, orphan_lamp_id+3000);
     
@@ -1436,7 +1438,9 @@ L0:
     }
     EndIf(ThisEvent());
     SetEventFlag(9180, ON);
+    SetEventFlag(10000200, ON);
     PlayCutsceneToPlayer(36000010, CutscenePlayMode.Skippable, 10000);
+    SetEventFlag(10000200, OFF);
     WaitFixedTimeFrames(1);
     if (EventFlag(12100956)) {
         DeactivateObject(3601810, Disabled);

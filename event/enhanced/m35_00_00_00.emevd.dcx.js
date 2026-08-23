@@ -720,7 +720,12 @@ $Event(0, Default, function() {
     $InitializeEvent(0, 13501124);
     $InitializeEvent(0, 13501125);
     $InitializeEvent(0, 13501200, 3501120, 13504220, 1, 3500020, 0, -1);
-    $InitializeEvent(1, 13501200, 3501130, 13504230, 1, 3500030, 0, -1);
+    if (EventFlag(living_failures_defeat+13)) {
+        SetObjactState(3501130, 3500030, Disabled);
+    }
+    else {
+        $InitializeEvent(1, 13501200, 3501130, 13504230, 1, 3500030, 0, -1);
+    }
     $InitializeEvent(2, 13501200, 3501141, 13504241, 2, 3500040, 0, -1);
     $InitializeEvent(3, 13501200, 3501142, 13504242, 2, 3500040, 0, -1);
     $InitializeEvent(4, 13501200, 3501145, 13504245, 2, 3500041, 0, -1);
@@ -1828,7 +1833,7 @@ $Event(13504853, Default, function() {
     SetMapSoundState(3503812, Disabled);
     SetMapSoundState(3503813, Disabled);
     SetMapSoundState(3503814, Disabled);
-    EndIf(EventFlag(13501800));
+    EndIf(EventFlag(13501800) && !EventFlag(living_failures_defeat+13));
     if (!ThisEvent()) {
         flagArea &= !EventFlag(13501850) && EventFlag(13504852);
         if (!HasMultiplayerState(MultiplayerState.Host)) {

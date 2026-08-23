@@ -677,8 +677,8 @@ def t210304_x95():
             AddTalkListData(38, 200323, 12100993)
 
             # lamp music
-            AddTalkListData(33, 200320, 12100891)
-            AddTalkListData(34, 200319, 12100991)
+            # AddTalkListData(33, 200320, 12100891)
+            # AddTalkListData(34, 200319, 12100991)
         else:
             pass
 

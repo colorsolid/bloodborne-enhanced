@@ -16,6 +16,9 @@ def t210717_x0(actionbutton1=6106, flag1=6000, flag2=6001, flag3=6001, flag4=600
     """State 0"""
     while True:
         """State 1"""
+        # set initially and when menu closed
+        # SetEventState(12103050, 0)
+        # SetEventState(12103051, 0)
         assert (not GetOneLineHelpStatus() and not IsTalkingToSomeoneElse() and not IsClientPlayer()
                 and not IsPlayerDead() and not IsCharacterDisabled())
         """State 3"""
@@ -50,8 +53,12 @@ def t210717_x2():
         assert (t210717_x0(actionbutton1=6106, flag1=6000, flag2=6001, flag3=6001, flag4=6001, flag5=6001,
                 flag6=6001, flag7=6001))
         """State 1"""
+        ChangePlayerStat(8, 0, 16)
         Label('L0')
-        if GetEventStatus(12103010) == 1:
+        # SetEventState(12103050, 1)
+        if GetEventStatus(12103050) == 1:
+            Goto('L0')
+        elif GetEventStatus(12103010) == 1:
             call = t210717_x10() # dummy
             if call.Done():
                 pass
