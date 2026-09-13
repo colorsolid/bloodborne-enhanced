@@ -53,6 +53,14 @@ $Event(0, Default, function() {
     
     SetEventFlag(10008900+shadows_offset, OFF);
     
+    SetEventFlag(10007799, OFF);
+    SetEventFlag(shadows_defeat+15, OFF);
+    if (EventFlag(shadows_defeat+14)) {
+        SetEventFlag(10007799, ON);
+        SetEventFlag(shadows_defeat+14, OFF);
+        SetEventFlag(shadows_defeat+15, ON);
+    }
+    
     //InitializeEvent(0, 12701820, 0);
     
     $InitializeEvent(3, 10007900, 10000000+shadows_return, shadows_return, area_id, block_id);
@@ -77,6 +85,7 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(shadows_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(shadows_defeat+12) || EventFlag(shadows_defeat-1)) {
+        ForceAnimationPlayback(10000, 101201, false, false, false);
         SetSpEffect(10000, 1990, false);
         SetEventFlag(shadows_defeat, OFF);
         SetEventFlag(shadows_defeat+2, OFF);
@@ -93,8 +102,8 @@ $Event(0, Default, function() {
     
     $InitializeEvent(shadows_offset, 12102070, shadows_defeat+13, 0, 7419, shadows_id1, shadows_id2, shadows_id3, -1, -1);
     
-    $InitializeEvent(shadows_offset, 10008900, shadows_defeat-1, shadows_lamp_id+1000, 0, 0, shadows_lamp_id+5000, area_id, block_id);
-    $InitializeEvent(shadows_offset, 10007700, shadows_defeat+11, shadows_defeat+12, shadows_lamp_id+1000, 827000);
+    $InitializeEvent(shadows_offset, 10008900, shadows_defeat-1, shadows_lamp_id+1000, 0, 0);
+    $InitializeEvent(shadows_offset, 10007700, shadows_defeat+11, shadows_defeat+12, shadows_lamp_id+5000, 827000);
     
     $InitializeEvent(1400, 12107000, 72111400, 2701950, 2412950);
     $InitializeEvent(1401, 12107000, 72111401, 2701950, 2412951);
@@ -785,6 +794,12 @@ L0:
             AwardItemLot(2700990);
         } else {
             AwardItemLot(2700995);
+            if (EventFlag(shadows_defeat+15)) {
+                AwardItemLot(17030);
+            }
+            else if (EventFlag(shadows_defeat+13)) {
+                AwardItemLot(17020);
+            }
         }
         if (EventFlag(12100851) && !PlayerHasItem(ItemType.Goods, 4002)) {
             AwardItemLot(2700970);
@@ -802,7 +817,6 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.Weapon, 52, PlayLogMultiplayerType.HostOnly);
         ParameterOutput(PlayerPlayLogParameter.Armor, 52, PlayLogMultiplayerType.HostOnly);
         if (EventFlag(shadows_defeat+13)) {
-            AwardItemLot(17020);
             $InitializeEvent(shadows_offset, 10007800, shadows_lamp_id+1000, 827000, 2);
         }
         EndEvent();
@@ -1067,7 +1081,8 @@ $Event(12704806, Restart, function() {
             || (CharacterDead(2700802)
                 && CharacterDead(2700800)
                 && CharacterHasSpEffect(2700801, 5536))
-            || (HPRatio(2700800) <= 0.3 && HPRatio(2700801) <= 0.3 && HPRatio(2700802) <= 0.3));
+            || (HPRatio(2700800) <= 0.3 && HPRatio(2700801) <= 0.3 && HPRatio(2700802) <= 0.3)
+            || EventFlag(shadows_defeat+15));
     RequestCharacterAICommand(2700800, 10, 1);
     RequestCharacterAICommand(2700801, 10, 1);
     RequestCharacterAICommand(2700802, 10, 1);
@@ -1208,7 +1223,7 @@ $Event(12704815, Restart, function(chrEntityId, hitEntityId, dummypolyId) {
         WaitFor(CharacterBackreadStatus(chrEntityId));
         ChangeCharacterEnableState(chrEntityId, Disabled);
         SetCharacterGravity(chrEntityId, Disabled);
-        WaitFor(CharacterHasEventMessage(hitEntityId, 50));
+        WaitFor(CharacterHasEventMessage(hitEntityId, 50) || EventFlag(shadows_defeat+15));
     }
     if (HPRatio(hitEntityId) <= 0) {
         ForceCharacterDeath(chrEntityId, false);
@@ -2668,6 +2683,7 @@ $Event(12704460, Restart, function(chrEntityId, areaEntityId, entityId, areaEnti
 
 // heal npcs
 $Event(12704470, Default, function() {
+    WaitFor(EventFlag(12100894));
     WaitFor(CharacterHasSpEffect(10000, 3010));
     SetSpEffect(2700920, 3012, false);
     SetSpEffect(2700921, 3012, false);

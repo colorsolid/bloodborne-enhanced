@@ -103,6 +103,7 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(living_failures_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(living_failures_defeat+12) || EventFlag(living_failures_defeat-1)) {
+        ForceAnimationPlayback(10000, 101201, false, false, false);
         SetSpEffect(10000, 1990, false);
         SetEventFlag(living_failures_defeat, OFF);
         SetEventFlag(living_failures_defeat+1, OFF);
@@ -127,6 +128,7 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(maria_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(maria_defeat+12) || EventFlag(maria_defeat-1)) {
+        ForceAnimationPlayback(10000, 101201, false, false, false);
         SetSpEffect(10000, 1990, false);
         SetEventFlag(maria_defeat, OFF);
         SetEventFlag(maria_defeat+1, OFF);
@@ -144,11 +146,11 @@ $Event(0, Default, function() {
     $InitializeEvent(living_failures_offset, 12102070, living_failures_defeat+13, 0, 7504, living_failures_id1, living_failures_id2, living_failures_id3, living_failures_id4, living_failures_id5);
     $InitializeEvent(maria_offset, 12102070, maria_defeat+13, 0, 7505, maria_id, -1, -1, -1, -1);
     
-    $InitializeEvent(living_failures_offset, 10008900, living_failures_defeat-1, living_failures_lamp_id+1000, 0, 0, living_failures_lamp_id+5000, area_id, block_id);
-    $InitializeEvent(maria_offset, 10008900, maria_defeat-1, maria_lamp_id+1000, 0, 0, maria_lamp_id+5000, area_id, block_id);
+    $InitializeEvent(living_failures_offset, 10008900, living_failures_defeat-1, living_failures_lamp_id+1000, 0, 0);
+    $InitializeEvent(maria_offset, 10008900, maria_defeat-1, maria_lamp_id+1000, 0, 0);
     
-    $InitializeEvent(living_failures_offset, 10007700, living_failures_defeat+11, living_failures_defeat+12, living_failures_lamp_id+1000, 835001);
-    $InitializeEvent(maria_offset, 10007700, maria_defeat+11, maria_defeat+12, maria_lamp_id+1000, 835002);
+    $InitializeEvent(living_failures_offset, 10007700, living_failures_defeat+11, living_failures_defeat+12, living_failures_lamp_id+5000, 835001);
+    $InitializeEvent(maria_offset, 10007700, maria_defeat+11, maria_defeat+12, 3502997, 835002);
     
     $InitializeEvent(3800, 12107000, 72113800, 3501950, 2412950);
     $InitializeEvent(3801, 12107000, 72113801, 3501950, 2412951);
@@ -1316,17 +1318,12 @@ L5:
     DeleteMapSFX(3503820, false);
     SetEventFlag(9180, ON);
     WaitFixedTimeFrames(1);
-    if (!EventFlag(1651)) {
-        if (!EventFlag(maria_defeat+13) || EventFlag(12100866)) {
-            PlayCutsceneAndWarpPlayer(35000010, CutscenePlayMode.Skippable, 3502808, 35, 0, 10000);
+    if (!EventFlag(maria_defeat+13) || EventFlag(12100866)) {
+        if (EventFlag(maria_defeat+13) && EventFlag(12100866)) {
+            WaitFixedTimeSeconds(1.5);
         }
-    } else {
-L0:
-        if (!EventFlag(maria_defeat+13) || EventFlag(12100866)) {
-            PlayCutsceneAndWarpPlayer(35000010, CutscenePlayMode.Skippable, 3502808, 35, 0, 10000);
-        }
+        PlayCutsceneAndWarpPlayer(35000010, CutscenePlayMode.Skippable, 3502808, 35, 0, 10000);
     }
-L1:
     WaitFixedTimeFrames(1);
     SetEventFlag(9180, OFF);
     ChangeCharacterEnableState(3500800, Enabled);
@@ -4325,6 +4322,7 @@ $Event(13504460, Default, function(chrEntityId, areaEntityId, entityId, areaEnti
 
 // heal npcs
 $Event(13504470, Default, function() {
+    WaitFor(EventFlag(12100894));
     WaitFor(CharacterHasSpEffect(10000, 3010));
     SetSpEffect(3500940, 3012, false);
     WaitFixedTimeFrames(1);

@@ -94,6 +94,7 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(one_reborn_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(one_reborn_defeat+12) || EventFlag(one_reborn_defeat-1)) {
+        ForceAnimationPlayback(10000, 101201, false, false, false);
         SetSpEffect(10000, 1990, false);
         SetEventFlag(one_reborn_defeat, OFF);
         SetEventFlag(one_reborn_defeat+2, OFF);
@@ -110,8 +111,8 @@ $Event(0, Default, function() {
     
     $InitializeEvent(one_reborn_offset, 12102070, one_reborn_defeat+13, 0, 7458, one_reborn_id1, one_reborn_id2, one_reborn_id3, one_reborn_id4, -1);
     
-    $InitializeEvent(one_reborn_offset, 10008900, one_reborn_defeat-1, one_reborn_lamp_id+1000, 0, 0, one_reborn_lamp_id+5000, area_id, block_id);
-    $InitializeEvent(one_reborn_offset, 10007700, one_reborn_defeat+11, one_reborn_defeat+12, one_reborn_lamp_id+1000, 828000);
+    $InitializeEvent(one_reborn_offset, 10008900, one_reborn_defeat-1, one_reborn_lamp_id+1000, 0, 0);
+    $InitializeEvent(one_reborn_offset, 10007700, one_reborn_defeat+11, one_reborn_defeat+12, one_reborn_lamp_id+5000, 828000);
     
     $InitializeEvent(1800, 12107000, 72111800, 2801950, 2412950);
     $InitializeEvent(1801, 12107000, 72111801, 2801950, 2412951);
@@ -2430,6 +2431,9 @@ $Event(12801802, Default, function() {
     WaitFixedTimeFrames(1);
     DeleteMapSFX(2803911, false);
     if (!EventFlag(one_reborn_defeat+13) || EventFlag(12100866)) {
+        if (EventFlag(one_reborn_defeat+13) && EventFlag(12100866)) {
+            WaitFixedTimeSeconds(1.5);
+        }
         if (!HasMultiplayerState(MultiplayerState.Multiplayer)) {
             PlayCutsceneToPlayer(28000000, CutscenePlayMode.Skippable, 10000);
         } else {
@@ -3312,6 +3316,7 @@ $Event(12804460, Restart, function(chrEntityId, areaEntityId, entityId, areaEnti
 
 // heal npcs
 $Event(12804470, Default, function() {
+    WaitFor(EventFlag(12100894));
     WaitFor(CharacterHasSpEffect(10000, 3010));
     SetSpEffect(2800910, 3012, false);
     SetSpEffect(2800911, 3012, false);

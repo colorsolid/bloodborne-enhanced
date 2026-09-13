@@ -75,6 +75,14 @@ $Event(0, Default, function() {
     $InitializeEvent(lecture_hall_1_lamp_offset, 10008300, lecture_hall_1_lamp_id+2000, -1, lecture_hall_1_lamp_kindle, lecture_hall_1_lamp_id+6000, lecture_hall_1_lamp_id+3000);
     $InitializeEvent(lecture_hall_2_lamp_offset, 10008300, lecture_hall_2_lamp_id+2000, -1, lecture_hall_2_lamp_kindle, lecture_hall_2_lamp_id+6000, lecture_hall_2_lamp_id+3000);
     
+    SetEventFlag(10007799, OFF);
+    SetEventFlag(rom_defeat+15, OFF);
+    if (EventFlag(rom_defeat+14)) {
+        SetEventFlag(10007799, ON);
+        SetEventFlag(rom_defeat+14, OFF);
+        SetEventFlag(rom_defeat+15, ON);
+    }
+    
     if (EventFlag(rom_defeat+13) && !EventFlag(rom_defeat-1)) {
         SetEventFlag(rom_defeat+13, OFF);
         SetEventFlag(rom_defeat, ON);
@@ -88,6 +96,7 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(rom_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(rom_defeat+12) || EventFlag(rom_defeat-1)) {
+        ForceAnimationPlayback(10000, 101201, false, false, false);
         SetSpEffect(10000, 1990, false);
         SetEventFlag(rom_defeat, OFF);
         SetEventFlag(rom_defeat+2, ON);
@@ -108,8 +117,8 @@ $Event(0, Default, function() {
     
     $InitializeEvent(rom_offset, 12102070, rom_defeat+13, 0, 7456, rom_id, -1, -1, -1, -1);
     
-    $InitializeEvent(rom_offset, 10008900, rom_defeat-1, rom_lamp_id+1000, 0, 0, rom_lamp_id+5000, area_id, block_id);
-    $InitializeEvent(rom_offset, 10007700, rom_defeat+11, rom_defeat+12, rom_lamp_id+1000, 832001);
+    $InitializeEvent(rom_offset, 10008900, rom_defeat-1, rom_lamp_id+1000, rom_defeat+15, rom_defeat+14);
+    $InitializeEvent(rom_offset, 10007700, rom_defeat+11, rom_defeat+12, rom_lamp_id+5000, 832001);
     
     $InitializeEvent(1600, 12107000, 72111600, 3201950, 2412950);
     $InitializeEvent(1601, 12107000, 72111601, 3201950, 2412951);
@@ -1321,6 +1330,12 @@ L0:
         WaitFor(CharacterType(10000, TargetType.Alive));
         $InitializeEvent(0, 9350, 2);
         AwardAchievement(17);
+        if (EventFlag(rom_defeat+15)) {
+            AwardItemLot(17030);
+        }
+        else if (EventFlag(rom_defeat+13)) {
+            AwardItemLot(17020);
+        }
         AwardItemLot(51001900);
         SetEventFlag(3200, ON);
         SetEventFlag(9465, ON);
@@ -1333,7 +1348,6 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.Weapon, 92, PlayLogMultiplayerType.HostOnly);
         ParameterOutput(PlayerPlayLogParameter.Armor, 92, PlayLogMultiplayerType.HostOnly);
         if (EventFlag(rom_defeat+13)) {
-            AwardItemLot(17020);
             $InitializeEvent(rom_offset, 10007800, rom_lamp_id+1000, 832001, 2);
         }
         EndEvent();
@@ -1643,7 +1657,19 @@ $Event(13204805, Default, function() {
 
 // Heat up_Idiot Spider
 $Event(13204807, Default, function() {
+    if (EventFlag(rom_defeat+15)) {
+        SetEventFlag(13204811, ON);
+        SetEventFlag(13204812, ON);
+        RequestCharacterAICommand(3200800, 111, 0);
+        RequestCharacterAIReplan(3200800);
+        WaitFor(CharacterDead(3200800));
+        ForceCharacterDeath(3200111, false);
+        EndEvent();
+    }
+    ChangeCharacterEnableState(3200111, Disabled);
+    SetCharacterBackreadState(3200111, true);
     EndIf(EventFlag(13201800));
+    
     WaitFor(HPRatio(3200800) <= 0.75);
     RequestCharacterAICommand(3200800, 100, 0);
     RequestCharacterAIReplan(3200800);
@@ -2229,6 +2255,7 @@ $Event(13204460, Restart, function(chrEntityId, areaEntityId, entityId, areaEnti
 
 // heal npcs
 $Event(13204473, Default, function() {
+    WaitFor(EventFlag(12100894));
     WaitFor(CharacterHasSpEffect(10000, 3010));
     SetSpEffect(3200910, 3012, false);
     SetSpEffect(3200911, 3012, false);

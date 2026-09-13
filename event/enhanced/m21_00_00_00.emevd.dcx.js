@@ -16,105 +16,105 @@ const cleric_beast_lamp_id = 2411952;
 const cleric_beast_defeat = 12411700;
 const cleric_beast_rematch_triggered = cleric_beast_defeat + 11;
 const cleric_beast_rematch_started = cleric_beast_defeat + 12;
-const cleric_beast_rematch_spawn_point = cleric_beast_lamp_id + 1000;
+const cleric_beast_rematch_spawn_point = cleric_beast_lamp_id + 5000;
 
 const gascoigne_offset = 1;
 const gascoigne_lamp_id = 2411953;
 const gascoigne_defeat = 12411800;
 const gascoigne_rematch_triggered = gascoigne_defeat + 11;
 const gascoigne_rematch_started = gascoigne_defeat + 12;
-const gascoigne_rematch_spawn_point = gascoigne_lamp_id + 1000;
+const gascoigne_rematch_spawn_point = gascoigne_lamp_id + 5000;
 
 const amelia_offset = 2;
 const amelia_lamp_id = 2401951;
 const amelia_defeat = 12401800;
 const amelia_rematch_triggered = amelia_defeat + 11;
 const amelia_rematch_started = amelia_defeat + 12;
-const amelia_rematch_spawn_point = amelia_lamp_id + 1000;
+const amelia_rematch_spawn_point = amelia_lamp_id + 5000;
 
 const bsb_offset = 3;
 const bsb_lamp_id = 2301951;
 const bsb_defeat = 12301800;
 const bsb_rematch_triggered = bsb_defeat + 11;
 const bsb_rematch_started = bsb_defeat + 12;
-const bsb_rematch_spawn_point = bsb_lamp_id + 1000;
+const bsb_rematch_spawn_point = bsb_lamp_id + 5000;
 
 const witches_offset = 4;
 const witches_lamp_id = 2201951;
 const witches_defeat = 12201800;
 const witches_rematch_triggered = witches_defeat + 11;
 const witches_rematch_started = witches_defeat + 12;
-const witches_rematch_spawn_point = witches_lamp_id + 1000;
+const witches_rematch_spawn_point = witches_lamp_id + 5000;
 
 const shadows_offset = 5;
 const shadows_lamp_id = 2701951;
 const shadows_defeat = 12701800;
 const shadows_rematch_triggered = shadows_defeat + 11;
 const shadows_rematch_started = shadows_defeat + 12;
-const shadows_rematch_spawn_point = shadows_lamp_id + 1000;
+const shadows_rematch_spawn_point = shadows_lamp_id + 5000;
 
 const rom_offset = 6;
 const rom_lamp_id = 3201952;
 const rom_defeat = 13201800;
 const rom_rematch_triggered = rom_defeat + 11;
 const rom_rematch_started = rom_defeat + 12;
-const rom_rematch_spawn_point = rom_lamp_id + 1000;
+const rom_rematch_spawn_point = rom_lamp_id + 5000;
 
 const paarl_offset = 7;
 const paarl_lamp_id = 2301952;
 const paarl_defeat = 12301700;
 const paarl_rematch_triggered = paarl_defeat + 11;
 const paarl_rematch_started = paarl_defeat + 12;
-const paarl_rematch_spawn_point = paarl_lamp_id + 1000;
+const paarl_rematch_spawn_point = paarl_lamp_id + 5000;
 
 const one_reborn_offset = 8;
 const one_reborn_lamp_id = 2801951;
 const one_reborn_defeat = 12801800;
 const one_reborn_rematch_triggered = one_reborn_defeat + 11;
 const one_reborn_rematch_started = one_reborn_defeat + 12;
-const one_reborn_rematch_spawn_point = one_reborn_lamp_id + 1000;
+const one_reborn_rematch_spawn_point = one_reborn_lamp_id + 5000;
 
 const amygdala_offset = 9;
 const amygdala_lamp_id = 3301951;
 const amygdala_defeat = 13301800;
 const amygdala_rematch_triggered = amygdala_defeat + 11;
 const amygdala_rematch_started = amygdala_defeat + 12;
-const amygdala_rematch_spawn_point = amygdala_lamp_id + 1000;
+const amygdala_rematch_spawn_point = amygdala_lamp_id + 5000;
 
 const micolash_offset = 10;
 const micolash_lamp_id = 2601952;
 const micolash_defeat = 12601850;
 const micolash_rematch_triggered = micolash_defeat + 11;
 const micolash_rematch_started = micolash_defeat + 12;
-const micolash_rematch_spawn_point = micolash_lamp_id + 1000;
+const micolash_rematch_spawn_point = micolash_lamp_id + 5000;
 
 const wet_nurse_offset = 11;
 const wet_nurse_lamp_id = 2601951;
 const wet_nurse_defeat = 12601800;
 const wet_nurse_rematch_triggered = wet_nurse_defeat + 11;
 const wet_nurse_rematch_started = wet_nurse_defeat + 12;
-const wet_nurse_rematch_spawn_point = wet_nurse_lamp_id + 1000;
+const wet_nurse_rematch_spawn_point = wet_nurse_lamp_id + 5000;
 
 const celestial_emissary_offset = 12;
 const celestial_emissary_lamp_id = 2421952;
 const celestial_emissary_defeat = 12421700;
 const celestial_emissary_rematch_triggered = celestial_emissary_defeat + 11;
 const celestial_emissary_rematch_started = celestial_emissary_defeat + 12;
-const celestial_emissary_rematch_spawn_point = celestial_emissary_lamp_id + 1000;
+const celestial_emissary_rematch_spawn_point = celestial_emissary_lamp_id + 5000;
 
 const ebrietas_offset = 13;
 const ebrietas_lamp_id = 2421951;
 const ebrietas_defeat = 12421800;
 const ebrietas_rematch_triggered = ebrietas_defeat + 11;
 const ebrietas_rematch_started = ebrietas_defeat + 12;
-const ebrietas_rematch_spawn_point = ebrietas_lamp_id + 1000;
+const ebrietas_rematch_spawn_point = ebrietas_lamp_id + 5000;
 
 const logarius_offset = 14;
 const logarius_lamp_id = 2501952;
 const logarius_defeat = 12501800;
 const logarius_rematch_triggered = logarius_defeat + 11;
 const logarius_rematch_started = logarius_defeat + 12;
-const logarius_rematch_spawn_point = logarius_lamp_id + 1000;
+const logarius_rematch_spawn_point = logarius_lamp_id + 5000;
 
 const gehrman_offset = 15;
 const gehrman_defeat = 12101800;
@@ -146,35 +146,35 @@ const ludwig_defeat = 13401800;
 const ludwig_lamp_id = 3401952;
 const ludwig_rematch_triggered = ludwig_defeat + 11;
 const ludwig_rematch_started = ludwig_defeat + 12;
-const ludwig_rematch_spawn_point = ludwig_lamp_id + 1000;
+const ludwig_rematch_spawn_point = ludwig_lamp_id + 5000;
 
 const laurence_offset = 18;
 const laurence_defeat = 13401850;
 const laurence_lamp_id = 3401953;
 const laurence_rematch_triggered = laurence_defeat + 11;
 const laurence_rematch_started = laurence_defeat + 12;
-const laurence_rematch_spawn_point = laurence_lamp_id + 1000;
+const laurence_rematch_spawn_point = laurence_lamp_id + 5000;
 
 const living_failures_offset = 19;
 const living_failures_defeat = 13501850;
 const living_failures_lamp_id = 3501951;
 const living_failures_rematch_triggered = living_failures_defeat + 11;
 const living_failures_rematch_started = living_failures_defeat + 12;
-const living_failures_rematch_spawn_point = living_failures_lamp_id + 1000;
+const living_failures_rematch_spawn_point = living_failures_lamp_id + 5000;
     
 const maria_offset = 20;
 const maria_defeat = 13501800;
 const maria_lamp_id = 3501952;
 const maria_rematch_triggered = maria_defeat + 11;
 const maria_rematch_started = maria_defeat + 12;
-const maria_rematch_spawn_point = maria_lamp_id + 1000;
+const maria_rematch_spawn_point = 3502997;
 
 const orphan_offset = 21;
 const orphan_defeat = 13601800;
 const orphan_lamp_id = 3601952;
 const orphan_rematch_triggered = orphan_defeat + 11;
 const orphan_rematch_started = orphan_defeat + 12;
-const orphan_rematch_spawn_point = orphan_lamp_id + 1000;
+const orphan_rematch_spawn_point = orphan_lamp_id + 5000;
 
 // constructor
 $Event(0, Default, function() {
@@ -231,7 +231,7 @@ $Event(0, Default, function() {
     }
     
     // post rematch clean up
-    if (EventFlag(gehrman_rematch_played) && !EventFlag(gehrman_auto_rematch_trigger)) {
+    if (EventFlag(gehrman_rematch_played) && !EventFlag(gehrman_auto_rematch_trigger) && !EventFlag(distorted_rematch_played)) {
         SetEventFlag(gehrman_rematch_played, OFF);
         SetEventFlag(gehrman_defeat, ON);
         SetEventFlag(gehrman_encountered, ON);
@@ -254,6 +254,7 @@ $Event(0, Default, function() {
         SetEventFlag(gehrman_auto_rematch_trigger, OFF);
         SetEventFlag(10008900+gehrman_offset, ON);
         if (!EventFlag(distorted_rematch_played)) {
+            ForceAnimationPlayback(10000, 101201, false, false, false);
             $InitializeEvent(gehrman_offset, 10008300, 2102968, -1, auto_kindle, 2102328, 2102308);
         }
     }
@@ -274,6 +275,7 @@ $Event(0, Default, function() {
     } else if (EventFlag(moon_presence_rematch_started)
         || EventFlag(moon_presence_auto_rematch_trigger)
         || EventFlag(distorted_rematch_played)) {
+        ForceAnimationPlayback(10000, 101201, false, false, false);
         SetSpEffect(10000, 1990, false);
         SetEventFlag(moon_presence_defeat, OFF);
         SetEventFlag(moon_presence_defeat+2, OFF);
@@ -288,14 +290,14 @@ $Event(0, Default, function() {
     $InitializeEvent(30, 10008300, 2102318, -1, auto_kindle, 2102328, 2102308); // main spawn
     
     if (!EventFlag(distorted_rematch_played)) {
-        $InitializeEvent(gehrman_offset, 10007700, gehrman_rematch_triggered, gehrman_rematch_started, 2102969, 821000);
+        $InitializeEvent(gehrman_offset, 10007700, gehrman_rematch_triggered, gehrman_rematch_started, gehrman_trigger_short_warp, 821000);
     }
-    $InitializeEvent(moon_presence_offset, 10007700, moon_presence_rematch_triggered, moon_presence_rematch_started, 2102969, 821000);
+    $InitializeEvent(moon_presence_offset, 10007700, moon_presence_rematch_triggered, moon_presence_rematch_started, moon_presence_trigger_short_warp, 821000);
     
     if (!EventFlag(distorted_rematch_played)) {
-        $InitializeEvent(gehrman_offset, 10008900, gehrman_auto_rematch_trigger, 2102969, 0, 0, gehrman_trigger_short_warp, area_id, block_id);
+        $InitializeEvent(gehrman_offset, 10008900, gehrman_auto_rematch_trigger, 2102969, 0, 0);
     }
-    $InitializeEvent(moon_presence_offset, 10008900, moon_presence_auto_rematch_trigger, 2102969, distorted_rematch_played, distorted_rematch_played, moon_presence_trigger_short_warp, area_id, block_id);
+    $InitializeEvent(moon_presence_offset, 10008900, moon_presence_auto_rematch_trigger, 2102969, distorted_rematch_played, distorted_rematch_started);
     
     $InitializeEvent(0, 12102000); // reset rematch flags
     
@@ -338,7 +340,7 @@ $Event(0, Default, function() {
     $InitializeEvent(orphan_offset, 10007700, orphan_rematch_triggered, orphan_rematch_started, orphan_rematch_spawn_point, 821000);
     
     $InitializeEvent(0, 12100010);
-    if (EventFlag(9400)) {
+    if (EventFlag(9400) && !EventFlag(gehrman_rematch_played) && !EventFlag(moon_presence_rematch_played)) {
         SetPlayerRespawnPoint(2102961);
     }
     if (!HasMultiplayerState(MultiplayerState.Client)) {
@@ -1648,8 +1650,7 @@ L1:
 
 // time zone change
 $Event(12100300, Default, function() {
-    WaitFor(EventFlag(9401)); // prevent overlapping sky during first cutscene
-    if (EventFlag(12100856)) {
+    if (EventFlag(12100856) && EventFlag(12107810)) {
         BatchSetEventFlags(12105000, 12105001, OFF);
         RandomlySetEventFlagInRange(12105000, 12105001, ON);
         GotoIf(L0, EventFlag(12105000));
@@ -1669,6 +1670,7 @@ L1:
     DeactivateObject(2101300, Disabled);
     DeactivateObject(2101301, Enabled);
 L2:
+    SetEventFlag(12107810, ON);
     WaitFor(EventFlag(12102065));
     WaitFixedTimeSeconds(5);
     RestartEvent();
@@ -2101,10 +2103,13 @@ $Event(12101802, Default, function() {
     SetEventFlag(9180, ON);
     WaitFixedTimeFrames(1);
     if (!EventFlag(gehrman_rematch_played) || EventFlag(12100866)) {
+        if (EventFlag(gehrman_rematch_played) && EventFlag(12100866)) {
+            WaitFixedTimeSeconds(1.5);
+        }
         if (EventFlag(distorted_rematch_played)) {
             PlayCutsceneToPlayer(21000040, CutscenePlayMode.Skippable, 10000);
         } else {
-            PlayCutsceneAndWarpPlayer(21000040, CutscenePlayMode.Skippable, gehrman_trigger_short_warp, 21, 0, 10000);
+            PlayCutsceneAndWarpPlayer(21000040, CutscenePlayMode.Skippable, 2102808, 21, 0, 10000);
         }
     }
     WaitFixedTimeFrames(1);
@@ -2210,7 +2215,6 @@ L4:
     } else {
         DisplayBossHealthBar(Enabled, 2100800, 0, 804000);
     }
-    DisplayBossHealthBar(Enabled, 2100800, 0, 804000);
     SetCharacterInvincibility(2100800, Disabled);
     SetCharacterEventTarget(2100800, 2100801);
     CreatePlaylog(64);
@@ -2310,14 +2314,14 @@ L0:
     HandleBossDefeat(2100810);
     DeactivateObject(2101800, Disabled);
     DeleteMapSFX(2103800, true);
-    if (EventFlag(distorted_rematch_played)) {
-        AwardItemLot(17030);
-    } else if (EventFlag(moon_presence_rematch_played)) {
-        AwardItemLot(17020);
-    }
     SetNetworkSyncState(Disabled);
     if (!HasMultiplayerState(MultiplayerState.Client)) {
         WaitFor(CharacterType(10000, TargetType.Alive));
+        if (EventFlag(distorted_rematch_played)) {
+            AwardItemLot(17030);
+        } else if (EventFlag(moon_presence_rematch_played)) {
+            AwardItemLot(17020);
+        }
         $InitializeEvent(0, 9350, 5);
         EndTimeMeasurement(2100011);
         CreatePlaylog(22);
@@ -2378,6 +2382,12 @@ $Event(12101852, Default, function() {
     DeleteMapSFX(2103519, true);
     DeleteMapSFX(2103520, true);
     if (!EventFlag(moon_presence_rematch_played) || EventFlag(12100866)) {
+        if (EventFlag(moon_presence_rematch_played) && EventFlag(12100866)) {
+            WaitFixedTimeSeconds(1.5);
+        }
+        if (EventFlag(distorted_rematch_played)) {
+            WaitFixedTimeFrames(1);
+        }
         if (!HasMultiplayerState(MultiplayerState.Multiplayer)) {
             if (EventFlag(distorted_rematch_played)) {
                 PlayCutsceneToPlayer(21000050, CutscenePlayMode.Skippable, 10000);
@@ -3510,15 +3520,7 @@ $Event(12101028, Default, function() {
         WaitFixedTimeFrames(74);
     }
 L0:
-    if (!EventFlag(12105034)) {
-        ForceAnimationPlayback(2100231, 7053, true, false, false);
-    }
-    else {
-        ForceAnimationPlayback(2100231, 7054, false, false, false);
-        WaitFixedTimeFrames(30);
-        WaitFixedTimeFrames(79);
-        ForceAnimationPlayback(2100231, 7051, true, false, false);
-    }
+    ForceAnimationPlayback(2100231, 7053, true, false, false);
 });
 
 // Warp item sales to Cathedral District D begin

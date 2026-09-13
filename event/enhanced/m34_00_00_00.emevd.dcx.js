@@ -46,7 +46,7 @@ $Event(0, Default, function() {
     const coinsBaseFlag = 240;
     const coinsBaseId = (area_id * 100000) + (block_id * 10000) + 8500;
     const laurenceIndex = 5;
-    const ludwigIndex = 99;
+    const ludwigIndex = 9;
     const miniBsbIndex = 6;
     for (let i = 0; i < 20; i++) {
         if (i == laurenceIndex) {
@@ -98,6 +98,13 @@ $Event(0, Default, function() {
         SetEventFlag(ludwig_defeat+15, ON);
     }
     
+    SetEventFlag(laurence_defeat+15, OFF);
+    if (EventFlag(laurence_defeat+14)) {
+        SetEventFlag(10007799, ON);
+        SetEventFlag(laurence_defeat+14, OFF);
+        SetEventFlag(laurence_defeat+15, ON);
+    }
+    
     if (EventFlag(ludwig_defeat+13) && !EventFlag(ludwig_defeat-1)) {
         SetEventFlag(ludwig_defeat+13, OFF);
         SetEventFlag(9471, ON);
@@ -111,6 +118,7 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(ludwig_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(ludwig_defeat+12) || EventFlag(ludwig_defeat-1)) {
+        ForceAnimationPlayback(10000, 101201, false, false, false);
         SetSpEffect(10000, 1990, false);
         SetEventFlag(9471, OFF);
         SetEventFlag(ludwig_defeat, OFF);
@@ -139,6 +147,7 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(laurence_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(laurence_defeat+12) || EventFlag(laurence_defeat-1)) {
+        ForceAnimationPlayback(10000, 101201, false, false, false);
         SetSpEffect(10000, 1990, false);
         SetEventFlag(laurence_defeat, OFF);
         SetEventFlag(laurence_defeat+1, OFF);
@@ -158,11 +167,11 @@ $Event(0, Default, function() {
     $InitializeEvent(laurence_offset, 12102070, laurence_defeat+13, 0, 7499, laurence_id, -1, -1, -1, -1);
     $InitializeEvent(ludwig_offset, 12102070, ludwig_defeat+13, 0, 7498, ludwig_id1, ludwig_id2, -1, -1, -1);
     
-    $InitializeEvent(laurence_offset, 10008900, laurence_defeat-1, laurence_lamp_id+1000, 0, 0, laurence_lamp_id+5000, area_id, block_id);
-    $InitializeEvent(ludwig_offset, 10008900, ludwig_defeat-1, ludwig_lamp_id+1000, ludwig_defeat+15, ludwig_defeat+14, ludwig_lamp_id+5000, area_id, block_id);
+    $InitializeEvent(laurence_offset, 10008900, laurence_defeat-1, laurence_lamp_id+1000, laurence_defeat+15, laurence_defeat+14);
+    $InitializeEvent(ludwig_offset, 10008900, ludwig_defeat-1, ludwig_lamp_id+1000, ludwig_defeat+15, ludwig_defeat+14);
     
-    $InitializeEvent(ludwig_offset, 10007700, ludwig_defeat+11, ludwig_defeat+12, ludwig_lamp_id+1000, 834000);
-    $InitializeEvent(laurence_offset, 10007700, laurence_defeat+11, laurence_defeat+12, laurence_lamp_id+1000, 834002);
+    $InitializeEvent(ludwig_offset, 10007700, ludwig_defeat+11, ludwig_defeat+12, ludwig_lamp_id+5000, 834000);
+    $InitializeEvent(laurence_offset, 10007700, laurence_defeat+11, laurence_defeat+12, laurence_lamp_id+5000, 834002);
     
     $InitializeEvent(3400, 12107000, 72113400, 3401950, 2412950);
     $InitializeEvent(3401, 12107000, 72113401, 3401950, 2412951);
@@ -1539,11 +1548,6 @@ L0:
     DeleteMapSFX(3403800, true);
     SetLockcamSlotNumber(34, 0, 0);
     WaitFixedTimeSeconds(3);
-    if (EventFlag(ludwig_defeat+15)) {
-        AwardItemLot(17030);
-    } else if (EventFlag(ludwig_defeat+13)) {
-        AwardItemLot(17020);
-    }
     if (!chr2.Passed) {
         HandleBossDefeat(3400800);
     } else {
@@ -1552,6 +1556,11 @@ L0:
     SetNetworkSyncState(Disabled);
     if (!HasMultiplayerState(MultiplayerState.Client)) {
         WaitFor(CharacterType(10000, TargetType.Alive));
+        if (EventFlag(ludwig_defeat+15)) {
+            AwardItemLot(17030);
+        } else if (EventFlag(ludwig_defeat+13)) {
+            AwardItemLot(17020);
+        }
         if (EventFlag(13400999)) {
             WaitFixedTimeSeconds(3);
             PlayCutsceneToPlayer(34000040, CutscenePlayMode.Unskippable, 10000);
@@ -1618,8 +1627,14 @@ $Event(13401801, Default, function() {
                 && CharacterType(10000, TargetType.Alive)
                 && InArea(10000, 3402805));
         if (!EventFlag(ludwig_defeat+13) || EventFlag(12100866)) {
+            if (EventFlag(ludwig_defeat+13) && EventFlag(12100866)) {
+                WaitFixedTimeSeconds(1.5);
+            }
             if (!HasMultiplayerState(MultiplayerState.Multiplayer)) {
                 PlayCutsceneToPlayer(34000020, CutscenePlayMode.Skippable, 10000);
+                if (EventFlag(ludwig_defeat+15)) {
+                    PlayCutsceneToPlayer(34000030, CutscenePlayMode.Skippable, 10000);
+                }
             } else if (!HasMultiplayerState(MultiplayerState.Client)) {
                 PlayCutsceneToPlayer(34000020, CutscenePlayMode.Unskippable, 10000);
             } else {
@@ -1796,9 +1811,11 @@ L6:
         SetNetworkUpdateRate(3400800, true, CharacterUpdateFrequency.AlwaysUpdate);
         SetCharacterAIState(3400801, Enabled);
         SetNetworkUpdateRate(3400800, true, CharacterUpdateFrequency.AlwaysUpdate);
-        WarpCharacterAndCopyFloor(3400801, TargetEntityType.Area, 3402806, -1, 3400800);
+        WarpCharacterAndCopyFloor(3400801, TargetEntityType.Area, 3400860, -1, 3400800);
         SetCharacterGravity(3400801, Enabled);
         SetCharacterAnimationState(3400801, Enabled);
+        WaitFixedTimeFrames(1);
+        ForceAnimationPlayback(3400801, 7000, false, false, false);
         ClearSpEffect(3400801, 5300);
         SetSpEffect(3400801, 5333, false);
         SetCharacterAIState(3400801, Enabled);
@@ -2090,7 +2107,7 @@ $Event(13401850, Default, function() {
         ChangeCharacterEnableState(3400850, Disabled);
         ForceCharacterDeath(3400850, true);
         ChangeCharacterEnableState(3400851, Disabled);
-        ForceCharacterDeath(3400851, true);
+        ForceCharacterDeath(3400851, false);
         DeactivateObject(3401850, Disabled);
         DeleteMapSFX(3403850, true);
         EndEvent();
@@ -2113,6 +2130,12 @@ L0:
         WaitFor(CharacterType(10000, TargetType.Alive));
         AwardAchievement(39);
         $InitializeEvent(0, 9350, 3);
+        if (EventFlag(laurence_defeat+15)) {
+            AwardItemLot(17030);
+        }
+        else if (EventFlag(laurence_defeat+13)) {
+            AwardItemLot(17020);
+        }
         if (!EventFlag(6673)) {
             AwardItemLot(3401850);
         } else {
@@ -2131,7 +2154,6 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.Weapon, 80, PlayLogMultiplayerType.HostOnly);
         ParameterOutput(PlayerPlayLogParameter.Armor, 80, PlayLogMultiplayerType.HostOnly);
         if (EventFlag(laurence_defeat+13)) {
-            AwardItemLot(17020);
             $InitializeEvent(laurence_offset, 10007800, laurence_lamp_id+1000, 834002, 3);
         }
         EndEvent();
@@ -2143,6 +2165,10 @@ L1:
 
 // Vicar Ω_Host enters boss room_First battle
 $Event(13404861, Restart, function() {
+    if (!EventFlag(laurence_defeat+15)) {
+        ChangeCharacterEnableState(3400851, Disabled);
+        ForceCharacterDeath(3400851, false);
+    }
     EndIf(EventFlag(13401850));
     if (EventFlag(13401851)) {
         IssueShortWarpRequest(3400850, TargetEntityType.Area, 3402853, -1);
@@ -2153,6 +2179,9 @@ L0:
     SetCharacterGravity(3400850, Disabled);
     SetCharacterInvincibility(3400850, Enabled);
     ForceAnimationPlayback(3400850, 7002, true, false, false);
+    SetCharacterMaphits(3400851, true);
+    SetCharacterGravity(3400851, Disabled);
+    SetCharacterInvincibility(3400851, Enabled);
     WaitFor(
         !EventFlag(13401850)
             && !EventFlag(13401851)
@@ -2178,6 +2207,9 @@ $Event(13401851, Restart, function() {
                 && PlayerHasItem(ItemType.Goods, 4014)
                 && InArea(10000, 3402855));
         if (!EventFlag(laurence_defeat+13) || EventFlag(12100866)) {
+            if (EventFlag(laurence_defeat+13) && EventFlag(12100866)) {
+                WaitFixedTimeSeconds(1.5);
+            }
             if (!HasMultiplayerState(MultiplayerState.Multiplayer)) {
                 PlayCutsceneAndWarpPlayer(34000010, CutscenePlayMode.Skippable, 3402856, 34, 0, 10000);
             } else if (!HasMultiplayerState(MultiplayerState.Client)) {
@@ -2194,6 +2226,19 @@ $Event(13401851, Restart, function() {
         SetCharacterInvincibility(3400850, Disabled);
         SetCharacterMaphits(3400850, false);
         ForceAnimationPlayback(3400850, 3029, false, false, false);
+        if (EventFlag(laurence_defeat+15)) {
+            IssueShortWarpRequest(3400851, TargetEntityType.Area, 3402854, -1);
+            SetCharacterGravity(3400851, Enabled);
+            SetCharacterInvincibility(3400851, Disabled);
+            SetCharacterMaphits(3400851, false);
+            ForceAnimationPlayback(3400851, 3029, false, false, false);
+            SetSpEffect(3400851, 5011, false);
+            WaitFixedTimeFrames(1);
+            SetSpEffect(3400850, 5014, false);
+            SetSpEffect(3400851, 5020, false);
+            ClearSpEffect(3400851, 5021);
+            ChangeCharacterHitmask(3400851, 10, ON);
+        }
         EndIf(EventFlag(9302));
         $InitializeEvent(0, 9350, 1);
         SetEventFlag(9302, ON);
@@ -2269,6 +2314,8 @@ $Event(13404852, Restart, function() {
     EndIf(EventFlag(13401850));
     SetCharacterAIState(3400850, Disabled);
     SetCharacterHPBarDisplay(3400850, Disabled);
+    SetCharacterAIState(3400851, Disabled);
+    SetCharacterHPBarDisplay(3400851, Disabled);
     if (!ThisEvent()) {
         WaitFor(EventFlag(13404858) || EventFlag(laurence_defeat+13));
         if (!HasMultiplayerState(MultiplayerState.Client)) {
@@ -2295,21 +2342,33 @@ L2:
     SetSpEffect(3400850, 7500, true);
     WaitFixedTimeFrames(1);
     AdaptHpchangingSpEffectToNPCPartOfTarget(3400850);
+    SetSpEffect(3400851, 7500, true);
+    WaitFixedTimeFrames(1);
+    AdaptHpchangingSpEffectToNPCPartOfTarget(3400851);
     Goto(L6);
 L3:
     SetSpEffect(3400850, 7501, true);
     WaitFixedTimeFrames(1);
     AdaptHpchangingSpEffectToNPCPartOfTarget(3400850);
+    SetSpEffect(3400851, 7501, true);
+    WaitFixedTimeFrames(1);
+    AdaptHpchangingSpEffectToNPCPartOfTarget(3400851);
     Goto(L6);
 L4:
     SetSpEffect(3400850, 7502, true);
     WaitFixedTimeFrames(1);
     AdaptHpchangingSpEffectToNPCPartOfTarget(3400850);
+    SetSpEffect(3400851, 7502, true);
+    WaitFixedTimeFrames(1);
+    AdaptHpchangingSpEffectToNPCPartOfTarget(3400851);
     Goto(L6);
 L5:
     SetSpEffect(3400850, 7503, true);
     WaitFixedTimeFrames(1);
     AdaptHpchangingSpEffectToNPCPartOfTarget(3400850);
+    SetSpEffect(3400851, 7503, true);
+    WaitFixedTimeFrames(1);
+    AdaptHpchangingSpEffectToNPCPartOfTarget(3400851);
     Goto(L6);
 L6:
     if (EventFlag(laurence_defeat+13)) {
@@ -2317,6 +2376,10 @@ L6:
     }
     SetCharacterAIState(3400850, Enabled);
     DisplayBossHealthBar(Enabled, 3400850, 1, 450000);
+    if (EventFlag(laurence_defeat+15)) {
+        SetCharacterAIState(3400851, Enabled);
+        DisplayBossHealthBar(Enabled, 3400851, 0, 450001);
+    }
     CreatePlaylog(46);
     StartTimeMeasurement(3400030, 62, Enabled);
 });
@@ -2429,7 +2492,6 @@ L0:
 
 // Vicar Ω_Half-body amputation
 $Event(13404875, Default, function() {
-    EndIf(EventFlag(laurence_defeat+15));
     if (!ThisEvent()) {
         WaitFor(CharacterHasEventMessage(3400850, 400));
     }
@@ -3788,6 +3850,7 @@ $Event(13404490, Restart, function(chrEntityId, eventFlagId, eventFlagId2, event
 
 // heal npcs
 $Event(13404470, Default, function() {
+    WaitFor(EventFlag(12100894));
     WaitFor(CharacterHasSpEffect(10000, 3010));
     SetSpEffect(3400921, 3012, false);
     SetSpEffect(3400922, 3012, false);

@@ -95,6 +95,7 @@ $Event(0, Default, function() {
         }
     // rematch has started
     } else if (EventFlag(orphan_defeat+12) || EventFlag(orphan_defeat-1)) {
+        ForceAnimationPlayback(10000, 101201, false, false, false);
         SetSpEffect(10000, 1990, false);
         SetEventFlag(orphan_defeat, OFF);
         SetEventFlag(orphan_defeat+1, OFF);
@@ -113,8 +114,8 @@ $Event(0, Default, function() {
     
     $InitializeEvent(orphan_offset, 12102070, orphan_defeat+13, 0, 7506, orphan_id1, orphan_id2, -1, -1, -1);
     
-    $InitializeEvent(orphan_offset, 10008900, orphan_defeat-1, orphan_lamp_id+1000, orphan_defeat+15, orphan_defeat+14, orphan_lamp_id+5000, area_id, block_id);
-    $InitializeEvent(orphan_offset, 10007700, orphan_defeat+11, orphan_defeat+12, orphan_lamp_id+1000, 836000);
+    $InitializeEvent(orphan_offset, 10008900, orphan_defeat-1, orphan_lamp_id+1000, orphan_defeat+15, orphan_defeat+14);
+    $InitializeEvent(orphan_offset, 10007700, orphan_defeat+11, orphan_defeat+12, orphan_lamp_id+5000, 836000);
     
     $InitializeEvent(4100, 12107000, 72114100, 3601950, 2412950);
     $InitializeEvent(4101, 12107000, 72114101, 3601950, 2412951);
@@ -500,14 +501,11 @@ $Event(0, Default, function() {
     $InitializeEvent(28, 12107200, 72100328, 2902958, 9009);
     $InitializeEvent(29, 12107200, 72100329, 2902959, 9010);
     
-    $InitializeEvent(65, 10000100, 3503960, 3503961, 13607810, -1);
+    $InitializeEvent(65, 10000100, 3603960, 3603961, 13607810, -1);
     $InitializeEvent(65, 7000, 3600950, 3601950, 999, 13607800, -1);
-    $InitializeEvent(66, 10000100, 3503962, 3503963, 13607830, -1);
+    $InitializeEvent(66, 10000100, 3603962, 3603963, 13607830, -1);
     $InitializeEvent(66, 7000, 3600951, 3601951, 999, 13607820, -1);
-    
-    //$InitializeEvent(67, 10000100, 3503964, 3503965, 13607850, orphan_defeat);
-    SetMapSoundState(3503960, Disabled);
-    SetMapSoundState(3503961, Disabled);
+    $InitializeEvent(67, 10000100, 3603964, 3603965, 13607850, orphan_defeat);
     $InitializeEvent(67, 7000, 3600952, 3601952, 13601800, 13607840, orphan_defeat+13);
     $InitializeEvent(orphan_offset, 10008800, orphan_defeat+13, orphan_lamp_id-1000, orphan_lamp_id, orphan_lamp_id+3000);
     
@@ -1240,11 +1238,6 @@ L0:
     DeleteMapSFX(3603801, true);
     SetLockcamSlotNumber(36, 0, 0);
     WaitFixedTimeSeconds(3);
-    if (EventFlag(orphan_defeat+15)) {
-        AwardItemLot(17030);
-    } else if (EventFlag(orphan_defeat+13)) {
-        AwardItemLot(17020);
-    }
     if (!chr2.Passed) {
         HandleBossDefeat(3600800);
     } else {
@@ -1255,7 +1248,12 @@ L0:
         WaitFor(CharacterType(10000, TargetType.Alive));
         AwardAchievement(35);
         $InitializeEvent(0, 9350, 5);
-        if (!EventFlag(orphan_defeat+13)) {
+        if (EventFlag(orphan_defeat+15)) {
+            AwardItemLot(17030);
+        } else if (EventFlag(orphan_defeat+13)) {
+            AwardItemLot(17020);
+        }
+        else {
             AwardItemLot(3601800);
         }
         SetEventFlag(3600, ON);
@@ -1320,6 +1318,9 @@ $Event(13601801, Default, function() {
                 && CharacterType(10000, TargetType.Alive)
                 && InArea(10000, 3602805));
         if (!EventFlag(orphan_defeat+13) || EventFlag(12100866)) {
+            if (EventFlag(orphan_defeat+13) && EventFlag(12100866)) {
+                WaitFixedTimeSeconds(1.5);
+            }
             if (!HasMultiplayerState(MultiplayerState.Multiplayer)) {
                 PlayCutsceneToPlayer(36000000, CutscenePlayMode.Skippable, 10000);
             } else {
@@ -1439,9 +1440,10 @@ L0:
     EndIf(ThisEvent());
     SetEventFlag(9180, ON);
     SetEventFlag(10000200, ON);
+    WaitFixedTimeFrames(3);
     PlayCutsceneToPlayer(36000010, CutscenePlayMode.Skippable, 10000);
-    SetEventFlag(10000200, OFF);
     WaitFixedTimeFrames(1);
+    SetEventFlag(10000200, OFF);
     if (EventFlag(12100956)) {
         DeactivateObject(3601810, Disabled);
         DeactivateObject(3601811, Enabled);
@@ -1577,7 +1579,10 @@ L5:
         SetNetworkUpdateRate(3600800, true, CharacterUpdateFrequency.AlwaysUpdate);
         SetNetworkUpdateRate(3600801, true, CharacterUpdateFrequency.AlwaysUpdate);
         SetCharacterGravity(3600801, Enabled);
-        WarpCharacterAndCopyFloor(3600801, TargetEntityType.Character, 3600800, 203, 3600800);
+        WarpCharacterAndCopyFloor(3600801, TargetEntityType.Area, 3600850, -1, 3600800);
+        WaitFixedTimeFrames(1);
+        SpawnOneshotSFX(TargetEntityType.Character, 3600801, 203, 645430);
+        ForceAnimationPlayback(3600801, 3031, false, false, false);
         ClearSpEffect(3600801, 5300);
         SetSpEffect(3600801, 5333, false);
         SetCharacterAIState(3600801, Enabled);

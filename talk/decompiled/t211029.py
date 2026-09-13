@@ -2195,8 +2195,8 @@ def t211029_x95():
             AddTalkListData(38, 200323, 12100993)
 
             # lamp music
-            # AddTalkListData(33, 200320, 12100891)
-            # AddTalkListData(34, 200319, 12100991)
+            AddTalkListData(33, 200320, 12100891)
+            AddTalkListData(34, 200319, 12100991)
         else:
             pass
 
@@ -2509,6 +2509,10 @@ def t211029_x99():
         AddTalkListData(11, 200080, 12100960)
         AddTalkListData(12, 200081, 12100860)
 
+        # hidden chalice layers
+        AddTalkListData(19, 200335, 14000993)
+        AddTalkListData(20, 200336, 14000893)
+
         # random time of day
         AddTalkListData(13, 200129, 12100956)
         AddTalkListData(14, 200130, 12100856)
@@ -2527,6 +2531,10 @@ def t211029_x99():
         # infinite durability
         AddTalkListData(32, 200231, 12100955)
         AddTalkListData(33, 200232, 12100855)
+
+        # fade out
+        AddTalkListData(36, 200329, 14000991)
+        AddTalkListData(37, 200330, 14000891)
 
         # ghost shop
         AddTalkListData(34, 200317, 14000990)
@@ -2573,6 +2581,12 @@ def t211029_x99():
         elif GetTalkListEntryResult() == 12: # disable - unlocked chalice dungeons
             SetEventState(12100960, 1)
             SetEventState(12100860, 0)
+        elif GetTalkListEntryResult() == 19: # enable - hidden chalice layers
+            SetEventState(14000993, 0)
+            SetEventState(14000893, 1)
+        elif GetTalkListEntryResult() == 20: # disable - hidden chalice layers
+            SetEventState(14000993, 1)
+            SetEventState(14000893, 0)
         elif GetTalkListEntryResult() == 13: # enable - random time of day
             SetEventState(12100956, 0)
             SetEventState(12100856, 1)
@@ -2615,6 +2629,12 @@ def t211029_x99():
         elif GetTalkListEntryResult() == 35: # disable - ghost shop
             SetEventState(14000990, 1)
             SetEventState(14000890, 0)
+        elif GetTalkListEntryResult() == 36: # enable - fade out
+            SetEventState(14000991, 0)
+            SetEventState(14000891, 1)
+        elif GetTalkListEntryResult() == 37: # disable - fade out
+            SetEventState(14000991, 1)
+            SetEventState(14000891, 0)
 
 # portable lamp settings
 def t211029_x106():
@@ -2741,8 +2761,12 @@ def t211029_x107():
         AddTalkListData(3, 200275, -1) # grand-resonance bell
 
         # summons signs always available
-        AddTalkListData(1, 200278, 12100989) # on - toggle off
-        AddTalkListData(2, 200279, 12100889) # off - toggle on
+        AddTalkListData(1, 200278, 12100989) # off - toggle on
+        AddTalkListData(2, 200279, 12100889) # on - toggle off
+
+        # heal summons
+        AddTalkListData(3, 200327, 14000992) # off - toggle on
+        AddTalkListData(4, 200328, 14000892) # on - toggle off
 
         ShowShopMessage(0, 0, 0)
         def WhilePaused():
@@ -2755,6 +2779,12 @@ def t211029_x107():
         elif GetTalkListEntryResult() == 2: # summons signs always available - off - toggle on
             SetEventState(12100989, 1)
             SetEventState(12100889, 0)
+        elif GetTalkListEntryResult() == 3: # summons signs always available - on - toggle off
+            SetEventState(14000992, 0)
+            SetEventState(14000892, 1)
+        elif GetTalkListEntryResult() == 4: # summons signs always available - off - toggle on
+            SetEventState(14000992, 1)
+            SetEventState(14000892, 0)
         elif GetTalkListEntryResult() == 3: # grand-resonance bell settings
             call = t211029_x108()
             if call.Get() == 1:

@@ -274,6 +274,7 @@ def t240001_x60(action1=_):
             else:
                 pass
             AddTalkListData(9, 200041, 12100867) # boss rematch
+            AddTalkListData(10, 200119, 12100867) # distorted boss rematch
             """State 2"""
             ShowShopMessage(0, 0, 0)
             def WhilePaused():
@@ -395,6 +396,14 @@ def t240001_x60(action1=_):
             # boss rematch
             elif GetTalkListEntryResult() == 9:
                 call = t240001_x59()
+                if call.Get() == 1:
+                    ForceCloseGenericDialog()
+                    pass
+                elif call.Done():
+                    return 0
+            # boss rematch (distorted)
+            elif GetTalkListEntryResult() == 10:
+                call = t240001_x59(flag=12401800+14)
                 if call.Get() == 1:
                     ForceCloseGenericDialog()
                     pass

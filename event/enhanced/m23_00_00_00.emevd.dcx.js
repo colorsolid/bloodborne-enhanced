@@ -90,6 +90,7 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(bsb_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(bsb_defeat+12) || EventFlag(bsb_defeat-1)) {
+        ForceAnimationPlayback(10000, 101201, false, false, false);
         SetSpEffect(10000, 1990, false);
         SetEventFlag(bsb_defeat, OFF);
         SetEventFlag(bsb_defeat+2, OFF);
@@ -114,6 +115,7 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(paarl_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(paarl_defeat+12) || EventFlag(paarl_defeat-1)) {
+        ForceAnimationPlayback(10000, 101201, false, false, false);
         SetSpEffect(10000, 1990, false);
         SetEventFlag(paarl_defeat, OFF);
         SetEventFlag(paarl_defeat+2, OFF);
@@ -132,11 +134,11 @@ $Event(0, Default, function() {
     $InitializeEvent(bsb_offset, 12102070, bsb_defeat+13, 0, 7416, bsb_id, -1, -1, -1, -1);
     $InitializeEvent(paarl_offset, 12102070, paarl_defeat+13, 0, 7449, paarl_id, -1, -1, -1, -1);
     
-    $InitializeEvent(bsb_offset, 10008900, bsb_defeat-1, bsb_lamp_id+1000, 0, 0, bsb_lamp_id+5000, area_id, block_id);
-    $InitializeEvent(paarl_offset, 10008900, paarl_defeat-1, paarl_lamp_id+1000, 0, 0, paarl_lamp_id+5000, area_id, block_id);
+    $InitializeEvent(bsb_offset, 10008900, bsb_defeat-1, bsb_lamp_id+1000, 0, 0);
+    $InitializeEvent(paarl_offset, 10008900, paarl_defeat-1, paarl_lamp_id+1000, 0, 0);
     
-    $InitializeEvent(bsb_offset, 10007700, bsb_defeat+11, bsb_defeat+12, bsb_lamp_id+1000, 823000);
-    $InitializeEvent(paarl_offset, 10007700, paarl_defeat+11, paarl_defeat+12, paarl_lamp_id+1000, 823001);
+    $InitializeEvent(bsb_offset, 10007700, bsb_defeat+11, bsb_defeat+12, bsb_lamp_id+5000, 823000);
+    $InitializeEvent(paarl_offset, 10007700, paarl_defeat+11, paarl_defeat+12, paarl_lamp_id+5000, 823001);
     
     $InitializeEvent(900, 12107000, 72110900, 2301950, 2412950);
     $InitializeEvent(901, 12107000, 72110901, 2301950, 2412951);
@@ -1838,6 +1840,7 @@ $Event(12304460, Restart, function(chrEntityId, areaEntityId, entityId, areaEnti
 
 // heal npcs
 $Event(12304470, Default, function() {
+    WaitFor(EventFlag(12100894));
     WaitFor(CharacterHasSpEffect(10000, 3010));
     SetSpEffect(2300740, 3012, false);
     SetSpEffect(2300930, 3012, false);

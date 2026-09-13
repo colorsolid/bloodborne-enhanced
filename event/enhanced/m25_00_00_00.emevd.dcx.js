@@ -36,9 +36,13 @@ $Event(0, Default, function() {
     const coinsBaseFlag = 120;
     const coinsBaseId = (area_id * 100000) + (block_id * 10000) + 8500;
     const logariusIndex = 5;
+    const crownIndex = 9;
     for (let i = 0; i < 20; i++) {
         if (i == logariusIndex) {
             $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, logarius_defeat, 0);
+        }
+        else if (i == crownIndex) {
+            $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, 12500810, 0);
         }
         else {
             $InitializeEvent(coinsBaseFlag+i, 10003000, coinsBaseId+i, 10000999, 0);
@@ -53,6 +57,14 @@ $Event(0, Default, function() {
     }
     
     SetEventFlag(10008900+logarius_offset, OFF);
+    
+    SetEventFlag(10007799, OFF);
+    SetEventFlag(logarius_defeat+15, OFF);
+    if (EventFlag(logarius_defeat+14)) {
+        SetEventFlag(10007799, ON);
+        SetEventFlag(logarius_defeat+14, OFF);
+        SetEventFlag(logarius_defeat+15, ON);
+    }
     
     $InitializeEvent(0, 10007900, 10000000+logarius_return, logarius_return, area_id, block_id);
     
@@ -86,6 +98,7 @@ $Event(0, Default, function() {
         }
     // rematch mode started, warp player to boss trigger point
     } else if (EventFlag(logarius_defeat+12) || EventFlag(logarius_defeat-1)) {
+        ForceAnimationPlayback(10000, 101201, false, false, false);
         SetSpEffect(10000, 1990, false);
         if (EventFlag(12500810)) {
             SetEventFlag(12500810, OFF);
@@ -108,8 +121,8 @@ $Event(0, Default, function() {
     
     $InitializeEvent(logarius_offset, 12102070, logarius_defeat+13, 0, 7457, logarius_id, -1, -1, -1, -1);
     
-    $InitializeEvent(logarius_offset, 10008900, logarius_defeat-1, logarius_lamp_id+1000, 0, 0, logarius_lamp_id+5000, area_id, block_id);
-    $InitializeEvent(logarius_offset, 10007700, logarius_defeat+11, logarius_defeat+12, logarius_lamp_id+1000, 825000);
+    $InitializeEvent(logarius_offset, 10008900, logarius_defeat-1, logarius_lamp_id+1000, logarius_defeat+15, logarius_defeat+14);
+    $InitializeEvent(logarius_offset, 10007700, logarius_defeat+11, logarius_defeat+12, logarius_lamp_id+5000, 825000);
     
     $InitializeEvent(2200, 12107000, 72112200, 2501950, 2412950);
     $InitializeEvent(2201, 12107000, 72112201, 2501950, 2412951);
@@ -1794,6 +1807,14 @@ L0:
     SetNetworkSyncState(Disabled);
     if (!HasMultiplayerState(MultiplayerState.Client)) {
         WaitFor(CharacterType(10000, TargetType.Alive));
+        if (EventFlag(logarius_defeat+15)) {
+            ChangeCharacterEnableState(2500808, Disabled);
+            ChangeCharacterEnableState(2500809, Disabled);
+            AwardItemLot(17030);
+        }
+        else if (EventFlag(logarius_defeat+13)) {
+            AwardItemLot(17020);
+        }
         $InitializeEvent(0, 9350, 3);
         AwardAchievement(26);
         SetEventFlag(2500, ON);
@@ -1807,7 +1828,6 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.Weapon, 52, PlayLogMultiplayerType.HostOnly);
         ParameterOutput(PlayerPlayLogParameter.Armor, 52, PlayLogMultiplayerType.HostOnly);
         if (EventFlag(logarius_defeat+13)) {
-            AwardItemLot(17020);
             $InitializeEvent(logarius_offset, 10007800, logarius_lamp_id+1000, 825000, 2);
         }
         EndEvent();
@@ -1829,6 +1849,16 @@ $Event(12501801, Default, function() {
 
 // Host enters boss room_First battle_King's Grim Reaper
 $Event(12501802, Default, function() {
+    if (!EventFlag(logarius_defeat+15)) {
+        ChangeCharacterEnableState(2500808, Disabled);
+        ChangeCharacterEnableState(2500809, Disabled);
+    }
+    else {
+        SetSpEffect(2500800, 5633, false);
+        SetSpEffect(2500800, 5599, false);
+        //DeactivateObject(2501800, Enabled);
+        //SpawnMapSFX(2503800);
+    }
     EndIf(EventFlag(12501800));
     if (!ThisEventSlot()) {
         ForceAnimationPlayback(2500800, 7000, false, false, false);
@@ -1846,6 +1876,9 @@ $Event(12501802, Default, function() {
     SetEventFlag(9180, ON);
     WaitFixedTimeFrames(1);
     if (!EventFlag(logarius_defeat+13) || EventFlag(12100866)) {
+        if (EventFlag(logarius_defeat+13) && EventFlag(12100866)) {
+            WaitFixedTimeSeconds(1.5);
+        }
         if (!HasMultiplayerState(MultiplayerState.Multiplayer)) {
             PlayCutsceneToPlayer(25000020, CutscenePlayMode.Skippable, 10000);
         } else {
@@ -2102,7 +2135,7 @@ $Event(12504807, Default, function() {
 // SA break
 $Event(12504808, Default, function() {
     EndIf(EventFlag(12501800));
-    WaitFor(CharacterHasSpEffect(2500800, 5633) && CharacterHasEventMessage(2500800, 10));
+    WaitFor(CharacterHasSpEffect(2500800, 5633) && CharacterHasEventMessage(2500800, 10) && !EventFlag(logarius_defeat+15));
     ClearSpEffect(2500800, 5633);
     ClearSpEffect(2500800, 5599);
     WaitFixedTimeFrames(1);

@@ -176,10 +176,16 @@ def t210660_x5():
             SetEventState(12100650, 1)
             SetEventState(12501800+11, 1)
         elif GetTalkListEntryResult() == 16: # gehrman *
-            SetEventState(12100650, 1)
+            if GetEventStatus(12100964) == 1:
+                SetEventState(12100650, 1)
+            else:
+                pass
             SetEventState(12101800+11, 1)
         elif GetTalkListEntryResult() == 17: # moon presence *
-            SetEventState(12100650, 1)
+            if GetEventStatus(12100964) == 1:
+                SetEventState(12100650, 1)
+            else:
+                pass
             SetEventState(12101850+11, 1)
         elif GetTalkListEntryResult() == 18: # ludwig * 
             SetEventState(12100650, 1)
@@ -203,10 +209,14 @@ def t210660_x6():
     while True:
         ClearTalkListData()
         AddTalkListData(1, 200123, 12411800) # gascoignes
+        AddTalkListData(3, 200332, 12411800) # amelia
+        AddTalkListData(5, 200331, 12701800) # shadows
+        AddTalkListData(6, 200333, 12701800) # rom
+        AddTalkListData(7, 200334, 12701800) # logarius
         AddTalkListData(9, 200160, 12601800) # nurses
         AddTalkListData(10, 200159, 12101850) # gherman and moon prescence
         AddTalkListData(12, 200125, 13401800) # ludwigs
-        # AddTalkListData(13, 200126, 12411700) # laurences
+        AddTalkListData(13, 200126, 12411700) # laurences
         AddTalkListData(14, 200124, 13601800) # orphans
         ShowShopMessage(0, 0, 0)
         def WhilePaused():
@@ -217,23 +227,42 @@ def t210660_x6():
             SetEventState(12100650, 1)
             SetEventState(12411800+11, 1)
             SetEventState(12411800+14, 1)
+        elif GetTalkListEntryResult() == 3: # amelia
+            SetEventState(12100650, 1)
+            SetEventState(12401800+11, 1)
+            SetEventState(12401800+14, 1)
+        elif GetTalkListEntryResult() == 5: # shadows
+            SetEventState(12100650, 1)
+            SetEventState(12701800+11, 1)
+            SetEventState(12701800+14, 1)
+        elif GetTalkListEntryResult() == 6: # rom
+            SetEventState(12100650, 1)
+            SetEventState(13201800+11, 1)
+            SetEventState(13201800+14, 1)
+        elif GetTalkListEntryResult() == 7: # logarius
+            SetEventState(12100650, 1)
+            SetEventState(12501800+11, 1)
+            SetEventState(12501800+14, 1)
         elif GetTalkListEntryResult() == 9: # nurses
             SetEventState(12100650, 1)
             SetEventState(12601800+11, 1)
             SetEventState(12601800+14, 1)
         elif GetTalkListEntryResult() == 10: # gherman and moon prescence
-            SetEventState(12100650, 1)
-            SetEventState(12101800+11, 1)
+            if GetEventStatus(12100964) == 1:
+                SetEventState(12100650, 1)
+            else:
+                pass
+            # SetEventState(12101800+11, 1)
             SetEventState(12101850+11, 1)
             SetEventState(12101850+14, 1)
         elif GetTalkListEntryResult() == 12: # ludwigs
             SetEventState(12100650, 1)
             SetEventState(13401800+11, 1)
             SetEventState(13401800+14, 1)
-        # elif GetTalkListEntryResult() == 13: # laurences
-        #     SetEventState(12100650, 1)
-        #     SetEventState(13401850+11, 1)
-        #     SetEventState(13401850+14, 1)
+        elif GetTalkListEntryResult() == 13: # laurences
+            SetEventState(12100650, 1)
+            SetEventState(13401850+11, 1)
+            SetEventState(13401850+14, 1)
         elif GetTalkListEntryResult() == 14: # orphans
             SetEventState(12100650, 1)
             SetEventState(13601800+11, 1)

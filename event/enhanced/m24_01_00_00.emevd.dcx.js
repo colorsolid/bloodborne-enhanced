@@ -76,8 +76,10 @@ $Event(0, Default, function() {
     SetEventFlag(10008900+cleric_beast_offset, OFF);
     SetEventFlag(10008900+gascoigne_offset, OFF);
     
+    //$InitializeEvent(0, 12415090);
     
-    $InitializeEvent(1, 10007900, 10000000+cleric_beast_return, cleric_beast_return, area_id, block_id);
+    
+    $InitializeEvent(0, 10007901); // gascoigne special quick warp
     $InitializeEvent(2, 10007900, 10000000+gascoigne_return, gascoigne_return, area_id, block_id);
     
     $InitializeEvent(iosefka_lamp_offset, 10008500, iosefka_lamp_id, 72110000);
@@ -116,6 +118,7 @@ $Event(0, Default, function() {
         }
     // rematch has started
     } else if (EventFlag(cleric_beast_defeat+12) || EventFlag(cleric_beast_defeat-1)) {
+        ForceAnimationPlayback(10000, 101201, false, false, false);
         SetSpEffect(10000, 1990, false);
         SetEventFlag(cleric_beast_defeat, OFF);
         SetEventFlag(cleric_beast_defeat+2, OFF);
@@ -140,6 +143,7 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(gascoigne_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(gascoigne_defeat+12) || EventFlag(gascoigne_defeat-1)) {
+        ForceAnimationPlayback(10000, 101201, false, false, false);
         SetSpEffect(10000, 1990, false);
         SetObjactState(2411304, 2410080, Disabled); // disable gate
         SetEventFlag(gascoigne_defeat, OFF);
@@ -159,11 +163,11 @@ $Event(0, Default, function() {
     $InitializeEvent(cleric_beast_offset, 12102070, cleric_beast_defeat+13, 0, 7447, cleric_beast_id, -1, -1, -1, -1);
     $InitializeEvent(gascoigne_offset, 12102070, gascoigne_defeat+13, gascoigne_defeat+15, 7448, gascoigne_id1, gascoigne_id2, -1, -1, -1);
     
-    $InitializeEvent(cleric_beast_offset, 10008900, cleric_beast_defeat-1, cleric_beast_lamp_id+1000, 0, 0, cleric_beast_lamp_id+5000, area_id, block_id);
-    $InitializeEvent(gascoigne_offset, 10008900, gascoigne_defeat-1, gascoigne_lamp_id+1000, gascoigne_defeat+15, gascoigne_defeat+14, gascoigne_lamp_id+5000, area_id, block_id);
+    $InitializeEvent(cleric_beast_offset, 10008900, cleric_beast_defeat-1, cleric_beast_lamp_id+1000, 0, 0);
+    $InitializeEvent(gascoigne_offset, 10008900, gascoigne_defeat-1, gascoigne_lamp_id+1000, gascoigne_defeat+15, gascoigne_defeat+14);
     
-    $InitializeEvent(cleric_beast_offset, 10007700, cleric_beast_defeat+11, cleric_beast_defeat+12, cleric_beast_lamp_id+1000, 824100);
-    $InitializeEvent(gascoigne_offset, 10007700, gascoigne_defeat+11, gascoigne_defeat+12, gascoigne_lamp_id+1000, 824102);
+    $InitializeEvent(cleric_beast_offset, 10007700, cleric_beast_defeat+11, cleric_beast_defeat+12, cleric_beast_lamp_id+5000, 824100);
+    $InitializeEvent(gascoigne_offset, 10007700, gascoigne_defeat+11, gascoigne_defeat+12, gascoigne_lamp_id+5000, 824102);
     
     $InitializeEvent(0, 12107000, 72110000, 2411950, 2412950);
     $InitializeEvent(1, 12107000, 72110001, 2411950, 2412951);
@@ -1803,6 +1807,12 @@ L0:
     SetNetworkSyncState(Disabled);
     if (!HasMultiplayerState(MultiplayerState.Client)) {
         WaitFor(CharacterType(10000, TargetType.Alive));
+        if (EventFlag(cleric_beast_defeat+15)) {
+            AwardItemLot(17030);
+        }
+        else if (EventFlag(cleric_beast_defeat+13)) {
+            AwardItemLot(17020);
+        }
         $InitializeEvent(0, 9350, 3);
         AwardAchievement(21);
         if (!EventFlag(6645) && !EventFlag(cleric_beast_defeat+13)) {
@@ -1819,7 +1829,6 @@ L0:
         ParameterOutput(PlayerPlayLogParameter.Weapon, 52, PlayLogMultiplayerType.HostOnly);
         ParameterOutput(PlayerPlayLogParameter.Armor, 52, PlayLogMultiplayerType.HostOnly);
         if (EventFlag(cleric_beast_defeat+13)) {
-            AwardItemLot(17020);
             $InitializeEvent(cleric_beast_offset, 10007800, cleric_beast_lamp_id+1000, 824100, 1);
         }
         EndEvent();
@@ -2199,6 +2208,9 @@ $Event(12411802, Default, function() {
     SetEventFlag(9180, ON);
     WaitFixedTimeFrames(1);
     if (!EventFlag(gascoigne_defeat+13) || EventFlag(12100866)) {
+        if (EventFlag(gascoigne_defeat+13) && EventFlag(12100866)) {
+            WaitFixedTimeSeconds(1.5);
+        }
         if (!HasMultiplayerState(MultiplayerState.Multiplayer)) {
             PlayCutsceneToPlayer(24010010, CutscenePlayMode.Skippable, 10000);
         } else {
@@ -2342,7 +2354,9 @@ L4:
         SetCharacterAIState(2410810, Enabled);
         DisplayBossHealthBar(Enabled, 2410810, 1, 271001);
         SetCharacterGravity(2410811, Enabled);
-        WarpCharacterAndCopyFloor(2410811, TargetEntityType.Character, 2410810, 203, 2410810);
+        WarpCharacterAndCopyFloor(2410811, TargetEntityType.Area, 2410890, -1, 2410810);
+        WaitFixedTimeFrames(1);
+        ForceAnimationPlayback(2410811, 3030, false, true, false);
         SetCharacterAIState(2410811, Enabled);
         DisplayBossHealthBar(Enabled, 2410811, 0, 272001);
     } else {
@@ -2955,6 +2969,7 @@ $Event(12410900, Default, function() {
 
 // Time Zone Change_Cathedral District B
 $Event(12410310, Default, function() {
+    WaitFor(EventFlag(12100956) || EventFlag(12100856));
     GotoIf(S0, !EventFlag(12100956));
     GotoIf(L2, EventFlag(9802));
     GotoIf(L1, EventFlag(9801));
@@ -5006,6 +5021,7 @@ $Event(12414460, Restart, function(chrEntityId, areaEntityId, entityId, areaEnti
 
 // heal npcs
 $Event(12414471, Default, function() {
+    WaitFor(EventFlag(12100894));
     WaitFor(CharacterHasSpEffect(10000, 3010));
     SetSpEffect(2410158, 3012, false);
     SetSpEffect(2410740, 3012, false);
@@ -5598,4 +5614,39 @@ $Event(12415010, Restart, function(entityId, soundType, soundId, timeSeconds) {
         PlaySE(entityId, soundType, soundId);
     }
     RestartEvent();
+});
+
+// gascoigne special quick warp
+$Event(10007901, Default, function() {
+    const warp_trigger = 10000000+gascoigne_return;
+    WaitFor(EventFlag(warp_trigger));
+    SetEventFlag(warp_trigger, OFF);
+    WaitFixedTimeFrames(1);
+    if (AnyBatchEventFlags(10008500, 10008599)) { // resting
+        BatchSetEventFlags(10008500, 10008599, OFF);
+        SetEventFlag(10007999, ON);
+        DummyPlayCutsceneAndWarpPlayer(gascoigne_return, area_id, block_id);
+    } else { // not resting
+        ForceAnimationPlayback(10000, 101167, false, false, false);
+        WaitFixedTimeSeconds(3);
+        DummyPlayCutsceneAndWarpPlayer(gascoigne_return, area_id, block_id);
+        WaitFixedTimeSeconds(0.5);
+    }
+    SetCharacterAnimationState(10000, Enabled);
+    SetCharacterTeamType(10000, TeamType.Host);
+    ActivateHit(10000, Enabled);
+    WaitFixedTimeFrames(1);
+    WaitFor(InArea(10000, 2411859));
+    WaitFixedTimeSeconds(0.5);
+    DummyPlayCutsceneAndWarpPlayer(2411858, area_id, block_id);
+    ForceAnimationPlayback(10000, 101201, false, false, false);
+    RestartEvent();
+});
+
+// gascoigne quick warp fix
+$Event(12415090, Default, function() {
+    WaitFor(EventFlag(12411859));
+    WaitFor(InArea(10000, 2411859));
+    WaitFixedTimeSeconds(0.5);
+    IssueShortWarpRequest(10000, TargetEntityType.Area, 2411858, -1);
 });

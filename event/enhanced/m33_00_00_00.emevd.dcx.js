@@ -79,6 +79,7 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(amygdala_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(amygdala_defeat+12) || EventFlag(amygdala_defeat-1)) {
+        ForceAnimationPlayback(10000, 101201, false, false, false);
         SetSpEffect(10000, 1990, false);
         SetEventFlag(amygdala_defeat, OFF);
         SetEventFlag(amygdala_defeat+2, OFF);
@@ -95,8 +96,8 @@ $Event(0, Default, function() {
     
     $InitializeEvent(amygdala_offset, 12102070, amygdala_defeat+13, 0, 7446, amygdala_id, -1, -1, -1, -1);
     
-    $InitializeEvent(amygdala_offset, 10008900, amygdala_defeat-1, amygdala_lamp_id+1000, 0, 0, amygdala_lamp_id+5000, area_id, block_id);
-    $InitializeEvent(amygdala_offset, 10007700, amygdala_defeat+11, amygdala_defeat+12, amygdala_lamp_id+1000, 833000);
+    $InitializeEvent(amygdala_offset, 10008900, amygdala_defeat-1, amygdala_lamp_id+1000, 0, 0);
+    $InitializeEvent(amygdala_offset, 10007700, amygdala_defeat+11, amygdala_defeat+12, amygdala_lamp_id+5000, 833000);
     
     $InitializeEvent(0, 10007400, 3300910, 13304420, 101161, 101208, 163); // henryk - c
     $InitializeEvent(0, 10008630, 10008630, 10008640, 3300910, 13304420, 3303910, 200244, 101208, 200254, 200264);
@@ -1426,6 +1427,7 @@ $Event(13304460, Restart, function(chrEntityId, areaEntityId, entityId, areaEnti
 
 // heal npcs
 $Event(13304470, Default, function() {
+    WaitFor(EventFlag(12100894));
     WaitFor(CharacterHasSpEffect(10000, 3010));
     SetSpEffect(3300910, 3012, false);
     WaitFixedTimeFrames(1);

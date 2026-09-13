@@ -97,6 +97,7 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(celestial_emissary_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(celestial_emissary_defeat+12) || EventFlag(celestial_emissary_defeat-1)) {
+        ForceAnimationPlayback(10000, 101201, false, false, false);
         SetSpEffect(10000, 1990, false);
         SetEventFlag(celestial_emissary_defeat, OFF);
         SetEventFlag(celestial_emissary_defeat+2, OFF);
@@ -120,6 +121,7 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(ebrietas_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(ebrietas_defeat+12) || EventFlag(ebrietas_defeat-1)) {
+        ForceAnimationPlayback(10000, 101201, false, false, false);
         SetSpEffect(10000, 1990, false);
         SetEventFlag(ebrietas_defeat, OFF);
         SetEventFlag(ebrietas_defeat+2, ON);
@@ -140,11 +142,11 @@ $Event(0, Default, function() {
     $InitializeEvent(celestial_emissary_offset, 12102070, celestial_emissary_defeat+13, 0, 7459, celestial_emissary_id, -1, -1, -1, -1);
     $InitializeEvent(ebrietas_offset, 12102070, ebrietas_defeat+13, 0, 7462, ebrietas_id, -1, -1, -1, -1);
     
-    $InitializeEvent(celestial_emissary_offset, 10008900, celestial_emissary_defeat-1, celestial_emissary_lamp_id+1000, 0, 0, celestial_emissary_lamp_id+5000, area_id, block_id);
-    $InitializeEvent(ebrietas_offset, 10008900, ebrietas_defeat-1, ebrietas_lamp_id+1000, 0, 0, ebrietas_lamp_id+5000, area_id, block_id);
+    $InitializeEvent(celestial_emissary_offset, 10008900, celestial_emissary_defeat-1, celestial_emissary_lamp_id+1000, 0, 0);
+    $InitializeEvent(ebrietas_offset, 10008900, ebrietas_defeat-1, ebrietas_lamp_id+1000, 0, 0);
     
-    $InitializeEvent(celestial_emissary_offset, 10007700, celestial_emissary_defeat+11, celestial_emissary_defeat+12, celestial_emissary_lamp_id+1000, 824200);
-    $InitializeEvent(ebrietas_offset, 10007700, ebrietas_defeat+11, ebrietas_defeat+12, ebrietas_lamp_id+1000, 824201);
+    $InitializeEvent(celestial_emissary_offset, 10007700, celestial_emissary_defeat+11, celestial_emissary_defeat+12, celestial_emissary_lamp_id+5000, 824200);
+    $InitializeEvent(ebrietas_offset, 10007700, ebrietas_defeat+11, ebrietas_defeat+12, ebrietas_lamp_id+5000, 824201);
     
     $InitializeEvent(600, 12107000, 72110600, 2421950, 2412950);
     $InitializeEvent(601, 12107000, 72110601, 2421950, 2412951);
@@ -2412,6 +2414,7 @@ $Event(12424460, Restart, function(chrEntityId, areaEntityId, entityId, areaEnti
 
 // heal npcs
 $Event(12424470, Default, function() {
+    WaitFor(EventFlag(12100894));
     WaitFor(CharacterHasSpEffect(10000, 3010));
     SetSpEffect(2420910, 3012, false);
     WaitFixedTimeFrames(1);

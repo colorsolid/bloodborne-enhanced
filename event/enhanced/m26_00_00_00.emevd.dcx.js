@@ -62,7 +62,7 @@ $Event(0, Default, function() {
     // ghosts
     const ghostsBaseFlag = 140;
     const ghostsBaseId = (area_id * 100000) + (block_id * 10000) + 8600;
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 20; i++) {
         $InitializeEvent(ghostsBaseFlag+i, 10003500, ghostsBaseId+i);
     }
     
@@ -105,6 +105,7 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(micolash_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(micolash_defeat+12) || EventFlag(micolash_defeat-1)) {
+        ForceAnimationPlayback(10000, 101201, false, false, false);
         SetSpEffect(10000, 1990, false);
         SetEventFlag(1082, OFF);
         SetEventFlag(micolash_defeat, OFF);
@@ -130,6 +131,7 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(wet_nurse_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(wet_nurse_defeat+12) || EventFlag(wet_nurse_defeat-1)) {
+        ForceAnimationPlayback(10000, 101201, false, false, false);
         SetSpEffect(10000, 1990, false);
         SetEventFlag(wet_nurse_defeat, OFF);
         SetEventFlag(wet_nurse_defeat+2, OFF);
@@ -150,11 +152,11 @@ $Event(0, Default, function() {
     $InitializeEvent(micolash_offset, 12102070, micolash_defeat+13, 0, 7460, micolash_id, -1, -1, -1, -1);
     $InitializeEvent(wet_nurse_offset, 12102070, wet_nurse_defeat+13, 0, 7461, wet_nurse_id, wet_nurse_id2, -1, -1, -1);
     
-    $InitializeEvent(micolash_offset, 10008900, micolash_defeat-1, micolash_lamp_id+1000, 0, 0, micolash_lamp_id+5000, area_id, block_id);
-    $InitializeEvent(wet_nurse_offset, 10008900, wet_nurse_defeat-1, wet_nurse_lamp_id+1000, wet_nurse_defeat+15, wet_nurse_defeat+14, wet_nurse_lamp_id+5000, area_id, block_id);
+    $InitializeEvent(micolash_offset, 10008900, micolash_defeat-1, micolash_lamp_id+1000, 0, 0);
+    $InitializeEvent(wet_nurse_offset, 10008900, wet_nurse_defeat-1, wet_nurse_lamp_id+1000, wet_nurse_defeat+15, wet_nurse_defeat+14);
     
-    $InitializeEvent(micolash_offset, 10007700, micolash_defeat+11, micolash_defeat+12, micolash_lamp_id+1000, 826000);
-    $InitializeEvent(wet_nurse_offset, 10007700, wet_nurse_defeat+11, wet_nurse_defeat+12, wet_nurse_lamp_id+1000, 826002);
+    $InitializeEvent(micolash_offset, 10007700, micolash_defeat+11, micolash_defeat+12, micolash_lamp_id+5000, 826000);
+    $InitializeEvent(wet_nurse_offset, 10007700, wet_nurse_defeat+11, wet_nurse_defeat+12, wet_nurse_lamp_id+5000, 826002);
     
     $InitializeEvent(3000, 12107000, 72113000, 2601950, 2412950);
     $InitializeEvent(3001, 12107000, 72113001, 2601950, 2412951);
@@ -1295,6 +1297,9 @@ $Event(12601802, Default, function() {
     SetMapSoundState(2603100, Disabled);
     WaitFixedTimeFrames(1);
     if (!EventFlag(wet_nurse_defeat+13) || EventFlag(12100866)) {
+        if (EventFlag(wet_nurse_defeat+13) && EventFlag(12100866)) {
+            WaitFixedTimeSeconds(1.5);
+        }
         if (!HasMultiplayerState(MultiplayerState.Multiplayer)) {
             PlayCutsceneToPlayer(26000010, CutscenePlayMode.Skippable, 10000);
         } else {
@@ -1519,6 +1524,7 @@ $Event(12604807, Default, function() {
 
 // Boss dark magic management
 $Event(12604810, Default, function() {
+    WaitFor(EventFlag(wet_nurse_defeat+2));
     WaitFor(CharacterHasSpEffect(10000, 5630) || EventFlag(wet_nurse_defeat+15));
     if (EventFlag(wet_nurse_defeat+15)) {
         SetSpEffect(10000, 5680, false);
@@ -1576,6 +1582,7 @@ $Event(12604830, Default, function(chrEntityId, eventFlagId, areaEntityId, entit
 
 // Clone summon attack
 $Event(12604840, Default, function() {
+    WaitFor(EventFlag(wet_nurse_defeat+2));
     WaitFor(
         (EventFlag(12604803)
             && CharacterHasEventMessage(2600800, 20)
@@ -1707,13 +1714,14 @@ $Event(12601852, Default, function() {
     EndIf(CharacterType(10000, TargetType.BlackPhantom));
     SetEventFlag(9180, ON);
     WaitFixedTimeFrames(1);
-    if (!HasMultiplayerState(MultiplayerState.Multiplayer)) {
-        if (!EventFlag(micolash_defeat+13) || EventFlag(12100866)) {
-            PlayCutsceneToPlayer(26000060, CutscenePlayMode.Skippable, 10000);
+    if (!EventFlag(micolash_defeat+13) || EventFlag(12100866)) {
+        if (EventFlag(micolash_defeat+13) && EventFlag(12100866)) {
+            WaitFixedTimeSeconds(1.5);
         }
-    } else {
+        if (!HasMultiplayerState(MultiplayerState.Multiplayer)) {
+            PlayCutsceneToPlayer(26000060, CutscenePlayMode.Skippable, 10000);
+        } else {
 L0:
-        if (!EventFlag(micolash_defeat+13) || EventFlag(12100866)) {
             PlayCutsceneToPlayer(26000060, CutscenePlayMode.Unskippable, 10000);
         }
     }

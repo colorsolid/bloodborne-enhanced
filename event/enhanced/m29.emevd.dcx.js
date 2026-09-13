@@ -61,6 +61,11 @@ const boss_4_defeat = 12901803;
 // constructor
 $Event(0, Default, function() {
     
+    if (EventFlag(10001060)) {
+        SetEventFlag(10001060, OFF);
+        SetSpEffect(10000, 1991, false);
+    }
+    
     $InitializeEvent(0, 10001511);
     
     SetEventFlag(10001509, OFF);
@@ -72,39 +77,39 @@ $Event(0, Default, function() {
     SetEventFlag(10008900+boss_3_offset, OFF);
     SetEventFlag(10008900+boss_4_offset, OFF);
     
-    $InitializeEvent(38, 10007900, 10000000+boss_1_return, boss_1_return, area_id, block_id);
-    $InitializeEvent(39, 10007900, 10000000+boss_1_return-1, boss_1_return, area_id, block_id);
+    $InitializeEvent(38, 10007900, 10000000+boss_1_return, boss_1_return);
+    $InitializeEvent(39, 10007900, 10000000+boss_1_return-1, boss_1_return);
     
-    $InitializeEvent(40, 10007900, 10000000+boss_2_return, boss_2_return, area_id, block_id);
-    $InitializeEvent(41, 10007900, 10000000+boss_2_return-1, boss_2_return, area_id, block_id);
-    $InitializeEvent(42, 10007900, 10000000+boss_2_return-2, boss_2_return, area_id, block_id);
-    $InitializeEvent(43, 10007900, 10000000+boss_2_return-3, boss_2_return, area_id, block_id);
+    $InitializeEvent(40, 10007900, 10000000+boss_2_return, boss_2_return);
+    $InitializeEvent(41, 10007900, 10000000+boss_2_return-1, boss_2_return);
+    $InitializeEvent(42, 10007900, 10000000+boss_2_return-2, boss_2_return);
+    $InitializeEvent(43, 10007900, 10000000+boss_2_return-3, boss_2_return);
     
-    $InitializeEvent(44, 10007900, 10000000+boss_3_return, boss_3_return, area_id, block_id);
-    $InitializeEvent(45, 10007900, 10000000+boss_3_return-1, boss_3_return, area_id, block_id);
-    $InitializeEvent(46, 10007900, 10000000+boss_3_return-2, boss_3_return, area_id, block_id);
-    $InitializeEvent(47, 10007900, 10000000+boss_3_return-3, boss_3_return, area_id, block_id);
-    $InitializeEvent(48, 10007900, 10000000+boss_3_return-4, boss_3_return, area_id, block_id);
-    $InitializeEvent(49, 10007900, 10000000+boss_3_return-5, boss_3_return, area_id, block_id);
+    $InitializeEvent(44, 10007900, 10000000+boss_3_return, boss_3_return);
+    $InitializeEvent(45, 10007900, 10000000+boss_3_return-1, boss_3_return);
+    $InitializeEvent(46, 10007900, 10000000+boss_3_return-2, boss_3_return);
+    $InitializeEvent(47, 10007900, 10000000+boss_3_return-3, boss_3_return);
+    $InitializeEvent(48, 10007900, 10000000+boss_3_return-4, boss_3_return);
+    $InitializeEvent(49, 10007900, 10000000+boss_3_return-5, boss_3_return);
     
-    $InitializeEvent(50, 10007900, 10000000+boss_4_return, boss_4_return, area_id, block_id);
-    $InitializeEvent(51, 10007900, 10000000+boss_4_return-1, boss_4_return, area_id, block_id);
-    $InitializeEvent(52, 10007900, 10000000+boss_4_return-2, boss_4_return, area_id, block_id);
-    $InitializeEvent(53, 10007900, 10000000+boss_4_return-3, boss_4_return, area_id, block_id);
-    $InitializeEvent(54, 10007900, 10000000+boss_4_return-4, boss_4_return, area_id, block_id);
-    $InitializeEvent(55, 10007900, 10000000+boss_4_return-5, boss_4_return, area_id, block_id);
-    $InitializeEvent(56, 10007900, 10000000+boss_4_return-6, boss_4_return, area_id, block_id);
-    $InitializeEvent(57, 10007900, 10000000+boss_4_return-7, boss_4_return, area_id, block_id);
+    $InitializeEvent(50, 10007900, 10000000+boss_4_return, boss_4_return);
+    $InitializeEvent(51, 10007900, 10000000+boss_4_return-1, boss_4_return);
+    $InitializeEvent(52, 10007900, 10000000+boss_4_return-2, boss_4_return);
+    $InitializeEvent(53, 10007900, 10000000+boss_4_return-3, boss_4_return);
+    $InitializeEvent(54, 10007900, 10000000+boss_4_return-4, boss_4_return);
+    $InitializeEvent(55, 10007900, 10000000+boss_4_return-5, boss_4_return);
+    $InitializeEvent(56, 10007900, 10000000+boss_4_return-6, boss_4_return);
+    $InitializeEvent(57, 10007900, 10000000+boss_4_return-7, boss_4_return);
     
     if (EventFlag(10008950)) {
         SetEventFlag(10008950, OFF);
         SetSpEffect(10000, 4682, false);
     }
     
-    $InitializeEvent(boss_1_offset, 10007700, boss_1_defeat+2011, boss_1_defeat+2012, boss_1_lamp_id+1000);
-    $InitializeEvent(boss_2_offset, 10007700, boss_2_defeat+2021, boss_2_defeat+2022, boss_2_lamp_id+1000);
-    $InitializeEvent(boss_3_offset, 10007700, boss_3_defeat+2031, boss_3_defeat+2032, boss_3_lamp_id+1000);
-    $InitializeEvent(boss_4_offset, 10007700, boss_4_defeat+2041, boss_4_defeat+2042, boss_4_lamp_id+1000);
+    $InitializeEvent(boss_1_offset, 10007700, boss_1_defeat+2011, boss_1_defeat+2012, boss_1_lamp_id+5000);
+    $InitializeEvent(boss_2_offset, 10007700, boss_2_defeat+2021, boss_2_defeat+2022, boss_2_lamp_id+5000);
+    $InitializeEvent(boss_3_offset, 10007700, boss_3_defeat+2031, boss_3_defeat+2032, boss_3_lamp_id+5000);
+    $InitializeEvent(boss_4_offset, 10007700, boss_4_defeat+2041, boss_4_defeat+2042, boss_4_lamp_id+5000);
     
     $InitializeEvent(lamp_1_offset, 10008100, 10008100+lamp_1_offset, lamp_1_kindle);
     $InitializeEvent(lamp_2_offset, 10008100, 10008100+lamp_2_offset, lamp_2_kindle);
@@ -128,6 +133,7 @@ $Event(0, Default, function() {
         $InitializeEvent(boss_1_lamp_offset, 10008300, boss_1_lamp_id+2000, 10000999, boss_1_lamp_kindle, boss_1_lamp_id+6000, boss_1_lamp_id+3000);
         DummyPlayCutsceneAndWarpPlayer(boss_1_lamp_id+4000, area_id, block_id);
     } else if (EventFlag(boss_1_defeat+2012) || EventFlag(boss_1_defeat+1099)) {
+        ForceAnimationPlayback(10000, 101201, false, false, false);
         SetSpEffect(10000, 1990, false);
         SetEventFlag(boss_1_defeat, OFF);
         SetEventFlag(boss_1_defeat+2012, OFF);
@@ -145,6 +151,7 @@ $Event(0, Default, function() {
         $InitializeEvent(boss_2_lamp_offset, 10008300, boss_2_lamp_id+2000, 10000999, boss_2_lamp_kindle, boss_2_lamp_id+6000, boss_2_lamp_id+3000);
         DummyPlayCutsceneAndWarpPlayer(boss_2_lamp_id+4000, area_id, block_id);
     } else if (EventFlag(boss_2_defeat+2022) || EventFlag(boss_2_defeat+1089)) {
+        ForceAnimationPlayback(10000, 101201, false, false, false);
         SetSpEffect(10000, 1990, false);
         SetEventFlag(boss_2_defeat, OFF);
         SetEventFlag(boss_2_defeat+2022, OFF);
@@ -162,6 +169,7 @@ $Event(0, Default, function() {
         $InitializeEvent(boss_3_lamp_offset, 10008300, boss_3_lamp_id+2000, 10000999, boss_3_lamp_kindle, boss_3_lamp_id+6000, boss_3_lamp_id+3000);
         DummyPlayCutsceneAndWarpPlayer(boss_3_lamp_id+4000, area_id, block_id);
     } else if (EventFlag(boss_3_defeat+2032) || EventFlag(boss_3_defeat+1079)) {
+        ForceAnimationPlayback(10000, 101201, false, false, false);
         SetSpEffect(10000, 1990, false);
         SetEventFlag(boss_3_defeat, OFF);
         SetEventFlag(boss_3_defeat+2032, OFF);
@@ -179,6 +187,7 @@ $Event(0, Default, function() {
         $InitializeEvent(boss_4_lamp_offset, 10008300, boss_4_lamp_id+2000, 10000999, boss_4_lamp_kindle, boss_4_lamp_id+6000, boss_4_lamp_id+3000);
         DummyPlayCutsceneAndWarpPlayer(boss_4_lamp_id+4000, area_id, block_id);
     } else if (EventFlag(boss_4_defeat+2042) || EventFlag(boss_4_defeat+1069)) {
+        ForceAnimationPlayback(10000, 101201, false, false, false);
         SetSpEffect(10000, 1990, false);
         SetEventFlag(boss_4_defeat, OFF);
         SetEventFlag(boss_4_defeat+2042, OFF);
@@ -202,10 +211,10 @@ $Event(0, Default, function() {
     
     $InitializeEvent(0, 10008601); // disable item refill after time limit
     
-    $InitializeEvent(boss_1_offset, 10008900, boss_1_defeat+1099, boss_1_lamp_id+1000, boss_1_lamp_id+5000);
-    $InitializeEvent(boss_2_offset, 10008900, boss_2_defeat+1089, boss_2_lamp_id+1000, boss_2_lamp_id+5000);
-    $InitializeEvent(boss_3_offset, 10008900, boss_3_defeat+1079, boss_3_lamp_id+1000, boss_3_lamp_id+5000);
-    $InitializeEvent(boss_4_offset, 10008900, boss_4_defeat+1069, boss_4_lamp_id+1000, boss_4_lamp_id+5000);
+    $InitializeEvent(boss_1_offset, 10008900, boss_1_defeat+1099, boss_1_lamp_id+1000);
+    $InitializeEvent(boss_2_offset, 10008900, boss_2_defeat+1089, boss_2_lamp_id+1000);
+    $InitializeEvent(boss_3_offset, 10008900, boss_3_defeat+1079, boss_3_lamp_id+1000);
+    $InitializeEvent(boss_4_offset, 10008900, boss_4_defeat+1069, boss_4_lamp_id+1000);
     
     $InitializeEvent(0, 12101000, 4110, 2100211, 1, 10);
     $InitializeEvent(1, 12101000, 4111, 2100211, 2, 13);
@@ -1584,58 +1593,92 @@ $Event(0, Default, function() {
     $InitializeEvent(0, 12907400);
 });
 
-// rematch boss triggered
+// initialize boss rematch
 $Event(10007700, Default, function(rematchTrigger, rematchActive, rematchSpawnPoint) {
     WaitFor(EventFlag(rematchTrigger));
     SetEventFlag(rematchTrigger, OFF);
     SetEventFlag(rematchActive, ON);
     SetSpEffect(10000, 4681, false);
     RequestCharacterAnimationReset(10000, Interpolation.Interpolated);
-    ForceAnimationPlayback(10000, 101161, false, false, false);
+    if (EventFlag(12100761)) {
+        SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, 140);
+    } else {
+        ForceAnimationPlayback(10000, 101161, false, false, false);
+    }
     SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, 829000);
     SpawnOneshotSFX(TargetEntityType.Character, 10000, 240, 829000);
-    WaitFixedTimeFrames(59);
+    $InitializeEvent(0, 10008600);
+    WaitFixedTimeSeconds(1.9);
     SetPlayerRespawnPoint(rematchSpawnPoint);
     SetSpEffect(10000, 2101, false);
 });
 
 // rematch victory
 $Event(10007800, Default, function(postRematchSpawnPoint) {
-    RequestCharacterAnimationReset(10000, Interpolation.Interpolated);
+    BatchSetEventFlags(10001021, 10001022, OFF);
+    if (EventFlag(12100852)) { // scaling
+        EventValueOperation(10001021, 2, 3, 0, 0, CalculationType.Assign); // assign high-chance ghost reward
+        AwardItemLot(125700031); // high level cursed gem
+        $InitializeEvent(0, 10001020, 0); // high-chance ghost reward
+    }
+    else {
+        EventValueOperation(10001021, 2, 1, 0, 0, CalculationType.Assign); // use default reward level
+        AwardItemLot(110771); // area-scaled cursed gem
+        $InitializeEvent(0, 10001020, 0); // default chance ghost reward
+    }
     ForceAnimationPlayback(10000, 101161, false, false, false);
     
     // 15: super fx
     // 240: centered, subtle
     // 236 or 243?: ground
-    // PlaySE(10000, SoundType.sSFX, 7012);
+    
     SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, 829000);
     SpawnOneshotSFX(TargetEntityType.Character, 10000, 240, 829000);
     
     WaitFixedTimeFrames(59);
     
-    if (EventFlag(12100750) && EventFlag(12100963)) { // rematch started from broken lamp and return to dream enabled
-        WarpPlayerToRespawnPoint(2102969);
-    } else {
-        // WarpPlayerToRespawnPoint(X0_4);
-        SetPlayerRespawnPoint(postRematchSpawnPoint);
-        SetSpEffect(10000, 2101, false);
+    SetPlayerRespawnPoint(postRematchSpawnPoint);
+    SetSpEffect(10000, 2101, false);
+});
+
+// hide lamp during rematch
+$Event(10008800, Default, function(rematchActive, lampNpc, lampObject, tempLocation) {
+    WaitFor(EventFlag(rematchActive));
+    ChangeCharacterEnableState(lampNpc, Disabled);
+    DeactivateObject(lampObject, Disabled);
+    WaitFixedTimeFrames(1);
+    CharacterWarpRequest(lampNpc, TargetEntityType.Area, tempLocation, -1);
+});
+
+// Auto restart rematch if dead + move player to rematch point
+$Event(10008900, Default, function(autoRematchFlag, lampSpawnPoint) {
+    EndIf(!ThisEventSlot()); // game's state is not in rematch mode
+    SetSpEffect(10000, 1934, false);
+    WaitFor(HPRatio(10000) <= 0);
+    SetEventFlag(autoRematchFlag, ON); // used for moving bloodstain
+    if (EventFlag(12100864)) { // auto rematch enabled
+        SetEventFlag(10008950, ON);
+    }
+    else {
+        SetPlayerRespawnPoint(lampSpawnPoint);
     }
 });
 
 // return to boss
-$Event(10007900, Default, function(warpTrigger, bossEntrancePoint, areaId, blockId) {
-    WaitFor(EventFlag(warpTrigger)); // 12801899
+$Event(10007900, Default, function(warpTrigger, bossEntrancePoint) {
+    WaitFor(EventFlag(warpTrigger));
     SetEventFlag(warpTrigger, OFF);
-    SetEventFlag(10007999, ON);
     WaitFixedTimeFrames(1);
     if (AnyBatchEventFlags(10008500, 10008599)) { // resting
         BatchSetEventFlags(10008500, 10008599, OFF);
-        WaitFixedTimeSeconds(0.5);
+        SetEventFlag(10007999, ON);
+        DummyPlayCutsceneAndWarpPlayer(bossEntrancePoint, area_id, block_id);
     } else { // not resting
         ForceAnimationPlayback(10000, 101167, false, false, false);
         WaitFixedTimeSeconds(3);
+        DummyPlayCutsceneAndWarpPlayer(bossEntrancePoint, area_id, block_id);
+        WaitFixedTimeSeconds(0.5);
     }
-    DummyPlayCutsceneAndWarpPlayer(bossEntrancePoint, areaId, blockId);
     SetCharacterAnimationState(10000, Enabled);
     SetCharacterTeamType(10000, TeamType.Host);
     ActivateHit(10000, Enabled);
@@ -1661,8 +1704,7 @@ $Event(10008100, Default, function(thisEventSlot, lampKindleFlag) {
         IncrementEventValue(lampKindleFlag, 2, 3);
         if (EventValue(lampKindleFlag, 2) == 3) { // max kindling reached
             DisplayGenericDialog(200171, PromptType.OKCANCEL, NumberofOptions.OneButton, 10000, 3);
-        } else {
-            // increased
+        } else { // increased
             DisplayGenericDialog(200170, PromptType.OKCANCEL, NumberofOptions.OneButton, 10000, 3);
         }
     }
@@ -1759,6 +1801,9 @@ $Event(10008300, Default, function(spawnCheckerRegion, bypassChecker, lampKindle
 
 // resting
 $Event(10008500, Default, function(lampId, lampWarpFlag) {
+    if (!EventFlag(10001510)) {
+        BatchSetEventFlags(10008500, 10008599, OFF);
+    }
     SetEventFlag(10001510, OFF);
     WaitFor(ThisEventSlot()); // menu opened, trigger animation
     RotateCharacter(10000, lampId, 101280, false);
@@ -1768,20 +1813,19 @@ $Event(10008500, Default, function(lampId, lampWarpFlag) {
     BatchSetEventFlags(10008630, 10008639, OFF); // dismiss summons or they'll tweak
     ActivateHit(10000, Disabled);
     WaitFor(!ThisEventSlot()); // wait for menu closed
-    if (EventFlag(10007999)) {
+    if (EventFlag(10007999)) { // quick warping to boss, bypass auto-reawaken
         SetEventFlag(10007999, OFF);
         RestartEvent();
     }
     if (EventFlag(10001510)) {
         RestartEvent();
     }
-    $InitializeEvent(0, 10008600);
     SetEventFlag(lampWarpFlag, ON);
-    RestartEvent();
 });
 
 // fade
 $Event(10008600, Default, function() {
+    EndIf(EventFlag(14000991));
     WaitFixedTimeSeconds(1);
     DisplayBanner(TextBannerType.StadiumLoss); // fade out
 });
@@ -1871,28 +1915,6 @@ $Event(10008601, Default, function() {
     SetEventFlag(10001509, ON);
 });
 
-// hide lamp during rematch
-$Event(10008800, Default, function(rematchActive, lampNpc, lampObject, tempLocation) {
-    WaitFor(EventFlag(rematchActive));
-    ChangeCharacterEnableState(lampNpc, Disabled);
-    DeactivateObject(lampObject, Disabled);
-    WaitFixedTimeFrames(1);
-    CharacterWarpRequest(lampNpc, TargetEntityType.Area, tempLocation, -1);
-});
-
-// Auto restart rematch if dead + move player to rematch point
-$Event(10008900, Default, function(autoRematchFlag, lampSpawnPoint, rematchStartRegion) {
-    EndIf(!ThisEventSlot()); // game's state is not in rematch mode
-    SetSpEffect(10000, 1934, false);
-    DummyPlayCutsceneAndWarpPlayer(rematchStartRegion, 29, 0);
-    WaitFor(HPRatio(10000) <= 0);
-    SetEventFlag(autoRematchFlag, ON); // used for moving bloodstain
-    SetPlayerRespawnPoint(lampSpawnPoint);
-    if (EventFlag(12100864)) { // auto rematch enabled
-        SetEventFlag(10008950, ON);
-    }
-});
-
 $Event(12200220, Default, function(eventFlagId) {
     WaitFor(EventFlag(eventFlagId));
     DisplayMessage(10011260, 0);
@@ -1916,33 +1938,33 @@ $Event(12101301, Default, function() {
     EndIf(ThisEvent());
     SetEventFlag(12101401, ON);
     WaitFor(ThisEvent());
-    EventValueOperation(12104010, 1, 1, 0, 1, CalculationType.Assign);
-    DirectlyGivePlayerItem(ItemType.Weapon, 25000000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 9000000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 23000000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 24000000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 4000000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 29000000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 28000000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 5100000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 2000000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 30000000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 26000000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 5000000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 8000000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 38000000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 12000000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 8100000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 27000000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 10100000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 10000000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 7000000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 7100000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 32000000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 11000000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 22000000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 13000000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 31000000, 12104010, 1);
+    EventValueOperation(12104030, 1, 1, 0, 1, CalculationType.Assign);
+    DirectlyGivePlayerItem(ItemType.Weapon, 25000000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 9000000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 23000000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 24000000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 4000000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 29000000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 28000000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 5100000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 2000000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 30000000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 26000000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 5000000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 8000000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 38000000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 12000000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 8100000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 27000000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 10100000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 10000000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 7000000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 7100000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 32000000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 11000000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 22000000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 13000000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 31000000, 12104030, 1);
     if (EventFlag(12101302) && EventFlag(12101303)) {
         SetEventFlag(12101300, ON);
     }
@@ -1954,33 +1976,33 @@ $Event(12101302, Default, function() {
     EndIf(ThisEvent());
     SetEventFlag(12101402, ON);
     WaitFor(ThisEvent());
-    EventValueOperation(12104010, 1, 1, 0, 1, CalculationType.Assign);
-    DirectlyGivePlayerItem(ItemType.Weapon, 2010000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 4010000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 5010000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 5110000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 7010000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 7110000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 8010000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 8110000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 9010000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 10010000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 10110000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 11010000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 12010000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 13010000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 22010000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 23010000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 24010000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 25010000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 26010000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 27010000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 28010000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 29010000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 30010000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 31010000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 32010000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 38010000, 12104010, 1);
+    EventValueOperation(12104030, 1, 1, 0, 1, CalculationType.Assign);
+    DirectlyGivePlayerItem(ItemType.Weapon, 2010000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 4010000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 5010000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 5110000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 7010000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 7110000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 8010000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 8110000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 9010000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 10010000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 10110000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 11010000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 12010000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 13010000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 22010000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 23010000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 24010000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 25010000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 26010000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 27010000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 28010000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 29010000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 30010000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 31010000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 32010000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 38010000, 12104030, 1);
     if (EventFlag(12101301) && EventFlag(12101303)) {
         SetEventFlag(12101300, ON);
     }
@@ -1992,33 +2014,33 @@ $Event(12101303, Default, function() {
     EndIf(ThisEvent());
     SetEventFlag(12101403, ON);
     WaitFor(ThisEvent());
-    EventValueOperation(12104010, 1, 1, 0, 1, CalculationType.Assign);
-    DirectlyGivePlayerItem(ItemType.Weapon, 2020000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 4020000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 5020000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 5120000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 7020000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 7120000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 8020000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 8120000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 9020000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 10020000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 10120000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 11020000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 12020000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 13020000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 22020000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 23020000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 24020000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 25020000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 26020000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 27020000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 28020000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 29020000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 30020000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 31020000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 32020000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 38020000, 12104010, 1);
+    EventValueOperation(12104030, 1, 1, 0, 1, CalculationType.Assign);
+    DirectlyGivePlayerItem(ItemType.Weapon, 2020000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 4020000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 5020000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 5120000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 7020000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 7120000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 8020000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 8120000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 9020000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 10020000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 10120000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 11020000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 12020000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 13020000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 22020000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 23020000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 24020000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 25020000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 26020000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 27020000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 28020000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 29020000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 30020000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 31020000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 32020000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 38020000, 12104030, 1);
     if (EventFlag(12101301) && EventFlag(12101302)) {
         SetEventFlag(12101300, ON);
     }
@@ -2030,23 +2052,23 @@ $Event(12101310, Default, function() {
     EndIf(ThisEvent());
     SetEventFlag(12101410, ON);
     WaitFor(ThisEvent());
-    EventValueOperation(12104010, 1, 1, 0, 1, CalculationType.Assign);
-    DirectlyGivePlayerItem(ItemType.Weapon, 15000000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 35000000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 14100000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 34000000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 18100000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 33000000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 20000000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 19100000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 6100000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 36000000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 14200000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 18000000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 20100000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 19000000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 6000000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Weapon, 14000000, 12104010, 1);
+    EventValueOperation(12104030, 1, 1, 0, 1, CalculationType.Assign);
+    DirectlyGivePlayerItem(ItemType.Weapon, 15000000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 35000000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 14100000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 34000000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 18100000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 33000000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 20000000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 19100000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 6100000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 36000000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 14200000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 18000000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 20100000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 19000000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 6000000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Weapon, 14000000, 12104030, 1);
     SetEventFlag(12101410, OFF);
 });
 
@@ -2055,19 +2077,19 @@ $Event(12101320, Default, function() {
     EndIf(ThisEvent());
     SetEventFlag(12101420, ON);
     WaitFor(ThisEvent());
-    EventValueOperation(12104010, 1, 1, 0, 1, CalculationType.Assign);
-    DirectlyGivePlayerItem(ItemType.Goods, 2010, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 2130, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 2000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 2020, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 2120, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 2050, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 1310, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 2080, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 2140, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 2110, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 2060, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 2070, 12104010, 1);
+    EventValueOperation(12104030, 1, 1, 0, 1, CalculationType.Assign);
+    DirectlyGivePlayerItem(ItemType.Goods, 2010, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 2130, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 2000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 2020, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 2120, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 2050, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 1310, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 2080, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 2140, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 2110, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 2060, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 2070, 12104030, 1);
     SetEventFlag(12101420, OFF);
 });
 
@@ -2088,43 +2110,43 @@ $Event(12101331, Default, function() {
     EndIf(ThisEvent());
     SetEventFlag(12101431, ON);
     WaitFor(ThisEvent());
-    EventValueOperation(12104010, 1, 1, 0, 1, CalculationType.Assign);
-    DirectlyGivePlayerItem(ItemType.Armor, 180000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 110000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 230000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 20000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 120000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 60000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 40000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 390000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 330000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 100000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 250000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 220000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 430000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 130000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 200000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 150000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 30000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 10000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 340000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 50000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 70000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 270000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 80000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 210000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 370000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 260000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 190000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 350000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 360000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 380000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 320000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 140000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 280000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 290000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 400000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 90000, 12104010, 1);
+    EventValueOperation(12104030, 1, 1, 0, 1, CalculationType.Assign);
+    DirectlyGivePlayerItem(ItemType.Armor, 180000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 110000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 230000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 20000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 120000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 60000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 40000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 390000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 330000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 100000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 250000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 220000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 430000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 130000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 200000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 150000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 30000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 10000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 340000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 50000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 70000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 270000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 80000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 210000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 370000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 260000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 190000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 350000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 360000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 380000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 320000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 140000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 280000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 290000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 400000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 90000, 12104030, 1);
     if (EventFlag(12101332) && EventFlag(12101333) && EventFlag(12101334)) {
         SetEventFlag(12101330, ON);
     }
@@ -2136,43 +2158,43 @@ $Event(12101332, Default, function() {
     EndIf(ThisEvent());
     SetEventFlag(12101432, ON);
     WaitFor(ThisEvent());
-    EventValueOperation(12104010, 1, 1, 0, 1, CalculationType.Assign);
-    DirectlyGivePlayerItem(ItemType.Armor, 241000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 391000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 111000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 331000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 41000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 101000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 11000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 121000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 381000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 181000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 361000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 221000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 151000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 231000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 131000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 201000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 31000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 341000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 51000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 281000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 71000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 71000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 401000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 81000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 211000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 371000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 311000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 351000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 191000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 301000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 321000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 141000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 291000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 21000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 61000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 91000, 12104010, 1);
+    EventValueOperation(12104030, 1, 1, 0, 1, CalculationType.Assign);
+    DirectlyGivePlayerItem(ItemType.Armor, 241000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 391000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 111000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 331000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 41000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 101000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 11000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 121000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 381000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 181000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 361000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 221000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 151000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 231000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 131000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 201000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 31000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 341000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 51000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 281000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 71000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 71000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 401000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 81000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 211000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 371000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 311000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 351000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 191000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 301000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 321000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 141000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 291000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 21000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 61000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 91000, 12104030, 1);
     if (EventFlag(12101331) && EventFlag(12101333) && EventFlag(12101334)) {
         SetEventFlag(12101330, ON);
     }
@@ -2184,33 +2206,33 @@ $Event(12101333, Default, function() {
     EndIf(ThisEvent());
     SetEventFlag(12101433, ON);
     WaitFor(ThisEvent());
-    EventValueOperation(12104010, 1, 1, 0, 1, CalculationType.Assign);
-    DirectlyGivePlayerItem(ItemType.Armor, 242000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 392000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 42000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 332000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 102000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 12000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 122000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 182000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 222000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 152000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 132000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 32000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 342000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 52000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 72000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 82000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 212000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 372000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 402000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 352000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 232000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 112000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 142000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 22000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 62000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 382000, 12104010, 1);
+    EventValueOperation(12104030, 1, 1, 0, 1, CalculationType.Assign);
+    DirectlyGivePlayerItem(ItemType.Armor, 242000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 392000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 42000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 332000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 102000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 12000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 122000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 182000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 222000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 152000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 132000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 32000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 342000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 52000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 72000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 82000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 212000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 372000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 402000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 352000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 232000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 112000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 142000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 22000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 62000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 382000, 12104030, 1);
     if (EventFlag(12101331) && EventFlag(12101332) && EventFlag(12101334)) {
         SetEventFlag(12101330, ON);
     }
@@ -2222,38 +2244,38 @@ $Event(12101334, Default, function() {
     EndIf(ThisEvent());
     SetEventFlag(12101434, ON);
     WaitFor(ThisEvent());
-    EventValueOperation(12104010, 1, 1, 0, 1, CalculationType.Assign);
-    DirectlyGivePlayerItem(ItemType.Armor, 313000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 243000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 113000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 393000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 43000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 333000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 103000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 13000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 123000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 383000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 183000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 363000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 223000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 153000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 233000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 133000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 203000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 33000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 343000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 53000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 73000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 83000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 213000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 373000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 353000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 193000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 143000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 403000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 293000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 23000, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Armor, 63000, 12104010, 1);
+    EventValueOperation(12104030, 1, 1, 0, 1, CalculationType.Assign);
+    DirectlyGivePlayerItem(ItemType.Armor, 313000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 243000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 113000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 393000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 43000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 333000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 103000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 13000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 123000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 383000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 183000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 363000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 223000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 153000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 233000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 133000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 203000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 33000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 343000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 53000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 73000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 83000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 213000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 373000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 353000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 193000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 143000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 403000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 293000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 23000, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Armor, 63000, 12104030, 1);
     if (EventFlag(12101331) && EventFlag(12101332) && EventFlag(12101333)) {
         SetEventFlag(12101330, ON);
     }
@@ -2265,32 +2287,32 @@ $Event(12101340, Default, function() {
     EndIf(ThisEvent());
     SetEventFlag(12101440, ON);
     WaitFor(ThisEvent());
-    EventValueOperation(12104010, 1, 1, 0, 1, CalculationType.Assign);
-    DirectlyGivePlayerItem(ItemType.Goods, 6100, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 6109, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 6200, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 6209, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 6210, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 6219, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 6300, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 6302, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 6309, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 6310, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 6312, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 6319, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 6401, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 6409, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 6420, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 6429, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 6500, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 6502, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 6509, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 6520, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 6522, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 6529, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 6530, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 6532, 12104010, 1);
-    DirectlyGivePlayerItem(ItemType.Goods, 6539, 12104010, 1);
+    EventValueOperation(12104030, 1, 1, 0, 1, CalculationType.Assign);
+    DirectlyGivePlayerItem(ItemType.Goods, 6100, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6109, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6200, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6209, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6210, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6219, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6300, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6302, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6309, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6310, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6312, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6319, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6401, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6409, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6420, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6429, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6500, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6502, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6509, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6520, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6522, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6529, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6530, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6532, 12104030, 1);
+    DirectlyGivePlayerItem(ItemType.Goods, 6539, 12104030, 1);
     SetEventFlag(12101440, OFF);
 });
 
@@ -2299,25 +2321,25 @@ $Event(12101360, Default, function() {
     SetEventFlag(12101360, ON);
     WaitFor(!ThisEvent());
     
-    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    EventValueOperation(12104030, 8, 99, 0, 1, CalculationType.Assign);
     StoreItemAmountHeldInEventValue(ItemType.Goods, 3000, 12104020, 8);
-    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
-    DirectlyGivePlayerItem(ItemType.Goods, 3000, 12104010, 8);
+    EventValueOperation(12104030, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 3000, 12104030, 8);
     
-    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    EventValueOperation(12104030, 8, 99, 0, 1, CalculationType.Assign);
     StoreItemAmountHeldInEventValue(ItemType.Goods, 3010, 12104020, 8);
-    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
-    DirectlyGivePlayerItem(ItemType.Goods, 3010, 12104010, 8);
+    EventValueOperation(12104030, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 3010, 12104030, 8);
     
-    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    EventValueOperation(12104030, 8, 99, 0, 1, CalculationType.Assign);
     StoreItemAmountHeldInEventValue(ItemType.Goods, 3020, 12104020, 8);
-    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
-    DirectlyGivePlayerItem(ItemType.Goods, 3020, 12104010, 8);
+    EventValueOperation(12104030, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 3020, 12104030, 8);
     
-    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    EventValueOperation(12104030, 8, 99, 0, 1, CalculationType.Assign);
     StoreItemAmountHeldInEventValue(ItemType.Goods, 3030, 12104020, 8);
-    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
-    DirectlyGivePlayerItem(ItemType.Goods, 3030, 12104010, 8);
+    EventValueOperation(12104030, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 3030, 12104030, 8);
     
     RestartEvent();
 });
@@ -2327,120 +2349,120 @@ $Event(12101361, Default, function() {
     SetEventFlag(12101361, ON);
     WaitFor(!ThisEvent());
     
-    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    EventValueOperation(12104030, 8, 99, 0, 1, CalculationType.Assign);
     StoreItemAmountHeldInEventValue(ItemType.Goods, 7000, 12104020, 8);
-    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
-    DirectlyGivePlayerItem(ItemType.Goods, 7000, 12104010, 8);
+    EventValueOperation(12104030, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7000, 12104030, 8);
     
-    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    EventValueOperation(12104030, 8, 99, 0, 1, CalculationType.Assign);
     StoreItemAmountHeldInEventValue(ItemType.Goods, 7001, 12104020, 8);
-    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
-    DirectlyGivePlayerItem(ItemType.Goods, 7001, 12104010, 8);
+    EventValueOperation(12104030, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7001, 12104030, 8);
     
-    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    EventValueOperation(12104030, 8, 99, 0, 1, CalculationType.Assign);
     StoreItemAmountHeldInEventValue(ItemType.Goods, 7002, 12104020, 8);
-    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
-    DirectlyGivePlayerItem(ItemType.Goods, 7002, 12104010, 8);
+    EventValueOperation(12104030, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7002, 12104030, 8);
     
-    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    EventValueOperation(12104030, 8, 99, 0, 1, CalculationType.Assign);
     StoreItemAmountHeldInEventValue(ItemType.Goods, 7003, 12104020, 8);
-    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
-    DirectlyGivePlayerItem(ItemType.Goods, 7003, 12104010, 8);
+    EventValueOperation(12104030, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7003, 12104030, 8);
     
-    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    EventValueOperation(12104030, 8, 99, 0, 1, CalculationType.Assign);
     StoreItemAmountHeldInEventValue(ItemType.Goods, 7004, 12104020, 8);
-    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
-    DirectlyGivePlayerItem(ItemType.Goods, 7004, 12104010, 8);
+    EventValueOperation(12104030, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7004, 12104030, 8);
     
-    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    EventValueOperation(12104030, 8, 99, 0, 1, CalculationType.Assign);
     StoreItemAmountHeldInEventValue(ItemType.Goods, 7012, 12104020, 8);
-    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
-    DirectlyGivePlayerItem(ItemType.Goods, 7012, 12104010, 8);
+    EventValueOperation(12104030, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7012, 12104030, 8);
     
-    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    EventValueOperation(12104030, 8, 99, 0, 1, CalculationType.Assign);
     StoreItemAmountHeldInEventValue(ItemType.Goods, 7013, 12104020, 8);
-    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
-    DirectlyGivePlayerItem(ItemType.Goods, 7013, 12104010, 8);
+    EventValueOperation(12104030, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7013, 12104030, 8);
     
-    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    EventValueOperation(12104030, 8, 99, 0, 1, CalculationType.Assign);
     StoreItemAmountHeldInEventValue(ItemType.Goods, 7014, 12104020, 8);
-    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
-    DirectlyGivePlayerItem(ItemType.Goods, 7014, 12104010, 8);
+    EventValueOperation(12104030, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7014, 12104030, 8);
     
-    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    EventValueOperation(12104030, 8, 99, 0, 1, CalculationType.Assign);
     StoreItemAmountHeldInEventValue(ItemType.Goods, 7020, 12104020, 8);
-    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
-    DirectlyGivePlayerItem(ItemType.Goods, 7020, 12104010, 8);
+    EventValueOperation(12104030, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7020, 12104030, 8);
     
-    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    EventValueOperation(12104030, 8, 99, 0, 1, CalculationType.Assign);
     StoreItemAmountHeldInEventValue(ItemType.Goods, 7021, 12104020, 8);
-    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
-    DirectlyGivePlayerItem(ItemType.Goods, 7021, 12104010, 8);
+    EventValueOperation(12104030, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7021, 12104030, 8);
     
-    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    EventValueOperation(12104030, 8, 99, 0, 1, CalculationType.Assign);
     StoreItemAmountHeldInEventValue(ItemType.Goods, 7022, 12104020, 8);
-    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
-    DirectlyGivePlayerItem(ItemType.Goods, 7022, 12104010, 8);
+    EventValueOperation(12104030, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7022, 12104030, 8);
     
-    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    EventValueOperation(12104030, 8, 99, 0, 1, CalculationType.Assign);
     StoreItemAmountHeldInEventValue(ItemType.Goods, 7023, 12104020, 8);
-    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
-    DirectlyGivePlayerItem(ItemType.Goods, 7023, 12104010, 8);
+    EventValueOperation(12104030, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7023, 12104030, 8);
     
-    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    EventValueOperation(12104030, 8, 99, 0, 1, CalculationType.Assign);
     StoreItemAmountHeldInEventValue(ItemType.Goods, 7024, 12104020, 8);
-    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
-    DirectlyGivePlayerItem(ItemType.Goods, 7024, 12104010, 8);
+    EventValueOperation(12104030, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7024, 12104030, 8);
     
-    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    EventValueOperation(12104030, 8, 99, 0, 1, CalculationType.Assign);
     StoreItemAmountHeldInEventValue(ItemType.Goods, 7050, 12104020, 8);
-    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
-    DirectlyGivePlayerItem(ItemType.Goods, 7050, 12104010, 8);
+    EventValueOperation(12104030, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7050, 12104030, 8);
     
-    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    EventValueOperation(12104030, 8, 99, 0, 1, CalculationType.Assign);
     StoreItemAmountHeldInEventValue(ItemType.Goods, 7100, 12104020, 8);
-    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
-    DirectlyGivePlayerItem(ItemType.Goods, 7100, 12104010, 8);
+    EventValueOperation(12104030, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7100, 12104030, 8);
     
-    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    EventValueOperation(12104030, 8, 99, 0, 1, CalculationType.Assign);
     StoreItemAmountHeldInEventValue(ItemType.Goods, 7110, 12104020, 8);
-    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
-    DirectlyGivePlayerItem(ItemType.Goods, 7110, 12104010, 8);
+    EventValueOperation(12104030, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7110, 12104030, 8);
     
-    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    EventValueOperation(12104030, 8, 99, 0, 1, CalculationType.Assign);
     StoreItemAmountHeldInEventValue(ItemType.Goods, 7120, 12104020, 8);
-    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
-    DirectlyGivePlayerItem(ItemType.Goods, 7120, 12104010, 8);
+    EventValueOperation(12104030, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7120, 12104030, 8);
     
-    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    EventValueOperation(12104030, 8, 99, 0, 1, CalculationType.Assign);
     StoreItemAmountHeldInEventValue(ItemType.Goods, 7121, 12104020, 8);
-    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
-    DirectlyGivePlayerItem(ItemType.Goods, 7121, 12104010, 8);
+    EventValueOperation(12104030, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7121, 12104030, 8);
     
-    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    EventValueOperation(12104030, 8, 99, 0, 1, CalculationType.Assign);
     StoreItemAmountHeldInEventValue(ItemType.Goods, 7130, 12104020, 8);
-    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
-    DirectlyGivePlayerItem(ItemType.Goods, 7130, 12104010, 8);
+    EventValueOperation(12104030, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7130, 12104030, 8);
     
-    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    EventValueOperation(12104030, 8, 99, 0, 1, CalculationType.Assign);
     StoreItemAmountHeldInEventValue(ItemType.Goods, 7131, 12104020, 8);
-    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
-    DirectlyGivePlayerItem(ItemType.Goods, 7131, 12104010, 8);
+    EventValueOperation(12104030, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7131, 12104030, 8);
     
-    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    EventValueOperation(12104030, 8, 99, 0, 1, CalculationType.Assign);
     StoreItemAmountHeldInEventValue(ItemType.Goods, 7140, 12104020, 8);
-    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
-    DirectlyGivePlayerItem(ItemType.Goods, 7140, 12104010, 8);
+    EventValueOperation(12104030, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7140, 12104030, 8);
     
-    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    EventValueOperation(12104030, 8, 99, 0, 1, CalculationType.Assign);
     StoreItemAmountHeldInEventValue(ItemType.Goods, 7150, 12104020, 8);
-    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
-    DirectlyGivePlayerItem(ItemType.Goods, 7150, 12104010, 8);
+    EventValueOperation(12104030, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7150, 12104030, 8);
     
-    EventValueOperation(12104010, 8, 99, 0, 1, CalculationType.Assign);
+    EventValueOperation(12104030, 8, 99, 0, 1, CalculationType.Assign);
     StoreItemAmountHeldInEventValue(ItemType.Goods, 7200, 12104020, 8);
-    EventValueOperation(12104010, 8, 0, 12104020, 8, CalculationType.Sub);
-    DirectlyGivePlayerItem(ItemType.Goods, 7200, 12104010, 8);
+    EventValueOperation(12104030, 8, 0, 12104020, 8, CalculationType.Sub);
+    DirectlyGivePlayerItem(ItemType.Goods, 7200, 12104030, 8);
     
     RestartEvent();
 });
@@ -2790,18 +2812,18 @@ L0:
 });
 
 // Headstone warp function
-$Event(12107000, Default, function(eventFlagId, entityId, entityId2) {
+$Event(12107000, Default, function(lampWarpFlag, lampObjectId, lampSpawnPoint) {
     EndIf(HasMultiplayerState(MultiplayerState.Client));
-    WaitFor(EventFlag(eventFlagId));
+    WaitFor(EventFlag(lampWarpFlag));
     if (EventFlag(12100761)) {
         SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, 140);
     } else {
-        RotateCharacter(10000, entityId, 101164, false);
+        RotateCharacter(10000, lampObjectId, 101164, false);
         WaitFixedTimeSeconds(2);
     }
     $InitializeEvent(0, 10008600);
     WaitFixedTimeSeconds(2);
-    SetPlayerRespawnPoint(entityId2);
+    SetPlayerRespawnPoint(lampSpawnPoint);
     SetSpEffect(10000, 2101, false);
 });
 
@@ -2809,14 +2831,15 @@ $Event(12107000, Default, function(eventFlagId, entityId, entityId2) {
 $Event(12107100, Default, function(eventFlagId, entityId, eventFlagId2) {
     EndIf(HasMultiplayerState(MultiplayerState.Client));
     WaitFor(EventFlag(eventFlagId));
+    SetEventFlag(10001510, OFF);
     if (EventFlag(12100761)) {
         SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, 140);
     } else {
         RotateCharacter(10000, entityId, 101164, false);
         WaitFixedTimeSeconds(2);
     }
-    WaitFixedTimeSeconds(2);
     $InitializeEvent(0, 10008600);
+    WaitFixedTimeSeconds(2);
     SetEventFlag(9020, OFF);
     SetEventFlag(9021, OFF);
     SetEventFlag(9022, OFF);
@@ -5374,12 +5397,17 @@ $Event(12901728, Default, function(eventFlagId, objEntityId) {
         EndEvent();
     }
 L0:
-    WaitFor(EventFlag(eventFlagId) && EventFlag(92905360) && !EventFlag(12907220));
-    WaitFixedTimeSeconds(3);
+    WaitFor(EventFlag(eventFlagId) && (EventFlag(92905360) || EventFlag(14000893)) && !EventFlag(12907220));
+    if (!EventFlag(14000893)) {
+        WaitFixedTimeSeconds(3);
+    }
 L0:
     ForceAnimationPlayback(objEntityId, 0, false, true, false);
     SetEventFlag(12907220, ON);
     DeactivateObject(objEntityId, Disabled);
+    if (!EventFlag(92905360)) {
+        DisplayMessage(200337, 0);
+    }
 });
 
 // Boss reward_defeat item_undercard
@@ -6816,15 +6844,19 @@ $Event(12904863, Default, function(chrEntityId, chrEntityId2, chrEntityId3, area
     DisplayBossHealthBar(Enabled, chrEntityId3, 0, nameId);
     CreatePlaylog(1260);
     if (eventFlagId2 == 12901800) {
+        $InitializeEvent(0, 14001030, 12901800);
         StartTimeMeasurement(2900010, 1316, Enabled);
     }
     if (eventFlagId2 == 12901801) {
+        $InitializeEvent(0, 14001030, 12901801);
         StartTimeMeasurement(2900011, 1352, Enabled);
     }
     if (eventFlagId2 == 12901802) {
+        $InitializeEvent(0, 14001030, 12901802);
         StartTimeMeasurement(2900012, 1388, Enabled);
     }
     if (eventFlagId2 == 12901803) {
+        $InitializeEvent(0, 14001030, 12901803);
         StartTimeMeasurement(2900013, 1424, Enabled);
     }
     SetEventFlag(eventFlagId, ON);
@@ -7033,15 +7065,19 @@ $Event(12904877, Default, function(chrEntityId, areaEntityId, entityId, chrEntit
     WaitFor(InArea(10000, areaEntityId));
     CreatePlaylog(1260);
     if (eventFlagId2 == 12901800) {
+        $InitializeEvent(0, 14001030, 12901800);
         StartTimeMeasurement(2900010, 1316, Enabled);
     }
     if (eventFlagId2 == 12901801) {
+        $InitializeEvent(0, 14001030, 12901801);
         StartTimeMeasurement(2900011, 1352, Enabled);
     }
     if (eventFlagId2 == 12901802) {
+        $InitializeEvent(0, 14001030, 12901802);
         StartTimeMeasurement(2900012, 1388, Enabled);
     }
     if (eventFlagId2 == 12901803) {
+        $InitializeEvent(0, 14001030, 12901803);
         StartTimeMeasurement(2900013, 1424, Enabled);
     }
     if (!EventFlag(eventFlagId)) {
@@ -7126,15 +7162,19 @@ $Event(12904881, Default, function(chrEntityId, areaEntityId, entityId, nameId, 
     WaitFor(InArea(10000, areaEntityId));
     CreatePlaylog(1260);
     if (eventFlagId2 == 12901800) {
+        $InitializeEvent(0, 14001030, 12901800);
         StartTimeMeasurement(2900010, 1316, Enabled);
     }
     if (eventFlagId2 == 12901801) {
+        $InitializeEvent(0, 14001030, 12901801);
         StartTimeMeasurement(2900011, 1352, Enabled);
     }
     if (eventFlagId2 == 12901802) {
+        $InitializeEvent(0, 14001030, 12901802);
         StartTimeMeasurement(2900012, 1388, Enabled);
     }
     if (eventFlagId2 == 12901803) {
+        $InitializeEvent(0, 14001030, 12901803);
         StartTimeMeasurement(2900013, 1424, Enabled);
     }
     if (!EventFlag(eventFlagId)) {
@@ -10784,15 +10824,19 @@ L4:
     SetEventFlag(eventFlagId3, ON);
     CreatePlaylog(1260);
     if (eventFlagId == 12901800) {
+        $InitializeEvent(0, 14001030, 12901800);
         StartTimeMeasurement(2900010, 1316, Enabled);
     }
     if (eventFlagId == 12901801) {
+        $InitializeEvent(0, 14001030, 12901801);
         StartTimeMeasurement(2900011, 1352, Enabled);
     }
     if (eventFlagId == 12901802) {
+        $InitializeEvent(0, 14001030, 12901802);
         StartTimeMeasurement(2900012, 1388, Enabled);
     }
     if (eventFlagId == 12901803) {
+        $InitializeEvent(0, 14001030, 129018033);
         StartTimeMeasurement(2900013, 1424, Enabled);
     }
 });
@@ -10900,15 +10944,19 @@ L4:
     SetEventFlag(eventFlagId3, ON);
     CreatePlaylog(1260);
     if (eventFlagId == 12901800) {
+        $InitializeEvent(0, 14001030, 12901800);
         StartTimeMeasurement(2900010, 1316, Enabled);
     }
     if (eventFlagId == 12901801) {
+        $InitializeEvent(0, 14001030, 12901801);
         StartTimeMeasurement(2900011, 1352, Enabled);
     }
     if (eventFlagId == 12901802) {
+        $InitializeEvent(0, 14001030, 12901802);
         StartTimeMeasurement(2900012, 1388, Enabled);
     }
     if (eventFlagId == 12901803) {
+        $InitializeEvent(0, 14001030, 12901803);
         StartTimeMeasurement(2900013, 1424, Enabled);
     }
 });
@@ -11001,6 +11049,16 @@ L0:
     RestartEvent();
 });
 
+// boss death watcher
+$Event(14001030, Default, function(bossDefeatFlag) {
+    SetEventFlag(10001060, OFF);
+    EndIf(!EventFlag(12100893) || CharacterHasSpEffect(10000, 1990));
+    WaitFor(HPRatio(10000) <= 0 || EventFlag(bossDefeatFlag));
+    if (!EventFlag(bossDefeatFlag)) {
+        SetEventFlag(10001060, ON);
+    }
+});
+
 // Begin boss battle
 $Event(12906806, Default, function(X0_4, X4_4, X8_4, X12_4, X16_4, X20_1) {
     EndIf(EventFlag(X8_4));
@@ -11047,15 +11105,19 @@ L4:
     SetEventFlag(X16_4, ON);
     CreatePlaylog(1260);
     if (X8_4 == 12901800) {
+        $InitializeEvent(0, 14001030, 12901800);
         StartTimeMeasurement(2900010, 1316, Enabled);
     }
     if (X8_4 == 12901801) {
+        $InitializeEvent(0, 14001030, 12901801);
         StartTimeMeasurement(2900011, 1352, Enabled);
     }
     if (X8_4 == 12901802) {
+        $InitializeEvent(0, 14001030, 12901802);
         StartTimeMeasurement(2900012, 1388, Enabled);
     }
     if (X8_4 == 12901803) {
+        $InitializeEvent(0, 14001030, 12901803);
         StartTimeMeasurement(2900013, 1424, Enabled);
     }
 });
@@ -13168,4 +13230,21 @@ L4:
     WaitFor(EventFlag(12103903));
     WaitFixedTimeFrames(1);
     RestartEvent();
+});
+
+// rematch ghost token rewards
+$Event(10001020, Default, function(guaranteed) {
+    EndIf(!EventFlag(14000890));
+    if (guaranteed == 1) {
+        AwardItemLot(17040); // guaranteed ghost token
+    }
+    if (EventValue(10001021, 2) == 3) {
+        AwardItemLot(17050); // 75% ghost token
+    }
+    else if (EventValue(10001021, 2) == 2) {
+        AwardItemLot(17050); // 50% ghost token
+    }
+    else if (EventValue(10001021, 2) == 1) {
+        AwardItemLot(17050); // 25% ghost token
+    }
 });

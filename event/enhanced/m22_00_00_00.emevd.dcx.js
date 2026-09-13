@@ -80,9 +80,9 @@ $Event(0, Default, function() {
         }
         else {
             $InitializeEvent(witches_lamp_offset, 10008300, witches_lamp_id+2000, 10000999, witches_lamp_kindle, witches_lamp_id+6000, witches_lamp_id+3000);
-            DummyPlayCutsceneAndWarpPlayer(witches_lamp_id+4000, area_id, block_id);
         }
     } else if (EventFlag(witches_rematch_started) || EventFlag(witches_auto_rematch)) {
+        ForceAnimationPlayback(10000, 101201, false, false, false);
         SetSpEffect(10000, 1990, false);
         SetEventFlag(witches_defeat, OFF);
         SetEventFlag(witches_defeat+2, OFF);
@@ -100,8 +100,8 @@ $Event(0, Default, function() {
     
     $InitializeEvent(witches_offset, 12102070, witches_rematch_cleanup, 0, 7418, witches_id1, witches_id2, -1, -1, -1);
     
-    $InitializeEvent(witches_offset, 10008900, witches_auto_rematch, witches_lamp_spawn_point, 0, 0, witches_rematch_start_region, area_id, block_id);
-    $InitializeEvent(witches_offset, 10007700, witches_rematch_triggered, witches_rematch_started, witches_lamp_spawn_point, 822000);
+    $InitializeEvent(witches_offset, 10008900, witches_auto_rematch, witches_lamp_spawn_point, 0, 0);
+    $InitializeEvent(witches_offset, 10007700, witches_rematch_triggered, witches_rematch_started, witches_rematch_start_region, 822000);
     
     $InitializeEvent(1200, 12107000, 72111200, 2201950, 2412950);
     $InitializeEvent(1201, 12107000, 72111201, 2201950, 2412951);
@@ -362,7 +362,7 @@ $Event(0, Default, function() {
     $InitializeEvent(0, 10000100, 2203960, 2203961, 12207810, -1);
     $InitializeEvent(0, 7000, 2200950, 2201950, 999, 12207800, -1);
     
-    $InitializeEvent(1, 10000100, 2413962, 2413963, 12207830, witches_defeat);
+    $InitializeEvent(1, 10000100, 2203962, 2203963, 12207830, witches_defeat);
     $InitializeEvent(1, 7000, 2200951, 2201951, 12201800, 12207820, witches_defeat+13);
     $InitializeEvent(witches_offset, 10008800, witches_defeat+13, witches_lamp_id-1000, witches_lamp_id, witches_lamp_id+3000);
     
@@ -2314,6 +2314,7 @@ $Event(12204460, Restart, function(chrEntityId, areaEntityId, entityId, areaEnti
 
 // heal npcs
 $Event(12204470, Default, function() {
+    WaitFor(EventFlag(12100894));
     WaitFor(CharacterHasSpEffect(10000, 3010));
     SetSpEffect(2200910, 3012, false);
     WaitFixedTimeFrames(1);

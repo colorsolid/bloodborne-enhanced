@@ -75,6 +75,7 @@ $Event(0, Default, function() {
     for (let i = 0; i < 10; i++) {
         $InitializeEvent(ghostsBaseFlag+i, 10003500, ghostsBaseId+i);
     }
+    $InitializeEvent(9, 10003500, ghostsBaseId+10); // hunter's dream slot
     
     $InitializeEvent(cathedral_ward_lamp_offset, 10008500, cathedral_ward_lamp_id, 72110404);
     $InitializeEvent(amelia_lamp_offset, 10008500, amelia_lamp_id, 72110505);
@@ -85,6 +86,13 @@ $Event(0, Default, function() {
     $InitializeEvent(0, 10007900, amelia_return_flag, amelia_return, area_id, block_id);
     
     SetEventFlag(amelia_auto_rematch_check, OFF);
+    SetEventFlag(10007799, OFF);
+    SetEventFlag(amelia_defeat+15, OFF);
+    if (EventFlag(amelia_defeat+14)) {
+        SetEventFlag(10007799, ON);
+        SetEventFlag(amelia_defeat+14, OFF);
+        SetEventFlag(amelia_defeat+15, ON);
+    }
     $InitializeEvent(cathedral_ward_lamp_offset, 10008300, cathedral_ward_lamp_spawn_checker, -1, cathedral_ward_lamp_kindle_state, cathedral_warp_lamp_hidden_region, cathedral_warp_lamp_temp_region);
     
     if (EventFlag(amelia_rematch_played) && !EventFlag(amelia_auto_rematch_trigger)) {
@@ -99,6 +107,7 @@ $Event(0, Default, function() {
             DummyPlayCutsceneAndWarpPlayer(amelia_lamp_spawn_region, area_id, block_id);
         }
     } else if (EventFlag(amelia_rematch_started) || EventFlag(amelia_auto_rematch_trigger)) {
+        ForceAnimationPlayback(10000, 101201, false, false, false);
         SetSpEffect(10000, 1990, false);
         SetEventFlag(amelia_defeat, OFF);
         SetEventFlag(amelia_encountered, OFF);
@@ -111,12 +120,12 @@ $Event(0, Default, function() {
         $InitializeEvent(amelia_lamp_offset, 10008300, amelia_lamp_spawn_checker, -1, amelia_lamp_kindle_state, amelia_lamp_hidden_region, amelia_lamp_temp_region);
     }
     
-    $InitializeEvent(amelia_offset, 10001030, 12402802, amelia_defeat);
+    $InitializeEvent(amelia_offset, 10001030, 12404802, amelia_defeat);
     
     $InitializeEvent(amelia_offset, 12102070, amelia_rematch_played, 0, 7417, amelia_id, -1, -1, -1, -1);
     
-    $InitializeEvent(amelia_offset, 10008900, amelia_auto_rematch_trigger, amelia_lamp_object, 0, 0, amelia_rematch_spawn_region, area_id, block_id);
-    $InitializeEvent(amelia_offset, 10007700, amelia_rematch_triggered, amelia_rematch_started, amelia_lamp_object, 824000);
+    $InitializeEvent(amelia_offset, 10008900, amelia_auto_rematch_trigger, amelia_lamp_object, 0, 0);
+    $InitializeEvent(amelia_offset, 10007700, amelia_rematch_triggered, amelia_rematch_started, amelia_rematch_spawn_region, 824000);
     
     $InitializeEvent(400, 12107000, 72110400, 2401950, 2412950);
     $InitializeEvent(401, 12107000, 72110401, 2401950, 2412951);
@@ -787,6 +796,7 @@ $Event(0, Default, function() {
     $InitializeEvent(6, 12400630, 2400772);
     $InitializeEvent(7, 12400630, 2400774);
     $InitializeEvent(8, 12400630, 2400700);
+    $InitializeEvent(0, 12400640);
     $InitializeEvent(0, 12400501);
     InitializeEvent(0, 12400504, 0);
     $InitializeEvent(0, 12400507);
@@ -3887,11 +3897,25 @@ L0:
 
 // Appearance of Avenger_NPC2
 $Event(12400655, Default, function() {
+    if (EventFlag(amelia_rematch_played)) {
+        SetCharacterBackreadState(2400901, true);
+        WaitFor(!EventFlag(amelia_rematch_played));
+    }
     EndIf(ThisEvent());
     SetCharacterBackreadState(2400901, true);
     EndIf(EventFlag(amelia_rematch_played));
     WaitFor(EventFlag(1370));
     SetCharacterBackreadState(2400901, false);
+});
+
+// Distorted rematch NPC
+$Event(12400640, Default, function() {
+    if (!EventFlag(amelia_defeat+15)) {
+        SetCharacterBackreadState(2400909, true);
+        EndEvent();
+    }
+    WaitFor(CharacterDead(2400800));
+    ForceCharacterDeath(2400909, false);
 });
 
 // Revenge_Darkness
@@ -4871,6 +4895,9 @@ $Event(12401802, Default, function() {
     WaitFixedTimeFrames(1);
     SetEventFlag(72400400, ON);
     if (!EventFlag(amelia_rematch_played) || EventFlag(12100866)) {
+        if (EventFlag(amelia_rematch_played) && EventFlag(12100866)) {
+            WaitFixedTimeSeconds(1.5);
+        }
         if (!HasMultiplayerState(MultiplayerState.Multiplayer)) {
             PlayCutsceneToPlayer(24000060, CutscenePlayMode.Skippable, 10000);
         } else {
@@ -4881,8 +4908,10 @@ $Event(12401802, Default, function() {
     DeactivateObject(2400801, Disabled);
     SetEventFlag(9180, OFF);
     ChangeCharacterEnableState(2400800, Enabled);
-    ForceAnimationPlayback(2400800, 7000, false, false, false);
-    ForceAnimationPlayback(2400800, 7001, false, false, false);
+    if (!EventFlag(amelia_rematch_played)) {
+        ForceAnimationPlayback(2400800, 7000, false, false, false);
+        ForceAnimationPlayback(2400800, 7001, false, false, false);
+    }
     SetEventFlag(12404800, ON);
     EndIf(EventFlag(9301));
     $InitializeEvent(0, 9350, 1);
@@ -5026,7 +5055,9 @@ L4:
     }
     SetCharacterAIState(2400800, Enabled);
     DisplayBossHealthBar(Enabled, 2400800, 0, 502000);
-    ForceAnimationPlayback(2400800, 7002, false, false, false);
+    if (!EventFlag(amelia_defeat+15)) {
+        ForceAnimationPlayback(2400800, 7002, false, false, false);
+    }
     CreatePlaylog(160);
     StartTimeMeasurement(2410010, 176, Enabled);
 });
@@ -5083,7 +5114,7 @@ $Event(12404805, Default, function() {
 // Boss Heat Up_Saint Beast
 $Event(12404807, Default, function() {
     EndIf(EventFlag(12401800));
-    WaitFor(HPRatio(2400800) < 0.5);
+    WaitFor(HPRatio(2400800) < 0.5 || EventFlag(amelia_defeat+15));
     RequestCharacterAICommand(2400800, 100, 1);
     RequestCharacterAIReplan(2400800);
     WaitFor(CharacterHasEventMessage(2400800, 100));
@@ -5383,6 +5414,7 @@ $Event(12404460, Restart, function(chrEntityId, areaEntityId, entityId, areaEnti
 
 // heal npcs
 $Event(12404470, Default, function() {
+    WaitFor(EventFlag(12100894));
     WaitFor(CharacterHasSpEffect(10000, 3010));
     SetSpEffect(2400910, 3012, false);
     WaitFixedTimeFrames(1);

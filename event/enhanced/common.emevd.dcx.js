@@ -42,7 +42,7 @@ $Event(0, Default, function() {
     $InitializeEvent(2, 10001010, 2220, 6038); // hands - phantasm
     
     // visual effects
-    $InitializeEvent(0, 12104200, 1800, 2298); // test
+    $InitializeEvent(0, 12104200, 1800, 2299); // test
     
     $InitializeEvent(1, 12104200, 1814, 2813); // sparklers
     $InitializeEvent(2, 12104200, 1815, 2711); // flaming head
@@ -54,6 +54,8 @@ $Event(0, Default, function() {
     $InitializeEvent(8, 12104200, 1821, 2605); // yellow smoke
     $InitializeEvent(9, 12104200, 1822, 2611); // purple smoke
     $InitializeEvent(35, 12104200, 1835, 2613); // black smoke
+    $InitializeEvent(37, 12104200, 1837, 2614); // bugs
+    $InitializeEvent(38, 12104200, 1838, 2713); // red lightning
     
     $InitializeEvent(10, 12104200, 1802, 2302); // made of money
     $InitializeEvent(11, 12104200, 1818, 2322); // binding magic
@@ -192,7 +194,6 @@ $Event(0, Default, function() {
         SetEventFlag(12100750, ON);
         GotoIf(S0, !EventFlag(12100963)); // victory respawn location is set to dream
     }
-    // DisplayBanner(TextBannerType.Dead);
     // SetPlayerRespawnPoint(2102969); // return to broken lamp
     
     // remove insight on auto rematch
@@ -1046,6 +1047,14 @@ $Event(10008400, Default, function() {
         }
     }
     
+    // heal npcs
+    // on: 14000892, off: 14000992
+    if (!EventFlag(14000992)) {
+        if (!EventFlag(14000892)) {
+            SetEventFlag(14000992, ON);
+        }
+    }
+    
     // --------------------------------------------------- \\
     // --------------- D I F F I C U L T Y --------------- //
     // --------------------------------------------------- \\
@@ -1137,6 +1146,14 @@ $Event(10008400, Default, function() {
         }
     }
     
+    // access hidden layers in chalice
+    // on: 14000893, off: 14000993
+    if (!EventFlag(14000993)) {
+        if (!EventFlag(14000893)) {
+            SetEventFlag(14000993, ON);
+        }
+    }
+    
     // random time
     // on: 12100856, off: 12100956
     if (!EventFlag(12100956)) {
@@ -1172,6 +1189,14 @@ $Event(10008400, Default, function() {
     if (!EventFlag(12100955)) {
         if (!EventFlag(12100855)) {
             SetEventFlag(12100855, ON);
+        }
+    }
+    
+    // fadeout
+    // on: 14000891, off: 14000991
+    if (!EventFlag(14000991)) {
+        if (!EventFlag(14000891)) {
+            SetEventFlag(14000891, ON);
         }
     }
     
@@ -2105,10 +2130,16 @@ $Event(12102037, Default, function() {
     SetEventFlag(12102065, OFF);
     RandomlySetEventFlagInRange(12102060, 12102062, ON);
     if (!EventFlag(12102060) || CharacterHasSpEffect(10000, 60000)) {
+        if (CharacterHasSpEffect(10000, 60000)) {
+            DisplayMessage(200326, 0);
+        }
+        WaitFixedTimeSeconds(5);
         ClearSpEffect(10000, 60000);
         WaitFor(RandomElapsedSeconds(300, 900));
         RestartEvent();
     }
+    DisplayMessage(200325, 0);
+    WaitFixedTimeSeconds(5);
     SetSpEffect(10000, 60000, false);
     WaitFor(RandomElapsedSeconds(120, 300));
     SetEventFlag(12102065, ON);
@@ -2985,6 +3016,7 @@ $Event(12107000, Default, function(lampWarpFlag, lampObjectId, lampSpawnPoint) {
 $Event(12107100, Default, function(eventFlagId, entityId, eventFlagId2) {
     EndIf(HasMultiplayerState(MultiplayerState.Client));
     WaitFor(EventFlag(eventFlagId));
+    SetEventFlag(10001510, OFF);
     if (EventFlag(12100761)) {
         SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, 140);
     } else {
@@ -3628,9 +3660,8 @@ $Event(7200, Default, function(eventFlagId, entityId, entityId2) {
         SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, 140);
     }
     $InitializeEvent(0, 10008600);
-    WaitFixedTimeSeconds(2);
+    WaitFixedTimeSeconds(1.9);
     if (EventFlag(9401)) {
-        // WarpPlayerToRespawnPoint(X8_4);
         SetPlayerRespawnPoint(entityId2);
         SetSpEffect(10000, 2101, false);
         EndEvent();
@@ -3664,17 +3695,21 @@ $Event(7600, Default, function(objEntityId, entityId) {
     RestartEvent();
 });
 
-// rematch boss triggered
+// initialize boss rematch
 $Event(10007700, Default, function(rematchTrigger, rematchActive, rematchSpawnPoint, fogSfx) {
     WaitFor(EventFlag(rematchTrigger));
     SetEventFlag(rematchTrigger, OFF);
     SetEventFlag(rematchActive, ON);
     SetSpEffect(10000, 4681, false);
-    RequestCharacterAnimationReset(10000, Interpolation.Interpolated);
-    ForceAnimationPlayback(10000, 101161, false, false, false);
+    if (EventFlag(12100761)) {
+        SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, 140);
+    } else {
+        ForceAnimationPlayback(10000, 101161, false, false, false);
+    }
     SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, fogSfx);
     SpawnOneshotSFX(TargetEntityType.Character, 10000, 240, fogSfx);
-    WaitFixedTimeFrames(59);
+    $InitializeEvent(0, 10008600);
+    WaitFixedTimeSeconds(1.9);
     SetPlayerRespawnPoint(rematchSpawnPoint);
     SetSpEffect(10000, 2101, false);
 });
@@ -3704,7 +3739,6 @@ $Event(10007800, Default, function(postRematchSpawnPoint, fogSfxId, defaultGhost
             $InitializeEvent(0, 10001020, 0); // default chance ghost reward
         }
     }
-    RequestCharacterAnimationReset(10000, Interpolation.Interpolated);
     ForceAnimationPlayback(10000, 101161, false, false, false);
     
     // 15: super fx
@@ -3714,7 +3748,9 @@ $Event(10007800, Default, function(postRematchSpawnPoint, fogSfxId, defaultGhost
     SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, fogSfxId);
     SpawnOneshotSFX(TargetEntityType.Character, 10000, 240, fogSfxId);
     
-    WaitFixedTimeFrames(59);
+    $InitializeEvent(0, 10008600);
+    
+    WaitFixedTimeSeconds(1.9);
     
     if (EventFlag(12100750) && EventFlag(12100963)) { // rematch started from broken lamp and return to dream enabled
         WarpPlayerToRespawnPoint(2102969);
@@ -3724,20 +3760,52 @@ $Event(10007800, Default, function(postRematchSpawnPoint, fogSfxId, defaultGhost
     }
 });
 
+// hide lamp during rematch
+$Event(10008800, Default, function(rematchActive, lampNpc, lampObject, tempLocation) {
+    WaitFor(EventFlag(rematchActive));
+    ChangeCharacterEnableState(lampNpc, Disabled);
+    DeactivateObject(lampObject, Disabled);
+    WaitFixedTimeFrames(1);
+    CharacterWarpRequest(lampNpc, TargetEntityType.Area, tempLocation, -1);
+});
+
+// Auto restart rematch if dead + move player to rematch point
+$Event(10008900, Default, function(autoRematchFlag, lampSpawnPoint, distortedActive, distortedTrigger) {
+    EndIf(!ThisEventSlot()); // game's state is not in rematch mode
+    SetSpEffect(10000, 1934, false); // retain souls on death
+    WaitFor(HPRatio(10000) <= 0);
+    if (EventFlag(12100864)) { // auto rematch enabled
+        SetEventFlag(autoRematchFlag, ON);
+        if (distortedActive != 0 && EventFlag(distortedActive)) { // if distorted memory
+            SetEventFlag(distortedTrigger, ON);
+        }
+        if (EventFlag(12100750) && EventFlag(12100963)) { // initiated from dream and death respawn location is dream
+            SetEventFlag(12100850, ON); // flag to set respawn location back to dream
+        }
+        SetEventFlag(10008950, ON);
+    // auto rematch disabled
+    } else if (EventFlag(12100859)) { // death respawn location is boss lamp
+        SetPlayerRespawnPoint(lampSpawnPoint);
+    } else if (EventFlag(12100750)) {
+        SetPlayerRespawnPoint(2102969); // respawn at broken lamp
+    }
+});
+
 // return/quick warp to boss
 $Event(10007900, Default, function(warpTrigger, bossEntrancePoint, areaId, blockId) {
-    WaitFor(EventFlag(warpTrigger)); // 12801899
+    WaitFor(EventFlag(warpTrigger));
     SetEventFlag(warpTrigger, OFF);
-    SetEventFlag(10007999, ON);
     WaitFixedTimeFrames(1);
     if (AnyBatchEventFlags(10008500, 10008599)) { // resting
         BatchSetEventFlags(10008500, 10008599, OFF);
-        WaitFixedTimeSeconds(0.5);
+        SetEventFlag(10007999, ON);
+        DummyPlayCutsceneAndWarpPlayer(bossEntrancePoint, areaId, blockId);
     } else { // not resting
         ForceAnimationPlayback(10000, 101167, false, false, false);
         WaitFixedTimeSeconds(3);
+        DummyPlayCutsceneAndWarpPlayer(bossEntrancePoint, areaId, blockId);
+        WaitFixedTimeSeconds(0.5);
     }
-    DummyPlayCutsceneAndWarpPlayer(bossEntrancePoint, areaId, blockId);
     SetCharacterAnimationState(10000, Enabled);
     SetCharacterTeamType(10000, TeamType.Host);
     ActivateHit(10000, Enabled);
@@ -3849,12 +3917,14 @@ $Event(10008300, Default, function(spawnCheckerRegion, bypassChecker, lampKindle
 
 // resting
 $Event(10008500, Default, function(lampId, lampWarpFlag) {
+    if (!EventFlag(10001510)) {
+        BatchSetEventFlags(10008500, 10008599, OFF);
+    }
     SetEventFlag(10001510, OFF);
     WaitFor(ThisEventSlot()); // menu opened, trigger animation
     RotateCharacter(10000, lampId, 101280, false);
     SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, 140);
     SetCharacterAnimationState(10000, Disabled);
-    SetSpEffect(10000, 80000, false);
     SetCharacterTeamType(10000, TeamType.Baby);
     BatchSetEventFlags(10008630, 10008639, OFF); // dismiss summons or they'll tweak
     ActivateHit(10000, Disabled);
@@ -3871,6 +3941,7 @@ $Event(10008500, Default, function(lampId, lampWarpFlag) {
 
 // fade
 $Event(10008600, Default, function() {
+    EndIf(EventFlag(14000991));
     WaitFixedTimeSeconds(1);
     DisplayBanner(TextBannerType.StadiumLoss); // fade out
 });
@@ -4076,7 +4147,8 @@ $Event(10008603, Default, function() {
         if (spawnCond) {
             RequestCharacterAnimationReset(10000, Interpolation.Interpolated);
             ForceAnimationPlayback(10000, 101161, false, false, false);
-            WaitFixedTimeFrames(59);
+            $InitializeEvent(0, 10008600);
+            WaitFixedTimeSeconds(1.9);
             SetPlayerRespawnPoint(spawnPoints[i]);
             SetSpEffect(10000, 2101, false);
         }
@@ -4089,7 +4161,7 @@ $Event(10008604, Default, function() {
     BatchSetEventFlags(10008610, 10008614, OFF);
     WaitFor(EventFlag(10008610));
     ForceAnimationPlayback(10000, 101161, false, false, false);
-    WaitFixedTimeFrames(59);
+    WaitFixedTimeSeconds(1.9);
     if (EventValue(10008611, 4) == 0) {
         SetEventFlag(72100300, ON);
     }
@@ -4125,7 +4197,8 @@ $Event(10008615, Default, function() {
     WaitFor(EventFlag(10008615));
     RequestCharacterAnimationReset(10000, Interpolation.Interpolated);
     ForceAnimationPlayback(10000, 101161, false, false, false);
-    WaitFixedTimeFrames(59);
+    $InitializeEvent(0, 10008600);
+    WaitFixedTimeSeconds(1.9);
     SetSpEffect(10000, 2101, false);
 });
 
@@ -4385,39 +4458,6 @@ $Event(12104200, Default, function(itemId, spEffect) {
     SetSpEffect(10000, spEffect, false);
     WaitFor(!PlayerHasItem(ItemType.Goods, itemId));
     RestartEvent();
-});
-
-// hide lamp during rematch
-$Event(10008800, Default, function(rematchActive, lampNpc, lampObject, tempLocation) {
-    WaitFor(EventFlag(rematchActive));
-    ChangeCharacterEnableState(lampNpc, Disabled);
-    DeactivateObject(lampObject, Disabled);
-    WaitFixedTimeFrames(1);
-    CharacterWarpRequest(lampNpc, TargetEntityType.Area, tempLocation, -1);
-});
-
-// Auto restart rematch if dead + move player to rematch point
-$Event(10008900, Default, function(autoRematchFlag, lampSpawnPoint, distortedActive, distortedTrigger, rematchStartRegion, areaId, blockId) {
-    EndIf(!ThisEventSlot()); // game's state is not in rematch mode
-    SetSpEffect(10000, 1934, false);
-    DummyPlayCutsceneAndWarpPlayer(rematchStartRegion, areaId, blockId);
-    WaitFor(HPRatio(10000) <= 0);
-    if (EventFlag(12100864)) { // auto rematch enabled
-        SetEventFlag(autoRematchFlag, ON);
-        if (distortedActive != 0 && EventFlag(distortedActive)) { // if distorted memory
-            SetEventFlag(distortedTrigger, ON);
-        }
-        if (EventFlag(12100750) && EventFlag(12100963)) { // initiated from dream and death respawn location is dream
-            SetEventFlag(12100850, ON); // flag to set respawn location back to dream
-        }
-        SetPlayerRespawnPoint(lampSpawnPoint);
-        SetEventFlag(10008950, ON);
-    // auto rematch disabled
-    } else if (EventFlag(12100859)) { // death respawn location is boss lamp
-        SetPlayerRespawnPoint(lampSpawnPoint);
-    } else if (EventFlag(12100750)) {
-        SetPlayerRespawnPoint(2102969); // respawn at broken lamp
-    }
 });
 
 // Covenant BJ Unique Effect_XX
@@ -5205,7 +5245,11 @@ L3:
     SetMapSoundState(soundState2, Disabled);
     Goto(L4);
 L4:
-    WaitFor(EventFlag(12103903));
+    WaitFor(
+        EventFlag(12103903) 
+        || EventFlagState(CHANGE, TargetEventFlagType.EventFlag, 12100891)
+        || EventFlagState(CHANGE, TargetEventFlagType.EventFlag, 10000200)
+    );
     WaitFixedTimeFrames(1);
     RestartEvent();
 });
