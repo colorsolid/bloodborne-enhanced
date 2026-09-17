@@ -3804,7 +3804,6 @@ $Event(10007900, Default, function(warpTrigger, bossEntrancePoint, areaId, block
         ForceAnimationPlayback(10000, 101167, false, false, false);
         WaitFixedTimeSeconds(3);
         DummyPlayCutsceneAndWarpPlayer(bossEntrancePoint, areaId, blockId);
-        WaitFixedTimeSeconds(0.5);
     }
     SetCharacterAnimationState(10000, Enabled);
     SetCharacterTeamType(10000, TeamType.Host);

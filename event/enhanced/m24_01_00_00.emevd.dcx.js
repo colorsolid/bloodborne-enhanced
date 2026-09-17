@@ -78,9 +78,8 @@ $Event(0, Default, function() {
     
     //$InitializeEvent(0, 12415090);
     
-    
-    $InitializeEvent(0, 10007901); // gascoigne special quick warp
-    $InitializeEvent(2, 10007900, 10000000+gascoigne_return, gascoigne_return, area_id, block_id);
+    $InitializeEvent(1, 10007900, 10000000+cleric_beast_return, cleric_beast_return, area_id, block_id);
+    $InitializeEvent(0, 10007902); // gascoigne special quick warp
     
     $InitializeEvent(iosefka_lamp_offset, 10008500, iosefka_lamp_id, 72110000);
     $InitializeEvent(central_lamp_offset, 10008500, central_lamp_id, 72110101);
@@ -5617,7 +5616,7 @@ $Event(12415010, Restart, function(entityId, soundType, soundId, timeSeconds) {
 });
 
 // gascoigne special quick warp
-$Event(10007901, Default, function() {
+$Event(10007902, Default, function() {
     const warp_trigger = 10000000+gascoigne_return;
     WaitFor(EventFlag(warp_trigger));
     SetEventFlag(warp_trigger, OFF);

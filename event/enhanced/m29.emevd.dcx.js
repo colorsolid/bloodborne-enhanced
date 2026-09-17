@@ -1664,7 +1664,7 @@ $Event(10008900, Default, function(autoRematchFlag, lampSpawnPoint) {
     }
 });
 
-// return to boss
+// return/quick warp to boss
 $Event(10007900, Default, function(warpTrigger, bossEntrancePoint) {
     WaitFor(EventFlag(warpTrigger));
     SetEventFlag(warpTrigger, OFF);
@@ -1677,7 +1677,6 @@ $Event(10007900, Default, function(warpTrigger, bossEntrancePoint) {
         ForceAnimationPlayback(10000, 101167, false, false, false);
         WaitFixedTimeSeconds(3);
         DummyPlayCutsceneAndWarpPlayer(bossEntrancePoint, area_id, block_id);
-        WaitFixedTimeSeconds(0.5);
     }
     SetCharacterAnimationState(10000, Enabled);
     SetCharacterTeamType(10000, TeamType.Host);
