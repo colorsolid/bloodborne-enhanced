@@ -209,14 +209,14 @@ def t210660_x6():
     while True:
         ClearTalkListData()
         AddTalkListData(1, 200123, 12411800) # gascoignes
-        AddTalkListData(3, 200332, 12411800) # amelia
+        AddTalkListData(3, 200332, 1371) # amelia
         AddTalkListData(5, 200331, 12701800) # shadows
-        AddTalkListData(6, 200333, 12701800) # rom
-        AddTalkListData(7, 200334, 12701800) # logarius
+        AddTalkListData(6, 200333, 13201800) # rom
+        AddTalkListData(7, 200334, 12501800) # logarius
         AddTalkListData(9, 200160, 12601800) # nurses
         AddTalkListData(10, 200159, 12101850) # gherman and moon prescence
         AddTalkListData(12, 200125, 13401800) # ludwigs
-        AddTalkListData(13, 200126, 12411700) # laurences
+        AddTalkListData(13, 200126, 13401850) # laurences
         AddTalkListData(14, 200124, 13601800) # orphans
         ShowShopMessage(0, 0, 0)
         def WhilePaused():

@@ -18,10 +18,23 @@
 
 // debug - 12410819
 
+const lampIds = [
+    2411950, 2411951, 2411952, 2411953, 2401950, 2401951, 2421950, 2421952, 
+    2421951, 2301950, 2301951, 2301952, 2201950, 2201951, 2701950, 2701951, 
+    3201950, 3201952, 2801950, 2801953, 2801951, 2801952, 2501950, 2501952, 
+    2501951, 2111950, 3201951, 3201953, 3301950, 3301951, 2601950, 2601953, 
+    2601952, 2601951, 3401950, 3401951, 3401953, 3401952, 3501950, 3501951, 
+    3501952, 3601950, 3601951, 3601952, 2901950, 2901951, 2901952, 2901953, 
+    2901954, 2901955, 2901956, 2901957, 2901958
+];
+
 // constructor
 $Event(0, Default, function() {
-    BatchSetEventFlags(10008500, 10008599, OFF); // force resting off when awakening
+    //BatchSetEventFlags(10008500, 10008599, OFF); // force resting off when awakening
+    SetEventFlag(10008500, OFF); // force resting off when awakening
     $InitializeEvent(0, 10008890); // test
+    
+    BatchSetEventFlags(10002090, 10002098, OFF);
      
     if (EventFlag(12100892) && EventFlag(9401) && !PlayerInMap(21, 0)) { // temp shop enabled, visited dream, no longer in dream
         BatchSetEventFlags(12101020, 12101021, ON); // remove starting weapon messengers in dream
@@ -32,6 +45,23 @@ $Event(0, Default, function() {
             SetSpEffect(10000, 1991, false);
         }
     }
+    EventValueOperation(14007090, 4, 0, 0, 0, CalculationType.Assign);
+    
+    $InitializeEvent(0, 10008500); // resting
+    $InitializeEvent(0, 14007000); // lamp to non-chalice & chalice to chalice
+    $InitializeEvent(0, 14007001); // non-chalice to chalice
+    $InitializeEvent(0, 14007009); // lamp reawaken
+    
+    $InitializeEvent(0, 12107200, 72100300, 2902950, 9001);
+    $InitializeEvent(1, 12107200, 72100301, 2902951, 9002);
+    $InitializeEvent(2, 12107200, 72100302, 2902952, 9003);
+    $InitializeEvent(3, 12107200, 72100303, 2902953, 9004);
+    $InitializeEvent(4, 12107200, 72100304, 2902954, 9005);
+    $InitializeEvent(5, 12107200, 72100305, 2902955, 9006);
+    $InitializeEvent(6, 12107200, 72100306, 2902956, 9007);
+    $InitializeEvent(7, 12107200, 72100307, 2902957, 9008);
+    $InitializeEvent(8, 12107200, 72100308, 2902958, 9009);
+    $InitializeEvent(9, 12107200, 72100309, 2902959, 9010);
     
     SetEventFlag(10000200, OFF); // lamp music interrupt flag
     
@@ -308,6 +338,8 @@ S1:
     $InitializeEvent(19, 5500, 25020000);
     $InitializeEvent(20, 5500, 38010000);
     $InitializeEvent(21, 5500, 38020000);
+    
+    // gems / runes
     $InitializeEvent(0, 9500, 3400, 100000);
     $InitializeEvent(1, 9500, 3401, 100010);
     $InitializeEvent(2, 9500, 3402, 100020);
@@ -359,7 +391,6 @@ S1:
     $InitializeEvent(48, 9500, 3482, 101320);
     $InitializeEvent(49, 9500, 3483, 101330);
     $InitializeEvent(50, 9500, 3484, 101340);
-    
     $InitializeEvent(51, 9500, 3413, 110750);
     $InitializeEvent(52, 9500, 3444, 110390);
     $InitializeEvent(53, 9500, 3445, 110400);
@@ -426,6 +457,8 @@ S1:
     $InitializeEvent(114, 9500, 3532, 110170);
     $InitializeEvent(115, 9500, 3533, 17050);
     $InitializeEvent(116, 9500, 3534, 125700031);
+    $InitializeEvent(117, 9500, 3535, 110751);
+    
     $InitializeEvent(0, 9440, 9440, 10500);
     $InitializeEvent(1, 9440, 9441, 11500);
     $InitializeEvent(2, 9440, 9442, 12500);
@@ -799,6 +832,14 @@ $Event(10008400, Default, function() {
     if (!EventFlag(12100951)) {
         if (!EventFlag(12100851)) {
             SetEventFlag(12100851, ON);
+        }
+    }
+    
+    // kindling color
+    // on: 14000894, off: 14000994
+    if (!EventFlag(14000994)) {
+        if (!EventFlag(14000894)) {
+            SetEventFlag(14000894, ON);
         }
     }
     
@@ -2996,47 +3037,6 @@ $Event(12105070, Restart, function(eventFlagId, eventFlagId2, bitNumber) {
     RestartEvent();
 });
 
-// Headstone warp function (warp to a lamp)
-$Event(12107000, Default, function(lampWarpFlag, lampObjectId, lampSpawnPoint) {
-    EndIf(HasMultiplayerState(MultiplayerState.Client));
-    WaitFor(EventFlag(lampWarpFlag));
-    if (EventFlag(12100761)) {
-        SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, 140);
-    } else {
-        RotateCharacter(10000, lampObjectId, 101164, false);
-        WaitFixedTimeSeconds(2);
-    }
-    $InitializeEvent(0, 10008600);
-    WaitFixedTimeSeconds(2);
-    SetPlayerRespawnPoint(lampSpawnPoint);
-    SetSpEffect(10000, 2101, false);
-});
-
-// Warp OBJ_Warp to Dungeon_First Half_XX
-$Event(12107100, Default, function(eventFlagId, entityId, eventFlagId2) {
-    EndIf(HasMultiplayerState(MultiplayerState.Client));
-    WaitFor(EventFlag(eventFlagId));
-    SetEventFlag(10001510, OFF);
-    if (EventFlag(12100761)) {
-        SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, 140);
-    } else {
-        RotateCharacter(10000, entityId, 101164, false);
-        WaitFixedTimeSeconds(2);
-    }
-    $InitializeEvent(0, 10008600);
-    WaitFixedTimeSeconds(2);
-    SetEventFlag(9020, OFF);
-    SetEventFlag(9021, OFF);
-    SetEventFlag(9022, OFF);
-    SetEventFlag(9023, OFF);
-    SetEventFlag(9024, OFF);
-    SetEventFlag(9025, OFF);
-    SetEventFlag(9026, OFF);
-    SetEventFlag(eventFlagId2, ON);
-    SetEventFlag(eventFlagId, OFF);
-    EndEvent();
-});
-
 // Warp OBJ_Warp to Dungeon_Late_XX
 $Event(12107200, Default, function(eventFlagId, entityId, eventFlagId2) {
     WaitFor(EventFlag(eventFlagId));
@@ -3606,6 +3606,8 @@ $Event(6816, Default, function() {
     RestartEvent();
 });
 
+// 2117
+
 // Warp OBJ_Registration_XX
 $Event(7000, Default, function(chrEntityId, objEntityId, eventFlagId, eventFlagId2, eventFlagId3) {
     SetNetworkSyncState(Disabled);
@@ -3624,9 +3626,9 @@ L0:
     DeactivateObject(objEntityId, Enabled);
     ChangeCharacterEnableState(chrEntityId, Enabled);
     if (EventFlag(12102200)) { // activate all lamps
-        RegisterHealingFountain(10000999, objEntityId, 0, 0, 0, 0); // force activate
+        RegisterHealingFountain(10000999, objEntityId, 0, 0, 0, 0); // force light
     } else {
-        RegisterHealingFountain(eventFlagId2, objEntityId, 0, 0, 0, 0); // activate normally
+        RegisterHealingFountain(eventFlagId2, objEntityId, 0, 0, 0, 0); // light normally
     }
 });
 
@@ -3796,8 +3798,10 @@ $Event(10007900, Default, function(warpTrigger, bossEntrancePoint, areaId, block
     WaitFor(EventFlag(warpTrigger));
     SetEventFlag(warpTrigger, OFF);
     WaitFixedTimeFrames(1);
-    if (AnyBatchEventFlags(10008500, 10008599)) { // resting
-        BatchSetEventFlags(10008500, 10008599, OFF);
+    //if (AnyBatchEventFlags(10008500, 10008599)) { // resting
+    //    BatchSetEventFlags(10008500, 10008599, OFF);
+    if (EventFlag(10008500)) { // resting
+        SetEventFlag(10008500, OFF);
         SetEventFlag(10007999, ON);
         DummyPlayCutsceneAndWarpPlayer(bossEntrancePoint, areaId, blockId);
     } else { // not resting
@@ -3812,9 +3816,34 @@ $Event(10007900, Default, function(warpTrigger, bossEntrancePoint, areaId, block
     RestartEvent();
 });
 
+
+// 8021 - orange flame
+// 8023 - teal flame
+// 8024 - yellow flame
+// 8025 - purple flame
+// 8026 - green flame
+
 // kindle
-$Event(10008100, Default, function(thisEventSlot, lampKindleFlag) {
+$Event(10008100, Default, function(thisEventSlot, lampKindleFlag, lampId, lampActivatedFlag) {
+    WaitFor(EventFlag(12100851) && EventFlag(lampActivatedFlag) && !CharacterHasSpEffect(10000, 1990));
     SetEventFlag(thisEventSlot, OFF);
+    if (EventFlag(14000894)) { // kindling effect colors
+        if (EventValue(lampKindleFlag, 2) == 0) {
+            CreateObjectfollowingSFX(lampId, 100, 8025);
+        }
+        else if (EventValue(lampKindleFlag, 2) == 1) {
+            DeleteObjectfollowingSFX(lampId, false);
+            CreateObjectfollowingSFX(lampId, 100, 8023);
+        }
+        else if (EventValue(lampKindleFlag, 2) == 2) {
+            DeleteObjectfollowingSFX(lampId, false);
+            CreateObjectfollowingSFX(lampId, 100, 8026);
+        }
+        else if (EventValue(lampKindleFlag, 2) == 3) {
+            DeleteObjectfollowingSFX(lampId, false);
+            CreateObjectfollowingSFX(lampId, 100, 8024);
+        }
+    }
     WaitFor(ThisEventSlot());
     if (PlayerInsightAmount() == 0) { // no insight
         DisplayGenericDialog(200175, PromptType.OKCANCEL, NumberofOptions.OneButton, 10000, 3);
@@ -3915,27 +3944,45 @@ $Event(10008300, Default, function(spawnCheckerRegion, bypassChecker, lampKindle
 });
 
 // resting
-$Event(10008500, Default, function(lampId, lampWarpFlag) {
-    if (!EventFlag(10001510)) {
-        BatchSetEventFlags(10008500, 10008599, OFF);
+$Event(10008500, Default, function() {
+    BatchSetEventFlags(14007080, 14007084, OFF);
+    if (!EventFlag(10001510)) { // not chalice animation reset
+        //BatchSetEventFlags(10008500, 10008599, OFF);
+        SetEventFlag(10008500, OFF);
     }
     SetEventFlag(10001510, OFF);
-    WaitFor(ThisEventSlot()); // menu opened, trigger animation
-    RotateCharacter(10000, lampId, 101280, false);
+    //WaitFor(ThisEventSlot()); // menu opened, trigger animation
+    WaitFor(ThisEvent()); // menu opened, trigger animation
+    SetEventFlag(14007080, ON);
+    //RotateCharacter(10000, lampId, 101280, false);
+    for (let i = 0; i < lampIds.length; i++) {
+        lampFlag &= EventValue(14007020, 6) == i;
+        if (lampFlag) {
+            RotateCharacter(10000, lampIds[i], 101280, false);
+            Goto(L0);
+        }
+        WaitFor(ElapsedSeconds(0)); // dummy statement to clear condition variable
+    }
+L0:
     SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, 140);
     SetCharacterAnimationState(10000, Disabled);
     SetCharacterTeamType(10000, TeamType.Baby);
     BatchSetEventFlags(10008630, 10008639, OFF); // dismiss summons or they'll tweak
     ActivateHit(10000, Disabled);
-    WaitFor(!ThisEventSlot()); // wait for menu closed
+    //WaitFor(!ThisEventSlot()); // wait for menu closed
+    WaitFor(!ThisEvent()); // wait for menu closed
+    SetEventFlag(14007081, ON);
     if (EventFlag(10007999)) { // quick warping to boss, bypass auto-reawaken
+        SetEventFlag(14007082, ON);
         SetEventFlag(10007999, OFF);
         RestartEvent();
     }
-    if (EventFlag(10001510)) {
+    if (EventFlag(10001510)) { // chalice animation played, reset rest animation
+        SetEventFlag(14007083, ON);
         RestartEvent();
     }
-    SetEventFlag(lampWarpFlag, ON);
+    SetEventFlag(14007084, ON);
+    SetEventFlag(14007009, ON);
 });
 
 // fade
@@ -4121,6 +4168,122 @@ L0:
     RestartEvent();
 });
 
+// 14000010 - 32
+// 14000011 - 16
+// 14000012 - 8
+// 14000013 - 4
+// 14000014 - 2
+// 14000015 - 1
+
+// 14000020 - 32
+// 14000021 - 16
+// 14000022 - 8
+// 14000023 - 4
+// 14000024 - 2
+// 14000025 - 1
+
+// lamp to non-chalice lamp or chalice to chalice
+$Event(14007000, Default, function() {
+    SetEventFlag(14007000, OFF);
+    BatchSetEventFlags(14007010, 14007025, OFF);
+    EndIf(HasMultiplayerState(MultiplayerState.Client));
+    WaitFor(ThisEvent());
+    // handle animation, rotate towards lamp if not already resting
+    if (EventFlag(12100761)) { // resting
+        SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, 140);
+        Goto(L1);
+    } else { // not resting
+        for (let i = 0; i < lampIds.length; i++) {
+            lampFlag &= EventValue(14007020, 6) == i;
+            if (lampFlag) {
+                RotateCharacter(10000, lampIds[i], 101164, false);
+                Goto(L0);
+            }
+            WaitFor(ElapsedSeconds(0)); // dummy statement to clear condition variable
+        }
+    }
+L0:
+    WaitFixedTimeSeconds(2);
+L1:
+    // handle warping
+    $InitializeEvent(0, 10008600);
+    WaitFixedTimeSeconds(2);
+    for (let i = 0; i < lampIds.length; i++) {
+        warpFlag &= EventValue(14007010, 6) == i;
+        if (warpFlag) {
+            SetPlayerRespawnPoint(lampIds[i]+1000);
+            Goto(L2);
+        }
+        WaitFor(ElapsedSeconds(0)); // dummy statement to clear condition variable
+    }
+L2:
+    SetSpEffect(10000, 2101, false);
+});
+
+// non-chalice lamp to chalice lamp
+$Event(14007001, Default, function() {
+    SetEventFlag(14007001, OFF);
+    BatchSetEventFlags(14007010, 14007025, OFF);
+    EndIf(HasMultiplayerState(MultiplayerState.Client));
+    WaitFor(ThisEvent());
+    // handle animation, rotate towards lamp if not already resting
+    const nonChaliceCount = lampIds.length - 9;
+    if (EventFlag(12100761)) { // resting
+        SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, 140);
+        Goto(L1);
+    } else { // not resting
+        for (let i = 0; i < nonChaliceCount; i++) {
+            lampFlag &= EventValue(14007020, 6) == i;
+            if (lampFlag) {
+                RotateCharacter(10000, lampIds[i], 101164, false);
+                Goto(L0);
+            }
+            WaitFor(ElapsedSeconds(0)); // dummy statement to clear condition variable
+        }
+    }
+L0:
+    WaitFixedTimeSeconds(2);
+L1:
+    // handle warping
+    $InitializeEvent(0, 10008600);
+    WaitFixedTimeSeconds(2);
+    for (let i = nonChaliceCount; i < lampIds.length; i++) {
+        warpFlag &= EventValue(14007010, 6) == i;
+        if (warpFlag) {
+            SetEventFlag(72100300+i-nonChaliceCount, ON);
+            EndEvent();
+        }
+        WaitFor(ElapsedSeconds(0)); // dummy statement to clear condition variable
+    }
+});
+
+// lamp reawaken
+$Event(14007009, Default, function() {
+    SetEventFlag(14007009, OFF);
+    EndIf(HasMultiplayerState(MultiplayerState.Client));
+    WaitFor(ThisEvent());
+    if (EventFlag(12100761)) { // resting
+        SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, 140);
+        Goto(L1);
+    } else { // not resting
+        for (let i = 0; i < lampIds.length; i++) {
+            lampFlag &= EventValue(14007020, 6) == i;
+            if (lampFlag) {
+                RotateCharacter(10000, lampIds[i], 101164, false);
+                Goto(L0);
+            }
+            WaitFor(ElapsedSeconds(0)); // dummy statement to clear condition variable
+        }
+    }
+L0:
+    WaitFixedTimeSeconds(2);
+L1:
+    $InitializeEvent(0, 10008600);
+    WaitFixedTimeSeconds(2);
+    SetSpEffect(10000, 2101, false);
+});
+
+
 // 8604 - 32
 // 8605 - 16
 // 8606 - 8
@@ -4283,7 +4446,8 @@ L1:
     }
     else {
 L2:
-        if (!AnyBatchEventFlags(10008500, 10008599) && !EventFlag(10008650)) { // triggered manually, not by resting or map transition
+        //if (!AnyBatchEventFlags(10008500, 10008599) && !EventFlag(10008650)) { // triggered manually, not by resting or map transition
+            if (!EventFlag(10008500) && !EventFlag(10008650)) { // triggered manually, not by resting or map transition
             ForceAnimationPlayback(10000, 101222, false, false, false); // snap animation
         }
         else if (EventFlag(10008650)) {
@@ -4352,12 +4516,7 @@ $Event(10008601, Default, function() {
 });
 
 // 8020 - little vortex
-// 8021 - orange flame
 // 8022 - little vortex
-// 8023 - teal flame
-// 8024 - yellow flame
-// 8025 - purple flame
-// 8026 - green flame
 // 8027 - light ball
 // 8028 - light pillar
 // 8029 - flame and tall light pillar

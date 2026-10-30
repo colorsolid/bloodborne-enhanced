@@ -8,7 +8,9 @@ def t290114_1():
 
 def t290114_x0():
     """State 0,1"""
-    SetEventState(10008500+74, 0)
+    SetEventState(10008500, 0)
+    SetEventState(14007020, 0)
+    SetEventState(14007021, 0)
     assert t290114_x7(z1=99999, z2=99999, z3=99999, z4=99999)
     """State 2"""
     return 0
@@ -87,6 +89,8 @@ def t290114_x3(actionbutton1=6100, actionbutton2=6101, actionbutton3=6103, flag3
                     assert t290114_x0()
             else:
                 assert CheckActionButtonArea(actionbutton3)
+                SetEventState(14007020, 1)
+                SetEventState(14007021, 1)
                 ClearPlayerDamageInfo()
                 SetTalkTime(0.33)
                 call = t290114_x60()
@@ -174,7 +178,7 @@ def t290114_x60():
     """State 0,6"""
     if GetEventStatus(12100858) and GetEventStatus(12100861):
         SetEventState(12100761, 1)
-        SetEventState(10008500+74, 1)
+        SetEventState(10008500, 1)
     else:
         pass
     while True:
@@ -335,8 +339,10 @@ def t290114_x60():
         # rest
         elif GetTalkListEntryResult() == 20:
             SetEventState(12100761, 1)
-            SetEventState(10008500+74, 1)
-    SetEventState(10008500+74, 0)
+            SetEventState(10008500, 1)
+    SetEventState(10008500, 0)
+    SetEventState(14007020, 0)
+    SetEventState(14007021, 0)
     return 0
 
 # boss rematch
@@ -396,7 +402,9 @@ def t290114_x50():
             call = t290114_x116()
             if call.Get() == 1:
                 SetEventState(10001510, 1)
-                SetEventState(10008500+74, 0)
+                SetEventState(10008500, 0)
+                SetEventState(14007020, 0)
+                SetEventState(14007021, 0)
                 ForceCloseMenu()
             elif call.Done():
                 """State 21"""
@@ -404,7 +412,7 @@ def t290114_x50():
         # reawaken
         elif GetTalkListEntryResult() == 49:
             """State 15"""
-            call = t290114_x40(flag3=1480, flag4=48, action1=10010715)
+            call = t290114_x40()
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -543,32 +551,68 @@ def t290114_x20(flag2=_, flag3=_, action1=_):
         assert not IsGenericDialogOpen()
         """State 5"""
         return 1
+    
+def t290114_x21(flag1=10000999, flag2=10000999, flag3=10000999, flag4=10000999, flag5=10000999):
+    if GetEventStatus(12100968) and flag1 == 10008607 and flag2 == 10000999 and flag3 == 10000999 and flag4 == 10000999 and flag5 == 10000999:
+        if not GetEventStatus(70002413):
+            SetEventState(72102413, 1)
+        else:
+            OpenGenericDialog(1, 10010720, 1, 0, 1)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
+            return 1
+    elif GetEventStatus(12100968) and flag1 == 10008607 and flag2 == 10008608 and flag3 == 10000999 and flag4 == 10000999 and flag5 == 10000999:
+        if not GetEventStatus(70002401):
+            SetEventState(72102401, 1)
+        else:
+            OpenGenericDialog(1, 10010720, 1, 0, 1)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
+            return 1
+    elif GetEventStatus(12100968) and flag1 == 10008605 and flag2 == 10008607 and flag3 == 10008608 and flag4 == 10000999 and flag5 == 10000999:
+        if not GetEventStatus(70002802):
+            SetEventState(72102802, 1)
+        else:
+            OpenGenericDialog(1, 10010720, 1, 0, 1)
+            def WhilePaused():
+                SetTalkTime(0.33)
+            assert not IsGenericDialogOpen()
+            return 1
+    else:
+        pass
+    SetEventState(flag1, 1)
+    SetEventState(flag2, 1)
+    SetEventState(flag3, 1)
+    SetEventState(flag4, 1)
+    SetEventState(flag5, 1)
+
+    SetEventState(14007000, 1)
+
+    return 0
 
 # reawaken
-def t290114_x40(flag3=_, flag4=_, action1=10010715):
+def t290114_x40():
     """State 0,5"""
-    if not GetEventStatus(flag3 * 10 + 70000000 + flag4 * 1):
-        """State 1"""
-        OpenGenericDialog(2, 10010710, 3, 4, 2)
-        def WhilePaused():
-            SetTalkTime(0.33)
-        if GetGenericDialogButtonResult() == 1:
-            """State 3"""
-            DebugEvent('OK')
-            """State 6"""
-            call = t290114_x20(flag2=flag3, flag3=flag4, action1=10010715)
-            if call.Get() == 1:
+    OpenGenericDialog(2, 10010710, 3, 4, 2)
+    def WhilePaused():
+        SetTalkTime(0.33)
+    if GetGenericDialogButtonResult() == 1:
+        """State 3"""
+        DebugEvent('OK')
+        """State 6"""
+        call = t290114_x41()
+        if call.Get() == 1:
                 pass
-        elif not IsGenericDialogOpen():
-            """State 2"""
-            DebugEvent('CANCEL')
-    else:
-        """State 4"""
-        OpenGenericDialog(7, action1, 1, 0, 1)
-        def WhilePaused():
-            SetTalkTime(0.33)
-        assert not IsGenericDialogOpen()
+    elif not IsGenericDialogOpen():
+        """State 2"""
+        DebugEvent('CANCEL')
     """State 7"""
+    return 0
+
+def t290114_x41():
+    SetEventState(14007009, 1)
     return 0
 
 # yharnam headstone
@@ -588,18 +632,18 @@ def t290114_x51():
         """State 3"""
         ClearTalkListData()
         """State 4"""
-        AddTalkListData(1, 70000000 + 241 * 10 + 0, 10000000 + 241 * 10000 + 7810 + 20 * 0)
-        AddTalkListData(2, 70000000 + 241 * 10 + 1, 10000000 + 241 * 10000 + 7810 + 20 * 1)
-        AddTalkListData(3, 70000000 + 241 * 10 + 2, 10000000 + 241 * 10000 + 7810 + 20 * 2)
-        AddTalkListData(4, 70000000 + 241 * 10 + 3, 10000000 + 241 * 10000 + 7810 + 20 * 3)
-        AddTalkListData(5, 70000000 + 240 * 10 + 0, 10000000 + 240 * 10000 + 7810 + 20 * 0)
-        AddTalkListData(6, 70000000 + 240 * 10 + 1, 10000000 + 240 * 10000 + 7810 + 20 * 1)
-        AddTalkListData(7, 70000000 + 242 * 10 + 0, 10000000 + 242 * 10000 + 7810 + 20 * 0)
-        AddTalkListData(8, 70000000 + 242 * 10 + 2, 10000000 + 242 * 10000 + 7810 + 20 * 2)
-        AddTalkListData(9, 70000000 + 242 * 10 + 1, 10000000 + 242 * 10000 + 7810 + 20 * 1)
-        AddTalkListData(10, 70000000 + 230 * 10 + 0, 10000000 + 230 * 10000 + 7810 + 20 * 0)
-        AddTalkListData(11, 70000000 + 230 * 10 + 1, 10000000 + 230 * 10000 + 7810 + 20 * 1)
-        AddTalkListData(12, 70000000 + 230 * 10 + 2, 10000000 + 230 * 10000 + 7810 + 20 * 2)
+        AddTalkListData(1, 70000000 + 241 * 10 + 0, 10000000 + 241 * 10000 + 7810 + 20 * 0) # 1st floor sickroom
+        AddTalkListData(2, 70000000 + 241 * 10 + 1, 10000000 + 241 * 10000 + 7810 + 20 * 1) # central yharnam
+        AddTalkListData(3, 70000000 + 241 * 10 + 2, 10000000 + 241 * 10000 + 7810 + 20 * 2) # great bridge
+        AddTalkListData(4, 70000000 + 241 * 10 + 3, 10000000 + 241 * 10000 + 7810 + 20 * 3) # tomb of oedon
+        AddTalkListData(5, 70000000 + 240 * 10 + 0, 10000000 + 240 * 10000 + 7810 + 20 * 0) # cathedral ward
+        AddTalkListData(6, 70000000 + 240 * 10 + 1, 10000000 + 240 * 10000 + 7810 + 20 * 1) # grand cathedral
+        AddTalkListData(7, 70000000 + 242 * 10 + 0, 10000000 + 242 * 10000 + 7810 + 20 * 0) # upper cathedral ward
+        AddTalkListData(8, 70000000 + 242 * 10 + 2, 10000000 + 242 * 10000 + 7810 + 20 * 2) # lumenflower gardens
+        AddTalkListData(9, 70000000 + 242 * 10 + 1, 10000000 + 242 * 10000 + 7810 + 20 * 1) # altair of despair
+        AddTalkListData(10, 70000000 + 230 * 10 + 0, 10000000 + 230 * 10000 + 7810 + 20 * 0) # old yharnam
+        AddTalkListData(11, 70000000 + 230 * 10 + 1, 10000000 + 230 * 10000 + 7810 + 20 * 1) # church of the good chalice
+        AddTalkListData(12, 70000000 + 230 * 10 + 2, 10000000 + 230 * 10000 + 7810 + 20 * 2) # graveyard of the dark beast
         """State 5"""
         StartWarpMenuInit()
         def WhilePaused():
@@ -609,7 +653,8 @@ def t290114_x51():
             return 1
         elif GetTalkListEntryResult() == 1:
             """State 7"""
-            call = t290114_x20(flag2=1480, flag3=0, action1=10010715)
+            # call = t290114_x20(flag2=1480, flag3=0, action1=10010715)
+            call = t290114_x21()
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -617,7 +662,7 @@ def t290114_x51():
                 return 0
         elif GetTalkListEntryResult() == 2:
             """State 9"""
-            call = t290114_x20(flag2=1480, flag3=1, action1=10010715)
+            call = t290114_x21(flag1=14007015)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -625,7 +670,7 @@ def t290114_x51():
                 return 0
         elif GetTalkListEntryResult() == 3:
             """State 11"""
-            call = t290114_x20(flag2=1480, flag3=2, action1=10010715)
+            call = t290114_x21(flag1=14007014)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -633,7 +678,7 @@ def t290114_x51():
                 return 0
         elif GetTalkListEntryResult() == 4:
             """State 13"""
-            call = t290114_x20(flag2=1480, flag3=3, action1=10010722)
+            call = t290114_x21(flag1=14007014, flag2=14007015)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -641,7 +686,7 @@ def t290114_x51():
                 return 0
         elif GetTalkListEntryResult() == 5:
             """State 15"""
-            call = t290114_x20(flag2=1480, flag3=4, action1=10010715)
+            call = t290114_x21(flag1=14007013)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -649,7 +694,7 @@ def t290114_x51():
                 return 0
         elif GetTalkListEntryResult() == 6:
             """State 17"""
-            call = t290114_x20(flag2=1480, flag3=5, action1=10010723)
+            call = t290114_x21(flag1=14007013, flag2=14007015)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -657,7 +702,7 @@ def t290114_x51():
                 return 0
         elif GetTalkListEntryResult() == 7:
             """State 19"""
-            call = t290114_x20(flag2=1480, flag3=6, action1=10010715)
+            call = t290114_x21(flag1=14007013, flag2=14007014)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -665,7 +710,7 @@ def t290114_x51():
                 return 0
         elif GetTalkListEntryResult() == 8:
             """State 21"""
-            call = t290114_x20(flag2=1480, flag3=7, action1=10010715)
+            call = t290114_x21(flag1=14007013, flag2=14007014, flag3=14007015)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -673,7 +718,7 @@ def t290114_x51():
                 return 0
         elif GetTalkListEntryResult() == 9:
             """State 23"""
-            call = t290114_x20(flag2=1480, flag3=8, action1=10010715)
+            call = t290114_x21(flag1=14007012)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -681,7 +726,7 @@ def t290114_x51():
                 return 0
         elif GetTalkListEntryResult() == 10:
             """State 25"""
-            call = t290114_x20(flag2=1480, flag3=9, action1=10010715)
+            call = t290114_x21(flag1=14007012, flag2=14007015)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -689,7 +734,7 @@ def t290114_x51():
                 return 0
         elif GetTalkListEntryResult() == 11:
             """State 27"""
-            call = t290114_x20(flag2=1480, flag3=10, action1=10010715)
+            call = t290114_x21(flag1=14007012, flag2=14007014)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -697,7 +742,7 @@ def t290114_x51():
                 return 0
         elif GetTalkListEntryResult() == 12:
             """State 29"""
-            call = t290114_x20(flag2=1480, flag3=11, action1=10010715)
+            call = t290114_x21(flag1=14007012, flag2=14007014, flag3=14007015)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -721,12 +766,12 @@ def t290114_x52():
         """State 3"""
         ClearTalkListData()
         """State 4"""
-        AddTalkListData(1, 70000000 + 220 * 10 + 0, 10000000 + 220 * 10000 + 7810 + 20 * 0)
-        AddTalkListData(2, 70000000 + 220 * 10 + 1, 10000000 + 220 * 10000 + 7810 + 20 * 1)
-        AddTalkListData(3, 70000000 + 270 * 10 + 0, 10000000 + 270 * 10000 + 7810 + 20 * 0)
-        AddTalkListData(4, 70000000 + 270 * 10 + 1, 10000000 + 270 * 10000 + 7810 + 20 * 1)
-        AddTalkListData(5, 70000000 + 320 * 10 + 0, 10000000 + 320 * 10000 + 7810 + 20 * 0)
-        AddTalkListData(6, 70000000 + 320 * 10 + 2, 10000000 + 320 * 10000 + 7810 + 20 * 2)
+        AddTalkListData(1, 70000000 + 220 * 10 + 0, 10000000 + 220 * 10000 + 7810 + 20 * 0) # hemwick charnel lane
+        AddTalkListData(2, 70000000 + 220 * 10 + 1, 10000000 + 220 * 10000 + 7810 + 20 * 1) # witch's abode
+        AddTalkListData(3, 70000000 + 270 * 10 + 0, 10000000 + 270 * 10000 + 7810 + 20 * 0) # forbidden woods
+        AddTalkListData(4, 70000000 + 270 * 10 + 1, 10000000 + 270 * 10000 + 7810 + 20 * 1) # forbidden grave
+        AddTalkListData(5, 70000000 + 320 * 10 + 0, 10000000 + 320 * 10000 + 7810 + 20 * 0) # byrgenwerth
+        AddTalkListData(6, 70000000 + 320 * 10 + 2, 10000000 + 320 * 10000 + 7810 + 20 * 2) # moon lake
         """State 5"""
         StartWarpMenuInit()
         def WhilePaused():
@@ -736,7 +781,7 @@ def t290114_x52():
             return 1
         elif GetTalkListEntryResult() == 1:
             """State 7"""
-            call = t290114_x20(flag2=1480, flag3=12, action1=10010715)
+            call = t290114_x21(flag1=14007012, flag2=14007013)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -744,7 +789,7 @@ def t290114_x52():
                 return 0
         elif GetTalkListEntryResult() == 2:
             """State 9"""
-            call = t290114_x20(flag2=1480, flag3=13, action1=10010715)
+            call = t290114_x21(flag1=14007012, flag2=14007013, flag3=14007015)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -752,7 +797,7 @@ def t290114_x52():
                 return 0
         elif GetTalkListEntryResult() == 3:
             """State 11"""
-            call = t290114_x20(flag2=1480, flag3=14, action1=10010715)
+            call = t290114_x21(flag1=14007012, flag2=14007013, flag3=14007014)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -760,7 +805,7 @@ def t290114_x52():
                 return 0
         elif GetTalkListEntryResult() == 4:
             """State 13"""
-            call = t290114_x20(flag2=1480, flag3=15, action1=10010715)
+            call = t290114_x21(flag1=14007012, flag2=14007013, flag3=14007014, flag4=14007015)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -768,7 +813,7 @@ def t290114_x52():
                 return 0
         elif GetTalkListEntryResult() == 5:
             """State 15"""
-            call = t290114_x20(flag2=1480, flag3=16, action1=10010715)
+            call = t290114_x21(flag1=14007011)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -776,7 +821,7 @@ def t290114_x52():
                 return 0
         elif GetTalkListEntryResult() == 6:
             """State 17"""
-            call = t290114_x20(flag2=1480, flag3=17, action1=10010715)
+            call = t290114_x21(flag1=14007011, flag2=14007015)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -800,14 +845,14 @@ def t290114_x53():
         """State 3"""
         ClearTalkListData()
         """State 4"""
-        AddTalkListData(1, 70000000 + 280 * 10 + 0, 10000000 + 280 * 10000 + 7810 + 20 * 0)
-        AddTalkListData(2, 70000000 + 280 * 10 + 3, 10000000 + 280 * 10000 + 7810 + 20 * 3)
-        AddTalkListData(3, 70000000 + 280 * 10 + 1, 10000000 + 280 * 10000 + 7810 + 20 * 1)
-        AddTalkListData(4, 70000000 + 280 * 10 + 2, 10000000 + 280 * 10000 + 7810 + 20 * 2)
-        AddTalkListData(5, 70000000 + 250 * 10 + 0, 10000000 + 250 * 10000 + 7810 + 20 * 0)
-        AddTalkListData(6, 70000000 + 250 * 10 + 2, 10000000 + 250 * 10000 + 7810 + 20 * 2)
-        AddTalkListData(7, 70000000 + 250 * 10 + 1, 10000000 + 250 * 10000 + 7810 + 20 * 1)
-        AddTalkListData(8, 70000000 + 211 * 10 + 0, 10000000 + 211 * 10000 + 7810 + 20 * 0)
+        AddTalkListData(1, 70000000 + 280 * 10 + 0, 10000000 + 280 * 10000 + 7810 + 20 * 0) # yahar'gul unseen village
+        AddTalkListData(2, 70000000 + 280 * 10 + 3, 10000000 + 280 * 10000 + 7810 + 20 * 3) # yahar'gul chapel
+        AddTalkListData(3, 70000000 + 280 * 10 + 1, 10000000 + 280 * 10000 + 7810 + 20 * 1) # advent plaza
+        AddTalkListData(4, 70000000 + 280 * 10 + 2, 10000000 + 280 * 10000 + 7810 + 20 * 2) # hypogean gaol
+        AddTalkListData(5, 70000000 + 250 * 10 + 0, 10000000 + 250 * 10000 + 7810 + 20 * 0) # forsaken castle cainhurst
+        AddTalkListData(6, 70000000 + 250 * 10 + 2, 10000000 + 250 * 10000 + 7810 + 20 * 2) # logarius' seat
+        AddTalkListData(7, 70000000 + 250 * 10 + 1, 10000000 + 250 * 10000 + 7810 + 20 * 1) # vileblood queen's chamber
+        AddTalkListData(8, 70000000 + 211 * 10 + 0, 10000000 + 211 * 10000 + 7810 + 20 * 0) # abandoned old workshop
         """State 5"""
         StartWarpMenuInit()
         def WhilePaused():
@@ -817,7 +862,7 @@ def t290114_x53():
             return 1
         elif GetTalkListEntryResult() == 1:
             """State 7"""
-            call = t290114_x20(flag2=1480, flag3=18, action1=10010715)
+            call = t290114_x21(flag1=14007011, flag2=14007014)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -825,7 +870,7 @@ def t290114_x53():
                 return 0
         elif GetTalkListEntryResult() == 2:
             """State 9"""
-            call = t290114_x20(flag2=1480, flag3=19, action1=10010715)
+            call = t290114_x21(flag1=14007011, flag2=14007014, flag3=14007015)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -833,7 +878,7 @@ def t290114_x53():
                 return 0
         elif GetTalkListEntryResult() == 3:
             """State 11"""
-            call = t290114_x20(flag2=1480, flag3=20, action1=10010715)
+            call = t290114_x21(flag1=14007011, flag2=14007013)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -841,7 +886,7 @@ def t290114_x53():
                 return 0
         elif GetTalkListEntryResult() == 4:
             """State 13"""
-            call = t290114_x20(flag2=1480, flag3=21, action1=10010725)
+            call = t290114_x21(flag1=14007011, flag2=14007013, flag3=14007015)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -849,7 +894,7 @@ def t290114_x53():
                 return 0
         elif GetTalkListEntryResult() == 5:
             """State 15"""
-            call = t290114_x20(flag2=1480, flag3=22, action1=10010715)
+            call = t290114_x21(flag1=14007011, flag2=14007013, flag3=14007014)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -857,7 +902,7 @@ def t290114_x53():
                 return 0
         elif GetTalkListEntryResult() == 6:
             """State 17"""
-            call = t290114_x20(flag2=1480, flag3=23, action1=10010715)
+            call = t290114_x21(flag1=14007011, flag2=14007013, flag3=14007014, flag4=14007015)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -865,7 +910,7 @@ def t290114_x53():
                 return 0
         elif GetTalkListEntryResult() == 7:
             """State 19"""
-            call = t290114_x20(flag2=1480, flag3=24, action1=10010715)
+            call = t290114_x21(flag1=14007011, flag2=14007012)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -873,7 +918,7 @@ def t290114_x53():
                 return 0
         elif GetTalkListEntryResult() == 8:
             """State 21"""
-            call = t290114_x20(flag2=1480, flag3=25, action1=10010715)
+            call = t290114_x21(flag1=14007011, flag2=14007012, flag3=14007015)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -897,14 +942,14 @@ def t290114_x54():
         """State 3"""
         ClearTalkListData()
         """State 4"""
-        AddTalkListData(1, 70000000 + 320 * 10 + 1, 10000000 + 320 * 10000 + 7810 + 20 * 1)
-        AddTalkListData(2, 70000000 + 320 * 10 + 3, 10000000 + 320 * 10000 + 7810 + 20 * 3)
-        AddTalkListData(3, 70000000 + 330 * 10 + 0, 10000000 + 330 * 10000 + 7810 + 20 * 0)
-        AddTalkListData(4, 70000000 + 330 * 10 + 1, 10000000 + 330 * 10000 + 7810 + 20 * 1)
-        AddTalkListData(5, 70000000 + 260 * 10 + 0, 10000000 + 260 * 10000 + 7810 + 20 * 0)
-        AddTalkListData(6, 70000000 + 260 * 10 + 3, 10000000 + 260 * 10000 + 7810 + 20 * 3)
-        AddTalkListData(7, 70000000 + 260 * 10 + 2, 10000000 + 260 * 10000 + 7810 + 20 * 2)
-        AddTalkListData(8, 70000000 + 260 * 10 + 1, 10000000 + 260 * 10000 + 7810 + 20 * 1)
+        AddTalkListData(1, 70000000 + 320 * 10 + 1, 10000000 + 320 * 10000 + 7810 + 20 * 1) # lecture building
+        AddTalkListData(2, 70000000 + 320 * 10 + 3, 10000000 + 320 * 10000 + 7810 + 20 * 3) # lecture building 2nd floor
+        AddTalkListData(3, 70000000 + 330 * 10 + 0, 10000000 + 330 * 10000 + 7810 + 20 * 0) # nightmare frontier
+        AddTalkListData(4, 70000000 + 330 * 10 + 1, 10000000 + 330 * 10000 + 7810 + 20 * 1) # amygdala's chamber
+        AddTalkListData(5, 70000000 + 260 * 10 + 0, 10000000 + 260 * 10000 + 7810 + 20 * 0) # nightmare of mensis
+        AddTalkListData(6, 70000000 + 260 * 10 + 3, 10000000 + 260 * 10000 + 7810 + 20 * 3) # mergo's loft: base
+        AddTalkListData(7, 70000000 + 260 * 10 + 2, 10000000 + 260 * 10000 + 7810 + 20 * 2) # mergo's loft: middle
+        AddTalkListData(8, 70000000 + 260 * 10 + 1, 10000000 + 260 * 10000 + 7810 + 20 * 1) # wet nurse's lunarium
         """State 5"""
         StartWarpMenuInit()
         def WhilePaused():
@@ -914,7 +959,7 @@ def t290114_x54():
             return 1
         elif GetTalkListEntryResult() == 1:
             """State 7"""
-            call = t290114_x20(flag2=1480, flag3=26, action1=10010715)
+            call = t290114_x21(flag1=14007011, flag2=14007012, flag3=14007014)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -922,7 +967,7 @@ def t290114_x54():
                 return 0
         elif GetTalkListEntryResult() == 2:
             """State 9"""
-            call = t290114_x20(flag2=1480, flag3=27, action1=10010715)
+            call = t290114_x21(flag1=14007011, flag2=14007012, flag3=14007014, flag4=14007015)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -930,7 +975,7 @@ def t290114_x54():
                 return 0
         elif GetTalkListEntryResult() == 3:
             """State 11"""
-            call = t290114_x20(flag2=1480, flag3=28, action1=10010715)
+            call = t290114_x21(flag1=14007011, flag2=14007012, flag3=14007013)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -938,7 +983,7 @@ def t290114_x54():
                 return 0
         elif GetTalkListEntryResult() == 4:
             """State 13"""
-            call = t290114_x20(flag2=1480, flag3=29, action1=10010715)
+            call = t290114_x21(flag1=14007011, flag2=14007012, flag3=14007013, flag4=14007015)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -946,7 +991,7 @@ def t290114_x54():
                 return 0
         elif GetTalkListEntryResult() == 5:
             """State 15"""
-            call = t290114_x20(flag2=1480, flag3=30, action1=10010715)
+            call = t290114_x21(flag1=14007011, flag2=14007012, flag3=14007013, flag4=14007014)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -954,7 +999,7 @@ def t290114_x54():
                 return 0
         elif GetTalkListEntryResult() == 6:
             """State 17"""
-            call = t290114_x20(flag2=1480, flag3=31, action1=10010715)
+            call = t290114_x21(flag1=14007011, flag2=14007012, flag3=14007013, flag4=14007014, flag5=14007015)
             if call.Done():
                 """State 18"""
                 return 0
@@ -962,7 +1007,7 @@ def t290114_x54():
                 pass
         elif GetTalkListEntryResult() == 7:
             """State 19"""
-            call = t290114_x20(flag2=1480, flag3=32, action1=10010715)
+            call = t290114_x21(flag1=14007010)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -970,7 +1015,7 @@ def t290114_x54():
                 return 0
         elif GetTalkListEntryResult() == 8:
             """State 21"""
-            call = t290114_x20(flag2=1480, flag3=33, action1=10010715)
+            call = t290114_x21(flag1=14007010, flag2=14007015)
             if call.Done():
                 """State 22"""
                 return 0
@@ -994,16 +1039,16 @@ def t290114_x55():
         """State 3"""
         ClearTalkListData()
         """State 4"""
-        AddTalkListData(9, 70000000 + 340 * 10 + 0, 10000000 + 340 * 10000 + 7810 + 20 * 0)
-        AddTalkListData(10, 70000000 + 340 * 10 + 1, 10000000 + 340 * 10000 + 7810 + 20 * 1)
-        AddTalkListData(12, 70000000 + 340 * 10 + 3, 10000000 + 340 * 10000 + 7810 + 20 * 3)
-        AddTalkListData(11, 70000000 + 340 * 10 + 2, 10000000 + 340 * 10000 + 7810 + 20 * 2)
-        AddTalkListData(13, 70000000 + 350 * 10 + 0, 10000000 + 350 * 10000 + 7810 + 20 * 0)
-        AddTalkListData(14, 70000000 + 350 * 10 + 1, 10000000 + 350 * 10000 + 7810 + 20 * 1)
-        AddTalkListData(15, 70000000 + 350 * 10 + 2, 10000000 + 350 * 10000 + 7810 + 20 * 2)
-        AddTalkListData(16, 70000000 + 360 * 10 + 0, 10000000 + 360 * 10000 + 7810 + 20 * 0)
-        AddTalkListData(17, 70000000 + 360 * 10 + 1, 10000000 + 360 * 10000 + 7810 + 20 * 1)
-        AddTalkListData(18, 70000000 + 360 * 10 + 2, 10000000 + 360 * 10000 + 7810 + 20 * 2)
+        AddTalkListData(9, 70000000 + 340 * 10 + 0, 10000000 + 340 * 10000 + 7810 + 20 * 0)  # hunter's nightmare
+        AddTalkListData(10, 70000000 + 340 * 10 + 1, 10000000 + 340 * 10000 + 7810 + 20 * 1) # nightmare church
+        AddTalkListData(12, 70000000 + 340 * 10 + 3, 10000000 + 340 * 10000 + 7810 + 20 * 3) # nightmare grand cathedral
+        AddTalkListData(11, 70000000 + 340 * 10 + 2, 10000000 + 340 * 10000 + 7810 + 20 * 2) # underground corpse pile
+        AddTalkListData(13, 70000000 + 350 * 10 + 0, 10000000 + 350 * 10000 + 7810 + 20 * 0) # research hall
+        AddTalkListData(14, 70000000 + 350 * 10 + 1, 10000000 + 350 * 10000 + 7810 + 20 * 1) # lumenwood garden
+        AddTalkListData(15, 70000000 + 350 * 10 + 2, 10000000 + 350 * 10000 + 7810 + 20 * 2) # astral clocktower
+        AddTalkListData(16, 70000000 + 360 * 10 + 0, 10000000 + 360 * 10000 + 7810 + 20 * 0) # fishing hamlet
+        AddTalkListData(17, 70000000 + 360 * 10 + 1, 10000000 + 360 * 10000 + 7810 + 20 * 1) # lighthouse hut
+        AddTalkListData(18, 70000000 + 360 * 10 + 2, 10000000 + 360 * 10000 + 7810 + 20 * 2) # coast
         """State 5"""
         StartWarpMenuInit()
         def WhilePaused():
@@ -1013,7 +1058,7 @@ def t290114_x55():
             return 1
         elif GetTalkListEntryResult() == 9:
             """State 7"""
-            call = t290114_x20(flag2=1480, flag3=34, action1=10010715)
+            call = t290114_x21(flag1=14007010, flag2=14007014)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -1021,7 +1066,7 @@ def t290114_x55():
                 return 0
         elif GetTalkListEntryResult() == 10:
             """State 9"""
-            call = t290114_x20(flag2=1480, flag3=35, action1=10010715)
+            call = t290114_x21(flag1=14007010, flag2=14007014, flag3=14007015)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -1029,7 +1074,7 @@ def t290114_x55():
                 return 0
         elif GetTalkListEntryResult() == 12:
             """State 11"""
-            call = t290114_x20(flag2=1480, flag3=36, action1=10010715)
+            call = t290114_x21(flag1=14007010, flag2=14007013)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -1037,7 +1082,7 @@ def t290114_x55():
                 return 0
         elif GetTalkListEntryResult() == 11:
             """State 13"""
-            call = t290114_x20(flag2=1480, flag3=37, action1=10010715)
+            call = t290114_x21(flag1=14007010, flag2=14007013, flag3=14007015)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -1045,7 +1090,7 @@ def t290114_x55():
                 return 0
         elif GetTalkListEntryResult() == 13:
             """State 15"""
-            call = t290114_x20(flag2=1480, flag3=38, action1=10010715)
+            call = t290114_x21(flag1=14007010, flag2=14007013, flag3=14007014)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -1053,7 +1098,7 @@ def t290114_x55():
                 return 0
         elif GetTalkListEntryResult() == 14:
             """State 17"""
-            call = t290114_x20(flag2=1480, flag3=39, action1=10010715)
+            call = t290114_x21(flag1=14007010, flag2=14007013, flag3=14007014, flag4=14007015)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -1061,12 +1106,12 @@ def t290114_x55():
                 return 0
         elif GetTalkListEntryResult() == 15:
             """State 19"""
-            assert t290114_x20(flag2=1480, flag3=40, action1=10010715)
+            assert t290114_x21(flag1=14007010, flag2=14007012)
             """State 20"""
             return 0
         elif GetTalkListEntryResult() == 16:
             """State 21"""
-            call = t290114_x20(flag2=1480, flag3=41, action1=10010715)
+            call = t290114_x21(flag1=14007010, flag2=14007012, flag3=14007015)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -1074,7 +1119,7 @@ def t290114_x55():
                 return 0
         elif GetTalkListEntryResult() == 17:
             """State 23"""
-            call = t290114_x20(flag2=1480, flag3=42, action1=10010715)
+            call = t290114_x21(flag1=14007010, flag2=14007012, flag3=14007014)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -1082,7 +1127,7 @@ def t290114_x55():
                 return 0
         elif GetTalkListEntryResult() == 18:
             """State 25"""
-            call = t290114_x20(flag2=1480, flag3=43, action1=10010715)
+            call = t290114_x21(flag1=14007010, flag2=14007012, flag3=14007014, flag4=14007015)
             if call.Get() == 1:
                 pass
             elif call.Done():
@@ -1116,71 +1161,55 @@ def t290114_x116(flag1=0):
             """State 6"""
             DebugEvent('ダンジョン_1F')
             """State 39"""
-            SetEventState(12106000, 1)
-            assert t290114_x117(flag1=flag1, z1=72100300+40)
+            assert t290114_x117(flag2=14007010, flag3=14007012, flag4=14007013)
             return 0
         elif GetTalkListEntryResult() == 2:
             """State 10"""
             DebugEvent('ダンジョン_2F')
             """State 40"""
-            SetEventState(12106000, 1)
-            assert t290114_x117(flag1=flag1, z1=72100301+40)
+            assert t290114_x117(flag2=14007010, flag3=14007012, flag4=14007013, flag5=14007015)
             return 0
         elif GetTalkListEntryResult() == 3:
             """State 4"""
             DebugEvent('ダンジョン_3F')
             """State 41"""
-            SetEventState(12106000, 1)
-            assert t290114_x117(flag1=flag1, z1=72100302+40)
+            assert t290114_x117(flag2=14007010, flag3=14007012, flag4=14007013, flag5=14007014)
             return 0
         elif GetTalkListEntryResult() == 4:
             """State 7"""
             DebugEvent('ダンジョン_4F')
             """State 42"""
-            SetEventState(12106000, 1)
-            assert t290114_x117(flag1=flag1, z1=72100303+40)
+            assert t290114_x117(flag2=14007010, flag3=14007012, flag4=14007013, flag5=14007014, flag6=14007015)
             return 0
         elif GetTalkListEntryResult() == 5:
             """State 11"""
             DebugEvent('ダンジョン_5F')
             """State 43"""
-            SetEventState(12106000, 1)
-            assert t290114_x117(flag1=flag1, z1=72100304+40)
+            assert t290114_x117(flag2=14007010, flag3=14007011)
             return 0
         elif GetTalkListEntryResult() == 6:
             """State 8"""
             DebugEvent('ダンジョン_6F')
             """State 44"""
-            SetEventState(12106000, 1)
-            assert t290114_x117(flag1=flag1, z1=72100305+40)
+            assert t290114_x117(flag2=14007010, flag3=14007011, flag4=14007015)
             return 0
         elif GetTalkListEntryResult() == 7:
             """State 9"""
             DebugEvent('ダンジョン_7F')
             """State 45"""
-            SetEventState(12106000, 1)
-            assert t290114_x117(flag1=flag1, z1=72100306+40)
+            assert t290114_x117(flag2=14007010, flag3=14007011, flag4=14007014)
             return 0
         elif GetTalkListEntryResult() == 8:
             """State 12"""
             DebugEvent('ダンジョン_8F')
             """State 46"""
-            SetEventState(12106000, 1)
-            assert t290114_x117(flag1=flag1, z1=72100307+40)
+            assert t290114_x117(flag2=14007010, flag3=14007011, flag4=14007014, flag5=14007015)
             return 0
         elif GetTalkListEntryResult() == 9:
             """State 13"""
             DebugEvent('ダンジョン_9F')
             """State 47"""
-            SetEventState(12106000, 1)
-            assert t290114_x117(flag1=flag1, z1=72100308+40)
-            return 0
-        elif GetTalkListEntryResult() == 10:
-            """State 14"""
-            DebugEvent('ダンジョン_10F')
-            """State 48"""
-            SetEventState(12106000, 1)
-            assert t290114_x117(flag1=flag1, z1=72100309+40)
+            assert t290114_x117(flag2=14007010, flag3=14007011, flag4=14007013)
             return 0
         elif (GetTalkListEntryResult() == 50 or not GetTalkListEntryResult() or not CheckSpecificPersonMenuIsOpen(320,
                 0)):
@@ -1217,10 +1246,14 @@ def t290114_x116(flag1=0):
             break
     return 1
 
-def t290114_x117(flag1=72100421, z1=_):
-    """State 2"""
-    SetEventState(z1, 1)
-    """State 3"""
+def t290114_x117(flag2=999, flag3=999, flag4=999, flag5=999, flag6=999):
+    """State 0,1"""
+    SetEventState(flag2, 1)
+    SetEventState(flag3, 1)
+    SetEventState(flag4, 1)
+    SetEventState(flag5, 1)
+    SetEventState(flag6, 1)
+    SetEventState(14007000, 1)
     return 0
 
 # workshop

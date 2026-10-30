@@ -2209,6 +2209,12 @@ def t280029_x95():
         if GetEventStatus(12100862) == 1:
             AddTalkListData(35, 200172, 12100951) # disabled - enable lamp kindling
             AddTalkListData(36, 200173, 12100851) # enabled - disable lamp kindling
+
+            if GetEventStatus(12100851) == 1:
+                AddTalkListData(39, 200338, 14000994) # disabled - enable kindling colors
+                AddTalkListData(40, 200339, 14000894) # enabled - disable kindling colors
+            else:
+                pass
         else:
             pass
 
@@ -2369,12 +2375,6 @@ def t280029_x95():
         elif GetTalkListEntryResult() == 32: # enable - quick warp to boss
             SetEventState(12100957, 0)
             SetEventState(12100857, 1)
-        elif GetTalkListEntryResult() == 37: # disable - quick warp to boss prompt
-            SetEventState(12100993, 1)
-            SetEventState(12100893, 0)
-        elif GetTalkListEntryResult() == 38: # enable - quick warp to boss prompt
-            SetEventState(12100993, 0)
-            SetEventState(12100893, 1)
         elif GetTalkListEntryResult() == 33: # disable - lamp music
             SetEventState(12100991, 1)
             SetEventState(12100891, 0)
@@ -2388,6 +2388,18 @@ def t280029_x95():
         elif GetTalkListEntryResult() == 36: # disable - lamp kindling
             SetEventState(12100951, 1)
             SetEventState(12100851, 0)
+        elif GetTalkListEntryResult() == 37: # disable - quick warp to boss prompt
+            SetEventState(12100993, 1)
+            SetEventState(12100893, 0)
+        elif GetTalkListEntryResult() == 38: # enable - quick warp to boss prompt
+            SetEventState(12100993, 0)
+            SetEventState(12100893, 1)
+        elif GetTalkListEntryResult() == 39: # enable - lamp kindling colors
+            SetEventState(14000994, 0)
+            SetEventState(14000894, 1)
+        elif GetTalkListEntryResult() == 40: # disable - lamp kindling colors
+            SetEventState(14000994, 1)
+            SetEventState(14000894, 0)
 
 # broken lamp settings
 def t280029_x96():

@@ -3676,3 +3676,44 @@ $Event(12105310, Restart, function(eventFlagId, entityId) {
     WaitFixedTimeFrames(74);
     RestartEvent();
 });
+
+// Headstone warp function (warp to a lamp)
+$Event(12107000, Default, function(lampWarpFlag, lampObjectId, lampSpawnPoint) {
+    EndIf(HasMultiplayerState(MultiplayerState.Client));
+    WaitFor(EventFlag(lampWarpFlag));
+    if (EventFlag(12100761)) {
+        SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, 140);
+    } else {
+        RotateCharacter(10000, lampObjectId, 101164, false);
+        WaitFixedTimeSeconds(2);
+    }
+    $InitializeEvent(0, 10008600);
+    WaitFixedTimeSeconds(2);
+    SetPlayerRespawnPoint(lampSpawnPoint);
+    SetSpEffect(10000, 2101, false);
+});
+
+// Warp OBJ_Warp to Dungeon_First Half_XX
+$Event(12107100, Default, function(eventFlagId, entityId, eventFlagId2) {
+    EndIf(HasMultiplayerState(MultiplayerState.Client));
+    WaitFor(EventFlag(eventFlagId));
+    SetEventFlag(10001510, OFF);
+    if (EventFlag(12100761)) {
+        SpawnOneshotSFX(TargetEntityType.Character, 10000, 236, 140);
+    } else {
+        RotateCharacter(10000, entityId, 101164, false);
+        WaitFixedTimeSeconds(2);
+    }
+    $InitializeEvent(0, 10008600);
+    WaitFixedTimeSeconds(2);
+    SetEventFlag(9020, OFF);
+    SetEventFlag(9021, OFF);
+    SetEventFlag(9022, OFF);
+    SetEventFlag(9023, OFF);
+    SetEventFlag(9024, OFF);
+    SetEventFlag(9025, OFF);
+    SetEventFlag(9026, OFF);
+    SetEventFlag(eventFlagId2, ON);
+    SetEventFlag(eventFlagId, OFF);
+    EndEvent();
+});
